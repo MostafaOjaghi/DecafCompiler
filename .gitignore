@@ -2,5 +2,5 @@ out/
 report/
 main
 src/lex.yy.*
-src/parser.tab.h
+src/parser.tab.*
 
