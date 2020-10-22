@@ -10,10 +10,19 @@
 
 letter [a-zA-Z]
 digit [0-9]
-
+exp ((E|e)((\+|-)?)?{digit}+)
 %%
 
+\/\/.* /* ignore single line comment */;
+\/\\*(.|\n)*\\*\/ /* ignore multi-line comment */;
+
 [ \t\r\014] /*ignore ws*/ ;
+
+(true|false)					{return T_BOOLEANLITERAL;}
+{digit}+\.{digit}*{exp}?	{return T_DOUBLELITERAL;}
+\"[^\"]*\"					{return T_STRINGLITERAL;}
+({digit}+|0(X|x)[a-fA-F0-9]+)			{return T_INTLITERAL;}
+
 "\n"			{return T_NEWLINE;}
 "void" 			{return T_VOID;}
 "int" 			{return T_INT;}
@@ -59,6 +68,7 @@ digit [0-9]
 "==" 	{return T_CMPE;}
 "!=" 	{return T_CMPNE;}
 "||" 	{return T_OR;}
+"&&"	{return T_AND;}
 "!" 	{return T_NOT;}
 ";" 	{return T_SEMICOLON;}
 "," 	{return T_COMMA;}
