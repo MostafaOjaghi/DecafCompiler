@@ -32,6 +32,7 @@ FILE *output_file;
 
 program:
 		| program line
+		| program words
 ;
 
 line: T_NEWLINE
