@@ -17,13 +17,13 @@ exp ((E|e)((\+|-)?)?{digit}+)
 \/\\*(.|\n)*\\*\/ /* ignore multi-line comment */;
 
 [ \t\r\014] /*ignore ws*/ ;
+"\n"		/*ignore newline*/ ;
 
 (true|false)					{return T_BOOLEANLITERAL;}
 {digit}+\.{digit}*{exp}?	{return T_DOUBLELITERAL;}
 \"[^\"]*\"					{return T_STRINGLITERAL;}
 ({digit}+|0(X|x)[a-fA-F0-9]+)			{return T_INTLITERAL;}
 
-"\n"			{return T_NEWLINE;}
 "void" 			{return T_VOID;}
 "int" 			{return T_INT;}
 "double" 		{return T_DOUBLE;}

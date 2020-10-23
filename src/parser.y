@@ -31,29 +31,17 @@ FILE *output_file;
 %%
 
 program:
-		| program line
-		| program words
-;
-
-line: T_NEWLINE
-		| words T_NEWLINE
-;
-
-words: word
-		| words word
+		| program word
 ;
 
 word: keyword 		{fprintf(output_file, "%s\n", yytext);}
 	| operator		{fprintf(output_file, "%s\n", yytext);}	
-	| id 			{fprintf(output_file, "T_ID %s\n", yytext);}
+	| T_ID 			{fprintf(output_file, "T_ID %s\n", yytext);}
 	| T_INTLITERAL		{fprintf(output_file, "T_INTLITERAL %s\n", yytext);}
 	| T_DOUBLELITERAL 	{fprintf(output_file, "T_DOUBLELITERAL %s\n", yytext);}
 	| T_STRINGLITERAL	{fprintf(output_file, "T_STRINGLITERAL %s\n", yytext);}
 	| T_BOOLEANLITERAL	{fprintf(output_file, "T_BOOLEANLITERAL %s\n", yytext);}
 	| T_UNDEFINED 	{fprintf(output_file, "UNDEFINED_TOKEN\n"); exit(0);}
-;
-
-id:	T_ID
 ;
 
 keyword: T_VOID
