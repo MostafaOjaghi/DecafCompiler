@@ -8,7 +8,7 @@ extern FILE *yyin, *output_file;
 using namespace std;
 
 int main(int argc, char* argv[]) {
-	if (argc < 5 ){
+    if (argc < 5 ){
         cerr<< "Usage: " << argv[0] << " -i <input> -o <output>" << endl ;
         return 1;
     }
@@ -19,7 +19,9 @@ int main(int argc, char* argv[]) {
     yyin = fopen(input_file_path, "r");
     output_file = fopen(output_file_path, "w");
 
-	yyparse();
-	fclose(output_file);
-	return 0;
+    // yydebug = 1;
+    yyparse();
+    fprintf(output_file, "OK\n");
+    fclose(output_file);
+    return 0;
 }

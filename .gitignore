@@ -3,4 +3,5 @@ report/
 main
 src/lex.yy.*
 src/parser.tab.*
+src/parser.output
 

@@ -9,7 +9,7 @@ lex.yy.c lex.yy.h: scanner.l parser.tab.h
 	flex scanner.l
 
 parser.tab.c parser.tab.h: parser.y
-	bison -d parser.y
+	bison -d -r all parser.y
 
 clean:
 	rm ../main lex.yy.c lex.yy.h parser.tab.c parser.tab.h

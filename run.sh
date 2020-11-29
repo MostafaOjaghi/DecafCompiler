@@ -1,4 +1,5 @@
 #!/bin/bash
+echo " *** !SAG TOO WINDOWS! ***"
 OUTPUT_DIRECTORY="out/"
 TEST_DIRECTORY="tests/"
 REPORT_DIRECTORY="report/"
