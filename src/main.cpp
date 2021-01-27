@@ -2,6 +2,7 @@
 #include <cstdio>
 
 #include "parser.tab.h"
+#include "SyntaxTree/SyntaxTree.h"
 
 extern FILE *yyin, *output_file;
 
