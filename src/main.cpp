@@ -21,7 +21,7 @@ int main(int argc, char* argv[]) {
 
     // yydebug = 1;
     yyparse();
-    fprintf(output_file, "li $v0, 10\nsyscall\n");
+    fprintf(output_file, "main:\nli $v0, 10\nsyscall\n");
     fclose(output_file);
     return 0;
 }
