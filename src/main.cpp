@@ -2,10 +2,13 @@
 #include <cstdio>
 
 #include "parser.tab.h"
+#include "SyntaxTree/SyntaxTree.h"
 
 extern FILE *yyin, *output_file;
 
 using namespace std;
+
+ProgramNode root;
 
 int main(int argc, char* argv[]) {
     if (argc < 5 ){

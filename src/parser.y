@@ -6,9 +6,15 @@
 #include <fstream>
 
 #include "lex.yy.h"
+#include "SyntaxTree/SyntaxTree.h"
+
+#define YYSTYPE Node *
 
 extern int yylex();
 //extern int yyparse();
+
+extern ProgramNode root;
+
 
 void yyerror(const char* s);
 
@@ -32,11 +38,11 @@ FILE *output_file;
 
 %%
 
-program: decl
-		| program decl
+program: decl { root.addDecl($1); }
+		| program decl { root.addDecl($2); }
 ;
 
-decl: variable_decl
+decl: variable_decl { Decl *node = new Decl(); node->child = $1; $$ = node; }
 	| function_decl
 	| class_decl
 	| interface_decl
@@ -169,7 +175,7 @@ expr: lvalue T_ASSIGN expr
 	| T_THIS
 	| call
 	| T_OP expr T_CP
-	| expr T_PLUS expr
+	| expr T_PLUS expr 
 	| expr T_MINUS expr
 	| expr T_MUL expr
 	| expr T_DIV expr
@@ -208,7 +214,7 @@ actuals:
 	| actuals1
 ;
 
-constant: T_INTLITERAL
+constant: T_INTLITERAL {ConstantNode *node = new ConstantNode(); node->type = "int"; node->val = yytext; $$ = node;}
 		| T_DOUBLELITERAL
 		| T_BOOLEANLITERAL
 		| T_STRINGLITERAL

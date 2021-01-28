@@ -12,5 +12,11 @@ public:
     virtual void cgen() = 0;
 };
 
+class ProgramNode : public Node {
+public:
+	virtual void cgen() {};
+	virtual void addDecl(Node *node) {};
+};
+
 
 #endif //DECAFCOMPILER_NODE_H
