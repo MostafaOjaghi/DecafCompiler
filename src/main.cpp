@@ -2,7 +2,6 @@
 #include <cstdio>
 
 #include "parser.tab.h"
-#include "SyntaxTree/SyntaxTree.h"
 
 extern FILE *yyin, *output_file;
 
@@ -22,7 +21,7 @@ int main(int argc, char* argv[]) {
 
     // yydebug = 1;
     yyparse();
-    fprintf(output_file, "OK\n");
+    fprintf(output_file, "li $v0, 10\nsyscall\n");
     fclose(output_file);
     return 0;
 }

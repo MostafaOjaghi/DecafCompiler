@@ -5,14 +5,14 @@
 #ifndef DECAFCOMPILER_RESULTTYPE_H
 #define DECAFCOMPILER_RESULTTYPE_H
 #include <string>
-
+#include <vector>
 
 class Type {
 
-    static vector <Type> types;
+    static std::vector <Type> types;
     Type *parent;
     bool isPrimitive;
-    string id;
+    std::string id;
 };
 
 

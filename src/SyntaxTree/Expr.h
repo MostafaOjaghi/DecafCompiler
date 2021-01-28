@@ -5,6 +5,8 @@
 #ifndef DECAFCOMPILER_EXPR_H
 #define DECAFCOMPILER_EXPR_H
 
+#include "Node.h"
+#include "Type.h"
 
 class Expr :public Node{
 
