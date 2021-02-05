@@ -7,13 +7,15 @@
 #include <string>
 #include <vector>
 
-class Type {
+namespace SymbolTable {
+    class Type {
 
-    static std::vector <Type> types;
-    Type *parent;
-    bool isPrimitive;
-    std::string id;
-};
+        static std::vector<Type> types;
+        Type *parent;
+        bool isPrimitive;
+        std::string id;
+    };
+}
 
 
 #endif //DECAFCOMPILER_RESULTTYPE_H

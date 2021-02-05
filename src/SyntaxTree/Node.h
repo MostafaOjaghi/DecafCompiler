@@ -8,15 +8,19 @@
 
 #include <vector>
 #include <string>
+#include <SymbolTable/Scope.h>
 
 
 namespace SyntaxTree {
     class Decl;
 
     class Node {
+    private:
+        SymbolTable::Scope *scope;
 
     public:
         virtual std::string cgen() = 0;
+        virtual SymbolTable::Scope * getScope();
     };
 
     class ProgramNode : public Node {

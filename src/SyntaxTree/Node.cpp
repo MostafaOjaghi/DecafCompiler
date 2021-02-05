@@ -7,4 +7,5 @@
 void SyntaxTree::ProgramNode::addDecl(Decl *decl) {
     declerations.push_back(decl);
 }
+Scope * SyntaxTree::Node::getScope() {return scope;}
 
