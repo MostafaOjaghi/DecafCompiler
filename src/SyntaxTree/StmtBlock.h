@@ -6,10 +6,22 @@
 #define DECAFCOMPILER_STMTBLOCK_H
 
 #include "Node.h"
+#include "Stmts.h"
+#include "VariableDecls.h"
 
 namespace SyntaxTree {
     class StmtBlock : public Node {
+    private:
+        Stmts * stmts;
+        VariableDecls * variableDecls;
+    public:
+        Stmts *getStmts() const;
 
+        void setStmts(Stmts *stmts);
+
+        VariableDecls *getVariableDecls() const;
+
+        void setVariableDecls(VariableDecls *variableDecls);
     };
 
     class StmtBlockToVariableDeclAndStatement : public StmtBlock {

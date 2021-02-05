@@ -7,6 +7,8 @@
 
 
 #include "Node.h"
+#include "Formals.h"
+#include "StmtBlock.h"
 
 namespace SyntaxTree {
 
@@ -19,6 +21,24 @@ namespace SyntaxTree {
     };
 
     class FunctionDeclToVoidIdent : public FunctionDecl {
+    private:
+        std::string functionIdentifier;
+        Formals * formals;
+        StmtBlock * stmtBlock;
+    public:
+        const std::string &getFunctionIdentifier() const;
+
+        void setFunctionIdentifier(const std::string &functionIdentifier);
+
+        Formals *getFormals() const;
+
+        std::string cgen() override;
+
+        void setFormals(Formals *formals);
+
+        StmtBlock *getStmtBlock() const;
+
+        void setStmtBlock(StmtBlock *stmtBlock);
 
     };
 }

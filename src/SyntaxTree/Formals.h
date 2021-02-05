@@ -6,10 +6,19 @@
 #define DECAFCOMPILER_FORMALS_H
 
 #include "Node.h"
+#include "Variable.h"
 
 namespace SyntaxTree {
     class Formals : public Node {
+    private:
+        std::vector<Variable *>variables;
+    public:
+        const std::vector<Variable *> &getVariables() const;
 
+    public:
+        void addVariable(Variable *variable);
+
+        std::string cgen() override;
     };
 
     class FormalsToVariablePlus : public Formals {
@@ -19,6 +28,7 @@ namespace SyntaxTree {
     class FormalsToEpsilon : public Formals {
 
     };
+
 }
 
 

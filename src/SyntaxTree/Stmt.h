@@ -6,6 +6,7 @@
 #define DECAFCOMPILER_STMT_H
 
 #include "Node.h"
+#include "PrintStmt.h"
 
 namespace SyntaxTree {
     class Stmt : public Node {
@@ -41,7 +42,11 @@ namespace SyntaxTree {
     };
 
     class StmtToPrintStmt : public Stmt {
+        PrintStmt * printStmt;
+    public:
+        PrintStmt *getPrintStmt() const;
 
+        void setPrintStmt(PrintStmt *printStmt);
     };
 
     class StmtToStmtBlock : public Stmt {

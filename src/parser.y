@@ -4,11 +4,15 @@
 
 #include <iostream>
 #include <fstream>
+#include <string>
 
 #include "lex.yy.h"
 #include "SyntaxTree/SyntaxTree.h"
 using namespace SyntaxTree;
 using namespace SymbolTable;
+using namespace std;
+
+string saved_yytext;
 
 #define YYSTYPE Node *
 
@@ -91,12 +95,21 @@ array_type: primitive_type T_OB T_CB
 ;
 
 function_decl: type T_ID T_OP formals T_CP stmt_block
-			| T_VOID T_ID T_OP formals T_CP stmt_block
+			| T_VOID T_ID { saved_yytext = yytext; } T_OP formals T_CP stmt_block { FunctionDeclToVoidIdent *node = new FunctionDeclToVoidIdent();
+			                                                              node->setFunctionIdentifier(saved_yytext);
+			                                                              node->setFormals((Formals *) $5);
+			                                                              node->setStmtBlock((StmtBlock *) $7);
+			                                                              $$ = node; }
 ;
 
 formals:
-		| variable
-		| formals T_COMMA variable
+		| variable {Formals *node = new Formals();
+		            node->addVariable((Variable *) $1);
+		            $$ = node;}
+		| formals T_COMMA variable {    Formals *node = (Formals *) $1;
+		                                node->addVariable((Variable *) $2);
+		                                $$ = node;
+		                           }
 ;
 
 class_decl: T_CLASS T_ID extends implements T_OCB fields T_CCB
@@ -136,15 +149,27 @@ proto_type: type T_ID T_OP formals T_CP T_SEMICOLON
 		| T_VOID T_ID T_OP formals T_CP T_SEMICOLON
 ;
 
-stmt_block: T_OCB variable_decls stmts T_CCB
+stmt_block: T_OCB variable_decls stmts T_CCB {  StmtBlock *node = new StmtBlock();
+                                                node->setVariableDecls((VariableDecls *) $2);
+                                                node->setStmts((Stmts *) $3);
+                                                $$ = node;}
 ;
 
-stmts:
-	| stmt stmts
+stmts: {    Stmts *node = new Stmts();
+            $$ = node;
+            }
+	| stmt stmts {  Stmts *node = (Stmts *) $2;
+	                node->addStmt((Stmt *) $1);
+	                $$ = node;
+	                }
 ;
 
-variable_decls:
-		| variable_decls variable_decl
+variable_decls: {   VariableDecls *node = new VariableDecls();
+                    $$ = node;
+                    }
+		| variable_decls variable_decl {    VariableDecls *node = (VariableDecls *) $1;
+		                                    node->addVariableDecl((VariableDecl *) $2);
+		                                    $$ = node; }
 ;
 
 stmt: T_SEMICOLON
@@ -155,7 +180,10 @@ stmt: T_SEMICOLON
 	| break_stmt
 	| continue_stmt
 	| return_stmt
-	| print_stmt
+	| print_stmt {  StmtToPrintStmt *node = new StmtToPrintStmt();
+	                node->setPrintStmt((PrintStmt *) $1);
+	                $$ = node;
+	                }
 	| stmt_block
 ;
 
