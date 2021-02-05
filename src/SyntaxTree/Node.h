@@ -21,6 +21,7 @@ namespace SyntaxTree {
     public:
         virtual std::string cgen() = 0;
         virtual SymbolTable::Scope * getScope();
+        virtual void createScope() = 0;
     };
 
     class ProgramNode : public Node {

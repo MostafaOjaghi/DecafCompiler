@@ -7,15 +7,20 @@
 
 
 #include <string>
+#include <map>
+#include "SymbolTableEntry.h"
 
 namespace SymbolTable {
     class Scope {
     private:
         std::string name;
         Scope *par;
+        std::map<std::string, SymbolTableEntry *>mp;
+
     public:
-        std::string getName();
-        Scope * getPar();
+        virtual std::string getName();
+        virtual Scope * getPar();
+        virtual SymbolTableEntry * getEntry(const std::string &id);
     };
 }
 
