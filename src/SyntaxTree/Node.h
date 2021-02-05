@@ -6,6 +6,10 @@
 #define DECAFCOMPILER_NODE_H
 
 
+#include <vector>
+
+class Decl;
+
 class Node {
 
 public:
@@ -13,10 +17,12 @@ public:
 };
 
 class ProgramNode : public Node {
+private:
+    std::vector<Decl *> declerations;
 public:
-	virtual void cgen() {};
-	virtual void addDecl(Node *node) {};
-};
+    virtual void cgen() {};
 
+    virtual void addDecl(Decl *decl);
+};
 
 #endif //DECAFCOMPILER_NODE_H

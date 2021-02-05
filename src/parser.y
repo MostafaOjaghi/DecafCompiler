@@ -43,7 +43,7 @@ program: decl { root.addDecl($1); }
 ;
 
 decl: variable_decl { Decl *node = new Decl(); node->child = $1; $$ = node; }
-	| function_decl
+	| function_decl {}
 	| class_decl
 	| interface_decl
 ;
