@@ -7,6 +7,7 @@
 
 #include "lex.yy.h"
 #include "SyntaxTree/SyntaxTree.h"
+using namespace SyntaxTree;
 
 #define YYSTYPE Node *
 
@@ -38,11 +39,11 @@ FILE *output_file;
 
 %%
 
-program: decl { root.addDecl($1); }
-		| program decl { root.addDecl($2); }
+program: decl { root.addDecl((Decl *)$1); }
+		| program decl { root.addDecl((Decl *)$2); }
 ;
 
-decl: variable_decl { Decl *node = new Decl(); node->child = $1; $$ = node; }
+decl: variable_decl
 	| function_decl {}
 	| class_decl
 	| interface_decl
@@ -165,8 +166,8 @@ continue_stmt: T_CONTINUE T_SEMICOLON
 print_stmt: T_PRINT T_OP actuals1 T_CP T_SEMICOLON
 ;
 
-actuals1: expr
-	| expr T_COMMA actuals1
+actuals1: expr { PrintStmt *node = new PrintStmt(); node->addExpr((Expr *)$1); $$=node; }
+	| expr T_COMMA actuals1 { ((PrintStmt *)$3)->addExpr((Expr *)$1); $$=$3; }
 ;
 
 expr: lvalue T_ASSIGN expr
@@ -214,7 +215,7 @@ actuals:
 	| actuals1
 ;
 
-constant: T_INTLITERAL {ConstantNode *node = new ConstantNode(); node->type = "int"; node->val = yytext; $$ = node;}
+constant: T_INTLITERAL { /*ConstantNode *node = new ConstantNode(); node->type = "int"; node->val = yytext; $$ = node;*/}
 		| T_DOUBLELITERAL
 		| T_BOOLEANLITERAL
 		| T_STRINGLITERAL

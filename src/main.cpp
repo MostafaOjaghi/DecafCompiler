@@ -8,7 +8,7 @@ extern FILE *yyin, *output_file;
 
 using namespace std;
 
-ProgramNode root;
+SyntaxTree::ProgramNode root;
 
 int main(int argc, char* argv[]) {
     if (argc < 5 ){

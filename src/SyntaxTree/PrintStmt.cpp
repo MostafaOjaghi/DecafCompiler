@@ -8,6 +8,6 @@ std::string SyntaxTree::PrintStmt::cgen() {
     return std::string();
 }
 
-void SyntaxTree::PrintStmt::AddExpr(Expr *expr) {
+void SyntaxTree::PrintStmt::addExpr(Expr *expr) {
     exprs.push_back(expr);
 }

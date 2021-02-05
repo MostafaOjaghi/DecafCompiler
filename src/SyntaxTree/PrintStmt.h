@@ -17,7 +17,7 @@ namespace SyntaxTree {
 
     public:
         std::string cgen() override;
-        void AddExpr(Expr *expr);
+        void addExpr(Expr *expr);
     };
 }
 
