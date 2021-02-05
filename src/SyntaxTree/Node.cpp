@@ -4,7 +4,7 @@
 
 #include "Node.h"
 
-void ProgramNode::addDecl(Decl *decl) {
+void SyntaxTree::ProgramNode::addDecl(Decl *decl) {
     declerations.push_back(decl);
 }
 
