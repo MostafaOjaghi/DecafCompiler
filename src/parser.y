@@ -362,63 +362,224 @@ continue_stmt: T_CONTINUE T_SEMICOLON { ContinueStmt *node = new ContinueStmt();
                                         }
 ;
 
-print_stmt: T_PRINT T_OP actuals1 T_CP T_SEMICOLON { $$ = $3; }
+print_stmt: T_PRINT T_OP actuals1 T_CP T_SEMICOLON {    PrintStmt *node = new PrintStmt();
+                                                        node->setActuals((Actuals *) $3);
+                                                        $$ = node;
+                                                        }
 ;
 
-actuals1: expr { PrintStmt *node = new PrintStmt(); node->addExpr((Expr *)$1); $$=node; }
-	| expr T_COMMA actuals1 { ((PrintStmt *)$3)->addExpr((Expr *)$1); $$=$3; }
+actuals1: expr {    Actuals *node = new Actuals();
+                    node->addExpression((Expr *) $1);
+                    $$ = node;
+                    }
+	| expr T_COMMA actuals1 {   Actuals *node = (Actuals *) $3; // TODO: may need to be reversed
+	                            node->addExpression((Expr *) $1);
+	                            $$ = node;
+	                            }
 ;
 
-expr: lvalue T_ASSIGN expr
-	| constant
-	| lvalue
-	| T_THIS
-	| call
-	| T_OP expr T_CP
-	| expr T_PLUS expr 
-	| expr T_MINUS expr
-	| expr T_MUL expr
-	| expr T_DIV expr
-	| expr T_PERCENT expr
-	| T_MINUS expr
-	| expr T_CMPL expr
-	| expr T_CMPLE expr
-	| expr T_CMPG expr
-	| expr T_CMPGE expr
-	| expr T_CMPE expr
-	| expr T_CMPNE expr
-	| expr T_AND expr
-	| expr T_OR expr
-	| T_NOT expr
-	| T_READINTEGER T_OP T_CP
-	| T_READLINE T_OP T_CP
-	| T_NEW T_ID
-	| T_NEWARRAY T_OP expr T_COMMA type T_CP
-	| T_ITOD T_OP expr T_CP
-	| T_DTOI T_OP expr T_CP
-	| T_ITOB T_OP expr T_CP
-	| T_BTOI T_OP expr T_CP
+expr: lvalue T_ASSIGN expr {    ExprToAssignmentExpr *node = new ExprToAssignmentExpr();
+                                node->setLValue((LValue *) $1);
+                                node->setExpr((Expr *) $3);
+                                $$ = node;
+                                }
+	| constant {    ExprToConstant *node = new ExprToConstant();
+	                node->setConstant((Constant *) $1);
+	                $$ = node;
+	                }
+	| lvalue {  ExprToLValue *node = new ExprToLValue();
+	            node->setLValue((LValue *) $1);
+	            $$ = node;
+	            }
+	| T_THIS {  ExprToThis *node = new ExprToThis();
+	            $$ = node; }
+	| call {    ExprToCall *node = new ExprToCall();
+	            node->setCall((Call *) $1);
+	            $$ = node;
+	            }
+	| T_OP expr T_CP {  ExprToExpr *node = new ExprToExpr();
+	                    node->setExpr((Expr *) $2);
+	                    $$ = node;
+	                    }
+	| expr T_PLUS expr {    ExprToBinaryOperation *node = new ExprToBinaryOperation();
+	                        node->setOperatorSymbol("+");
+	                        node->setOperand1((Expr *) $1);
+	                        node->setOperand2((Expr *) $3);
+	                        $$ = node;
+	                        }
+	| expr T_MINUS expr {    ExprToBinaryOperation *node = new ExprToBinaryOperation();
+                        	 node->setOperatorSymbol("-");
+                        	 node->setOperand1((Expr *) $1);
+                        	 node->setOperand2((Expr *) $3);
+                        	 $$ = node;
+                        	 }
+	| expr T_MUL expr {    ExprToBinaryOperation *node = new ExprToBinaryOperation();
+                      	   node->setOperatorSymbol("*");
+                      	   node->setOperand1((Expr *) $1);
+                      	   node->setOperand2((Expr *) $3);
+                      	   $$ = node;
+                      	   }
+	| expr T_DIV expr {    ExprToBinaryOperation *node = new ExprToBinaryOperation();
+                      	   node->setOperatorSymbol("/");
+                      	   node->setOperand1((Expr *) $1);
+                      	   node->setOperand2((Expr *) $3);
+                      	   $$ = node;
+                      	   }
+	| expr T_PERCENT expr {    ExprToBinaryOperation *node = new ExprToBinaryOperation();
+                         	   node->setOperatorSymbol("%");
+                         	   node->setOperand1((Expr *) $1);
+                         	   node->setOperand2((Expr *) $3);
+                         	   $$ = node;
+                         	   }
+	| T_MINUS expr {    ExprToUnaryOperation *node = new ExprToUnaryOperation();
+	                    node->setOperatorSymbol("-");
+	                    node->setOperand((Expr *) $2);
+	                    $$ = node;
+	                    }
+	| expr T_CMPL expr {    ExprToBinaryOperation *node = new ExprToBinaryOperation();
+                            node->setOperatorSymbol("<");
+                            node->setOperand1((Expr *) $1);
+                            node->setOperand2((Expr *) $3);
+                            $$ = node;
+                            }
+	| expr T_CMPLE expr {    ExprToBinaryOperation *node = new ExprToBinaryOperation();
+                             node->setOperatorSymbol("<=");
+                             node->setOperand1((Expr *) $1);
+                             node->setOperand2((Expr *) $3);
+                             $$ = node;
+                             }
+	| expr T_CMPG expr {    ExprToBinaryOperation *node = new ExprToBinaryOperation();
+                            node->setOperatorSymbol(">");
+                            node->setOperand1((Expr *) $1);
+                            node->setOperand2((Expr *) $3);
+                            $$ = node;
+                        }
+	| expr T_CMPGE expr {    ExprToBinaryOperation *node = new ExprToBinaryOperation();
+                             node->setOperatorSymbol(">=");
+                             node->setOperand1((Expr *) $1);
+                             node->setOperand2((Expr *) $3);
+                             $$ = node;
+                             }
+	| expr T_CMPE expr {    ExprToBinaryOperation *node = new ExprToBinaryOperation();
+                            node->setOperatorSymbol("==");
+                            node->setOperand1((Expr *) $1);
+                            node->setOperand2((Expr *) $3);
+                            $$ = node;
+                            }
+	| expr T_CMPNE expr {    ExprToBinaryOperation *node = new ExprToBinaryOperation();
+                             node->setOperatorSymbol("!=");
+                             node->setOperand1((Expr *) $1);
+                             node->setOperand2((Expr *) $3);
+                             $$ = node;
+                             }
+	| expr T_AND expr {    ExprToBinaryOperation *node = new ExprToBinaryOperation();
+                           node->setOperatorSymbol("&&");
+                           node->setOperand1((Expr *) $1);
+                           node->setOperand2((Expr *) $3);
+                           $$ = node;
+                           }
+	| expr T_OR expr {    ExprToBinaryOperation *node = new ExprToBinaryOperation();
+                           node->setOperatorSymbol("||");
+                           node->setOperand1((Expr *) $1);
+                           node->setOperand2((Expr *) $3);
+                           $$ = node;
+                           }
+	| T_NOT expr {    ExprToUnaryOperation *node = new ExprToUnaryOperation();
+                 	  node->setOperatorSymbol("!");
+                 	  node->setOperand((Expr *) $2);
+                 	  $$ = node;
+                 	  }
+	| T_READINTEGER T_OP T_CP { ExprToReadInteger *node = new ExprToReadInteger();
+	                            $$ = node;
+	                            }
+	| T_READLINE T_OP T_CP  {   ExprToReadLine *node = new ExprToReadLine();
+	                            $$ = node;
+	                            }
+	| T_NEW T_ID    {   ExprToNew *node = new ExprToNew();
+	                    $$ = node;
+	                    }
+	| T_NEWARRAY T_OP expr T_COMMA type T_CP {  ExprToNewArray *node = new ExprToNewArray();
+	                                            node->setExpr((Expr *) $3);
+	                                            node->setType((Type *) $5);
+	                                            $$ = node;
+	                                            }
+	| T_ITOD T_OP expr T_CP {   ExprToITOD *node = new ExprToITOD();
+	                            $$ = node;
+	                            }
+	| T_DTOI T_OP expr T_CP {   ExprToDTOI *node = new ExprToDTOI();
+	                            $$ = node;
+	                            }
+	| T_ITOB T_OP expr T_CP {   ExprToITOB *node = new ExprToITOB();
+	                            $$ = node;
+	                            }
+	| T_BTOI T_OP expr T_CP {   ExprToBTOI *node = new ExprToBTOI();
+	                            $$ = node;
+	                            }
 ;
 
-lvalue: T_ID
-	| T_ID T_OB expr T_CB
-	| expr T_DOT T_ID
-	| expr T_OB expr T_CB
+lvalue: T_ID {  LValueToIdent *node = new LValueToIdent();
+                node->setId(yytext);
+                $$ = node;
+                }
+	| expr T_DOT T_ID { LValueToFieldAccess *node = new LValueToFieldAccess();
+	                    node->setExpr((Expr *) $1);
+	                    node->setId(yytext);
+	                    $$ = node;
+	                    }
+	| expr T_OB expr T_CB { LValueToArray *node = new LValueToArray();
+	                        node->setExprArrayName((Expr *) $1);
+	                        node->setExprArrayIndex((Expr *) $3);
+	                        $$ = node;
+	                        }
 ;
 
-call: T_ID T_OP actuals T_CP
-	| expr T_DOT T_ID T_OP actuals T_CP
+call: T_ID {saved_yytext.push(yytext); } T_OP actuals T_CP {    CallToFunctionCall *node = new CallToFunctionCall();
+                                                                node->setFunctionId(saved_yytext.top());
+                                                                saved_yytext.pop();
+                                                                node->setActuals((Actuals *) $4);
+                                                                $$ = node;
+                                                            }
+	| expr T_DOT T_ID T_OP actuals T_CP {   CallToMethodCall *node = new CallToMethodCall();
+	                                        node->setMethodIdent((Expr *) $1);
+	                                        node->setActuals((Actuals *) $5);
+	                                        $$ = node;
+	                                        }
+
 ;
 
-actuals:
-	| actuals1
+actuals: {  Actuals *node = nullptr;
+            $$ = node;
+            }
+	| actuals1  {   Actuals *node = (Actuals *) $1;
+	                $$ = node;
+	                }
 ;
 
-constant: T_INTLITERAL { /*ConstantNode *node = new ConstantNode(); node->type = "int"; node->val = yytext; $$ = node;*/}
-		| T_DOUBLELITERAL
-		| T_BOOLEANLITERAL
-		| T_STRINGLITERAL
-		| T_NULL
+constant: T_INTLITERAL {    Constant *node = new Constant();
+                            node->setConstantIdType("int");
+                            node->setConstantValue(yytext);
+                            $$ = node;
+                        }
+		| T_DOUBLELITERAL {    Constant *node = new Constant();
+                               node->setConstantIdType("double");
+                               node->setConstantValue(yytext);
+                               $$ = node;
+                           }
+		| T_BOOLEANLITERAL {    Constant *node = new Constant();
+                                node->setConstantIdType("bool");
+                                node->setConstantValue(yytext);
+                                $$ = node;
+                           }
+		| T_STRINGLITERAL {    Constant *node = new Constant();
+                               node->setConstantIdType("string");
+                               node->setConstantValue(yytext);
+                               $$ = node;
+                          }
+		| T_NULL        {   Constant *node = new Constant();
+		                    node->setConstantIdType("null");
+		                    node->setConstantValue(yytext);
+		                    $$ = node;
+		                    }
 ;
 
 

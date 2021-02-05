@@ -8,6 +8,10 @@ std::string SyntaxTree::PrintStmt::cgen() {
     return std::string();
 }
 
-void SyntaxTree::PrintStmt::addExpr(Expr *expr) {
-    exprs.push_back(expr);
+SyntaxTree::Actuals *SyntaxTree::PrintStmt::getActuals() const {
+    return actuals;
+}
+
+void SyntaxTree::PrintStmt::setActuals(SyntaxTree::Actuals *actuals) {
+    PrintStmt::actuals = actuals;
 }

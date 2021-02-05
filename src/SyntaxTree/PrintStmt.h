@@ -8,16 +8,21 @@
 
 #include "Node.h"
 #include "Expr.h"
+#include "Actuals.h"
 
 namespace SyntaxTree {
 
     class PrintStmt : public Node {
     private:
-        std::vector<Expr *> exprs;
+        Actuals *actuals;
+
+    public:
+        Actuals *getActuals() const;
+
+        void setActuals(Actuals *actuals);
 
     public:
         virtual std::string cgen() override;
-        virtual void addExpr(Expr *expr);
     };
 }
 

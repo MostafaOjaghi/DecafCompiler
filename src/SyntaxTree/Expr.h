@@ -5,52 +5,148 @@
 #ifndef DECAFCOMPILER_EXPR_H
 #define DECAFCOMPILER_EXPR_H
 
-#include <SymbolTable/TypeName.h>
 #include "Node.h"
+#include "LValue.h"
+#include "Constant.h"
+#include "Type.h"
 
 namespace SyntaxTree {
+    class Call;
+
     class Expr : public Node {
 
+    };
+
+    class ExprToAssignmentExpr : public Expr {
+    private:
+        LValue *lValue;
+        Expr *expr;
     public:
-        SymbolTable::TypeName type;
+        LValue *getLValue() const;
+
+        void setLValue(LValue *lValue);
+
+        Expr *getExpr() const;
+
+        void setExpr(Expr *expr);
     };
 
-    class AssignmentExpr : public Expr {
+    class ExprToConstant : public Expr {
+    private:
+        Constant *constant;
+    public:
+        Constant *getConstant() const;
+
+        void setConstant(Constant *constant);
     };
 
-    class Constant : public Expr {
+    class ExprToLValue : public Expr {
+    private:
+        LValue *lValue;
+    public:
+        LValue *getLValue() const;
+
+        void setLValue(LValue *lValue);
     };
 
-    class LValue : public Expr {
+    class ExprToThis : public Expr {
     };
 
-    class ThisExpr : public Expr {
+    class ExprToCall : public Expr {
+    private:
+        Call *call;
+    public:
+        Call *getCall() const;
+
+        void setCall(Call *call);
     };
 
-    class Call : public Expr {
+    class ExprToExpr : public Expr {
+    private:
+        Expr *expr;
+    public:
+        Expr *getExpr() const;
+
+        void setExpr(Expr *expr);
     };
 
-    class ParenthesisExpr : public Expr {
+    class ExprToBinaryOperation : public Expr {
+    private:
+        std::string operatorSymbol;
+        Expr *operand1;
+        Expr *operand2;
+    public:
+        const std::string &getOperatorSymbol() const;
+
+        void setOperatorSymbol(const std::string &operatorSymbol);
+
+    public:
+
+        Expr *getOperand1() const;
+
+        void setOperand1(Expr *operand1);
+
+        Expr *getOperand2() const;
+
+        void setOperand2(Expr *operand2);
+
     };
 
-    class AddExpr : public Expr {
+    class ExprToUnaryOperation : public Expr {
+    private:
+        std::string operatorSymbol;
+        Expr *operand;
+    public:
+        const std::string &getOperatorSymbol() const;
+
+        void setOperatorSymbol(const std::string &operatorSymbol);
+
+        Expr *getOperand() const;
+
+        void setOperand(Expr *operand);
     };
 
-    class SubExpr : public Expr {
+    class ExprToReadInteger : public Expr {
+
     };
 
-    class MultExpr : public Expr {
+    class ExprToReadLine : public Expr {
+
     };
 
-    class DivExpr : public Expr {
+    class ExprToNew : public Expr {
+
     };
 
-    class ModExpr : public Expr {
+    class ExprToNewArray : public Expr {
+    private:
+        Expr *expr;
+        Type *type;
+    public:
+        Expr *getExpr() const;
+
+        void setExpr(Expr *expr);
+
+        Type *getType() const;
+
+        void setType(Type *type);
     };
 
-    class NegExpr : public Expr {
+    class ExprToITOD : public Expr {
+
     };
 
+    class ExprToDTOI : public Expr {
+
+    };
+
+    class ExprToITOB : public Expr {
+
+    };
+
+    class ExprToBTOI : public Expr {
+
+    };
 }
 
 #endif //DECAFCOMPILER_EXPR_H
