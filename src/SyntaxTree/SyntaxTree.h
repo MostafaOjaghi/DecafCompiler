@@ -7,6 +7,6 @@
 
 #include "Expr.h"
 #include "Node.h"
-#include "Type.h"
+#include "SymbolTable/Type.h"
 
 #endif //DECAFCOMPILER_SYNTAXTREE_H

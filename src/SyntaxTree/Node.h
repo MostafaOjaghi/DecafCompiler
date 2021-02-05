@@ -9,21 +9,23 @@
 #include <vector>
 #include <string>
 
-class Decl;
 
-class Node {
+namespace SyntaxTree {
+    class Decl;
 
-public:
-    virtual std::string cgen() = 0;
-};
+    class Node {
 
-class ProgramNode : public Node {
-private:
-    std::vector<Decl *> declerations;
-public:
-    virtual std::string cgen();
+    public:
+        virtual std::string cgen() = 0;
+    };
 
-    virtual void addDecl(Decl *decl);
-};
+    class ProgramNode : public Node {
+    private:
+        std::vector<Decl *> declerations;
+    public:
+        virtual std::string cgen() {};
 
+        virtual void addDecl(Decl *decl);
+    };
+}
 #endif //DECAFCOMPILER_NODE_H

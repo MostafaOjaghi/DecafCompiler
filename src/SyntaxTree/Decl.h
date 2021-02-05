@@ -7,18 +7,18 @@
 
 
 #include "Node.h"
+namespace SyntaxTree {
+    class Decl : public Node {
+    };
 
-class Decl : public Node{
-};
+    class DeclToVariableDecl : public Decl {
+    };
 
-class DeclToVariableDecl : public Decl {
-};
+    class DeclToFunctionDecl : public Decl {
+    };
 
-class DeclToFunctionDecl : public Decl {
-};
-
-class DeclToInterfaceDecl : public Decl {
-};
-
+    class DeclToInterfaceDecl : public Decl {
+    };
+}
 
 #endif //DECAFCOMPILER_DECL_H
