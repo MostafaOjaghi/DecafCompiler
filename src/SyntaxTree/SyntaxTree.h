@@ -8,5 +8,15 @@
 #include "Expr.h"
 #include "Node.h"
 #include "SymbolTable/Type.h"
+#include "Decl.h"
+#include "Expr.h"
+#include "Formals.h"
+#include "FunctionDecl.h"
+#include "PrintStmt.h"
+#include "Stmt.h"
+#include "StmtBlock.h"
+#include "Type.h"
+#include "Variable.h"
+#include "VariableDecl.h"
 
 #endif //DECAFCOMPILER_SYNTAXTREE_H
