@@ -18,4 +18,4 @@ add_executable(DecafCompiler
         src/lex.yy.h
         src/main.cpp
         src/parser.tab.c
-        src/parser.tab.h src/SyntaxTree/Decl.cpp src/SyntaxTree/Decl.h src/SyntaxTree/VariableDecl.cpp src/SyntaxTree/VariableDecl.h src/SyntaxTree/Variable.cpp src/SyntaxTree/Variable.h src/SyntaxTree/FunctionDecl.cpp src/SyntaxTree/FunctionDecl.h)
+        src/parser.tab.h src/SyntaxTree/Decl.cpp src/SyntaxTree/Decl.h src/SyntaxTree/VariableDecl.cpp src/SyntaxTree/VariableDecl.h src/SyntaxTree/Variable.cpp src/SyntaxTree/Variable.h src/SyntaxTree/FunctionDecl.cpp src/SyntaxTree/FunctionDecl.h src/SyntaxTree/Type.cpp src/SyntaxTree/Type.h src/SyntaxTree/Formals.cpp src/SyntaxTree/Formals.h src/SyntaxTree/StmtBlock.cpp src/SyntaxTree/StmtBlock.h src/SyntaxTree/Stmt.cpp src/SyntaxTree/Stmt.h)
