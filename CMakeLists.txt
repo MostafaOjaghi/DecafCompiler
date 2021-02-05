@@ -13,4 +13,4 @@ add_executable(DecafCompiler
         src/main.cpp
         src/parser.tab.c
         src/parser.tab.h
-        src/SyntaxTree/ src/SyntaxTree/IfStmt.cpp src/SyntaxTree/IfStmt.h src/SyntaxTree/WhileStmt.cpp src/SyntaxTree/WhileStmt.h src/SyntaxTree/ForStmt.cpp src/SyntaxTree/ForStmt.h src/SyntaxTree/ReturnStmt.cpp src/SyntaxTree/ReturnStmt.h src/SyntaxTree/BreakStmt.cpp src/SyntaxTree/BreakStmt.h src/SyntaxTree/ContinueStmt.cpp src/SyntaxTree/ContinueStmt.h)
+        src/SyntaxTree/ src/SyntaxTree/IfStmt.cpp src/SyntaxTree/IfStmt.h src/SyntaxTree/WhileStmt.cpp src/SyntaxTree/WhileStmt.h src/SyntaxTree/ForStmt.cpp src/SyntaxTree/ForStmt.h src/SyntaxTree/ReturnStmt.cpp src/SyntaxTree/ReturnStmt.h src/SyntaxTree/BreakStmt.cpp src/SyntaxTree/BreakStmt.h src/SyntaxTree/ContinueStmt.cpp src/SyntaxTree/ContinueStmt.h src/SymbolTable/Scope.cpp src/SymbolTable/Scope.h src/SymbolTable/SymbolTableEntry.cpp src/SymbolTable/SymbolTableEntry.h)
