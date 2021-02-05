@@ -20,7 +20,7 @@ namespace SymbolTable {
     public:
         virtual std::string getName();
         virtual Scope * getPar();
-        virtual SymbolTableEntry * getEntry(const std::string &id);
+        virtual SymbolTableEntry * getEntry(std::string id);
     };
 }
 

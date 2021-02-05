@@ -8,7 +8,7 @@ std::string SymbolTable::Scope::getName() {return name;}
 
 SymbolTable::Scope * SymbolTable::Scope::getPar() {return par;}
 
-SymbolTable::SymbolTableEntry * SymbolTable::Scope::getEntry(const std::string &id) {
+SymbolTable::SymbolTableEntry * SymbolTable::Scope::getEntry(std::string id) {
     if (mp.count(id))
         return mp[id];
     return nullptr;

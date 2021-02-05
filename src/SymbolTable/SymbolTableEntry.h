@@ -9,7 +9,7 @@
 
 namespace SymbolTable {
     class SymbolTableEntry {
-        Type type;
+        //Type type;
     };
 }
 
