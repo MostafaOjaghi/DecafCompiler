@@ -6,13 +6,23 @@
 #define DECAFCOMPILER_WHILESTMT_H
 
 #include "Node.h"
+#include "Expr.h"
 
 namespace SyntaxTree {
+    class Stmt;
+
     class WhileStmt : public Node {
+    private:
+        Expr *conditionalExpr;
+        Stmt *stmt;
+    public:
+        Stmt *getStmt() const;
 
-    };
-    class WhileStmtToWhileExprStmt : public WhileStmt {
+        void setStmt(Stmt *stmt);
 
+        Expr *getConditionalExpr() const;
+
+        void setConditionalExpr(Expr *conditionalExpr);
     };
 }
 

@@ -309,30 +309,60 @@ stmt: T_SEMICOLON { Stmt *node = new Stmt();
 	                }
 ;
 
-if_stmt: T_IF T_OP expr T_CP stmt
-		| T_IF T_OP expr T_CP stmt T_ELSE stmt
+if_stmt: T_IF T_OP expr T_CP stmt { IfStmt *node = new IfStmt();
+                                    node->setConditionalExpr((Expr *) $3);
+                                    node->setTrueStmt((Stmt *) $5);
+                                    node->setFalseStmt(nullptr);
+                                    $$ = node;
+                                    }
+		| T_IF T_OP expr T_CP stmt T_ELSE stmt {    IfStmt *node = new IfStmt();
+		                                            node->setConditionalExpr((Expr *) $3);
+                                                    node->setTrueStmt((Stmt *) $5);
+                                                    node->setFalseStmt((Stmt *) $7);
+                                                    $$ = node;
+                                                    }
+
 ;
 
-while_stmt: T_WHILE T_OP expr T_CP stmt
+while_stmt: T_WHILE T_OP expr T_CP stmt {   WhileStmt *node = new WhileStmt();
+                                            node->setConditionalExpr((Expr *) $3);
+                                            node->setStmt((Stmt *) $5);
+                                            $$ = node;
+                                            }
 ;
 
-expr2:
-	| expr
+expr2: {    $$ = nullptr;}
+	| expr {    Expr *node = (Expr *) $1;
+	            $$ = node;
+	            }
 ;
 
-for_stmt: T_FOR T_OP expr2 T_SEMICOLON expr T_SEMICOLON expr2 T_CP stmt
+for_stmt: T_FOR T_OP expr2 T_SEMICOLON expr T_SEMICOLON expr2 T_CP stmt {   ForStmt *node = new ForStmt();
+                                                                            node->setForInit((Expr *) $3);
+                                                                            node->setForCondition((Expr *) $5);
+                                                                            node->setForStep((Expr *) $7);
+                                                                            node->setStmt((Stmt *) $9);
+                                                                            $$ = node;
+                                                                            }
 ;
 
-return_stmt: T_RETURN expr2 T_SEMICOLON
+return_stmt: T_RETURN expr2 T_SEMICOLON {   ReturnStmt *node = new ReturnStmt();
+                                            node->setExpr((Expr *) $2);
+                                            $$ = node;
+                                            }
 ;
 
-break_stmt: T_BREAK T_SEMICOLON
+break_stmt: T_BREAK T_SEMICOLON {   BreakStmt *node = new BreakStmt();
+                                    $$ = node;
+                                    }
 ;
 
-continue_stmt: T_CONTINUE T_SEMICOLON
+continue_stmt: T_CONTINUE T_SEMICOLON { ContinueStmt *node = new ContinueStmt();
+                                        $$ = node;
+                                        }
 ;
 
-print_stmt: T_PRINT T_OP actuals1 T_CP T_SEMICOLON
+print_stmt: T_PRINT T_OP actuals1 T_CP T_SEMICOLON { $$ = $3; }
 ;
 
 actuals1: expr { PrintStmt *node = new PrintStmt(); node->addExpr((Expr *)$1); $$=node; }

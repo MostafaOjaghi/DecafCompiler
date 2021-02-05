@@ -6,11 +6,17 @@
 #define DECAFCOMPILER_RETURNSTMT_H
 
 #include "Node.h"
+#include "Expr.h"
 
 namespace SyntaxTree {
 
     class ReturnStmt : public Node {
+    private:
+        Expr *expr;
+    public:
+        Expr *getExpr() const;
 
+        void setExpr(Expr *expr);
     };
     class returnStmtToReturnExpr : public ReturnStmt {
 
