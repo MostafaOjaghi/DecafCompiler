@@ -7,14 +7,34 @@
 
 
 #include "Node.h"
+#include "VariableDecl.h"
+#include "FunctionDecl.h"
+
 namespace SyntaxTree {
     class Decl : public Node {
     };
 
     class DeclToVariableDecl : public Decl {
+    private:
+        VariableDecl *variableDecl;
+    public:
+        std::string cgen() override;
+
+        VariableDecl *getVariableDecl() const;
+
+        void setVariableDecl(VariableDecl *variableDecl);
     };
 
     class DeclToFunctionDecl : public Decl {
+    private:
+        FunctionDecl *functionDecl;
+    public:
+        std::string cgen() override;
+
+        FunctionDecl *getFunctionDecl() const;
+
+        void setFunctionDecl(FunctionDecl *functionDecl);
+
     };
 
     class DeclToInterfaceDecl : public Decl {

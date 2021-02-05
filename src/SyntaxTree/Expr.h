@@ -5,14 +5,14 @@
 #ifndef DECAFCOMPILER_EXPR_H
 #define DECAFCOMPILER_EXPR_H
 
-#include <SymbolTable/Type.h>
+#include <SymbolTable/TypeName.h>
 #include "Node.h"
 
 namespace SyntaxTree {
     class Expr : public Node {
 
     public:
-        SymbolTable::Type type;
+        SymbolTable::TypeName type;
     };
 
     class AssignmentExpr : public Expr {

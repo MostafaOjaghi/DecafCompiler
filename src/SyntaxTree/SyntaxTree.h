@@ -7,7 +7,7 @@
 
 #include "Expr.h"
 #include "Node.h"
-#include "SymbolTable/Type.h"
+#include "SymbolTable/TypeName.h"
 #include "Decl.h"
 #include "Expr.h"
 #include "Formals.h"

@@ -9,6 +9,13 @@
 
 namespace SyntaxTree {
     class Type : public Node {
+        SymbolTable::TypeName typeName;
+    public:
+        std::string cgen() override;
+
+        const SymbolTable::TypeName &getTypeName() const;
+
+        void setTypeName(const SymbolTable::TypeName &typeName);
 
     };
 

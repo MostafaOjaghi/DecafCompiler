@@ -5,11 +5,25 @@
 #ifndef DECAFCOMPILER_VARIABLE_H
 #define DECAFCOMPILER_VARIABLE_H
 
-namespace SyntaxTree {
-    class Variable {
-    };
+#include "Node.h"
+#include "Type.h"
 
-    class VariableToTypeIdent : public Variable {
+namespace SyntaxTree {
+    class Variable : public Node {
+        Type *type;
+    public:
+        Type *getType() const;
+
+        void setType(Type *type);
+
+        const std::string &getId() const;
+
+        void setId(const std::string &id);
+
+    private:
+        std::string id;
+    public:
+        std::string cgen() override;
     };
 }
 

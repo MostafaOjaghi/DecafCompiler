@@ -18,9 +18,10 @@ namespace SymbolTable {
         std::map<std::string, SymbolTableEntry *>mp;
 
     public:
-        virtual std::string getName();
-        virtual Scope * getPar();
-        virtual SymbolTableEntry * getEntry(std::string id);
+        std::string getName();
+        Scope * getPar();
+        SymbolTableEntry * getEntry(const std::string &id);
+        void addEntry(const std::string &id, SymbolTableEntry *entry);
     };
 }
 

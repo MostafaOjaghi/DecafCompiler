@@ -7,11 +7,18 @@
 
 
 #include "Node.h"
+#include "Variable.h"
+
 namespace SyntaxTree {
     class VariableDecl : public Node {
-    };
+    private:
+        Variable *variable;
+    public:
+        Variable *getVariable() const;
 
-    class VariableDeclToVariable : public VariableDecl {
+        void setVariable(Variable *variable);
+
+        std::string cgen() override;
     };
 }
 

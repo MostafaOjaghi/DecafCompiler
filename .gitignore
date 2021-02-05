@@ -6,4 +6,5 @@ src/parser.tab.*
 src/parser.output
 .idea/
 cmake-build-debug/
+.gradle
 

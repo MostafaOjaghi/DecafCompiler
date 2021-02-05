@@ -8,6 +8,7 @@
 #include "lex.yy.h"
 #include "SyntaxTree/SyntaxTree.h"
 using namespace SyntaxTree;
+using namespace SymbolTable;
 
 #define YYSTYPE Node *
 
@@ -43,27 +44,45 @@ program: decl { root.addDecl((Decl *)$1); }
 		| program decl { root.addDecl((Decl *)$2); }
 ;
 
-decl: variable_decl
-	| function_decl {}
+decl: variable_decl {   DeclToVariableDecl *node = new DeclToVariableDecl();
+                        node->setVariableDecl((VariableDecl *) $1);
+                        $$=node; }
+	| function_decl {   DeclToFunctionDecl *node = new DeclToFunctionDecl();
+						node->setFunctionDecl((FunctionDecl *) $1);
+						$$=node;}
 	| class_decl
 	| interface_decl
 ;
 
-variable_decl: variable T_SEMICOLON
+variable_decl: variable T_SEMICOLON {   VariableDecl *node = new VariableDecl();
+                                        node->setVariable((Variable *) $1);
+                                        $$=node; }
 ;
 
-variable: type T_ID
+variable: type T_ID {   Variable *node = new Variable();
+                        node->setType((Type *) $1);
+                        node->setId(yytext);
+                        $$ = node; }
 ;
 
-type: primitive_type
-	| T_ID
-	| array_type
+type: primitive_type { $$ = $1; }
+	| T_ID { $$ = new Type(); //TODO: complete
+	        }
+	| array_type { $$ = $1; }
 ;
 
-primitive_type: T_INT
-	| T_DOUBLE
-	| T_BOOL
-	| T_STRING
+primitive_type: T_INT { Type *node = new Type();
+                        node->setTypeName(TypeName("int", 0));
+                        $$ = node;}
+	| T_DOUBLE { Type *node = new SyntaxTree::Type();
+                 node->setTypeName(TypeName("double", 0));
+                 $$ = node;}
+	| T_BOOL { Type *node = new SyntaxTree::Type();
+               node->setTypeName(TypeName("bool", 0));
+               $$ = node;}
+	| T_STRING { Type *node = new SyntaxTree::Type();
+                 node->setTypeName(TypeName("string", 0));
+                 $$ = node;}
 ;
 
 array_type: primitive_type T_OB T_CB

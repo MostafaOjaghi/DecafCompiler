@@ -5,11 +5,15 @@
 #ifndef DECAFCOMPILER_SYMBOLTABLEENTRY_H
 #define DECAFCOMPILER_SYMBOLTABLEENTRY_H
 
-#include "Type.h"
+#include "TypeName.h"
 
 namespace SymbolTable {
     class SymbolTableEntry {
-        //Type type;
+        TypeName typeName;
+    public:
+        const TypeName &getTypeName() const;
+
+        void setTypeName(const TypeName &type);
     };
 }
 
