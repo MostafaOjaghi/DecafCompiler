@@ -1,0 +1,9 @@
+Label main:
+Beginfunc 100
+Input s
+Output s
+Input a
+Output a
+Assign b = s / a
+Output b
+Endfunc
