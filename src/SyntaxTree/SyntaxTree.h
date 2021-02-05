@@ -18,5 +18,11 @@
 #include "Type.h"
 #include "Variable.h"
 #include "VariableDecl.h"
+#include "IfStmt.h"
+#include "WhileStmt.h"
+#include "ForStmt.h"
+#include "ReturnStmt.h"
+#include "BreakStmt.h"
+#include "ContinueStmt.h"
 
 #endif //DECAFCOMPILER_SYNTAXTREE_H

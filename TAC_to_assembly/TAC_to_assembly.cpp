@@ -27,7 +27,7 @@ void getInt (string token) {
 }
 
 void printInt (string token) {
-    
+
     outputFile << "li $v0 1 \n";
     outputFile << "lw $t0 " << stack[token] << "($sp)\n";
     outputFile << "move $a0 $t0 \n";
