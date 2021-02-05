@@ -4,4 +4,6 @@ main
 src/lex.yy.*
 src/parser.tab.*
 src/parser.output
+.idea/
+cmake-build-debug/
 
