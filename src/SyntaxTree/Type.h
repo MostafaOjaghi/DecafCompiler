@@ -9,14 +9,20 @@
 
 namespace SyntaxTree {
     class Type : public Node {
-        SymbolTable::TypeName typeName;
+        std::string typeNameID;
+        int dimension;
     public:
+        int getDimension() const;
+
+        void setDimension(int dimension);
+
+        void incrementDimension();
+
         std::string cgen() override;
 
-        const SymbolTable::TypeName &getTypeName() const;
+        const std::string &getTypeNameId() const;
 
-        void setTypeName(const SymbolTable::TypeName &typeName);
-
+        void setTypeNameId(const std::string &typeNameId);
     };
 
     class TypeToInt : public Type{

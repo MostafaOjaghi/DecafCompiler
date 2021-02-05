@@ -28,7 +28,7 @@ namespace SyntaxTree {
     private:
         std::vector<Decl *> declerations;
     public:
-        virtual std::string cgen() {};
+        //virtual std::string cgen() {};
 
         virtual void addDecl(Decl *decl);
     };

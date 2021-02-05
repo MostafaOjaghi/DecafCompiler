@@ -31,3 +31,27 @@ void SyntaxTree::FunctionDeclToVoidIdent::setStmtBlock(SyntaxTree::StmtBlock *st
 std::string SyntaxTree::FunctionDeclToVoidIdent::cgen() {
     return std::string();
 }
+
+const std::string &SyntaxTree::FunctionDeclToTypeIdent::getFunctionIdentifier() const {
+    return functionIdentifier;
+}
+
+void SyntaxTree::FunctionDeclToTypeIdent::setFunctionIdentifier(const std::string &functionIdentifier) {
+    FunctionDeclToTypeIdent::functionIdentifier = functionIdentifier;
+}
+
+SyntaxTree::Formals *SyntaxTree::FunctionDeclToTypeIdent::getFormals() const {
+    return formals;
+}
+
+void SyntaxTree::FunctionDeclToTypeIdent::setFormals(SyntaxTree::Formals *formals) {
+    FunctionDeclToTypeIdent::formals = formals;
+}
+
+SyntaxTree::StmtBlock *SyntaxTree::FunctionDeclToTypeIdent::getStmtBlock() const {
+    return stmtBlock;
+}
+
+void SyntaxTree::FunctionDeclToTypeIdent::setStmtBlock(SyntaxTree::StmtBlock *stmtBlock) {
+    FunctionDeclToTypeIdent::stmtBlock = stmtBlock;
+}

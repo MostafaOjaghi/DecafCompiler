@@ -8,11 +8,12 @@
 
 #include "lex.yy.h"
 #include "SyntaxTree/SyntaxTree.h"
+#include <stack>
 using namespace SyntaxTree;
 using namespace SymbolTable;
 using namespace std;
 
-string saved_yytext;
+std::stack<string> saved_yytext;
 
 #define YYSTYPE Node *
 
@@ -54,8 +55,14 @@ decl: variable_decl {   DeclToVariableDecl *node = new DeclToVariableDecl();
 	| function_decl {   DeclToFunctionDecl *node = new DeclToFunctionDecl();
 						node->setFunctionDecl((FunctionDecl *) $1);
 						$$=node;}
-	| class_decl
-	| interface_decl
+	| class_decl {  DeclToClassDecl *node = new DeclToClassDecl();
+	                node->setClassDecl((ClassDecl *) $1);
+	                $$ = node;
+	              }
+	| interface_decl {  DeclToInterfaceDecl *node = new DeclToInterfaceDecl();
+	                    node->setInterfaceDecl((InterfaceDecl *) $1);
+	                    $$ = node;
+	                    }
 ;
 
 variable_decl: variable T_SEMICOLON {   VariableDecl *node = new VariableDecl();
@@ -70,36 +77,62 @@ variable: type T_ID {   Variable *node = new Variable();
 ;
 
 type: primitive_type { $$ = $1; }
-	| T_ID { $$ = new Type(); //TODO: complete
+	| T_ID {    Type *node = new Type();
+	            node->setTypeNameId(yytext);
+	            node->setDimension(0);
+	            $$ = node;
 	        }
 	| array_type { $$ = $1; }
 ;
 
 primitive_type: T_INT { Type *node = new Type();
-                        node->setTypeName(TypeName("int", 0));
+                        node->setTypeNameId("int");
+                        node->setDimension(0);
                         $$ = node;}
-	| T_DOUBLE { Type *node = new SyntaxTree::Type();
-                 node->setTypeName(TypeName("double", 0));
-                 $$ = node;}
+	| T_DOUBLE {    Type *node = new SyntaxTree::Type();
+	                node->setTypeNameId("double");
+	                node->setDimension(0);
+                    $$ = node;}
 	| T_BOOL { Type *node = new SyntaxTree::Type();
-               node->setTypeName(TypeName("bool", 0));
+               node->setTypeNameId("bool");
+               node->setDimension(0);
                $$ = node;}
 	| T_STRING { Type *node = new SyntaxTree::Type();
-                 node->setTypeName(TypeName("string", 0));
+                 node->setTypeNameId("string");
+                 node->setDimension(0);
                  $$ = node;}
 ;
 
-array_type: primitive_type T_OB T_CB
-		| T_ID T_OB T_CB
-		| array_type T_OB T_CB
+array_type: primitive_type T_OB T_CB {  Type *node = (Type *) $1;
+                                        node->incrementDimension();
+                                        $$ = node;
+                                        }
+		| T_ID {saved_yytext.push(yytext);} T_OB T_CB {     Type *node = new Type();
+		                                                    node->setTypeNameId(saved_yytext.top());
+		                                                    saved_yytext.pop();
+		                                                    node->setDimension(1);
+		                                                    $$ = node;
+		                                              }
+		| array_type T_OB T_CB {    Type *node = (Type *) $1;
+		                            node->incrementDimension();
+		                            $$ = node;
+		                       }
 ;
 
-function_decl: type T_ID T_OP formals T_CP stmt_block
-			| T_VOID T_ID { saved_yytext = yytext; } T_OP formals T_CP stmt_block { FunctionDeclToVoidIdent *node = new FunctionDeclToVoidIdent();
-			                                                              node->setFunctionIdentifier(saved_yytext);
-			                                                              node->setFormals((Formals *) $5);
-			                                                              node->setStmtBlock((StmtBlock *) $7);
-			                                                              $$ = node; }
+function_decl: type T_ID { saved_yytext.push(yytext); } T_OP formals T_CP stmt_block {  FunctionDeclToTypeIdent *node = new FunctionDeclToTypeIdent();
+                                                                                        node->setFunctionIdentifier(saved_yytext.top());
+                                                                                        saved_yytext.pop();
+                                                                                        node->setFormals((Formals *) $5);
+                                                                                        node->setStmtBlock((StmtBlock *) $7);
+                                                                                        $$ = node;
+                                                                                     }
+			| T_VOID T_ID { saved_yytext.push(yytext); } T_OP formals T_CP stmt_block { FunctionDeclToVoidIdent *node = new FunctionDeclToVoidIdent();
+			                                                                            node->setFunctionIdentifier(saved_yytext.top());
+			                                                                            saved_yytext.pop();
+			                                                                            node->setFormals((Formals *) $5); // TODO: check
+			                                                                            node->setStmtBlock((StmtBlock *) $7);
+			                                                                            $$ = node;
+			                                                                          }
 ;
 
 formals:
@@ -112,41 +145,104 @@ formals:
 		                           }
 ;
 
-class_decl: T_CLASS T_ID extends implements T_OCB fields T_CCB
+class_decl: T_CLASS T_ID extends implements T_OCB fields T_CCB {    ClassDecl *node = new ClassDecl();
+                                                                    node->setExtends((Extends *) $3);
+                                                                    node->setImplements((Implements *) $4);
+                                                                    node->setFields((Fields *) $6);
+                                                                    $$ = node;
+                                                               }
 ;
 
-extends:
-	| T_EXTENDS T_ID
+extends: {  Extends *node = new Extends();
+            $$ = node;
+         }
+	| T_EXTENDS T_ID {  Extends *node = new Extends();
+	                    node->setParentClassId(yytext);
+	                    $$ = node;
+	                    }
 ;
 
 implements:
-	| T_IMPLEMENTS T_ID
-	| implements T_COMMA T_ID
+	| T_IMPLEMENTS T_ID {  Implements *node = new Implements();
+	                       node->addInterfaceId(yytext);
+	                       $$ = node; }
+	| implements T_COMMA T_ID { Implements *node = (Implements *) $1;
+	                            node->addInterfaceId(yytext);
+	                            $$ = node;
+	                          }
 ;
 
-fields:
-	| fields field
+fields: {   Fields *node = new Fields();
+            $$ = node; }
+	| fields field {    Fields *node = (Fields *) $1;
+	                    node->addField( (Field *) $2);
+	                    $$ = node;
+	                    }
 ;
 
-field: access_mode variable_decl
-	| access_mode function_decl
+field: access_mode variable_decl {  FieldToVariableDecl *node = new FieldToVariableDecl();
+                                    node->setAccessMode((AccessMode *) $1);
+                                    node->setVariableDecl((VariableDecl *) $2);
+                                    $$ = node;
+                                 }
+	| access_mode function_decl {   FieldToFunctionDecl *node = new FieldToFunctionDecl();
+	                                node->setAccessMode((AccessMode *) $1);
+	                                node->setFunctionDecl((FunctionDecl *) $2);
+	                                $$ = node;
+	                            }
 ;
 
-access_mode:
-		| T_PRIVATE
-		| T_PROTECTED
-		| T_PUBLIC
+access_mode: {  AccessMode *node = new AccessMode();
+                node->setAccessModeId("public");
+                $$ = node;
+                }
+		| T_PRIVATE {  AccessMode *node = new AccessMode();
+                       node->setAccessModeId("private");
+                       $$ = node;
+                    }
+
+		| T_PROTECTED {  AccessMode *node = new AccessMode();
+                         node->setAccessModeId("private");
+                         $$ = node;
+                      }
+		| T_PUBLIC {    AccessMode *node = new AccessMode();
+		                node->setAccessModeId("public");
+		                $$ = node;
+		                }
 ;
 
-interface_decl: T_INTERFACE T_ID T_OCB proto_types T_CCB
+interface_decl: T_INTERFACE T_ID {saved_yytext.push(yytext); } T_OCB proto_types T_CCB {
+                                                                                            InterfaceDecl *node = new InterfaceDecl();
+                                                                                            node->setInterfaceId(saved_yytext.top());
+                                                                                            saved_yytext.pop();
+                                                                                            node->setPrototypes((Prototypes *) $5);
+                                                                                            $$ = node;
+                                                                                       }
 ;
 
-proto_types:
-		| proto_types proto_type
+proto_types: {  Prototypes *node = new Prototypes();
+                $$ = node;
+                }
+		| proto_types proto_type {  Prototypes *node = (Prototypes *) $1;
+		                            node->addPrototype((Prototype *) $2);
+		                            $$ = node;
+		                            }
 ;
 
-proto_type: type T_ID T_OP formals T_CP T_SEMICOLON
-		| T_VOID T_ID T_OP formals T_CP T_SEMICOLON
+proto_type: type T_ID {saved_yytext.push(yytext); } T_OP formals T_CP T_SEMICOLON {     PrototypeToTypeIdent *node = new PrototypeToTypeIdent();
+                                                                                        node->setType((Type *) $1);
+                                                                                        node->setPrototypeDeclId(saved_yytext.top());
+                                                                                        saved_yytext.pop();
+                                                                                        node->setFormals((Formals *) $5);
+                                                                                        $$ = node;
+                                                                                  }
+
+		| T_VOID T_ID {saved_yytext.push(yytext); } T_OP formals T_CP T_SEMICOLON { PrototypeToVoid *node = new PrototypeToVoid();
+		                                                                            node->setPrototypeDeclId(saved_yytext.top());
+                                                                                    saved_yytext.pop();
+                                                                                    node->setFormals((Formals *) $5);
+                                                                                    $$ = node;
+                                                                                  }
 ;
 
 stmt_block: T_OCB variable_decls stmts T_CCB {  StmtBlock *node = new StmtBlock();
@@ -166,25 +262,51 @@ stmts: {    Stmts *node = new Stmts();
 
 variable_decls: {   VariableDecls *node = new VariableDecls();
                     $$ = node;
-                    }
+                }
 		| variable_decls variable_decl {    VariableDecls *node = (VariableDecls *) $1;
 		                                    node->addVariableDecl((VariableDecl *) $2);
 		                                    $$ = node; }
 ;
 
-stmt: T_SEMICOLON
-	| expr T_SEMICOLON
-	| if_stmt
-	| while_stmt
-	| for_stmt
-	| break_stmt
-	| continue_stmt
-	| return_stmt
+stmt: T_SEMICOLON { Stmt *node = new Stmt();
+                    $$ = node;
+                    }
+	| expr T_SEMICOLON {    StmtToExpr *node = new StmtToExpr();
+	                        node->setExpr((Expr *) $1);
+	                        $$ = node;
+	                   }
+	| if_stmt   {   StmtToIfStmt *node = new StmtToIfStmt();
+	                node->setIfStmt((IfStmt *) $1);
+	                $$ = node;
+	            }
+	| while_stmt {  StmtToWhileStmt *node = new StmtToWhileStmt();
+	                node->setWhileStmt((WhileStmt *) $1);
+	                $$ = node;
+	                }
+	| for_stmt {    StmtToForStmt *node = new StmtToForStmt();
+	                node->setForStmt((ForStmt *) $1);
+	                $$ = node;
+	           }
+	| break_stmt {  StmtToBreakStmt *node = new StmtToBreakStmt();
+	                node->setBreakStmt((BreakStmt *) $1);
+	                $$ = node;
+	                }
+	| continue_stmt {   StmtToContinueStmt *node = new StmtToContinueStmt();
+	                    node->setContinueStmt((ContinueStmt *) $1);
+	                    $$ = node;
+	                    }
+	| return_stmt { StmtToReturnStmt *node = new StmtToReturnStmt();
+	                node->setReturnStmt((ReturnStmt *) $1);
+	                $$ = node;
+	                }
 	| print_stmt {  StmtToPrintStmt *node = new StmtToPrintStmt();
 	                node->setPrintStmt((PrintStmt *) $1);
 	                $$ = node;
 	                }
-	| stmt_block
+	| stmt_block {  StmtToStmtBlock *node = new StmtToStmtBlock();
+	                node->setStmtBlock((StmtBlock *) $1);
+	                $$ = node;
+	                }
 ;
 
 if_stmt: T_IF T_OP expr T_CP stmt

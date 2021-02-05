@@ -9,6 +9,8 @@
 #include "Node.h"
 #include "VariableDecl.h"
 #include "FunctionDecl.h"
+#include "ClassDecl.h"
+#include "InterfaceDecl.h"
 
 namespace SyntaxTree {
     class Decl : public Node {
@@ -37,7 +39,22 @@ namespace SyntaxTree {
 
     };
 
+    class DeclToClassDecl : public Decl {
+    private:
+        ClassDecl *classDecl;
+    public:
+        ClassDecl *getClassDecl() const;
+
+        void setClassDecl(ClassDecl *classDecl);
+    };
+
     class DeclToInterfaceDecl : public Decl {
+    private:
+        InterfaceDecl *interfaceDecl;
+    public:
+        InterfaceDecl *getInterfaceDecl() const;
+
+        void setInterfaceDecl(InterfaceDecl *interfaceDecl);
     };
 }
 
