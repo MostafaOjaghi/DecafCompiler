@@ -11,5 +11,14 @@
 class Decl : public Node{
 };
 
+class DeclToVariableDecl : public Decl {
+};
+
+class DeclToFunctionDecl : public Decl {
+};
+
+class DeclToInterfaceDecl : public Decl {
+};
+
 
 #endif //DECAFCOMPILER_DECL_H
