@@ -18,4 +18,4 @@ add_executable(DecafCompiler
         src/lex.yy.h
         src/main.cpp
         src/parser.tab.c
-        src/parser.tab.h src/SyntaxTree/Decl.cpp src/SyntaxTree/Decl.h)
+        src/parser.tab.h src/SyntaxTree/Decl.cpp src/SyntaxTree/Decl.h src/SyntaxTree/PrintStmt.cpp src/SyntaxTree/PrintStmt.h)

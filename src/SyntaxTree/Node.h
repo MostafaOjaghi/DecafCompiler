@@ -7,20 +7,21 @@
 
 
 #include <vector>
+#include <string>
 
 class Decl;
 
 class Node {
 
 public:
-    virtual void cgen() = 0;
+    virtual std::string cgen() = 0;
 };
 
 class ProgramNode : public Node {
 private:
     std::vector<Decl *> declerations;
 public:
-    virtual void cgen() {};
+    virtual std::string cgen();
 
     virtual void addDecl(Decl *decl);
 };
