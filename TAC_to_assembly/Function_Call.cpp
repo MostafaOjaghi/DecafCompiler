@@ -334,6 +334,7 @@ int main() {
             else if (tokens[0] == "Lcall") {
 
                 outputFile << "jal " << tokens[1].substr(0, tokens[1].size()) << "\n";
+                outputFile << "sw $v0 " << getPos(tokens[2], 0) << "\n";
             }
 
             else if (tokens[0] == "Popparams") {
@@ -347,6 +348,11 @@ int main() {
 
                 endSetFp();
 
+
+                if (tokens.size() == 2) {
+                    outputFile << "sw $t0 " << getPos(tokens[1], 0) << "\n";
+                    outputFile << "addi $v0 $t0 0\n";
+                }
                 outputFile << "move $sp $fp\n";
                 outputFile << "lw $fp " << current_func_size - 4 << "($sp)\n";
                 outputFile << "addiu $sp $sp " << current_func_size << "\n";

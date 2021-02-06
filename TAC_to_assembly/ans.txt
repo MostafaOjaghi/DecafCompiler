@@ -27,11 +27,8 @@ li $v0 1
 lw $t0 8($fp)
 move $a0 $t0 
 syscall 
-addi $sp $sp -4
-lw $t0 4($fp)
-sw $t0 0($sp)
 jal f
-addi $sp $sp 4
+sw $v0 12($fp)
 move $sp $fp
 lw $fp 44($sp)
 addiu $sp $sp 48
@@ -44,17 +41,28 @@ li $v0 5
 syscall 
 sw $v0 0($fp)
 li $v0 1 
-lw $t0 48($fp)
+lw $t0 0($fp)
 move $a0 $t0 
 syscall 
-lw $t0 48($fp)
-lw $t1 0($fp)
-add $t0 $t0 $t1
-sw $t0 4($fp)
+jal check
+sw $v0 0($fp)
+move $sp $fp
+lw $fp 44($sp)
+addiu $sp $sp 48
+jr $ra 
+check:
+addiu $sp $sp -48
+sw $fp 44($sp)
+move $fp $sp
+li $v0 5 
+syscall 
+sw $v0 0($fp)
 li $v0 1 
-lw $t0 4($fp)
+lw $t0 0($fp)
 move $a0 $t0 
 syscall 
+sw $t0 0($fp)
+addi $v0 $t0 0
 move $sp $fp
 lw $fp 44($sp)
 addiu $sp $sp 48

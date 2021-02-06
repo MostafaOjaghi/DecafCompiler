@@ -1,0 +1,22 @@
+Label main:
+Beginfunc 48
+Input s
+Output s
+Input a
+Output a
+Assign b = s / a
+Assign b = - s
+Output b
+Lcall f
+Endfunc
+Label f:
+Beginfunc 48
+Input g
+Output g
+Lcall check
+Endfunc
+Label check:
+Beginfunc 48
+Input x
+Output x
+Endfunc 48
