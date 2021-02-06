@@ -25,5 +25,7 @@
 #include "BreakStmt.h"
 #include "ContinueStmt.h"
 #include "ProgramNode.h"
+#include "Actuals.h"
+#include "Call.h"
 
 #endif //DECAFCOMPILER_SYNTAXTREE_H

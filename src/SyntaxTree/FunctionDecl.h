@@ -17,7 +17,22 @@ namespace SyntaxTree {
     };
 
     class FunctionDeclToTypeIdent : public FunctionDecl {
+    private:
+        std::string functionIdentifier;
+        Formals * formals;
+        StmtBlock * stmtBlock;
+    public:
+        const std::string &getFunctionIdentifier() const;
 
+        void setFunctionIdentifier(const std::string &functionIdentifier);
+
+        Formals *getFormals() const;
+
+        void setFormals(Formals *formals);
+
+        StmtBlock *getStmtBlock() const;
+
+        void setStmtBlock(StmtBlock *stmtBlock);
     };
 
     class FunctionDeclToVoidIdent : public FunctionDecl {

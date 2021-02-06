@@ -6,14 +6,14 @@
 
 SyntaxTree::Cgen SyntaxTree::PrintStmt::cgen() {
     Cgen cgen;
-    for (Expr *expr : exprs) {
-        Cgen expr_cgen = expr->cgen();
-        cgen.code += expr_cgen.code;
-        cgen.code += "Output " + expr_cgen.var + "\n";
-    }
+    // TODO complete
     return cgen;
 }
 
-void SyntaxTree::PrintStmt::addExpr(Expr *expr) {
-    exprs.push_back(expr);
+SyntaxTree::Actuals *SyntaxTree::PrintStmt::getActuals() const {
+    return actuals;
+}
+
+void SyntaxTree::PrintStmt::setActuals(SyntaxTree::Actuals *actuals) {
+    PrintStmt::actuals = actuals;
 }

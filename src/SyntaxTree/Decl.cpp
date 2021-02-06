@@ -27,3 +27,19 @@ void SyntaxTree::DeclToFunctionDecl::setFunctionDecl(SyntaxTree::FunctionDecl *f
 SyntaxTree::Cgen SyntaxTree::DeclToFunctionDecl::cgen() {
     return Cgen();
 }
+
+SyntaxTree::ClassDecl *SyntaxTree::DeclToClassDecl::getClassDecl() const {
+    return classDecl;
+}
+
+void SyntaxTree::DeclToClassDecl::setClassDecl(SyntaxTree::ClassDecl *classDecl) {
+    DeclToClassDecl::classDecl = classDecl;
+}
+
+SyntaxTree::InterfaceDecl *SyntaxTree::DeclToInterfaceDecl::getInterfaceDecl() const {
+    return interfaceDecl;
+}
+
+void SyntaxTree::DeclToInterfaceDecl::setInterfaceDecl(SyntaxTree::InterfaceDecl *interfaceDecl) {
+    DeclToInterfaceDecl::interfaceDecl = interfaceDecl;
+}

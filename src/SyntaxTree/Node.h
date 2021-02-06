@@ -27,7 +27,7 @@ namespace SyntaxTree {
         SymbolTable::Scope *scope;
 
     public:
-        virtual Cgen cgen() = 0;
+        virtual Cgen cgen() {return Cgen();};
         virtual SymbolTable::Scope * getScope();
         virtual void createScope() {};
     };

@@ -4,14 +4,28 @@
 
 #include "Type.h"
 
-const SymbolTable::TypeName &SyntaxTree::Type::getTypeName() const {
-    return typeName;
+
+const std::string &SyntaxTree::Type::getTypeNameId() const {
+    return typeNameID;
 }
 
-void SyntaxTree::Type::setTypeName(const SymbolTable::TypeName &typeName) {
-    Type::typeName = typeName;
-}
 
 SyntaxTree::Cgen SyntaxTree::Type::cgen() {
     return Cgen();
+}
+
+void SyntaxTree::Type::setTypeNameId(const std::string &typeNameId) {
+    typeNameID = typeNameId;
+}
+
+int SyntaxTree::Type::getDimension() const {
+    return dimension;
+}
+
+void SyntaxTree::Type::setDimension(int dimension) {
+    Type::dimension = dimension;
+}
+
+void SyntaxTree::Type::incrementDimension() {
+    Type::dimension++;
 }

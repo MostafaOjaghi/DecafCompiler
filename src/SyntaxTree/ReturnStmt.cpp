@@ -3,3 +3,11 @@
 //
 
 #include "ReturnStmt.h"
+
+SyntaxTree::Expr *SyntaxTree::ReturnStmt::getExpr() const {
+    return expr;
+}
+
+void SyntaxTree::ReturnStmt::setExpr(SyntaxTree::Expr *expr) {
+    ReturnStmt::expr = expr;
+}
