@@ -18,3 +18,11 @@ SyntaxTree::Cgen SyntaxTree::Stmts::cgen() {
         cgen.code += stmt->cgen().code;
     return cgen;
 }
+
+void SyntaxTree::Stmts::handleScope() {
+    for (Stmt *stmt : stmts) {
+        stmt->setScope(this->getScope());
+        stmt->handleScope();
+    }
+
+}

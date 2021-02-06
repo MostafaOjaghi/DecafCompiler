@@ -24,3 +24,9 @@ const std::string &SyntaxTree::Variable::getId() const {
 void SyntaxTree::Variable::setId(const std::string &id) {
     Variable::id = id;
 }
+
+void SyntaxTree::Variable::handleScope() {
+    SymbolTable::TypeName typeName = SymbolTable::TypeName(this->getType()->getTypeNameId(), this->getType()->getDimension());
+    SymbolTable::SymbolTableEntry *entry = new SymbolTable::SymbolTableEntry(typeName);
+    this->getScope()->addEntry(this->getId(), entry);
+}

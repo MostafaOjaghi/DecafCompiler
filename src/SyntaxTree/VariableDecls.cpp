@@ -15,3 +15,10 @@ SyntaxTree::Cgen SyntaxTree::VariableDecls::cgen() {
 void SyntaxTree::VariableDecls::addVariableDecl(SyntaxTree::VariableDecl *variableDecl) {
     variableDecls.push_back(variableDecl);
 }
+
+void SyntaxTree::VariableDecls::handleScope() {
+    for (VariableDecl *variableDecl : variableDecls) {
+        this->setScope(this->getScope());
+        this->handleScope();
+    }
+}

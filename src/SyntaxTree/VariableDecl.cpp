@@ -15,3 +15,8 @@ SyntaxTree::Variable *SyntaxTree::VariableDecl::getVariable() const {
 void SyntaxTree::VariableDecl::setVariable(SyntaxTree::Variable *variable) {
     VariableDecl::variable = variable;
 }
+
+void SyntaxTree::VariableDecl::handleScope() {
+    this->getVariable()->setScope(this->getScope());
+    this->getVariable()->handleScope();
+}

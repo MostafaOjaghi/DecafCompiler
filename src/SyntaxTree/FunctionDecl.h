@@ -13,48 +13,31 @@
 namespace SyntaxTree {
 
     class FunctionDecl : public Node {
+    private:
+        std::string functionIdentifier;
+        Formals * formals;
+        StmtBlock * stmtBlock;
+    public:
+        void handleScope() override;
 
+        const std::string &getFunctionIdentifier() const;
+
+        void setFunctionIdentifier(const std::string &functionIdentifier);
+
+        Formals *getFormals() const;
+
+        void setFormals(Formals *formals);
+
+        StmtBlock *getStmtBlock() const;
+
+        void setStmtBlock(StmtBlock *stmtBlock);
     };
 
     class FunctionDeclToTypeIdent : public FunctionDecl {
-    private:
-        std::string functionIdentifier;
-        Formals * formals;
-        StmtBlock * stmtBlock;
-    public:
-        const std::string &getFunctionIdentifier() const;
 
-        void setFunctionIdentifier(const std::string &functionIdentifier);
-
-        Formals *getFormals() const;
-
-        void setFormals(Formals *formals);
-
-        StmtBlock *getStmtBlock() const;
-
-        void setStmtBlock(StmtBlock *stmtBlock);
     };
 
     class FunctionDeclToVoidIdent : public FunctionDecl {
-    private:
-        std::string functionIdentifier;
-        Formals * formals;
-        StmtBlock * stmtBlock;
-    public:
-        const std::string &getFunctionIdentifier() const;
-
-        void setFunctionIdentifier(const std::string &functionIdentifier);
-
-        Formals *getFormals() const;
-
-        Cgen cgen() override;
-
-        void setFormals(Formals *formals);
-
-        StmtBlock *getStmtBlock() const;
-
-        void setStmtBlock(StmtBlock *stmtBlock);
-
     };
 }
 

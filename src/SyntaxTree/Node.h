@@ -25,11 +25,11 @@ namespace SyntaxTree {
     class Node {
     private:
         SymbolTable::Scope *scope;
-
     public:
+        void setScope(SymbolTable::Scope *scope);
         virtual Cgen cgen() {return Cgen();};
         virtual SymbolTable::Scope * getScope();
-        virtual void createScope() {};
+        virtual void handleScope() {};
     };
 }
 #endif //DECAFCOMPILER_NODE_H

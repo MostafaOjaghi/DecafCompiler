@@ -16,6 +16,11 @@ SyntaxTree::Cgen SyntaxTree::DeclToVariableDecl::cgen() {
     return variableDecl->cgen();
 }
 
+void SyntaxTree::DeclToVariableDecl::handleScope() {
+    this->getVariableDecl()->setScope(this->getScope());
+    this->getVariableDecl()->handleScope();
+}
+
 SyntaxTree::FunctionDecl *SyntaxTree::DeclToFunctionDecl::getFunctionDecl() const {
     return functionDecl;
 }
@@ -26,6 +31,12 @@ void SyntaxTree::DeclToFunctionDecl::setFunctionDecl(SyntaxTree::FunctionDecl *f
 
 SyntaxTree::Cgen SyntaxTree::DeclToFunctionDecl::cgen() {
     return Cgen();
+}
+
+// handling scope
+void SyntaxTree::DeclToFunctionDecl::handleScope() {
+    this->getFunctionDecl()->setScope(this->getScope());
+    this->getFunctionDecl()->handleScope();
 }
 
 SyntaxTree::ClassDecl *SyntaxTree::DeclToClassDecl::getClassDecl() const {

@@ -20,6 +20,8 @@ namespace SyntaxTree {
     private:
         VariableDecl *variableDecl;
     public:
+        void handleScope() override;
+
         Cgen cgen() override;
 
         VariableDecl *getVariableDecl() const;
@@ -31,6 +33,8 @@ namespace SyntaxTree {
     private:
         FunctionDecl *functionDecl;
     public:
+        void handleScope() override;
+
         Cgen cgen() override;
 
         FunctionDecl *getFunctionDecl() const;
