@@ -19,6 +19,10 @@ SyntaxTree::Cgen SyntaxTree::LValueToIdent::cgen() {
     return cgen;
 }
 
+void SyntaxTree::LValueToIdent::handleScope() {
+    // Nothing here
+}
+
 SyntaxTree::Expr *SyntaxTree::LValueToFieldAccess::getExpr() const {
     return expr;
 }

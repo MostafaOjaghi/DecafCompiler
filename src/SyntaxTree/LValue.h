@@ -20,6 +20,8 @@ namespace SyntaxTree {
     public:
         Cgen cgen() override;
 
+        void handleScope() override;
+
         const std::string &getId() const;
 
         void setId(const std::string &id);

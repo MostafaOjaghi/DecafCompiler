@@ -11,3 +11,7 @@ SyntaxTree::Expr *SyntaxTree::ReturnStmt::getExpr() const {
 void SyntaxTree::ReturnStmt::setExpr(SyntaxTree::Expr *expr) {
     ReturnStmt::expr = expr;
 }
+
+void SyntaxTree::ReturnStmt::handleScope() {
+    // nothing here
+}
