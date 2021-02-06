@@ -18,6 +18,8 @@ namespace SyntaxTree {
     private:
         std::string Id;
     public:
+        Cgen cgen() override;
+
         const std::string &getId() const;
 
         void setId(const std::string &id);

@@ -30,7 +30,7 @@ void SyntaxTree::DeclToFunctionDecl::setFunctionDecl(SyntaxTree::FunctionDecl *f
 }
 
 SyntaxTree::Cgen SyntaxTree::DeclToFunctionDecl::cgen() {
-    return Cgen();
+    return functionDecl->cgen();
 }
 
 // handling scope

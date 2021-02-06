@@ -44,6 +44,8 @@ namespace SyntaxTree {
     private:
         LValue *lValue;
     public:
+        Cgen cgen() override;
+
         LValue *getLValue() const;
 
         void setLValue(LValue *lValue);
@@ -61,10 +63,12 @@ namespace SyntaxTree {
         void setCall(Call *call);
     };
 
-    class ExprToExpr : public Expr {
+    class ExprToParenthesisExpr : public Expr {
     private:
         Expr *expr;
     public:
+        Cgen cgen() override;
+
         Expr *getExpr() const;
 
         void setExpr(Expr *expr);
@@ -79,8 +83,6 @@ namespace SyntaxTree {
         const std::string &getOperatorSymbol() const;
 
         void setOperatorSymbol(const std::string &operatorSymbol);
-
-    public:
 
         Expr *getOperand1() const;
 

@@ -23,7 +23,7 @@ SyntaxTree::Cgen SyntaxTree::ProgramNode::cgen() {
     }
     cgen.code = variables +
             "LCall main\n" +
-            "Goto exit\n" +
+            "Exit\n" +
             text;
     return cgen;
 }

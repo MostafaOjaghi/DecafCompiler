@@ -392,7 +392,7 @@ expr: lvalue T_ASSIGN expr {    ExprToAssignmentExpr *node = new ExprToAssignmen
 	            node->setCall((Call *) $1);
 	            $$ = node;
 	            }
-	| T_OP expr T_CP {  ExprToExpr *node = new ExprToExpr();
+	| T_OP expr T_CP {  ExprToParenthesisExpr *node = new ExprToParenthesisExpr();
 	                    node->setExpr((Expr *) $2);
 	                    $$ = node;
 	                    }

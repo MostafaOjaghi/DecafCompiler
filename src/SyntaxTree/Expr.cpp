@@ -5,7 +5,6 @@
 #include "Expr.h"
 #include "Type.h"
 
-
 SyntaxTree::LValue *SyntaxTree::ExprToAssignmentExpr::getLValue() const {
     return lValue;
 }
@@ -38,6 +37,10 @@ void SyntaxTree::ExprToLValue::setLValue(SyntaxTree::LValue *lValue) {
     ExprToLValue::lValue = lValue;
 }
 
+SyntaxTree::Cgen SyntaxTree::ExprToLValue::cgen() {
+    return lValue->cgen();
+}
+
 SyntaxTree::Call *SyntaxTree::ExprToCall::getCall() const {
     return call;
 }
@@ -46,12 +49,16 @@ void SyntaxTree::ExprToCall::setCall(SyntaxTree::Call *call) {
     ExprToCall::call = call;
 }
 
-SyntaxTree::Expr *SyntaxTree::ExprToExpr::getExpr() const {
+SyntaxTree::Expr *SyntaxTree::ExprToParenthesisExpr::getExpr() const {
     return expr;
 }
 
-void SyntaxTree::ExprToExpr::setExpr(SyntaxTree::Expr *expr) {
-    ExprToExpr::expr = expr;
+void SyntaxTree::ExprToParenthesisExpr::setExpr(SyntaxTree::Expr *expr) {
+    ExprToParenthesisExpr::expr = expr;
+}
+
+SyntaxTree::Cgen SyntaxTree::ExprToParenthesisExpr::cgen() {
+    return expr->cgen();
 }
 
 SyntaxTree::Expr *SyntaxTree::ExprToBinaryOperation::getOperand1() const {

@@ -36,3 +36,13 @@ void SyntaxTree::FunctionDecl::handleScope() {
     this->getStmtBlock()->setScope(scopeStmtBlock);
     this->getStmtBlock()->handleScope();
 }
+
+SyntaxTree::Cgen SyntaxTree::FunctionDeclToVoidIdent::cgen() {
+    Cgen cgen;
+    cgen.code += "Label " + getFunctionIdentifier() + ":\n";
+    cgen.code += "BeginFunc 100\n";
+    cgen.code += getStmtBlock()->cgen().code;
+    cgen.code += "EndFunc\n";
+
+    return cgen;
+}

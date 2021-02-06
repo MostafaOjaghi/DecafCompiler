@@ -25,6 +25,8 @@ namespace SyntaxTree {
     private:
         Expr *expr;
     public:
+        Cgen cgen() override;
+
         Expr *getExpr() const;
 
         void setExpr(Expr *expr);

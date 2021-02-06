@@ -24,6 +24,10 @@ void SyntaxTree::StmtToExpr::setExpr(SyntaxTree::Expr *expr) {
     StmtToExpr::expr = expr;
 }
 
+SyntaxTree::Cgen SyntaxTree::StmtToExpr::cgen() {
+    return expr->cgen();
+}
+
 SyntaxTree::IfStmt *SyntaxTree::StmtToIfStmt::getIfStmt() const {
     return ifStmt;
 }
