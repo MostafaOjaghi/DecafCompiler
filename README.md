@@ -129,3 +129,35 @@ Assign s = s - z
 Assign s = s + global1
 Endfunc s
 ```
+
+```
+Lcall main
+Exit
+
+Label main:
+Beginfunc 64
+Input s
+Output s
+Input a
+Output a
+Assign b = s / a
+Assign b = - s
+Output b
+Pushparam b
+Lcall f -> x
+Popparams 4
+Output x
+Endfunc
+
+Label f: c
+Beginfunc 64
+Output c
+Lcall check
+Endfunc c
+
+Label check:
+Beginfunc 64
+Input y
+Output y
+Endfunc
+```
