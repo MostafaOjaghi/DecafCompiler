@@ -27,5 +27,6 @@
 #include "ProgramNode.h"
 #include "Actuals.h"
 #include "Call.h"
+#include "Token.h"
 
 #endif //DECAFCOMPILER_SYNTAXTREE_H

@@ -80,7 +80,7 @@ exp ((E|e)((\+|-)?)?{digit}+)
 "{" 	{return T_OCB;}
 "}" 	{return T_CCB;}
 
-{letter}({letter}|{digit}|_)* {return T_ID;}
+{letter}({letter}|{digit}|_)* {yylval=new Token(yytext); return T_ID;}
 
 .				{return T_UNDEFINED;}
 

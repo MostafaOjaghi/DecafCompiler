@@ -1,21 +1,23 @@
 %define parse.trace
 
+%code requires {
+#include "SyntaxTree/SyntaxTree.h"
+#define YYSTYPE Node *
+
+using namespace SyntaxTree;
+}
+
 %{
 
 #include <iostream>
 #include <fstream>
-#include <string>
+#include "parser.tab.h"
 
 #include "lex.yy.h"
 #include "SyntaxTree/SyntaxTree.h"
-#include <stack>
-using namespace SyntaxTree;
+
 using namespace SymbolTable;
 using namespace std;
-
-std::stack<string> saved_yytext;
-
-#define YYSTYPE Node *
 
 extern int yylex();
 //extern int yyparse();
@@ -72,13 +74,13 @@ variable_decl: variable T_SEMICOLON {   VariableDecl *node = new VariableDecl();
 
 variable: type T_ID {   Variable *node = new Variable();
                         node->setType((Type *) $1);
-                        node->setId(yytext);
+                        node->setId(((Token *)$2)->getLexeme());
                         $$ = node; }
 ;
 
 type: primitive_type { $$ = $1; }
 	| T_ID {    Type *node = new Type();
-	            node->setTypeNameId(yytext);
+	            node->setTypeNameId(((Token *)$1)->getLexeme());
 	            node->setDimension(0);
 	            $$ = node;
 	        }
@@ -107,32 +109,29 @@ array_type: primitive_type T_OB T_CB {  Type *node = (Type *) $1;
                                         node->incrementDimension();
                                         $$ = node;
                                         }
-		| T_ID {saved_yytext.push(yytext);} T_OB T_CB {     Type *node = new Type();
-		                                                    node->setTypeNameId(saved_yytext.top());
-		                                                    saved_yytext.pop();
-		                                                    node->setDimension(1);
-		                                                    $$ = node;
-		                                              }
+		| T_ID T_OB T_CB { Type *node = new Type();
+                           node->setTypeNameId(((Token *)$1)->getLexeme());
+                           node->setDimension(1);
+                           $$ = node;
+                         }
 		| array_type T_OB T_CB {    Type *node = (Type *) $1;
 		                            node->incrementDimension();
 		                            $$ = node;
 		                       }
 ;
 
-function_decl: type T_ID { saved_yytext.push(yytext); } T_OP formals T_CP stmt_block {  FunctionDeclToTypeIdent *node = new FunctionDeclToTypeIdent();
-                                                                                        node->setFunctionIdentifier(saved_yytext.top());
-                                                                                        saved_yytext.pop();
-                                                                                        node->setFormals((Formals *) $5);
-                                                                                        node->setStmtBlock((StmtBlock *) $7);
-                                                                                        $$ = node;
-                                                                                     }
-			| T_VOID T_ID { saved_yytext.push(yytext); } T_OP formals T_CP stmt_block { FunctionDeclToVoidIdent *node = new FunctionDeclToVoidIdent();
-			                                                                            node->setFunctionIdentifier(saved_yytext.top());
-			                                                                            saved_yytext.pop();
-			                                                                            node->setFormals((Formals *) $5); // TODO: check
-			                                                                            node->setStmtBlock((StmtBlock *) $7);
-			                                                                            $$ = node;
-			                                                                          }
+function_decl: type T_ID T_OP formals T_CP stmt_block { FunctionDeclToTypeIdent *node = new FunctionDeclToTypeIdent();
+                                                        node->setFunctionIdentifier(((Token *)$2)->getLexeme());
+                                                        node->setFormals((Formals *) $4);
+                                                        node->setStmtBlock((StmtBlock *) $6);
+                                                        $$ = node;
+                                                      }
+			| T_VOID T_ID T_OP formals T_CP stmt_block {    FunctionDeclToVoidIdent *node = new FunctionDeclToVoidIdent();
+                                                            node->setFunctionIdentifier(((Token *)$2)->getLexeme());
+                                                            node->setFormals((Formals *) $4); // TODO: check
+                                                            node->setStmtBlock((StmtBlock *) $6);
+                                                            $$ = node;
+                                                       }
 ;
 
 formals:
@@ -157,17 +156,17 @@ extends: {  Extends *node = new Extends();
             $$ = node;
          }
 	| T_EXTENDS T_ID {  Extends *node = new Extends();
-	                    node->setParentClassId(yytext);
+	                    node->setParentClassId(((Token *)$2)->getLexeme());
 	                    $$ = node;
 	                    }
 ;
 
 implements:
 	| T_IMPLEMENTS T_ID {  Implements *node = new Implements();
-	                       node->addInterfaceId(yytext);
+	                       node->addInterfaceId(((Token *)$2)->getLexeme());
 	                       $$ = node; }
 	| implements T_COMMA T_ID { Implements *node = (Implements *) $1;
-	                            node->addInterfaceId(yytext);
+	                            node->addInterfaceId(((Token *)$3)->getLexeme());
 	                            $$ = node;
 	                          }
 ;
@@ -211,13 +210,11 @@ access_mode: {  AccessMode *node = new AccessMode();
 		                }
 ;
 
-interface_decl: T_INTERFACE T_ID {saved_yytext.push(yytext); } T_OCB proto_types T_CCB {
-                                                                                            InterfaceDecl *node = new InterfaceDecl();
-                                                                                            node->setInterfaceId(saved_yytext.top());
-                                                                                            saved_yytext.pop();
-                                                                                            node->setPrototypes((Prototypes *) $5);
-                                                                                            $$ = node;
-                                                                                       }
+interface_decl: T_INTERFACE T_ID T_OCB proto_types T_CCB {  InterfaceDecl *node = new InterfaceDecl();
+                                                            node->setInterfaceId(((Token *)$2)->getLexeme());
+                                                            node->setPrototypes((Prototypes *) $4);
+                                                            $$ = node;
+                                                         }
 ;
 
 proto_types: {  Prototypes *node = new Prototypes();
@@ -229,20 +226,18 @@ proto_types: {  Prototypes *node = new Prototypes();
 		                            }
 ;
 
-proto_type: type T_ID {saved_yytext.push(yytext); } T_OP formals T_CP T_SEMICOLON {     PrototypeToTypeIdent *node = new PrototypeToTypeIdent();
-                                                                                        node->setType((Type *) $1);
-                                                                                        node->setPrototypeDeclId(saved_yytext.top());
-                                                                                        saved_yytext.pop();
-                                                                                        node->setFormals((Formals *) $5);
-                                                                                        $$ = node;
-                                                                                  }
+proto_type: type T_ID T_OP formals T_CP T_SEMICOLON {   PrototypeToTypeIdent *node = new PrototypeToTypeIdent();
+                                                        node->setType((Type *) $1);
+                                                        node->setPrototypeDeclId(((Token *)$2)->getLexeme());
+                                                        node->setFormals((Formals *) $4);
+                                                        $$ = node;
+                                                    }
 
-		| T_VOID T_ID {saved_yytext.push(yytext); } T_OP formals T_CP T_SEMICOLON { PrototypeToVoid *node = new PrototypeToVoid();
-		                                                                            node->setPrototypeDeclId(saved_yytext.top());
-                                                                                    saved_yytext.pop();
-                                                                                    node->setFormals((Formals *) $5);
-                                                                                    $$ = node;
-                                                                                  }
+		| T_VOID T_ID T_OP formals T_CP T_SEMICOLON {   PrototypeToVoid *node = new PrototypeToVoid();
+                                                        node->setPrototypeDeclId(((Token *)$2)->getLexeme());
+                                                        node->setFormals((Formals *) $4);
+                                                        $$ = node;
+                                                    }
 ;
 
 stmt_block: T_OCB variable_decls stmts T_CCB {  StmtBlock *node = new StmtBlock();
@@ -317,8 +312,8 @@ if_stmt: T_IF T_OP expr T_CP stmt { IfStmt *node = new IfStmt();
                                     }
 		| T_IF T_OP expr T_CP stmt T_ELSE stmt {    IfStmt *node = new IfStmt();
 		                                            node->setConditionalExpr((Expr *) $3);
-                                                    node->setTrueStmt((Stmt *) $5);
-                                                    node->setFalseStmt((Stmt *) $7);
+                                                    node->setTrueStmt((Stmt *) $4);
+                                                    node->setFalseStmt((Stmt *) $6);
                                                     $$ = node;
                                                     }
 
@@ -518,12 +513,12 @@ expr: lvalue T_ASSIGN expr {    ExprToAssignmentExpr *node = new ExprToAssignmen
 ;
 
 lvalue: T_ID {  LValueToIdent *node = new LValueToIdent();
-                node->setId(yytext);
+                node->setId(((Token *)$1)->getLexeme());
                 $$ = node;
-                }
+             }
 	| expr T_DOT T_ID { LValueToFieldAccess *node = new LValueToFieldAccess();
 	                    node->setExpr((Expr *) $1);
-	                    node->setId(yytext);
+	                    node->setId(((Token *)$2)->getLexeme());
 	                    $$ = node;
 	                    }
 	| expr T_OB expr T_CB { LValueToArray *node = new LValueToArray();
@@ -533,12 +528,11 @@ lvalue: T_ID {  LValueToIdent *node = new LValueToIdent();
 	                        }
 ;
 
-call: T_ID {saved_yytext.push(yytext); } T_OP actuals T_CP {    CallToFunctionCall *node = new CallToFunctionCall();
-                                                                node->setFunctionId(saved_yytext.top());
-                                                                saved_yytext.pop();
-                                                                node->setActuals((Actuals *) $4);
-                                                                $$ = node;
-                                                            }
+call: T_ID  T_OP actuals T_CP {     CallToFunctionCall *node = new CallToFunctionCall();
+                                    node->setFunctionId(((Token *)$1)->getLexeme());
+                                    node->setActuals((Actuals *) $3);
+                                    $$ = node;
+                              }
 	| expr T_DOT T_ID T_OP actuals T_CP {   CallToMethodCall *node = new CallToMethodCall();
 	                                        node->setMethodIdent((Expr *) $1);
 	                                        node->setActuals((Actuals *) $5);
@@ -557,27 +551,27 @@ actuals: {  Actuals *node = nullptr;
 
 constant: T_INTLITERAL {    Constant *node = new Constant();
                             node->setConstantIdType("int");
-                            node->setConstantValue(yytext);
+                            node->setConstantValue(((Token *)$1)->getLexeme());
                             $$ = node;
                         }
 		| T_DOUBLELITERAL {    Constant *node = new Constant();
                                node->setConstantIdType("double");
-                               node->setConstantValue(yytext);
+                               node->setConstantValue(((Token *)$1)->getLexeme());
                                $$ = node;
                            }
 		| T_BOOLEANLITERAL {    Constant *node = new Constant();
                                 node->setConstantIdType("bool");
-                                node->setConstantValue(yytext);
+                                node->setConstantValue(((Token *)$1)->getLexeme());
                                 $$ = node;
                            }
 		| T_STRINGLITERAL {    Constant *node = new Constant();
                                node->setConstantIdType("string");
-                               node->setConstantValue(yytext);
+                               node->setConstantValue(((Token *)$1)->getLexeme());
                                $$ = node;
                           }
 		| T_NULL        {   Constant *node = new Constant();
 		                    node->setConstantIdType("null");
-		                    node->setConstantValue(yytext);
+		                    node->setConstantValue(((Token *)$1)->getLexeme());
 		                    $$ = node;
 		                    }
 ;

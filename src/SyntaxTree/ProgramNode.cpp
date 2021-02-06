@@ -3,7 +3,6 @@
 //
 
 #include "ProgramNode.h"
-#include "VariableDecl.h"
 
 #include "Decl.h"
 
@@ -16,7 +15,7 @@ SyntaxTree::Cgen SyntaxTree::ProgramNode::cgen() {
     std::string text;
     Cgen cgen;
     for (Decl *decl : declerations) {
-        if (dynamic_cast<VariableDecl *>(decl))
+        if (dynamic_cast<DeclToVariableDecl *>(decl))
             variables += decl->cgen().code;
         else
             text += decl->cgen().code;
