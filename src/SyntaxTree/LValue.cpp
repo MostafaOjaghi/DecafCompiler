@@ -12,6 +12,17 @@ void SyntaxTree::LValueToIdent::setId(const std::string &id) {
     Id = id;
 }
 
+SyntaxTree::Cgen SyntaxTree::LValueToIdent::cgen() {
+    Cgen cgen;
+    // TODO check: may need to define new temp
+    cgen.var = Id;
+    return cgen;
+}
+
+void SyntaxTree::LValueToIdent::handleScope() {
+    // Nothing here
+}
+
 SyntaxTree::Expr *SyntaxTree::LValueToFieldAccess::getExpr() const {
     return expr;
 }

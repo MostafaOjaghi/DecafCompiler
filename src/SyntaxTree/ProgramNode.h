@@ -17,6 +17,8 @@ namespace SyntaxTree {
     public:
         Cgen cgen() override;
 
+        void handleScope() override;
+
         void addDecl(Decl *decl);
     };
 }

@@ -11,3 +11,7 @@ const SymbolTable::TypeName &SymbolTable::SymbolTableEntry::getTypeName() const 
 void SymbolTable::SymbolTableEntry::setTypeName(const SymbolTable::TypeName &typeName) {
     SymbolTableEntry::typeName = typeName;
 }
+
+SymbolTable::SymbolTableEntry::SymbolTableEntry(const SymbolTable::TypeName &typeName) : typeName(typeName) {
+    this->typeName = typeName;
+}

@@ -11,6 +11,9 @@ namespace SymbolTable {
     class SymbolTableEntry {
         TypeName typeName;
     public:
+        SymbolTableEntry() = default;
+        SymbolTableEntry(const TypeName &typeName);
+
         const TypeName &getTypeName() const;
 
         void setTypeName(const TypeName &type);

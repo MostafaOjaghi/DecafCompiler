@@ -15,3 +15,10 @@ const std::vector<SyntaxTree::Variable *> &SyntaxTree::Formals::getVariables() c
 SyntaxTree::Cgen SyntaxTree::Formals::cgen() {
     return Cgen();
 }
+
+void SyntaxTree::Formals::handleScope() {
+    for (Variable* variable : variables) {
+        variable->setScope(this->getScope());
+        variable->handleScope();
+    }
+}

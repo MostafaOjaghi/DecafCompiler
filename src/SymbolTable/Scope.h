@@ -18,6 +18,12 @@ namespace SymbolTable {
         std::map<std::string, SymbolTableEntry *>mp;
 
     public:
+        Scope() = default;
+        Scope(const std::string &name, Scope *par);
+
+        Scope(const std::string &name);
+
+        void setPar(Scope *par);
         std::string getName();
         Scope * getPar();
         SymbolTableEntry * getEntry(const std::string &id);

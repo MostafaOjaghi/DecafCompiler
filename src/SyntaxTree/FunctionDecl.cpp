@@ -4,58 +4,45 @@
 
 #include "FunctionDecl.h"
 
-const std::string &SyntaxTree::FunctionDeclToVoidIdent::getFunctionIdentifier() const {
+const std::string &SyntaxTree::FunctionDecl::getFunctionIdentifier() const {
     return functionIdentifier;
 }
 
-void SyntaxTree::FunctionDeclToVoidIdent::setFunctionIdentifier(const std::string &functionIdentifier) {
-    FunctionDeclToVoidIdent::functionIdentifier = functionIdentifier;
+void SyntaxTree::FunctionDecl::setFunctionIdentifier(const std::string &functionIdentifier) {
+    FunctionDecl::functionIdentifier = functionIdentifier;
 }
 
-SyntaxTree::Formals *SyntaxTree::FunctionDeclToVoidIdent::getFormals() const {
+SyntaxTree::Formals *SyntaxTree::FunctionDecl::getFormals() const {
     return formals;
 }
 
-void SyntaxTree::FunctionDeclToVoidIdent::setFormals(SyntaxTree::Formals *formals) {
-    FunctionDeclToVoidIdent::formals = formals;
+void SyntaxTree::FunctionDecl::setFormals(SyntaxTree::Formals *formals) {
+    FunctionDecl::formals = formals;
 }
 
-SyntaxTree::StmtBlock *SyntaxTree::FunctionDeclToVoidIdent::getStmtBlock() const {
+SyntaxTree::StmtBlock *SyntaxTree::FunctionDecl::getStmtBlock() const {
     return stmtBlock;
 }
 
-void SyntaxTree::FunctionDeclToVoidIdent::setStmtBlock(SyntaxTree::StmtBlock *stmtBlock) {
-    FunctionDeclToVoidIdent::stmtBlock = stmtBlock;
+void SyntaxTree::FunctionDecl::setStmtBlock(SyntaxTree::StmtBlock *stmtBlock) {
+    FunctionDecl::stmtBlock = stmtBlock;
+}
+
+void SyntaxTree::FunctionDecl::handleScope() {
+    this->getFormals()->setScope(this->getScope());
+    this->getFormals()->handleScope();
+    SymbolTable::Scope *scopeStmtBlock = new SymbolTable::Scope();
+    scopeStmtBlock->setPar(this->getScope());
+    this->getStmtBlock()->setScope(scopeStmtBlock);
+    this->getStmtBlock()->handleScope();
 }
 
 SyntaxTree::Cgen SyntaxTree::FunctionDeclToVoidIdent::cgen() {
     Cgen cgen;
-    cgen.code += "Label " + functionIdentifier + ":\n";
-    cgen.code += "BeginFunc 100\n"; // TODO correct
-    cgen.code += stmtBlock->cgen().code;
+    cgen.code += "Label " + getFunctionIdentifier() + ":\n";
+    cgen.code += "BeginFunc 100\n";
+    cgen.code += getStmtBlock()->cgen().code;
+    cgen.code += "EndFunc\n";
+
     return cgen;
-}
-
-const std::string &SyntaxTree::FunctionDeclToTypeIdent::getFunctionIdentifier() const {
-    return functionIdentifier;
-}
-
-void SyntaxTree::FunctionDeclToTypeIdent::setFunctionIdentifier(const std::string &functionIdentifier) {
-    FunctionDeclToTypeIdent::functionIdentifier = functionIdentifier;
-}
-
-SyntaxTree::Formals *SyntaxTree::FunctionDeclToTypeIdent::getFormals() const {
-    return formals;
-}
-
-void SyntaxTree::FunctionDeclToTypeIdent::setFormals(SyntaxTree::Formals *formals) {
-    FunctionDeclToTypeIdent::formals = formals;
-}
-
-SyntaxTree::StmtBlock *SyntaxTree::FunctionDeclToTypeIdent::getStmtBlock() const {
-    return stmtBlock;
-}
-
-void SyntaxTree::FunctionDeclToTypeIdent::setStmtBlock(SyntaxTree::StmtBlock *stmtBlock) {
-    FunctionDeclToTypeIdent::stmtBlock = stmtBlock;
 }

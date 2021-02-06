@@ -5,7 +5,6 @@
 #include "Expr.h"
 #include "Type.h"
 
-
 SyntaxTree::LValue *SyntaxTree::ExprToAssignmentExpr::getLValue() const {
     return lValue;
 }
@@ -22,12 +21,24 @@ void SyntaxTree::ExprToAssignmentExpr::setExpr(SyntaxTree::Expr *expr) {
     ExprToAssignmentExpr::expr = expr;
 }
 
+void SyntaxTree::ExprToAssignmentExpr::handleScope() {
+    this->getExpr()->setScope(this->getScope());
+    this->getExpr()->handleScope();
+    this->getLValue()->setScope(this->getScope());
+    this->getLValue()->handleScope();
+}
+
 SyntaxTree::Constant *SyntaxTree::ExprToConstant::getConstant() const {
     return constant;
 }
 
 void SyntaxTree::ExprToConstant::setConstant(SyntaxTree::Constant *constant) {
     ExprToConstant::constant = constant;
+}
+
+void SyntaxTree::ExprToConstant::handleScope() {
+    this->getConstant()->setScope(this->getScope());
+    this->getConstant()->handleScope();
 }
 
 SyntaxTree::LValue *SyntaxTree::ExprToLValue::getLValue() const {
@@ -38,6 +49,10 @@ void SyntaxTree::ExprToLValue::setLValue(SyntaxTree::LValue *lValue) {
     ExprToLValue::lValue = lValue;
 }
 
+SyntaxTree::Cgen SyntaxTree::ExprToLValue::cgen() {
+    return lValue->cgen();
+}
+
 SyntaxTree::Call *SyntaxTree::ExprToCall::getCall() const {
     return call;
 }
@@ -46,12 +61,16 @@ void SyntaxTree::ExprToCall::setCall(SyntaxTree::Call *call) {
     ExprToCall::call = call;
 }
 
-SyntaxTree::Expr *SyntaxTree::ExprToExpr::getExpr() const {
+SyntaxTree::Expr *SyntaxTree::ExprToParenthesisExpr::getExpr() const {
     return expr;
 }
 
-void SyntaxTree::ExprToExpr::setExpr(SyntaxTree::Expr *expr) {
-    ExprToExpr::expr = expr;
+void SyntaxTree::ExprToParenthesisExpr::setExpr(SyntaxTree::Expr *expr) {
+    ExprToParenthesisExpr::expr = expr;
+}
+
+SyntaxTree::Cgen SyntaxTree::ExprToParenthesisExpr::cgen() {
+    return expr->cgen();
 }
 
 SyntaxTree::Expr *SyntaxTree::ExprToBinaryOperation::getOperand1() const {

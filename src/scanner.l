@@ -1,5 +1,6 @@
 %option noyywrap
 %option header-file="lex.yy.h"
+%option outfile="lex.yy.cpp"
 
 %{
 #include <iostream>

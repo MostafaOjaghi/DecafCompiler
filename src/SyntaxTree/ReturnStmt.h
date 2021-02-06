@@ -14,6 +14,8 @@ namespace SyntaxTree {
     private:
         Expr *expr;
     public:
+        void handleScope() override;
+
         Expr *getExpr() const;
 
         void setExpr(Expr *expr);

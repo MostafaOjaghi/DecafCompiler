@@ -17,3 +17,16 @@ SymbolTable::SymbolTableEntry * SymbolTable::Scope::getEntry(const std::string &
 void SymbolTable::Scope::addEntry(const std::string &id, SymbolTable::SymbolTableEntry *entry) {
     mp[id]=entry;
 }
+
+SymbolTable::Scope::Scope(const std::string &name, SymbolTable::Scope *par) : name(name), par(par) {
+    this->par = par;
+    this->name = name;
+}
+
+void SymbolTable::Scope::setPar(SymbolTable::Scope *par) {
+    Scope::par = par;
+}
+
+SymbolTable::Scope::Scope(const std::string &name) : name(name) {
+    this->name = name;
+}

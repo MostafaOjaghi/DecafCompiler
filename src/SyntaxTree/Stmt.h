@@ -15,6 +15,8 @@
 #include "ReturnStmt.h"
 
 namespace SyntaxTree {
+
+    // Prototype StmtBlock
     class StmtBlock;
 
     class Stmt : public Node {
@@ -25,6 +27,10 @@ namespace SyntaxTree {
     private:
         Expr *expr;
     public:
+        Cgen cgen() override;
+
+        void handleScope() override;
+
         Expr *getExpr() const;
 
         void setExpr(Expr *expr);
@@ -87,6 +93,8 @@ namespace SyntaxTree {
     class StmtToPrintStmt : public Stmt {
         PrintStmt * printStmt;
     public:
+        void handleScope() override;
+
         PrintStmt *getPrintStmt() const;
 
         void setPrintStmt(PrintStmt *printStmt);
@@ -99,6 +107,7 @@ namespace SyntaxTree {
         StmtBlock *stmtBlock;
     public:
         StmtBlock *getStmtBlock() const;
+        void handleScope() override;
 
         void setStmtBlock(StmtBlock *stmtBlock);
     };

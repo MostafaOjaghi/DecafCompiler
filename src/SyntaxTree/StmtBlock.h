@@ -15,6 +15,9 @@ namespace SyntaxTree {
         Stmts * stmts;
         VariableDecls * variableDecls;
     public:
+        void handleScope() override;
+
+    public:
         Stmts *getStmts() const;
 
         void setStmts(Stmts *stmts);

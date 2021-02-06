@@ -6,7 +6,12 @@
 
 SyntaxTree::Cgen SyntaxTree::PrintStmt::cgen() {
     Cgen cgen;
-    // TODO complete
+    // TODO handle other types
+    for (Expr *actual : actuals->getExpressions()) {
+        Cgen expr_cgen = actual->cgen();
+        cgen.code += expr_cgen.code;
+        cgen.code += "Output " + expr_cgen.var + '\n';
+    }
     return cgen;
 }
 

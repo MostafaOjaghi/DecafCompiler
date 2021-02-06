@@ -14,6 +14,8 @@ namespace SyntaxTree {
     private:
         Variable *variable;
     public:
+        void handleScope() override;
+
         Variable *getVariable() const;
 
         void setVariable(Variable *variable);
