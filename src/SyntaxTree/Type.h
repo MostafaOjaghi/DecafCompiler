@@ -11,7 +11,7 @@ namespace SyntaxTree {
     class Type : public Node {
         SymbolTable::TypeName typeName;
     public:
-        std::string cgen() override;
+        Cgen cgen() override;
 
         const SymbolTable::TypeName &getTypeName() const;
 

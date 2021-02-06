@@ -5,8 +5,8 @@
 #include <string>
 #include "Variable.h"
 
-std::string SyntaxTree::Variable::cgen() {
-    return std::string();
+SyntaxTree::Cgen SyntaxTree::Variable::cgen() {
+    return Cgen();
 }
 
 SyntaxTree::Type *SyntaxTree::Variable::getType() const {

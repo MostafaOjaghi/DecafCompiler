@@ -18,7 +18,7 @@ namespace SyntaxTree {
 
         void setVariable(Variable *variable);
 
-        std::string cgen() override;
+        Cgen cgen() override;
     };
 }
 

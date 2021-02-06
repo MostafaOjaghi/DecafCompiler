@@ -4,8 +4,14 @@
 
 #include "PrintStmt.h"
 
-std::string SyntaxTree::PrintStmt::cgen() {
-    return std::string();
+SyntaxTree::Cgen SyntaxTree::PrintStmt::cgen() {
+    Cgen cgen;
+    for (Expr *expr : exprs) {
+        Cgen expr_cgen = expr->cgen();
+        cgen.code += expr_cgen.code;
+        cgen.code += "Output " + expr_cgen.var + "\n";
+    }
+    return cgen;
 }
 
 void SyntaxTree::PrintStmt::addExpr(Expr *expr) {

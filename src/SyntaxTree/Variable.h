@@ -23,7 +23,7 @@ namespace SyntaxTree {
     private:
         std::string id;
     public:
-        std::string cgen() override;
+        Cgen cgen() override;
     };
 }
 

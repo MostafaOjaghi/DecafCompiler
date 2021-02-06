@@ -12,6 +12,6 @@ const std::vector<SyntaxTree::Variable *> &SyntaxTree::Formals::getVariables() c
     return variables;
 }
 
-std::string SyntaxTree::Formals::cgen() {
-    return std::string();
+SyntaxTree::Cgen SyntaxTree::Formals::cgen() {
+    return Cgen();
 }

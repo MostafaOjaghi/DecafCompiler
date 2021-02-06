@@ -17,6 +17,8 @@ namespace SyntaxTree {
     public:
         const std::vector<VariableDecl *> &getVariableDecls() const;
         void addVariableDecl(VariableDecl *variableDecl);
+
+        Cgen cgen() override;
     };
 }
 

@@ -12,8 +12,8 @@ void SyntaxTree::DeclToVariableDecl::setVariableDecl(SyntaxTree::VariableDecl *v
     DeclToVariableDecl::variableDecl = variableDecl;
 }
 
-std::string SyntaxTree::DeclToVariableDecl::cgen() {
-    return std::string();
+SyntaxTree::Cgen SyntaxTree::DeclToVariableDecl::cgen() {
+    return variableDecl->cgen();
 }
 
 SyntaxTree::FunctionDecl *SyntaxTree::DeclToFunctionDecl::getFunctionDecl() const {
@@ -24,6 +24,6 @@ void SyntaxTree::DeclToFunctionDecl::setFunctionDecl(SyntaxTree::FunctionDecl *f
     DeclToFunctionDecl::functionDecl = functionDecl;
 }
 
-std::string SyntaxTree::DeclToFunctionDecl::cgen() {
-    return std::string();
+SyntaxTree::Cgen SyntaxTree::DeclToFunctionDecl::cgen() {
+    return Cgen();
 }

@@ -19,3 +19,8 @@ SyntaxTree::VariableDecls *SyntaxTree::StmtBlock::getVariableDecls() const {
 void SyntaxTree::StmtBlock::setVariableDecls(SyntaxTree::VariableDecls *variableDecls) {
     StmtBlock::variableDecls = variableDecls;
 }
+
+SyntaxTree::Cgen SyntaxTree::StmtBlock::cgen() {
+    //TODO handle variables
+    return stmts->cgen();
+}

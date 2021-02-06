@@ -4,8 +4,8 @@
 
 #include "Node.h"
 
-void SyntaxTree::ProgramNode::addDecl(Decl *decl) {
-    declerations.push_back(decl);
-}
+#include <utility>
+
 SymbolTable::Scope * SyntaxTree::Node::getScope() {return scope;}
 
+SyntaxTree::Cgen::Cgen(std::string code) : code(std::move(code)) {}

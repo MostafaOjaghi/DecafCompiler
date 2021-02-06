@@ -12,25 +12,24 @@
 
 
 namespace SyntaxTree {
-    class Decl;
+    class Cgen {
+    public:
+        Cgen(std::string code);
+
+        Cgen() = default;
+
+        std::string var;
+        std::string code;
+    };
 
     class Node {
     private:
         SymbolTable::Scope *scope;
 
     public:
-        virtual std::string cgen() {return std::string();};
+        virtual Cgen cgen() = 0;
         virtual SymbolTable::Scope * getScope();
         virtual void createScope() {};
-    };
-
-    class ProgramNode : public Node {
-    private:
-        std::vector<Decl *> declerations;
-    public:
-        virtual std::string cgen() {};
-
-        virtual void addDecl(Decl *decl);
     };
 }
 #endif //DECAFCOMPILER_NODE_H

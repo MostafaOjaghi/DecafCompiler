@@ -4,8 +4,8 @@
 
 #include "VariableDecl.h"
 
-std::string SyntaxTree::VariableDecl::cgen() {
-    return std::string();
+SyntaxTree::Cgen SyntaxTree::VariableDecl::cgen() {
+    return Cgen("Assign " + variable->getId() + " 0\n");
 }
 
 SyntaxTree::Variable *SyntaxTree::VariableDecl::getVariable() const {

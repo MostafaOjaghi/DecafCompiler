@@ -15,6 +15,8 @@ namespace SyntaxTree {
     public:
         const std::vector<Stmt *> &getStmts() const;
         void addStmt(Stmt * stmt);
+
+        Cgen cgen() override;
     };
 }
 

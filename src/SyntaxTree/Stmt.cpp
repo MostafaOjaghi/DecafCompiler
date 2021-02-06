@@ -11,3 +11,7 @@ SyntaxTree::PrintStmt *SyntaxTree::StmtToPrintStmt::getPrintStmt() const {
 void SyntaxTree::StmtToPrintStmt::setPrintStmt(SyntaxTree::PrintStmt *printStmt) {
     StmtToPrintStmt::printStmt = printStmt;
 }
+
+SyntaxTree::Cgen SyntaxTree::StmtToPrintStmt::cgen() {
+    return printStmt->cgen();
+}

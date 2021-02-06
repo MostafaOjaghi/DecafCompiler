@@ -47,6 +47,8 @@ namespace SyntaxTree {
         PrintStmt *getPrintStmt() const;
 
         void setPrintStmt(PrintStmt *printStmt);
+
+        Cgen cgen() override;
     };
 
     class StmtToStmtBlock : public Stmt {

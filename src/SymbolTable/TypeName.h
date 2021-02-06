@@ -12,7 +12,7 @@ namespace SymbolTable {
     class TypeName {
         std::string id;
         ClassType *classType = nullptr;
-        int dimension;
+        int dimension = 0;
     public:
         TypeName(std::string id, int dimension);
         TypeName() = default;

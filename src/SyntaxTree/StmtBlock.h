@@ -22,10 +22,8 @@ namespace SyntaxTree {
         VariableDecls *getVariableDecls() const;
 
         void setVariableDecls(VariableDecls *variableDecls);
-    };
 
-    class StmtBlockToVariableDeclAndStatement : public StmtBlock {
-
+        Cgen cgen() override;
     };
 }
 

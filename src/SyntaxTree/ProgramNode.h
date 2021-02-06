@@ -6,9 +6,19 @@
 #define DECAFCOMPILER_PROGRAMNODE_H
 
 
-class ProgramNode {
+#include "Node.h"
 
-};
+namespace SyntaxTree {
+    class Decl;
 
+    class ProgramNode : public Node {
+    private:
+        std::vector<Decl *> declerations;
+    public:
+        Cgen cgen() override;
+
+        void addDecl(Decl *decl);
+    };
+}
 
 #endif //DECAFCOMPILER_PROGRAMNODE_H

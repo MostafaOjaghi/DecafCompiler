@@ -28,6 +28,10 @@ void SyntaxTree::FunctionDeclToVoidIdent::setStmtBlock(SyntaxTree::StmtBlock *st
     FunctionDeclToVoidIdent::stmtBlock = stmtBlock;
 }
 
-std::string SyntaxTree::FunctionDeclToVoidIdent::cgen() {
-    return std::string();
+SyntaxTree::Cgen SyntaxTree::FunctionDeclToVoidIdent::cgen() {
+    Cgen cgen;
+    cgen.code += "Label " + functionIdentifier + ":\n";
+    cgen.code += "BeginFunc 100\n"; // TODO correct
+    cgen.code += stmtBlock->cgen().code;
+    return cgen;
 }

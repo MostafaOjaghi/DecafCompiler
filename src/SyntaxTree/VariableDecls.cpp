@@ -8,6 +8,10 @@ const std::vector<SyntaxTree::VariableDecl *> &SyntaxTree::VariableDecls::getVar
     return variableDecls;
 }
 
+SyntaxTree::Cgen SyntaxTree::VariableDecls::cgen() {
+    return Cgen();
+}
+
 void SyntaxTree::VariableDecls::addVariableDecl(SyntaxTree::VariableDecl *variableDecl) {
     variableDecls.push_back(variableDecl);
 }

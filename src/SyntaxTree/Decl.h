@@ -18,7 +18,7 @@ namespace SyntaxTree {
     private:
         VariableDecl *variableDecl;
     public:
-        std::string cgen() override;
+        Cgen cgen() override;
 
         VariableDecl *getVariableDecl() const;
 
@@ -29,7 +29,7 @@ namespace SyntaxTree {
     private:
         FunctionDecl *functionDecl;
     public:
-        std::string cgen() override;
+        Cgen cgen() override;
 
         FunctionDecl *getFunctionDecl() const;
 

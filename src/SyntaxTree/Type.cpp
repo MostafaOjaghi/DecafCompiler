@@ -12,6 +12,6 @@ void SyntaxTree::Type::setTypeName(const SymbolTable::TypeName &typeName) {
     Type::typeName = typeName;
 }
 
-std::string SyntaxTree::Type::cgen() {
-    return std::string();
+SyntaxTree::Cgen SyntaxTree::Type::cgen() {
+    return Cgen();
 }

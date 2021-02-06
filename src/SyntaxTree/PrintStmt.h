@@ -16,7 +16,7 @@ namespace SyntaxTree {
         std::vector<Expr *> exprs;
 
     public:
-        virtual std::string cgen() override;
+        virtual Cgen cgen() override;
         virtual void addExpr(Expr *expr);
     };
 }

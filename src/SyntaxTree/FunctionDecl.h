@@ -32,7 +32,7 @@ namespace SyntaxTree {
 
         Formals *getFormals() const;
 
-        std::string cgen() override;
+        Cgen cgen() override;
 
         void setFormals(Formals *formals);
 

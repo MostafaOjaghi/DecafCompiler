@@ -18,7 +18,7 @@ namespace SyntaxTree {
     public:
         void addVariable(Variable *variable);
 
-        std::string cgen() override;
+        Cgen cgen() override;
     };
 
     class FormalsToVariablePlus : public Formals {
