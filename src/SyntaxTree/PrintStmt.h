@@ -21,8 +21,7 @@ namespace SyntaxTree {
 
         void setActuals(Actuals *actuals);
 
-    public:
-        virtual Cgen cgen() override;
+        Cgen cgen() override;
     };
 }
 

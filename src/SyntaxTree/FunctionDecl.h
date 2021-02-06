@@ -38,6 +38,8 @@ namespace SyntaxTree {
     };
 
     class FunctionDeclToVoidIdent : public FunctionDecl {
+    public:
+        Cgen cgen() override;
     };
 }
 

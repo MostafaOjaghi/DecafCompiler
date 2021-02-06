@@ -30,6 +30,10 @@ void SyntaxTree::StmtToExpr::setExpr(SyntaxTree::Expr *expr) {
     StmtToExpr::expr = expr;
 }
 
+SyntaxTree::Cgen SyntaxTree::StmtToExpr::cgen() {
+    return expr->cgen();
+}
+
 void SyntaxTree::StmtToExpr::handleScope() {
     this->getExpr()->setScope(this->getScope());
     this->getExpr()->handleScope();
