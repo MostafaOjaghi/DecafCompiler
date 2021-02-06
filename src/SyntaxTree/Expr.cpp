@@ -22,12 +22,24 @@ void SyntaxTree::ExprToAssignmentExpr::setExpr(SyntaxTree::Expr *expr) {
     ExprToAssignmentExpr::expr = expr;
 }
 
+void SyntaxTree::ExprToAssignmentExpr::handleScope() {
+    this->getExpr()->setScope(this->getScope());
+    this->getExpr()->handleScope();
+    this->getLValue()->setScope(this->getScope());
+    this->getLValue()->handleScope();
+}
+
 SyntaxTree::Constant *SyntaxTree::ExprToConstant::getConstant() const {
     return constant;
 }
 
 void SyntaxTree::ExprToConstant::setConstant(SyntaxTree::Constant *constant) {
     ExprToConstant::constant = constant;
+}
+
+void SyntaxTree::ExprToConstant::handleScope() {
+    this->getConstant()->setScope(this->getScope());
+    this->getConstant()->handleScope();
 }
 
 SyntaxTree::LValue *SyntaxTree::ExprToLValue::getLValue() const {

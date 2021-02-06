@@ -18,6 +18,8 @@ namespace SyntaxTree {
     private:
         std::string Id;
     public:
+        void handleScope() override;
+
         const std::string &getId() const;
 
         void setId(const std::string &id);

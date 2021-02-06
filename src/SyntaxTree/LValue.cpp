@@ -12,6 +12,10 @@ void SyntaxTree::LValueToIdent::setId(const std::string &id) {
     Id = id;
 }
 
+void SyntaxTree::LValueToIdent::handleScope() {
+    // Nothing here
+}
+
 SyntaxTree::Expr *SyntaxTree::LValueToFieldAccess::getExpr() const {
     return expr;
 }

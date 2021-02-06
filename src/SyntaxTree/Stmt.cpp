@@ -3,6 +3,7 @@
 //
 
 #include "Stmt.h"
+#include "StmtBlock.h"
 
 SyntaxTree::PrintStmt *SyntaxTree::StmtToPrintStmt::getPrintStmt() const {
     return printStmt;
@@ -16,12 +17,22 @@ SyntaxTree::Cgen SyntaxTree::StmtToPrintStmt::cgen() {
     return printStmt->cgen();
 }
 
+void SyntaxTree::StmtToPrintStmt::handleScope() {
+    this->getPrintStmt()->setScope(this->getScope());
+    this->getPrintStmt()->handleScope();
+}
+
 SyntaxTree::Expr *SyntaxTree::StmtToExpr::getExpr() const {
     return expr;
 }
 
 void SyntaxTree::StmtToExpr::setExpr(SyntaxTree::Expr *expr) {
     StmtToExpr::expr = expr;
+}
+
+void SyntaxTree::StmtToExpr::handleScope() {
+    this->getExpr()->setScope(this->getScope());
+    this->getExpr()->handleScope();
 }
 
 SyntaxTree::IfStmt *SyntaxTree::StmtToIfStmt::getIfStmt() const {
@@ -78,4 +89,9 @@ SyntaxTree::StmtBlock *SyntaxTree::StmtToStmtBlock::getStmtBlock() const {
 
 void SyntaxTree::StmtToStmtBlock::setStmtBlock(SyntaxTree::StmtBlock *stmtBlock) {
     StmtToStmtBlock::stmtBlock = stmtBlock;
+}
+
+void SyntaxTree::StmtToStmtBlock::handleScope() {
+    this->getStmtBlock()->setScope(this->getScope());
+    this->getStmtBlock()->handleScope();
 }

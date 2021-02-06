@@ -22,6 +22,8 @@ namespace SyntaxTree {
         LValue *lValue;
         Expr *expr;
     public:
+        void handleScope() override;
+
         LValue *getLValue() const;
 
         void setLValue(LValue *lValue);
@@ -35,6 +37,8 @@ namespace SyntaxTree {
     private:
         Constant *constant;
     public:
+        void handleScope() override;
+
         Constant *getConstant() const;
 
         void setConstant(Constant *constant);
