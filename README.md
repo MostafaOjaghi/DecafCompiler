@@ -102,7 +102,7 @@ be a `Popparams sz`.
 The following commands include memory access.
 * `Assign *(a + offset) = b`: Store the value of `b` in offset bytes after `a` in memory.
 * `Assign a = *(b + offset)`: Load the value in addes `b + offset` of memory 
-
+* `Acall x:` Call the function that its label is located at address `x`
 ##TAC tests
 
 **Simple function call example**:
