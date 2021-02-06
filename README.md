@@ -11,8 +11,13 @@ Yeganeh Gharedaghi  97106216
 ```
 
 ## TAC format
+**Input and Output**:
+The following commands handle simple input and output of character.
 
-*Assign value commands*:
+* `Input x`: Takes an *Integer* as an input and writes it in `x`
+* `Output x`: Outputs the value in `x`.
+
+**Assign value commands**:
 
 * `Assign x = y`: Set the value of `x` equal to the value of `y`
 * `Assign x = a op b`: This command calculates `a op b` and then writes the output
@@ -33,11 +38,11 @@ in x. `op` can have forms such as follows:
 * `Assign x = not y`: `y` should be `0` or `1` and the calculated not is written into `x`
 * `Assign x = - y`: negate `y` and then write the negated value into `x`
 
-*Labels and goto*:
+**Labels and goto**:
 * `label labelName:`: defines a label to be able to jump to.
 * `goto labelName`: A simple jump to label named `labelName`
 
-*Function call commands*:
+**Function call commands**:
 
 * `label functionName: param1 param2 param3 ...`: This defines a label, if the label is a function
 the parameters `param1`, `param2`, ... are the input arguments.
@@ -52,10 +57,10 @@ local variable that is used in the function. *Caution*: keep in mind if you have
 * `Endfunc var`: returns the value that is stored in `var`
 
 
-*Exit command*:
+**Exit command**:
 * `Exit`: If this line is read then the program exits.
 
-*Global Variables*:
+**Global Variables**:
 each program in TAC is written as follows:
 ```
 Assign g1 = 0
@@ -93,7 +98,14 @@ are all functions that may or may not return value. To call each of these functi
 `Pushparam x` may be needed if they have input arguments and then after each function call there should
 be a `Popparams sz`.
 
-*Simple function call example*:
+**Pointers**:
+The following commands include memory access.
+* `Assign *(a + offset) = b`: Store the value of `b` in offset bytes after `a` in memory.
+* `Assign a = *(b + offset)`: Load the value in addes `b + offset` of memory 
+
+##TAC tests
+
+**Simple function call example**:
 ```
 Assign global1 = 10
 Assign global2 = 20
