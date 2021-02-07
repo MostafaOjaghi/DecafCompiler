@@ -16,10 +16,8 @@ addiu $sp $sp -48
 li $v0 5 
 syscall 
 sw $v0 -4($fp)
-li $t0 5
-sw $t0 0($gp)
 lw $t0 -4($fp)
-lw $t1 0($gp)
+li $t1 5
 div $t0 $t0 $t1
 sw $t0 -8($fp)
 addi $sp $sp -4
@@ -38,7 +36,7 @@ addi $sp $sp 4
 sw $v0 -12($fp)
 addi $sp $sp 4
 lw $t0 -12($fp)
-lw $t1 0($gp)
+li $t1 5
 sub $t0 $t0 $t1
 sw $t0 -12($fp)
 li $v0 1 
@@ -84,10 +82,8 @@ li $t0 1
 sw $t0 -4($fp)
 lw $t0 8($fp)
 beq $t0 0 end
-li $t0 1
-sw $t0 -8($fp)
 lw $t0 8($fp)
-lw $t1 -8($fp)
+li $t1 1
 sub $t0 $t0 $t1
 sw $t0 8($fp)
 addi $sp $sp -4
@@ -106,7 +102,7 @@ addi $sp $sp 4
 sw $v0 -4($fp)
 addi $sp $sp 4
 lw $t0 8($fp)
-lw $t1 -8($fp)
+li $t1 1
 add $t0 $t0 $t1
 sw $t0 8($fp)
 lw $t0 -4($fp)

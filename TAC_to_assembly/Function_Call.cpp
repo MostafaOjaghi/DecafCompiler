@@ -238,7 +238,7 @@ int main() {
 
                 // Assign x = t1 op t2
 
-                // arithmatic|logical:
+                // arithmetic | logical:
                 // lw $t0 stack[t1]
                 // lw $t1 stack[t2]
                 // op $t0 $t0 $t1
@@ -250,8 +250,7 @@ int main() {
                     outputFile << "li $t0 " << tokens[3] << "\n";
                     outputFile << "sw $t0 " << getPos(tokens[1], 0) << "\n";
                     continue;
-                }
-                else if (SIZE(tokens) == 5) {
+                } else if (SIZE(tokens) == 5) {
 
                     outputFile << "lw $t0 " << getPos(tokens[4], 0) << "\n";
                     if (tokens[3] == "-") {
@@ -268,8 +267,16 @@ int main() {
                 string op = tokens[4];
                 string x = tokens[1];
 
-                outputFile << "lw $t0 " << getPos(t1, 0) << "\n";
-                outputFile << "lw $t1 " << getPos(t2, 0) << "\n";
+                if (t1[0] =< '9' && t1[0] >= '0') {
+                    outputFile << "li $t0 " << t1 << "\n";
+                } else {
+                    outputFile << "lw $t0 " << getPos(t1, 0) << "\n";
+                }
+                if (t2[0] =< '9' && t2[0] >= '0') {
+                    outputFile << "li $t1 " << t2 << "\n";
+                } else {
+                    outputFile << "lw $t1 " << getPos(t2, 0) << "\n";
+                }
 
                 if (op == "+") {
                     outputFile << "add $t0 $t0 $t1\n";

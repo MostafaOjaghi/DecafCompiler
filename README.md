@@ -100,8 +100,8 @@ be a `Popparams sz`.
 
 **Pointers**:
 The following commands include memory access.
-* `Assign *(a + offset) = b`: Store the value of `b` in offset bytes after `a` in memory.
-* `Assign a = *(b + offset)`: Load the value in addes `b + offset` of memory 
+* `Store *(a + offset) = b`: Store the value of `b` in offset bytes after `a` in memory.
+* `Load a = *(b + offset)`: Load the value in addes `b + offset` of memory
 
 ##TAC tests
 

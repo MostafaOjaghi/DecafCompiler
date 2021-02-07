@@ -15,7 +15,7 @@ Beginfunc 48
 Assign x = 1
 IfZ a Goto end
 Assign b = 1
-Assign a = a - b
+Assign a = a - 1
 Pushparam a
 Lcall mu -> x
 Popparams 4
