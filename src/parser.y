@@ -242,6 +242,7 @@ proto_type: type T_ID T_OP formals T_CP T_SEMICOLON {   PrototypeToTypeIdent *no
 
 stmt_block: T_OCB variable_decls stmts T_CCB {  StmtBlock *node = new StmtBlock();
                                                 node->setVariableDecls((VariableDecls *) $2);
+                                                ((Stmts *) $3)->reverseStmts();
                                                 node->setStmts((Stmts *) $3);
                                                 $$ = node;}
 ;
@@ -550,27 +551,27 @@ actuals: {  Actuals *node = nullptr;
 ;
 
 constant: T_INTLITERAL {    Constant *node = new Constant();
-                            node->setConstantIdType("int");
+                            node->setConstantType(ConstantType::INT);
                             node->setConstantValue(((Token *)$1)->getLexeme());
                             $$ = node;
                         }
 		| T_DOUBLELITERAL {    Constant *node = new Constant();
-                               node->setConstantIdType("double");
+                               node->setConstantType(ConstantType::DOUBLE);
                                node->setConstantValue(((Token *)$1)->getLexeme());
                                $$ = node;
                            }
 		| T_BOOLEANLITERAL {    Constant *node = new Constant();
-                                node->setConstantIdType("bool");
+                                node->setConstantType(ConstantType::BOOL);
                                 node->setConstantValue(((Token *)$1)->getLexeme());
                                 $$ = node;
                            }
 		| T_STRINGLITERAL {    Constant *node = new Constant();
-                               node->setConstantIdType("string");
+                               node->setConstantType(ConstantType::STRING);
                                node->setConstantValue(((Token *)$1)->getLexeme());
                                $$ = node;
                           }
 		| T_NULL        {   Constant *node = new Constant();
-		                    node->setConstantIdType("null");
+		                    node->setConstantType(ConstantType::NULL_POINTER);
 		                    node->setConstantValue(((Token *)$1)->getLexeme());
 		                    $$ = node;
 		                    }

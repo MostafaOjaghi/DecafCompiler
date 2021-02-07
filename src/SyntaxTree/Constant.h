@@ -8,14 +8,24 @@
 #include "Node.h"
 
 namespace SyntaxTree {
+    enum class ConstantType {
+        INT,
+        BOOL,
+        DOUBLE,
+        STRING,
+        NULL_POINTER
+    };
+
     class Constant : public Node {
     private:
-        std::string constantIdType;
+        ConstantType constantType;
         std::string constantValue;
     public:
-        const std::string &getConstantIdType() const;
+        Cgen cgen() override;
 
-        void setConstantIdType(const std::string &constantIdType);
+        ConstantType getConstantType() const;
+
+        void setConstantType(ConstantType constantType);
 
         const std::string &getConstantValue() const;
 

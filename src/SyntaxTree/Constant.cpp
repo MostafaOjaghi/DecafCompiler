@@ -4,18 +4,28 @@
 
 #include "Constant.h"
 
-const std::string &SyntaxTree::Constant::getConstantIdType() const {
-    return constantIdType;
-}
-
-void SyntaxTree::Constant::setConstantIdType(const std::string &constantIdType) {
-    Constant::constantIdType = constantIdType;
-}
-
 const std::string &SyntaxTree::Constant::getConstantValue() const {
     return constantValue;
 }
 
 void SyntaxTree::Constant::setConstantValue(const std::string &constantValue) {
     Constant::constantValue = constantValue;
+}
+
+SyntaxTree::Cgen SyntaxTree::Constant::cgen() {
+    Cgen cgen;
+    cgen.var = TemporaryGenerator::newTemp();
+    if (constantType == ConstantType::INT)
+        cgen.code = "Assign " + cgen.var + " = " + constantValue + "\n";
+    else
+        assert(0);
+    return cgen;
+}
+
+SyntaxTree::ConstantType SyntaxTree::Constant::getConstantType() const {
+    return constantType;
+}
+
+void SyntaxTree::Constant::setConstantType(SyntaxTree::ConstantType constantType) {
+    Constant::constantType = constantType;
 }

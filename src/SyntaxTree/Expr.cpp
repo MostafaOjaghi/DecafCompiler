@@ -28,6 +28,16 @@ void SyntaxTree::ExprToAssignmentExpr::handleScope() {
     this->getLValue()->handleScope();
 }
 
+SyntaxTree::Cgen SyntaxTree::ExprToAssignmentExpr::cgen() {
+    Cgen cgen;
+    Cgen lvalue_cgen = lValue->cgen();
+    Cgen expr_cgen = expr->cgen();
+    cgen.code += expr_cgen.code;
+    cgen.code += lvalue_cgen.code;
+    cgen.code += "Assign " + lvalue_cgen.var + " = " + expr_cgen.var + "\n";
+    return cgen;
+}
+
 SyntaxTree::Constant *SyntaxTree::ExprToConstant::getConstant() const {
     return constant;
 }
@@ -39,6 +49,10 @@ void SyntaxTree::ExprToConstant::setConstant(SyntaxTree::Constant *constant) {
 void SyntaxTree::ExprToConstant::handleScope() {
     this->getConstant()->setScope(this->getScope());
     this->getConstant()->handleScope();
+}
+
+SyntaxTree::Cgen SyntaxTree::ExprToConstant::cgen() {
+    return constant->cgen();
 }
 
 SyntaxTree::LValue *SyntaxTree::ExprToLValue::getLValue() const {
@@ -95,6 +109,16 @@ const std::string &SyntaxTree::ExprToBinaryOperation::getOperatorSymbol() const 
 
 void SyntaxTree::ExprToBinaryOperation::setOperatorSymbol(const std::string &operatorSymbol) {
     ExprToBinaryOperation::operatorSymbol = operatorSymbol;
+}
+
+SyntaxTree::Cgen SyntaxTree::ExprToBinaryOperation::cgen() {
+    Cgen cgen, op1, op2;
+    op1 = operand1->cgen();
+    op2 = operand2->cgen();
+    cgen.code += op1.code + op2.code;
+    cgen.var = TemporaryGenerator::newTemp();
+    cgen.code += "Assign " + cgen.var + " " + op1.var + " " + operatorSymbol + " " + op2.var + "\n";
+    return Node::cgen();
 }
 
 const std::string &SyntaxTree::ExprToUnaryOperation::getOperatorSymbol() const {

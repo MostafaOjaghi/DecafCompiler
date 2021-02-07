@@ -2,6 +2,7 @@
 // Created by shengdebao on 2/5/21.
 //
 
+#include <algorithm>
 #include "Stmts.h"
 
 const std::vector<SyntaxTree::Stmt *> &SyntaxTree::Stmts::getStmts() const {
@@ -25,4 +26,8 @@ void SyntaxTree::Stmts::handleScope() {
         stmt->handleScope();
     }
 
+}
+
+void SyntaxTree::Stmts::reverseStmts() {
+    std::reverse(stmts.begin(), stmts.end());
 }

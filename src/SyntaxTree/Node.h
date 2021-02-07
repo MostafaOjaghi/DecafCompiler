@@ -8,23 +8,26 @@
 
 #include <vector>
 #include <string>
+#include <cassert>
 #include <SymbolTable/Scope.h>
+#include "SymbolTable/TemporaryGenerator.h"
 
 
 namespace SyntaxTree {
     class Cgen {
     public:
-        Cgen(std::string code);
+        explicit Cgen(std::string code);
 
         Cgen() = default;
 
         std::string var;
         std::string code;
+        int var_count = 0;
     };
 
     class Node {
     private:
-        SymbolTable::Scope *scope;
+        SymbolTable::Scope *scope = nullptr;
     public:
         void setScope(SymbolTable::Scope *scope);
         virtual Cgen cgen() {return Cgen();};

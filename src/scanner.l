@@ -20,10 +20,10 @@ exp ((E|e)((\+|-)?)?{digit}+)
 [ \t\r\014] /*ignore ws*/ ;
 "\n"		/*ignore newline*/ ;
 
-(true|false)					{return T_BOOLEANLITERAL;}
-{digit}+\.{digit}*{exp}?	{return T_DOUBLELITERAL;}
-\"[^\"]*\"					{return T_STRINGLITERAL;}
-({digit}+|0(X|x)[a-fA-F0-9]+)			{return T_INTLITERAL;}
+(true|false)					{yylval=new Token(yytext); return T_BOOLEANLITERAL;}
+{digit}+\.{digit}*{exp}?	{yylval=new Token(yytext); return T_DOUBLELITERAL;}
+\"[^\"]*\"					{yylval=new Token(yytext); return T_STRINGLITERAL;}
+({digit}+|0(X|x)[a-fA-F0-9]+)			{yylval=new Token(yytext); return T_INTLITERAL;}
 
 "void" 			{return T_VOID;}
 "int" 			{return T_INT;}
