@@ -119,7 +119,8 @@ namespace SyntaxTree {
     };
 
     class ExprToReadInteger : public Expr {
-
+    public:
+        Cgen cgen() override;
     };
 
     class ExprToReadLine : public Expr {

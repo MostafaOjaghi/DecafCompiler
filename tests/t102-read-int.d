@@ -1,7 +1,7 @@
 void main() {
 	int a;
-	ReadInt(a);
+	a = ReadInteger();
 	Print(a);
-	ReadInt(a);
+	a = ReadInteger();
 	Print(a);
 }

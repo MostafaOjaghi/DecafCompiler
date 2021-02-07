@@ -117,8 +117,8 @@ SyntaxTree::Cgen SyntaxTree::ExprToBinaryOperation::cgen() {
     op2 = operand2->cgen();
     cgen.code += op1.code + op2.code;
     cgen.var = TemporaryGenerator::newTemp();
-    cgen.code += "Assign " + cgen.var + " " + op1.var + " " + operatorSymbol + " " + op2.var + "\n";
-    return Node::cgen();
+    cgen.code += "Assign " + cgen.var + " = " + op1.var + " " + operatorSymbol + " " + op2.var + "\n";
+    return cgen;
 }
 
 const std::string &SyntaxTree::ExprToUnaryOperation::getOperatorSymbol() const {
@@ -151,4 +151,12 @@ SyntaxTree::Type *SyntaxTree::ExprToNewArray::getType() const {
 
 void SyntaxTree::ExprToNewArray::setType(SyntaxTree::Type *type) {
     ExprToNewArray::type = type;
+}
+
+SyntaxTree::Cgen SyntaxTree::ExprToReadInteger::cgen() {
+    Cgen cgen;
+    cgen.var = TemporaryGenerator::newTemp();
+    cgen.code = "Input " + cgen.var + "\n";
+    cgen.var_count = 1;
+    return cgen;
 }
