@@ -134,7 +134,7 @@ function_decl: type T_ID T_OP formals T_CP stmt_block { FunctionDeclToTypeIdent 
                                                        }
 ;
 
-formals:
+formals:           {$$ = new Formals();}
 		| variable {Formals *node = new Formals();
 		            node->addVariable((Variable *) $1);
 		            $$ = node;}

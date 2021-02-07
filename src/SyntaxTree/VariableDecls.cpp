@@ -18,7 +18,7 @@ void SyntaxTree::VariableDecls::addVariableDecl(SyntaxTree::VariableDecl *variab
 
 void SyntaxTree::VariableDecls::handleScope() {
     for (VariableDecl *variableDecl : variableDecls) {
-        this->setScope(this->getScope());
-        this->handleScope();
+        variableDecl->setScope(this->getScope());
+        variableDecl->handleScope();
     }
 }

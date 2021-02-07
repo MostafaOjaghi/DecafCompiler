@@ -118,6 +118,7 @@ SyntaxTree::Cgen SyntaxTree::ExprToBinaryOperation::cgen() {
     cgen.code += op1.code + op2.code;
     cgen.var = TemporaryGenerator::newTemp();
     cgen.code += "Assign " + cgen.var + " = " + op1.var + " " + operatorSymbol + " " + op2.var + "\n";
+    cgen.var_count = op1.var_count + op2.var_count + 1;
     return cgen;
 }
 

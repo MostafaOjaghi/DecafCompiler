@@ -9,6 +9,7 @@
 #include <vector>
 #include <string>
 #include <cassert>
+#include <iostream>
 #include <SymbolTable/Scope.h>
 #include "SymbolTable/TemporaryGenerator.h"
 

@@ -24,7 +24,7 @@ int main(int argc, char* argv[]) {
 
 //    yydebug = 1;
     yyparse();
-//    root.handleScope();
+    root.handleScope();
     cout << root.cgen().code << endl;
     fprintf(output_file, "main:\nli $v0, 10\nsyscall\n");
     fclose(output_file);

@@ -28,7 +28,6 @@ SyntaxTree::Cgen SyntaxTree::StmtBlock::cgen() {
 void SyntaxTree::StmtBlock::handleScope() {
     this->getVariableDecls()->setScope(this->getScope());
     this->getVariableDecls()->handleScope();
-
     SymbolTable::Scope *stmtsScope = new SymbolTable::Scope(this->getScope()->getName() + "_" + "STMTS", this->getScope());
     this->getStmts()->setScope(stmtsScope);
     this->getStmts()->handleScope();
