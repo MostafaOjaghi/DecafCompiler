@@ -21,8 +21,6 @@ int gp;
 int fp;
 int fp_plus;
 int fp_minus;
-int fp_plus_prev;
-int fp_minus_prev;
 
 string current_func;
 string current_label;
@@ -30,15 +28,8 @@ int current_func_size;
 
 void beginSetFp() {
 
-    fp_plus_prev = fp_plus;
-    fp_minus_prev = fp_minus;
     fp_minus = -4;
     fp_plus = 0;
-}
-
-void endSetFp() {
-    fp_plus = fp_plus_prev;
-    fp_minus = fp_minus_prev;
 }
 
 string convertIntegerToString(int z) {
@@ -130,7 +121,7 @@ int main() {
 
     string line;
 
-    ifstream inputFile ("readme_test.txt");
+    ifstream inputFile ("complex_function.txt");
 
     current_func = "global:";
 
@@ -336,11 +327,9 @@ int main() {
 
                 sp -= current_func_size;
 
-                endSetFp();
-
 
                 if (SIZE(tokens) == 2) {
-                    outputFile << "sw $t0 " << getPos(tokens[1], 0) << "\n";
+                    outputFile << "lw $t0 " << getPos(tokens[1], 0) << "\n";
                     outputFile << "addi $v0 $t0 0\n";
                 }
                 outputFile << "addiu $sp $sp " << current_func_size << "\n";

@@ -1,0 +1,9 @@
+Assign a = 0
+Assign b = 0
+Lcall main
+Exit
+Label main:
+Beginfunc 100
+Output a
+Output b
+Endfunc
