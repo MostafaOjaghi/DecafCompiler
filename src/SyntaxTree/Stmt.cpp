@@ -81,6 +81,15 @@ void SyntaxTree::StmtToForStmt::setForStmt(SyntaxTree::ForStmt *forStmt) {
     StmtToForStmt::forStmt = forStmt;
 }
 
+SyntaxTree::Cgen SyntaxTree::StmtToForStmt::cgen() {
+    return forStmt->cgen();
+}
+
+void SyntaxTree::StmtToForStmt::handleScope() {
+    forStmt->setScope(getScope());
+    forStmt->handleScope();
+}
+
 SyntaxTree::BreakStmt *SyntaxTree::StmtToBreakStmt::getBreakStmt() const {
     return breakStmt;
 }

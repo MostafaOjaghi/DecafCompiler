@@ -40,7 +40,7 @@ SyntaxTree::Cgen SyntaxTree::WhileStmt::cgen() {
 void SyntaxTree::WhileStmt::handleScope() {
     conditionalExpr->setScope(getScope());
     conditionalExpr->handleScope();
-    auto *scope = new SymbolTable::Scope("while",getScope());
-    stmt->setScope(getScope());
+    auto *scope = new SymbolTable::Scope("whileBody",getScope());
+    stmt->setScope(scope);
     stmt->handleScope();
 }

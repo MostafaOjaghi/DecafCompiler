@@ -66,6 +66,10 @@ namespace SyntaxTree {
     private:
         ForStmt *forStmt;
     public:
+        Cgen cgen() override;
+
+        void handleScope() override;
+
         ForStmt *getForStmt() const;
 
         void setForStmt(ForStmt *forStmt);
