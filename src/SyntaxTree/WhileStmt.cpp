@@ -28,12 +28,12 @@ SyntaxTree::Cgen SyntaxTree::WhileStmt::cgen() {
     std::string labelPrefix = UniqueGenerator::newLabel();
     std::string startLabel = labelPrefix + "_startWhile";
     std::string endLabel = labelPrefix + "_endWhile";
-    cgen.code += "Label " + startLabel + ":\n";
-    cgen.code += condition.code;
-    cgen.code += "IfZ " + condition.var + " Goto " + endLabel + "\n";
-    cgen.code += body.code;
-    cgen.code += "Goto " + startLabel + "\n";
-    cgen.code += "Label " + endLabel + ":\n";
+    cgen.append("Label " + startLabel + ":\n");
+    cgen.append(condition);
+    cgen.append("IfZ " + condition.var + " Goto " + endLabel + "\n");
+    cgen.append(body);
+    cgen.append("Goto " + startLabel + "\n");
+    cgen.append("Label " + endLabel + ":\n");
     return cgen;
 }
 

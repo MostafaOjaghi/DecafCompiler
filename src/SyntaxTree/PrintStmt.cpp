@@ -9,10 +9,10 @@ SyntaxTree::Cgen SyntaxTree::PrintStmt::cgen() {
     // TODO handle other types
     for (Expr *actual : actuals->getExpressions()) {
         Cgen expr_cgen = actual->cgen();
-        cgen.code += expr_cgen.code;
-        cgen.code += "Output " + expr_cgen.var + '\n';
+        cgen.append(expr_cgen);
+        cgen.append("Output " + expr_cgen.var + '\n');
     }
-    cgen.code += "Endl\n";
+    cgen.append("Endl\n");
     return cgen;
 }
 

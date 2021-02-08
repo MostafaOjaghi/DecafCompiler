@@ -24,6 +24,17 @@ namespace SyntaxTree {
         std::string var;
         std::string code;
         int var_count = 0;
+
+        std::vector<std::string> breakLabels;
+        std::vector<std::string> continueLabels;
+
+        void append(Cgen cgen);
+        void append(std::string code);
+        void createVar();
+        void addBreakLabel(std::string label);
+        void addContinueLabel(std::string label);
+        std::string getBreakLabels();
+        std::string getContinueLabels();
     };
 
     class Node {

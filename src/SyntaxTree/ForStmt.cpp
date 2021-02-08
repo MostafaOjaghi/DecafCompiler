@@ -45,21 +45,17 @@ SyntaxTree::Cgen SyntaxTree::ForStmt::cgen() {
     std::string startLabel = labelPrefix + "_startFor";
     std::string stepLabel = labelPrefix + "_stepFor";
     std::string endLabel = labelPrefix + "_endFor";
-    if (forInit != nullptr) {
-        Cgen init = forInit->cgen();
-        cgen.code += init.code;
-    }
-    cgen.code += "Label " + startLabel + ":\n";
-    cgen.code += condition.code;
-    cgen.code += "IfZ " + condition.var + " Goto " + endLabel + "\n";
-    cgen.code += body.code;
-    cgen.code += "Label " + stepLabel + ":\n";
-    if (forStep != nullptr) {
-        Cgen step = forStep->cgen();
-        cgen.code += step.code;
-    }
-    cgen.code += "Goto " + startLabel + "\n";
-    cgen.code += "Label " + endLabel + ":\n";
+    if (forInit != nullptr)
+        cgen.append(forInit->cgen());
+    cgen.append("Label " + startLabel + ":\n");
+    cgen.append(condition);
+    cgen.append("IfZ " + condition.var + " Goto " + endLabel + "\n");
+    cgen.append(body);
+    cgen.append("Label " + stepLabel + ":\n");
+    if (forStep != nullptr)
+        cgen.append(forStep->cgen());
+    cgen.append("Goto " + startLabel + "\n");
+    cgen.append("Label " + endLabel + ":\n");
     return cgen;
 }
 

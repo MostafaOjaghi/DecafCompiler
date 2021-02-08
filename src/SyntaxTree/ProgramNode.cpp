@@ -12,19 +12,19 @@ void SyntaxTree::ProgramNode::addDecl(Decl *decl) {
 }
 
 SyntaxTree::Cgen SyntaxTree::ProgramNode::cgen() {
-    std::string variables;
-    std::string text;
+    Cgen variables;
+    Cgen text;
     Cgen cgen;
     for (Decl *decl : declerations) {
         if (dynamic_cast<DeclToVariableDecl *>(decl))
-            variables += decl->cgen().code;
+            variables.append(decl->cgen());
         else
-            text += decl->cgen().code;
+            text.append(decl->cgen());
     }
-    cgen.code = variables +
-            "Lcall func_main\n" +
-            "Exit\n" +
-            text;
+    cgen.append(variables);
+    cgen.append("Lcall func_main\n"
+                "Exit\n");
+    cgen.append(text);
     return cgen;
 }
 
