@@ -9,9 +9,8 @@
 
 namespace SyntaxTree {
     class ContinueStmt : public Node {
-    };
-
-    class ContinueStmtToContinue : public ContinueStmt {
+    public:
+        Cgen cgen() override;
     };
 }
 

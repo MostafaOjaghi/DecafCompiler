@@ -79,6 +79,8 @@ namespace SyntaxTree {
     private:
         BreakStmt *breakStmt;
     public:
+        Cgen cgen() override;
+
         BreakStmt *getBreakStmt() const;
 
         void setBreakStmt(BreakStmt *breakStmt);
@@ -88,6 +90,8 @@ namespace SyntaxTree {
     private:
         ContinueStmt *continueStmt;
     public:
+        Cgen cgen() override;
+
         ContinueStmt *getContinueStmt() const;
 
         void setContinueStmt(ContinueStmt *continueStmt);

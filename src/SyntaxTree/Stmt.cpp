@@ -98,12 +98,20 @@ void SyntaxTree::StmtToBreakStmt::setBreakStmt(SyntaxTree::BreakStmt *breakStmt)
     StmtToBreakStmt::breakStmt = breakStmt;
 }
 
+SyntaxTree::Cgen SyntaxTree::StmtToBreakStmt::cgen() {
+    return breakStmt->cgen();
+}
+
 SyntaxTree::ContinueStmt *SyntaxTree::StmtToContinueStmt::getContinueStmt() const {
     return continueStmt;
 }
 
 void SyntaxTree::StmtToContinueStmt::setContinueStmt(SyntaxTree::ContinueStmt *continueStmt) {
     StmtToContinueStmt::continueStmt = continueStmt;
+}
+
+SyntaxTree::Cgen SyntaxTree::StmtToContinueStmt::cgen() {
+    return continueStmt->cgen();
 }
 
 SyntaxTree::ReturnStmt *SyntaxTree::StmtToReturnStmt::getReturnStmt() const {

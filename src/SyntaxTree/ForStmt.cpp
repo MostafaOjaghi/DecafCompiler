@@ -52,10 +52,12 @@ SyntaxTree::Cgen SyntaxTree::ForStmt::cgen() {
     cgen.append("IfZ " + condition.var + " Goto " + endLabel + "\n");
     cgen.append(body);
     cgen.append("Label " + stepLabel + ":\n");
+    cgen.append(cgen.getContinueLabels());
     if (forStep != nullptr)
         cgen.append(forStep->cgen());
     cgen.append("Goto " + startLabel + "\n");
     cgen.append("Label " + endLabel + ":\n");
+    cgen.append(cgen.getBreakLabels());
     return cgen;
 }
 

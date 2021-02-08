@@ -32,8 +32,10 @@ SyntaxTree::Cgen SyntaxTree::WhileStmt::cgen() {
     cgen.append(condition);
     cgen.append("IfZ " + condition.var + " Goto " + endLabel + "\n");
     cgen.append(body);
+    cgen.append(cgen.getContinueLabels());
     cgen.append("Goto " + startLabel + "\n");
     cgen.append("Label " + endLabel + ":\n");
+    cgen.append(cgen.getBreakLabels());
     return cgen;
 }
 
