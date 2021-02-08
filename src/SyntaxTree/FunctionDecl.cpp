@@ -39,7 +39,7 @@ void SyntaxTree::FunctionDecl::handleScope() {
 
 SyntaxTree::Cgen SyntaxTree::FunctionDeclToVoidIdent::cgen() {
     Cgen cgen;
-    cgen.code += "Label " + getFunctionIdentifier() + ":\n"; // TODO args
+    cgen.code += "Label func_" + getFunctionIdentifier() + ":\n"; // TODO args
     cgen.code += "Beginfunc 100\n";
     cgen.code += getStmtBlock()->cgen().code;
     cgen.code += "Endfunc\n";

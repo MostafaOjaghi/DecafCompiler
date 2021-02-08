@@ -125,6 +125,8 @@ string tacToAssembly(istream &inputFile) {
 
     int global_flag = true;
 
+    output << ".text\nmain:\n";
+
     while ( getline(inputFile, line) ) {
 
         stringstream ss(line);

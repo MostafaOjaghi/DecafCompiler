@@ -17,7 +17,7 @@ make clean
 make
 if [ $? -ne 0 ]; then
     echo "Code did not Compile"
-    exit -1;
+    exit 1;
 fi
 cd ..
 for filelist in ${dirlist[*]}
