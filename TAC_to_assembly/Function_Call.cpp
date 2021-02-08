@@ -270,7 +270,13 @@ string tacToAssembly(istream &inputFile) {
 
             if (SIZE(tokens) == 4) {
 
-                output << "li $t0 " << tokens[3] << "\n";
+                if (tokens[3][0] <= '9' && tokens[3][0] >= '0') {
+
+                    output << "li $t0 " << tokens[3] << "\n";
+                }
+                else {
+                    output << "lw $t0 " << getPos(tokens[3], 0) << "\n";
+                }
                 output << "sw $t0 " << getPos(tokens[1], 0) << "\n";
                 continue;
             } else if (SIZE(tokens) == 5) {
@@ -387,7 +393,7 @@ string tacToAssembly(istream &inputFile) {
 
 #ifndef TAC_TO_ASSEMBLY_IN_PROJECT
 int main() {
-    ifstream inputFile ("array.txt");
+    ifstream inputFile ("assign_test.txt");
 
 
     if (inputFile.is_open()) {

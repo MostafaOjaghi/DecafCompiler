@@ -15,7 +15,7 @@ Store *(a + 8) = b
 Load x = *(a + 4)
 Output x
 Endl
-Load x = *(a + 8)
+Load x = *(a)
 Output x
 
 Endfunc
