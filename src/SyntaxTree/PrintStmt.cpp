@@ -12,6 +12,7 @@ SyntaxTree::Cgen SyntaxTree::PrintStmt::cgen() {
         cgen.code += expr_cgen.code;
         cgen.code += "Output " + expr_cgen.var + '\n';
     }
+    cgen.code += "Endl\n";
     return cgen;
 }
 

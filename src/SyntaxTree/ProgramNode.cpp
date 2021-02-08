@@ -22,7 +22,7 @@ SyntaxTree::Cgen SyntaxTree::ProgramNode::cgen() {
             text += decl->cgen().code;
     }
     cgen.code = variables +
-            "LCall main\n" +
+            "Lcall func_main\n" +
             "Exit\n" +
             text;
     return cgen;
