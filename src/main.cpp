@@ -1,8 +1,9 @@
 #include <iostream>
 #include <cstdio>
-
 #include "parser.tab.h"
+
 #include "SyntaxTree/SyntaxTree.h"
+#include "TacToAssembly.h"
 
 extern FILE *yyin, *output_file;
 
@@ -23,13 +24,18 @@ int main(int argc, char* argv[]) {
     output_file = fopen(output_file_path, "w");
 
 //    yydebug = 1;
-    cout << "Parsing:" << endl;
+    cout << "---------- Parsing: ----------" << endl;
     yyparse();
-    cout << "Handle Scope:" << endl;
+    cout << "---------- Handle Scope: ----------" << endl;
     root.handleScope();
-    cout << "Cgen:" << endl;
-    cout << root.cgen().code << endl;
-    fprintf(output_file, "main:\nli $v0, 10\nsyscall\n");
+    cout << "---------- Cgen: ----------" << endl;
+    string tac = root.cgen().code;
+    cout << tac << endl;
+    cout << "---------- asm: ----------" << endl;
+    string assembly = TacToAssembly::toAssembly(tac);
+    cout << assembly << endl;
+//    fprintf(output_file, "main:\nli $v0, 10\nsyscall\n");
+    fprintf(output_file, "%s", assembly.c_str());
     fclose(output_file);
     return 0;
 }
