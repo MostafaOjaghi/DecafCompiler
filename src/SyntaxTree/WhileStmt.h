@@ -16,6 +16,10 @@ namespace SyntaxTree {
         Expr *conditionalExpr;
         Stmt *stmt;
     public:
+        Cgen cgen() override;
+
+        void handleScope() override;
+
         Stmt *getStmt() const;
 
         void setStmt(Stmt *stmt);

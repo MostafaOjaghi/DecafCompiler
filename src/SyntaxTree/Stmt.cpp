@@ -64,6 +64,15 @@ void SyntaxTree::StmtToWhileStmt::setWhileStmt(SyntaxTree::WhileStmt *whileStmt)
     StmtToWhileStmt::whileStmt = whileStmt;
 }
 
+SyntaxTree::Cgen SyntaxTree::StmtToWhileStmt::cgen() {
+    return whileStmt->cgen();
+}
+
+void SyntaxTree::StmtToWhileStmt::handleScope() {
+    whileStmt->setScope(getScope());
+    whileStmt->handleScope();
+}
+
 SyntaxTree::ForStmt *SyntaxTree::StmtToForStmt::getForStmt() const {
     return forStmt;
 }

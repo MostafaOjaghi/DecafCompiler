@@ -53,6 +53,10 @@ namespace SyntaxTree {
     private:
         WhileStmt *whileStmt;
     public:
+        Cgen cgen() override;
+
+        void handleScope() override;
+
         WhileStmt *getWhileStmt() const;
 
         void setWhileStmt(WhileStmt *whileStmt);
