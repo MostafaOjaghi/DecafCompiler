@@ -1,5 +1,3 @@
-li $t0 10
-sw $t0 0($gp)
 addi $sp $sp -4
 sw $ra ($sp)
 addi $sp $sp -4
@@ -13,123 +11,32 @@ addi $sp $sp 4
 j Exit
 main:
 addiu $sp $sp -48
-li $v0 5 
-syscall 
+li $a0 32
+li $v0 9
+syscall
 sw $v0 -4($fp)
-lw $t0 -4($fp)
-li $t1 5
-div $t0 $t0 $t1
+li $t0 10
 sw $t0 -8($fp)
-addi $sp $sp -4
-lw $t0 -8($fp)
-sw $t0 0($sp)
-addi $sp $sp -4
-sw $ra ($sp)
-addi $sp $sp -4
-sw $fp ($sp)
-move $fp $sp
-jal mu
-lw $fp ($sp)
-addi $sp $sp 4
-lw $ra ($sp)
-addi $sp $sp 4
-sw $v0 -12($fp)
-addi $sp $sp 4
-lw $t0 -12($fp)
-li $t1 5
-sub $t0 $t0 $t1
-sw $t0 -12($fp)
+lw $t0 -4($fp)
+lw $t1 -8($fp)
+sw $t1 0($t0)
+li $t0 12
+sw $t0 -8($fp)
+lw $t0 -4($fp)
+lw $t1 -8($fp)
+sw $t1 4($t0)
+li $t0 14
+sw $t0 -8($fp)
+lw $t0 -4($fp)
+lw $t1 -8($fp)
+sw $t1 8($t0)
+lw $t0 -4($fp)
+lw $t1 4($t0)
+sw $t1 -12($fp)
 li $v0 1 
 lw $t0 -12($fp)
 move $a0 $t0 
 syscall 
-li $v0 5 
-syscall 
-sw $v0 -16($fp)
-li $v0 5 
-syscall 
-sw $v0 -20($fp)
-addi $sp $sp -4
-lw $t0 -12($fp)
-sw $t0 0($sp)
-addi $sp $sp -4
-lw $t0 -16($fp)
-sw $t0 0($sp)
-addi $sp $sp -4
-lw $t0 -20($fp)
-sw $t0 0($sp)
-addi $sp $sp -4
-sw $ra ($sp)
-addi $sp $sp -4
-sw $fp ($sp)
-move $fp $sp
-jal check
-lw $fp ($sp)
-addi $sp $sp 4
-lw $ra ($sp)
-addi $sp $sp 4
-sw $v0 -24($fp)
-addi $sp $sp 12
-li $v0 1 
-lw $t0 -24($fp)
-move $a0 $t0 
-syscall 
-addiu $sp $sp 48
-jr $ra 
-mu:
-addiu $sp $sp -48
-li $t0 1
-sw $t0 -4($fp)
-lw $t0 8($fp)
-beq $t0 0 end
-lw $t0 8($fp)
-li $t1 1
-sub $t0 $t0 $t1
-sw $t0 8($fp)
-addi $sp $sp -4
-lw $t0 8($fp)
-sw $t0 0($sp)
-addi $sp $sp -4
-sw $ra ($sp)
-addi $sp $sp -4
-sw $fp ($sp)
-move $fp $sp
-jal mu
-lw $fp ($sp)
-addi $sp $sp 4
-lw $ra ($sp)
-addi $sp $sp 4
-sw $v0 -4($fp)
-addi $sp $sp 4
-lw $t0 8($fp)
-li $t1 1
-add $t0 $t0 $t1
-sw $t0 8($fp)
-lw $t0 -4($fp)
-lw $t1 8($fp)
-mul $t0 $t0 $t1
-sw $t0 -4($fp)
-end:
-lw $t0 -4($fp)
-addi $v0 $t0 0
-addiu $sp $sp 48
-jr $ra 
-check:
-addiu $sp $sp -48
-lw $t0 16($fp)
-lw $t1 12($fp)
-add $t0 $t0 $t1
-sw $t0 -4($fp)
-lw $t0 -4($fp)
-lw $t1 8($fp)
-add $t0 $t0 $t1
-sw $t0 -4($fp)
-lw $t0 -4($fp)
-lw $t1 0($gp)
-add $t0 $t0 $t1
-sw $t0 -4($fp)
-lw $t0 -4($fp)
-addi $v0 $t0 0
 addiu $sp $sp 48
 jr $ra 
 Exit:

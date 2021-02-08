@@ -55,7 +55,7 @@ void addToFramePointer(string label, string variable, int pos) {
     string temp = label + variable;
     frame_pointer_pos[temp] = pos;
     //cout << pos << "ejlali" << endl;
-    cout << frame_pointer_pos[temp] << " " << temp << endl;
+    //cout << frame_pointer_pos[temp] << " " << temp << endl;
 }
 
 void addToGlobal(string variable) {
@@ -95,7 +95,7 @@ string getPos(string variable, int offset) {
     else {
 
         addToFramePointer(current_func, variable, fp_minus);
-        cout << "here!!!!! " << current_func + variable << convertIntegerToString(frame_pointer_pos[current_func + variable])<< "\n";
+        //cout << "here!!!!! " << current_func + variable << convertIntegerToString(frame_pointer_pos[current_func + variable])<< "\n";
         fp_minus -= 4;
         return convertIntegerToString(frame_pointer_pos[current_func + variable] + offset)+"($fp)";
     }
@@ -121,7 +121,7 @@ int main() {
 
     string line;
 
-    ifstream inputFile ("complex_function.txt");
+    ifstream inputFile ("array.txt");
 
     current_func = "global:";
 
@@ -144,7 +144,7 @@ int main() {
                 tokens.push_back(buf);
             }
 
-            cout << line << " " << tokens[0] << endl;
+            //cout << line << " " << tokens[0] << endl;
 
             if (tokens[0] == "Label") {
 
@@ -169,45 +169,72 @@ int main() {
 
             } else if (tokens[0] == "Load") {
 
-                string base = tokens[3].substr(2);
-                string v = tokens[5];
+                string base;
+                string v = tokens[1];
                 string offset;
                 int pos;
 
                 if (SIZE(tokens) == 6) {
 
-                    offset = tokens[5].substr(0, (int) SIZE(tokens[3]) - 1);
-                } else if (SIZE(tokens) == 5) {
+                    base = tokens[3].substr(2, SIZE(tokens[3]) - 1);
+                    offset = tokens[5].substr(0, SIZE(tokens[5]) - 1);
+                    //cout << "LOOOOK!!!" << offset << endl << endl;
+                    cout << "1\n";
+                } else if (SIZE(tokens) == 4) {
 
+                    base = tokens[3].substr(2, SIZE(tokens[3]) - 3);
                     offset = "0";
+                    cout << "2\n";
                 }
 
+                cout << base << " base " << offset << " offset " << v << " v\n" ;
+
+                outputFile << "lw $t0 " << getPos(base, 0) << "\n";
+                outputFile << "lw $t1 " << offset << "($t0)\n";
+                outputFile << "sw $t1 " << getPos(v, 0) << "\n";
+                /*
                 outputFile << "lw $t0 " << getPos(base, stoi(offset)) << "\n";
                 outputFile << "sw $t0 " << getPos(v, 0) << "\n";
+                */
 
                 // TODO CHECK
             } else if (tokens[0] == "Store") {
 
-                string base = tokens[1].substr(2);
+                string base;
                 string offset, v;
 
                 if (SIZE(tokens) == 6) {
 
-                    offset = tokens[3].substr(0, (int) SIZE(tokens[3]) - 1);
+                    base = tokens[1].substr(2, SIZE(tokens[1]) - 1);
+                    offset = tokens[3].substr(0, SIZE(tokens[3]) - 1);
+                    //cout <<  "aa" << tokens[3].substr(0, SIZE(tokens[3]) - 1) << "aa " << SIZE(tokens[3]) << endl;
                     v = tokens[5];
-                    //cout << base << " " << stack[base] + stoi(offset) << endl;
-                } else if (SIZE(tokens) == 5) {
+                    cout << "3\n";
+                    //cout << base << endl;
+                } else if (SIZE(tokens) == 4) {
 
                     offset = "0";
                     v = tokens[3];
+                    cout << "4\n";
+                    //string s = "01234567\n";
+                    //cout << s.substr(2, 2) << endl;
+                    //cout <<  "aa  " << tokens[1].substr(2, SIZE(tokens[1]) - 1) << "  aa " << SIZE(tokens[1]) << endl;
+                    base = tokens[1].substr(2, SIZE(tokens[1]) - 3);
                     //cout << base << " " << stack[base] + stoi(offset) << endl;
                 }
 
+                cout << base << " base " << offset << " offset " << v << " v\n" ;
+
+                outputFile << "lw $t0 " << getPos(base, 0) << "\n";
+                outputFile << "lw $t1 " << getPos(v, 0) << "\n";
+                outputFile << "sw $t1 " << offset << "($t0)\n";
+
+                /*
                 outputFile << "lw $t0 " << getPos(base, stoi(offset)) << "\n";
                 outputFile << "lw $t1 " << getPos(v, 0) << "\n";
                 outputFile << "sw $t1 ($t0)";
 
-                /*
+
                 if (stack.count(v)) {
 
                     stack[v] = stack[base] + stoi(offset);
@@ -267,12 +294,12 @@ int main() {
                 string op = tokens[4];
                 string x = tokens[1];
 
-                if (t1[0] =< '9' && t1[0] >= '0') {
+                if (t1[0] <= '9' && t1[0] >= '0') {
                     outputFile << "li $t0 " << t1 << "\n";
                 } else {
                     outputFile << "lw $t0 " << getPos(t1, 0) << "\n";
                 }
-                if (t2[0] =< '9' && t2[0] >= '0') {
+                if (t2[0] <= '9' && t2[0] >= '0') {
                     outputFile << "li $t1 " << t2 << "\n";
                 } else {
                     outputFile << "lw $t1 " << getPos(t2, 0) << "\n";
@@ -327,6 +354,11 @@ int main() {
                 if (SIZE(tokens) == 4) {
                     outputFile << "sw $v0 " << getPos(tokens[3], 0) << "\n";
                 }
+            } else if (tokens[0] == "Alloc") {
+
+                outputFile << "li $a0 " << stoi(tokens[2]) << "\n";
+                outputFile << "li $v0 9\nsyscall\n";
+                outputFile << "sw $v0 " << getPos(tokens[1], 0) << "\n";
             } else if (tokens[0] == "Popparams") {
 
                 outputFile << "addi $sp $sp " << stoi(tokens[1]) << "\n";
