@@ -369,13 +369,19 @@ string tacToAssembly(istream &inputFile) {
             }
             output << "addiu $sp $sp " << current_func_size << "\n";
             output << "jr $ra \n";
+        } else if (tokens[0] == "Endl") {
+
+            output << "li $v0 4\n";
+            output << "la $a0 newline\n";
+            output << "syscall\n";
         } else if (tokens[0] == "Exit") {
-            output << "j Exit\n";
+                output << "li $v0 10\n";
+                output << "syscall\n";
         }
 
-
     }
-    output << "Exit:\n";
+    output << ".data\n";
+    output << "newline: .asciiz \"\\n\"\n";
     return output.str();
 }
 

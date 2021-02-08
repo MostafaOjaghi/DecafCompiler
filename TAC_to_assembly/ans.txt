@@ -8,7 +8,8 @@ lw $fp ($sp)
 addi $sp $sp 4
 lw $ra ($sp)
 addi $sp $sp 4
-j Exit
+li $v0 10
+syscall
 main:
 addiu $sp $sp -48
 li $a0 32
@@ -37,6 +38,17 @@ li $v0 1
 lw $t0 -12($fp)
 move $a0 $t0 
 syscall 
+li $v0 4
+la $a0 newline
+syscall
+lw $t0 -4($fp)
+lw $t1 8($t0)
+sw $t1 -12($fp)
+li $v0 1 
+lw $t0 -12($fp)
+move $a0 $t0 
+syscall 
 addiu $sp $sp 48
 jr $ra 
-Exit:
+.data
+newline: .asciiz "\n"
