@@ -375,7 +375,10 @@ string tacToAssembly(istream &inputFile) {
             }
             output << "addiu $sp $sp " << current_func_size << "\n";
             output << "jr $ra \n";
-        } else if (tokens[0] == "Endl") {
+        } else if (tokens[0] == "Goto") {
+            output << "j " << tokens[1] << "\n";
+        }
+        else if (tokens[0] == "Endl") {
 
             output << "li $v0 4\n";
             output << "la $a0 newline\n";

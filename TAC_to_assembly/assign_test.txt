@@ -1,0 +1,13 @@
+Lcall main
+Exit
+Label main:
+Beginfunc 100
+Assign _main_a = 0
+Assign _main_b = 0
+Assign _t0 = 3
+Assign _main_a = _t0
+Assign _t1 = 5
+Assign _main_b = _t1
+Output _main_a
+Output _main_b
+Endfunc
