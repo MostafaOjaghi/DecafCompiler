@@ -40,6 +40,10 @@ namespace SyntaxTree {
     private:
         IfStmt *ifStmt;
     public:
+        Cgen cgen() override;
+
+        void handleScope() override;
+
         IfStmt *getIfStmt() const;
 
         void setIfStmt(IfStmt *ifStmt);

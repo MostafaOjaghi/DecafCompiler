@@ -121,7 +121,7 @@ SyntaxTree::Cgen SyntaxTree::ExprToBinaryOperation::cgen() {
     op1 = operand1->cgen();
     op2 = operand2->cgen();
     cgen.code += op1.code + op2.code;
-    cgen.var = TemporaryGenerator::newTemp();
+    cgen.var = UniqueGenerator::newTemp();
     cgen.code += "Assign " + cgen.var + " = " + op1.var + " " + operatorSymbol + " " + op2.var + "\n";
     cgen.var_count = op1.var_count + op2.var_count + 1;
     return cgen;
@@ -168,7 +168,7 @@ void SyntaxTree::ExprToNewArray::setType(SyntaxTree::Type *type) {
 
 SyntaxTree::Cgen SyntaxTree::ExprToReadInteger::cgen() {
     Cgen cgen;
-    cgen.var = TemporaryGenerator::newTemp();
+    cgen.var = UniqueGenerator::newTemp();
     cgen.code = "Input " + cgen.var + "\n";
     cgen.var_count = 1;
     return cgen;

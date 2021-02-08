@@ -47,6 +47,15 @@ void SyntaxTree::StmtToIfStmt::setIfStmt(SyntaxTree::IfStmt *ifStmt) {
     StmtToIfStmt::ifStmt = ifStmt;
 }
 
+SyntaxTree::Cgen SyntaxTree::StmtToIfStmt::cgen() {
+    return ifStmt->cgen();
+}
+
+void SyntaxTree::StmtToIfStmt::handleScope() {
+    ifStmt->setScope(getScope());
+    getIfStmt()->handleScope();
+}
+
 SyntaxTree::WhileStmt *SyntaxTree::StmtToWhileStmt::getWhileStmt() const {
     return whileStmt;
 }

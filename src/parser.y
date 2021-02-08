@@ -313,8 +313,8 @@ if_stmt: T_IF T_OP expr T_CP stmt { IfStmt *node = new IfStmt();
                                     }
 		| T_IF T_OP expr T_CP stmt T_ELSE stmt {    IfStmt *node = new IfStmt();
 		                                            node->setConditionalExpr((Expr *) $3);
-                                                    node->setTrueStmt((Stmt *) $4);
-                                                    node->setFalseStmt((Stmt *) $6);
+                                                    node->setTrueStmt((Stmt *) $5);
+                                                    node->setFalseStmt((Stmt *) $7);
                                                     $$ = node;
                                                     }
 

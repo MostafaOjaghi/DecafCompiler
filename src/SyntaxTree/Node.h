@@ -11,7 +11,7 @@
 #include <cassert>
 #include <iostream>
 #include <SymbolTable/Scope.h>
-#include "SymbolTable/TemporaryGenerator.h"
+#include "SymbolTable/UniqueGenerator.h"
 
 
 namespace SyntaxTree {

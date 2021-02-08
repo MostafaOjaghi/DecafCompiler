@@ -14,7 +14,7 @@ void SyntaxTree::Constant::setConstantValue(const std::string &constantValue) {
 
 SyntaxTree::Cgen SyntaxTree::Constant::cgen() {
     Cgen cgen;
-    cgen.var = TemporaryGenerator::newTemp();
+    cgen.var = UniqueGenerator::newTemp();
     if (constantType == ConstantType::INT) {
         cgen.code += "Assign " + cgen.var + " = " + constantValue + "\n";
     } else if (constantType == ConstantType::BOOL) {
