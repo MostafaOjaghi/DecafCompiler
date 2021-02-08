@@ -67,6 +67,11 @@ SyntaxTree::Cgen SyntaxTree::ExprToLValue::cgen() {
     return lValue->cgen();
 }
 
+void SyntaxTree::ExprToLValue::handleScope() {
+    lValue->setScope(getScope());
+    lValue->handleScope();
+}
+
 SyntaxTree::Call *SyntaxTree::ExprToCall::getCall() const {
     return call;
 }
@@ -120,6 +125,13 @@ SyntaxTree::Cgen SyntaxTree::ExprToBinaryOperation::cgen() {
     cgen.code += "Assign " + cgen.var + " = " + op1.var + " " + operatorSymbol + " " + op2.var + "\n";
     cgen.var_count = op1.var_count + op2.var_count + 1;
     return cgen;
+}
+
+void SyntaxTree::ExprToBinaryOperation::handleScope() {
+    operand1->setScope(getScope());
+    operand2->setScope(getScope());
+    operand1->handleScope();
+    operand2->handleScope();
 }
 
 const std::string &SyntaxTree::ExprToUnaryOperation::getOperatorSymbol() const {

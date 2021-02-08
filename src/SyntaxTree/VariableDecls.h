@@ -17,7 +17,6 @@ namespace SyntaxTree {
     public:
         void handleScope() override;
 
-    public:
         const std::vector<VariableDecl *> &getVariableDecls() const;
         void addVariableDecl(VariableDecl *variableDecl);
 

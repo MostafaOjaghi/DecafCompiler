@@ -29,7 +29,7 @@ SyntaxTree::Cgen SyntaxTree::ProgramNode::cgen() {
 }
 
 void SyntaxTree::ProgramNode::handleScope() {
-    this->setScope(new SymbolTable::Scope("global", nullptr));
+    this->setScope(new SymbolTable::Scope("", nullptr));
     for (Decl *decl : declerations) {
         if (DeclToVariableDecl *node = dynamic_cast<DeclToVariableDecl *>(decl)) {
             node->setScope(this->getScope());

@@ -32,7 +32,7 @@ namespace SyntaxTree {
     public:
         void setScope(SymbolTable::Scope *scope);
         virtual Cgen cgen() {return Cgen();};
-        virtual SymbolTable::Scope * getScope();
+        SymbolTable::Scope *getScope();
         virtual void handleScope() {};
     };
 }

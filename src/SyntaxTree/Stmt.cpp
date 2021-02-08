@@ -96,6 +96,11 @@ void SyntaxTree::StmtToStmtBlock::setStmtBlock(SyntaxTree::StmtBlock *stmtBlock)
 }
 
 void SyntaxTree::StmtToStmtBlock::handleScope() {
-    this->getStmtBlock()->setScope(this->getScope());
+    auto *scope = new SymbolTable::Scope("block", getScope());
+    this->getStmtBlock()->setScope(scope);
     this->getStmtBlock()->handleScope();
+}
+
+SyntaxTree::Cgen SyntaxTree::StmtToStmtBlock::cgen() {
+    return stmtBlock->cgen();
 }

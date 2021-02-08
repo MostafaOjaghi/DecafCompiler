@@ -5,17 +5,17 @@
 #include "LValue.h"
 
 const std::string &SyntaxTree::LValueToIdent::getId() const {
-    return Id;
+    return id;
 }
 
 void SyntaxTree::LValueToIdent::setId(const std::string &id) {
-    Id = id;
+    LValueToIdent::id = id;
 }
 
 SyntaxTree::Cgen SyntaxTree::LValueToIdent::cgen() {
     Cgen cgen;
     // TODO check: may need to define new temp
-    cgen.var = Id;
+    cgen.var = getScope()->getEntry(id)->getUniqueId();
     return cgen;
 }
 
@@ -32,11 +32,11 @@ void SyntaxTree::LValueToFieldAccess::setExpr(SyntaxTree::Expr *expr) {
 }
 
 const std::string &SyntaxTree::LValueToFieldAccess::getId() const {
-    return Id;
+    return id;
 }
 
 void SyntaxTree::LValueToFieldAccess::setId(const std::string &id) {
-    Id = id;
+    LValueToFieldAccess::id = id;
 }
 
 SyntaxTree::Expr *SyntaxTree::LValueToArray::getExprArrayName() const {

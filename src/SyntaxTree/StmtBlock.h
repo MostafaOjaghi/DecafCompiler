@@ -17,7 +17,6 @@ namespace SyntaxTree {
     public:
         void handleScope() override;
 
-    public:
         Stmts *getStmts() const;
 
         void setStmts(Stmts *stmts);

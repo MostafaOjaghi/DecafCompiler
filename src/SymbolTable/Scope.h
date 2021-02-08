@@ -14,7 +14,7 @@ namespace SymbolTable {
     class Scope {
     private:
         std::string name;
-        Scope *par;
+        Scope *par = nullptr;
         std::map<std::string, SymbolTableEntry *>mp;
 
     public:
@@ -25,6 +25,7 @@ namespace SymbolTable {
 
         void setPar(Scope *par);
         std::string getName();
+        std::string getPrefix();
         Scope * getPar();
         SymbolTableEntry * getEntry(const std::string &id);
         void addEntry(const std::string &id, SymbolTableEntry *entry);

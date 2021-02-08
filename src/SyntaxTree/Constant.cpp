@@ -15,10 +15,20 @@ void SyntaxTree::Constant::setConstantValue(const std::string &constantValue) {
 SyntaxTree::Cgen SyntaxTree::Constant::cgen() {
     Cgen cgen;
     cgen.var = TemporaryGenerator::newTemp();
-    if (constantType == ConstantType::INT)
-        cgen.code = "Assign " + cgen.var + " = " + constantValue + "\n";
-    else
+    if (constantType == ConstantType::INT) {
+        cgen.code += "Assign " + cgen.var + " = " + constantValue + "\n";
+    } else if (constantType == ConstantType::BOOL) {
+        cgen.code += "Assign " + cgen.var + " = ";
+        if (constantValue == "true")
+            cgen.code += "1";
+        else if (constantValue == "false")
+            cgen.code += "0";
+        else
+            assert(0);
+        cgen.code += "\n";
+    } else {
         assert(0);
+    }
     return cgen;
 }
 

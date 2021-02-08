@@ -22,3 +22,8 @@ SyntaxTree::Actuals *SyntaxTree::PrintStmt::getActuals() const {
 void SyntaxTree::PrintStmt::setActuals(SyntaxTree::Actuals *actuals) {
     PrintStmt::actuals = actuals;
 }
+
+void SyntaxTree::PrintStmt::handleScope() {
+    actuals->setScope(getScope());
+    actuals->handleScope();
+}

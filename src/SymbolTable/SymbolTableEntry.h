@@ -8,11 +8,21 @@
 #include "TypeName.h"
 
 namespace SymbolTable {
+    class Scope;
+
     class SymbolTableEntry {
+        std::string id;
         TypeName typeName;
+        Scope *scope;
     public:
-        SymbolTableEntry() = default;
-        SymbolTableEntry(const TypeName &typeName);
+//        SymbolTableEntry() = default;
+        SymbolTableEntry(const std::string &id, const TypeName &typeName, Scope *scope);
+
+        Scope *getScope() const;
+
+        void setScope(Scope *scope);
+
+        std::string getUniqueId();
 
         const TypeName &getTypeName() const;
 

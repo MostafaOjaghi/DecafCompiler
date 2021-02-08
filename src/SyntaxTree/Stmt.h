@@ -109,6 +109,8 @@ namespace SyntaxTree {
         StmtBlock *getStmtBlock() const;
         void handleScope() override;
 
+        Cgen cgen() override;
+
         void setStmtBlock(StmtBlock *stmtBlock);
     };
 }

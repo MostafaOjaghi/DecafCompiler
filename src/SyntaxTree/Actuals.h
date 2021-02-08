@@ -15,6 +15,8 @@ namespace SyntaxTree {
     public:
         const std::vector<Expr *> &getExpressions() const;
         void addExpression(Expr *expr);
+
+        void handleScope() override;
     };
 }
 

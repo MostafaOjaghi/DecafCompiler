@@ -54,6 +54,8 @@ namespace SyntaxTree {
     public:
         Cgen cgen() override;
 
+        void handleScope() override;
+
         LValue *getLValue() const;
 
         void setLValue(LValue *lValue);
@@ -89,6 +91,8 @@ namespace SyntaxTree {
         Expr *operand2;
     public:
         Cgen cgen() override;
+
+        void handleScope() override;
 
         const std::string &getOperatorSymbol() const;
 

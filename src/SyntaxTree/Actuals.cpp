@@ -11,3 +11,10 @@ const std::vector<SyntaxTree::Expr *> &SyntaxTree::Actuals::getExpressions() con
 void SyntaxTree::Actuals::addExpression(SyntaxTree::Expr *expr) {
     expressions.push_back(expr);
 }
+
+void SyntaxTree::Actuals::handleScope() {
+    for (Expr *expr : expressions) {
+        expr->setScope(getScope());
+        expr->handleScope();
+    }
+}

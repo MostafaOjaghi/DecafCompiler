@@ -22,6 +22,8 @@ namespace SyntaxTree {
         void setActuals(Actuals *actuals);
 
         Cgen cgen() override;
+
+        void handleScope() override;
     };
 }
 

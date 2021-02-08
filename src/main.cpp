@@ -23,8 +23,11 @@ int main(int argc, char* argv[]) {
     output_file = fopen(output_file_path, "w");
 
 //    yydebug = 1;
+    cout << "Parsing:" << endl;
     yyparse();
+    cout << "Handle Scope:" << endl;
     root.handleScope();
+    cout << "Cgen:" << endl;
     cout << root.cgen().code << endl;
     fprintf(output_file, "main:\nli $v0, 10\nsyscall\n");
     fclose(output_file);
