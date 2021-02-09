@@ -65,6 +65,7 @@ SyntaxTree::Cgen SyntaxTree::LValueToArray::cgen() {
     cgen.append(name);
     cgen.append(index);
     cgen.createVar("int", 0); // TODO int?
+    cgen.append("Assign " + cgen.var + " = " + index.var + " + 1\n");
     cgen.append("Addr " + cgen.var + " = &(" + name.var + " + " + index.var + ")\n");
     return cgen;
 }

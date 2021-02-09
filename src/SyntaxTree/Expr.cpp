@@ -221,7 +221,9 @@ SyntaxTree::Cgen SyntaxTree::ExprToNewArray::cgen() {
     Cgen size_cgen = expr->cgen();
     cgen.append(size_cgen);
     cgen.createVar(type->getTypeNameId(), type->getDimension());
+    cgen.append("Assign " + cgen.var + " = " + size_cgen.var + " + 1\n");
     cgen.append("Alloc " + cgen.var + " " + size_cgen.var + "\n");
+    cgen.append("Store *(" + cgen.var + ") = " + size_cgen.var + "\n");
     return cgen;
 }
 
