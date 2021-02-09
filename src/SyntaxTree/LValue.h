@@ -47,6 +47,10 @@ namespace SyntaxTree {
         Expr *exprArrayName;
         Expr *exprArrayIndex;
     public:
+        Cgen cgen() override;
+
+        void handleScope() override;
+
         Expr *getExprArrayName() const;
 
         void setExprArrayName(Expr *exprArrayName);

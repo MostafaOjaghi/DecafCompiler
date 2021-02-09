@@ -3,6 +3,7 @@
 //
 
 #include "LValue.h"
+#include "Expr.h"
 
 const std::string &SyntaxTree::LValueToIdent::getId() const {
     return id;
@@ -55,4 +56,22 @@ SyntaxTree::Expr *SyntaxTree::LValueToArray::getExprArrayIndex() const {
 
 void SyntaxTree::LValueToArray::setExprArrayIndex(SyntaxTree::Expr *exprArrayIndex) {
     LValueToArray::exprArrayIndex = exprArrayIndex;
+}
+
+SyntaxTree::Cgen SyntaxTree::LValueToArray::cgen() {
+    Cgen cgen;
+    Cgen name = exprArrayName->cgen();
+    Cgen index = exprArrayIndex->cgen();
+    cgen.append(name);
+    cgen.append(index);
+    cgen.createVar("int", 0); // TODO int?
+    cgen.append("Addr " + cgen.var + " = &(" + name.var + " + " + index.var + ")\n");
+    return cgen;
+}
+
+void SyntaxTree::LValueToArray::handleScope() {
+    exprArrayName->setScope(getScope());
+    exprArrayName->handleScope();
+    exprArrayIndex->setScope(getScope());
+    exprArrayIndex->handleScope();
 }

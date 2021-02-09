@@ -526,6 +526,15 @@ lvalue: T_ID {  LValueToIdent *node = new LValueToIdent();
                 node->setId(((Token *)$1)->getLexeme());
                 $$ = node;
              }
+    | T_ID T_OB expr T_CB { LValueToArray *node = new LValueToArray();
+			    			LValueToIdent *lvalue = new LValueToIdent();
+			                lvalue->setId(((Token *)$1)->getLexeme());
+			                ExprToLValue *expr = new ExprToLValue();
+	            			expr->setLValue(lvalue);
+	                        node->setExprArrayName(expr);
+	                        node->setExprArrayIndex((Expr *) $3);
+	                        $$ = node;
+	                        }
 	| expr T_DOT T_ID { LValueToFieldAccess *node = new LValueToFieldAccess();
 	                    node->setExpr((Expr *) $1);
 	                    node->setId(((Token *)$2)->getLexeme());

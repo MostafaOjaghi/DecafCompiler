@@ -200,6 +200,36 @@ string tacToAssembly(istream &inputFile) {
 
             output << "addiu $sp $sp " << -current_func_size << "\n";
 
+        } else if (tokens[0] == "Addr") {
+
+            string base;
+            string v = tokens[1];
+            string offset;
+            int pos;
+
+            if (SIZE(tokens) == 6) {
+
+                base = tokens[3].substr(2, SIZE(tokens[3]) - 1);
+                offset = tokens[5].substr(0, SIZE(tokens[5]) - 1);
+                //cout << "LOOOOK!!!" << offset << endl << endl;
+//                cout << "1\n";
+            } else if (SIZE(tokens) == 4) {
+
+                base = tokens[3].substr(2, SIZE(tokens[3]) - 3);
+                offset = "0";
+//                cout << "2\n";
+            }
+
+//            cout << base << " base " << offset << " offset " << v << " v\n";
+
+            output << "lw $t0 " << getPos(base, 0) << "\n";
+            if (offset[0] <= '9' && offset[0] >= '0')
+                output << "li $t1 " << offset << "\n";
+            else
+                output << "lw $t1 " << getPos(offset, 0) << "\n";
+            output << "sll $t1 $t1 2\n";
+            output << "add $t1 $t1 $t0\n";
+            output << "sw $t1 " << getPos(v, 0) << "\n";
         } else if (tokens[0] == "Load") {
 
             string base;
@@ -212,18 +242,18 @@ string tacToAssembly(istream &inputFile) {
                 base = tokens[3].substr(2, SIZE(tokens[3]) - 1);
                 offset = tokens[5].substr(0, SIZE(tokens[5]) - 1);
                 //cout << "LOOOOK!!!" << offset << endl << endl;
-                cout << "1\n";
+//                cout << "1\n";
             } else if (SIZE(tokens) == 4) {
 
                 base = tokens[3].substr(2, SIZE(tokens[3]) - 3);
                 offset = "0";
-                cout << "2\n";
+//                cout << "2\n";
             }
 
-            cout << base << " base " << offset << " offset " << v << " v\n" ;
+//            cout << base << " base " << offset << " offset " << v << " v\n" ;
 
             output << "lw $t0 " << getPos(base, 0) << "\n";
-            output << "lw $t1 " << offset << "($t0)\n";
+            output << "lw $t1 " << stoi(offset) * 4 << "($t0)\n";
             output << "sw $t1 " << getPos(v, 0) << "\n";
             /*
             output << "lw $t0 " << getPos(base, stoi(offset)) << "\n";
@@ -242,13 +272,13 @@ string tacToAssembly(istream &inputFile) {
                 offset = tokens[3].substr(0, SIZE(tokens[3]) - 1);
                 //cout <<  "aa" << tokens[3].substr(0, SIZE(tokens[3]) - 1) << "aa " << SIZE(tokens[3]) << endl;
                 v = tokens[5];
-                cout << "3\n";
+//                cout << "3\n";
                 //cout << base << endl;
             } else if (SIZE(tokens) == 4) {
 
                 offset = "0";
                 v = tokens[3];
-                cout << "4\n";
+//                cout << "4\n";
                 //string s = "01234567\n";
                 //cout << s.substr(2, 2) << endl;
                 //cout <<  "aa  " << tokens[1].substr(2, SIZE(tokens[1]) - 1) << "  aa " << SIZE(tokens[1]) << endl;
@@ -256,11 +286,11 @@ string tacToAssembly(istream &inputFile) {
                 //cout << base << " " << stack[base] + stoi(offset) << endl;
             }
 
-            cout << base << " base " << offset << " offset " << v << " v\n" ;
+//            cout << base << " base " << offset << " offset " << v << " v\n" ;
 
             output << "lw $t0 " << getPos(base, 0) << "\n";
             output << "lw $t1 " << getPos(v, 0) << "\n";
-            output << "sw $t1 " << offset << "($t0)\n";
+            output << "sw $t1 " << stoi(offset) * 4 << "($t0)\n";
 
             /*
             output << "lw $t0 " << getPos(base, stoi(offset)) << "\n";
@@ -294,7 +324,7 @@ string tacToAssembly(istream &inputFile) {
             printInt(tokens[1]);
         } else if (tokens[0] == "OutputB") {
 
-            printBool(tokens[1]);
+//            printBool(tokens[1]);
         } else if (tokens[0] == "IfZ") {
 
             output << "lw $t0 " << getPos(tokens[1], 0) << "\n";
@@ -407,6 +437,7 @@ string tacToAssembly(istream &inputFile) {
                 output << "li $a0 " << stoi(tokens[2]) << "\n";
             else
                 output << "lw $a0 " << getPos(tokens[2], 0) << "\n";
+            output << "sll $a0 $a0 2\n";
             output << "li $v0 9\nsyscall\n";
             output << "sw $v0 " << getPos(tokens[1], 0) << "\n";
         } else if (tokens[0] == "Popparams") {
