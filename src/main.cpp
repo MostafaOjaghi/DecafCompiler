@@ -23,7 +23,7 @@ int main(int argc, char* argv[]) {
     yyin = fopen(input_file_path, "r");
     output_file = fopen(output_file_path, "w");
 
-//    yydebug = 1;
+    yydebug = 1;
     cout << "---------- Parsing: ----------" << endl;
     yyparse();
     cout << "---------- Handle Scope: ----------" << endl;

@@ -144,6 +144,10 @@ namespace SyntaxTree {
         Expr *expr;
         Type *type;
     public:
+        Cgen cgen() override;
+
+        void handleScope() override;
+
         Expr *getExpr() const;
 
         void setExpr(Expr *expr);

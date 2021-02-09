@@ -359,8 +359,10 @@ string tacToAssembly(istream &inputFile) {
                 output << "sw $v0 " << getPos(tokens[3], 0) << "\n";
             }
         } else if (tokens[0] == "Alloc") {
-
-            output << "li $a0 " << stoi(tokens[2]) << "\n";
+            if (tokens[2][0] <= '9' && tokens[2][0] >= '0')
+                output << "li $a0 " << stoi(tokens[2]) << "\n";
+            else
+                output << "lw $a0 " << getPos(tokens[2], 0) << "\n";
             output << "li $v0 9\nsyscall\n";
             output << "sw $v0 " << getPos(tokens[1], 0) << "\n";
         } else if (tokens[0] == "Popparams") {

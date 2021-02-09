@@ -206,6 +206,22 @@ void SyntaxTree::ExprToNewArray::setType(SyntaxTree::Type *type) {
     ExprToNewArray::type = type;
 }
 
+SyntaxTree::Cgen SyntaxTree::ExprToNewArray::cgen() {
+    Cgen cgen;
+    Cgen size_cgen = expr->cgen();
+    cgen.append(size_cgen);
+    cgen.createVar(type->getTypeNameId(), type->getDimension());
+    cgen.append("Alloc " + cgen.var + " " + size_cgen.var + "\n");
+    return cgen;
+}
+
+void SyntaxTree::ExprToNewArray::handleScope() {
+    expr->setScope(getScope());
+    expr->handleScope();
+    type->setScope(getScope());
+    type->handleScope();
+}
+
 SyntaxTree::Cgen SyntaxTree::ExprToReadInteger::cgen() {
     Cgen cgen;
     cgen.createVar("int", 0);

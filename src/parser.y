@@ -50,6 +50,7 @@ FILE *output_file;
 %left T_CMPL T_CMPLE T_CMPG T_CMPGE
 %left T_PLUS T_MINUS
 %left T_MUL T_DIV T_PERCENT
+%left T_DOT
 
 %start program
 
