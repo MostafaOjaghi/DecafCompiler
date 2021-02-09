@@ -15,7 +15,7 @@ exp ((E|e)((\+|-)?)?{digit}+)
 %%
 
 \/\/.* /* ignore single line comment */;
-\/\\*(.|\n)*\\*\/ /* ignore multi-line comment */;
+\/\*(.|\n)*\*\/ /* ignore multi-line comment */;
 
 [ \t\r\014] /*ignore ws*/ ;
 "\n"		/*ignore newline*/ ;

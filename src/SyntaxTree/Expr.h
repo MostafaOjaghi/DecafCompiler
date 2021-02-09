@@ -83,6 +83,8 @@ namespace SyntaxTree {
     public:
         Cgen cgen() override;
 
+        void handleScope() override;
+
         Expr *getExpr() const;
 
         void setExpr(Expr *expr);

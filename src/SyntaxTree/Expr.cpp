@@ -112,6 +112,11 @@ SyntaxTree::Cgen SyntaxTree::ExprToParenthesisExpr::cgen() {
     return expr->cgen();
 }
 
+void SyntaxTree::ExprToParenthesisExpr::handleScope() {
+    expr->setScope(getScope());
+    expr->handleScope();
+}
+
 SyntaxTree::Expr *SyntaxTree::ExprToBinaryOperation::getOperand1() const {
     return operand1;
 }
