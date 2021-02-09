@@ -34,7 +34,7 @@ FILE *output_file;
 %token T_CLASS T_INTERFACE T_NULL T_THIS T_EXTENDS T_IMPLEMENTS T_PRIVATE T_PROTECTED T_PUBLIC
 %token T_FOR T_WHILE T_IF T_ELSE T_RETURN T_BREAK T_CONTINUE
 %token T_NEW T_NEWARRAY T_PRINT T_READINTEGER T_READLINE T_DTOI T_ITOD T_BTOI T_ITOB
-%token T_PLUS T_MINUS T_MUL T_DIV T_PERCENT T_CMPL T_CMPLE T_CMPG T_CMPGE T_ASSIGN T_CMPE T_CMPNE T_OR T_AND T_NOT T_SEMICOLON T_COMMA T_DOT T_OB T_CB T_OP T_CP T_OCB T_CCB
+%token T_MUL T_DIV T_PERCENT T_PLUS T_MINUS T_CMPL T_CMPLE T_CMPG T_CMPGE T_ASSIGN T_CMPE T_CMPNE T_OR T_AND T_NOT T_SEMICOLON T_COMMA T_DOT T_OB T_CB T_OP T_CP T_OCB T_CCB
 %token T_NEWLINE T_UNDEFINED
 
 %token T_ID
@@ -42,6 +42,14 @@ FILE *output_file;
 %token T_DOUBLELITERAL
 %token T_STRINGLITERAL
 %token T_BOOLEANLITERAL
+
+%right T_ASSIGN
+%left T_OR
+%left T_AND
+%left T_CMPE T_CMPNE
+%left T_CMPL T_CMPLE T_CMPG T_CMPGE
+%left T_PLUS T_MINUS
+%left T_MUL T_DIV T_PERCENT
 
 %start program
 
@@ -368,8 +376,8 @@ actuals1: expr {    Actuals *node = new Actuals();
                     node->addExpression((Expr *) $1);
                     $$ = node;
                     }
-	| expr T_COMMA actuals1 {   Actuals *node = (Actuals *) $3; // TODO: may need to be reversed
-	                            node->addExpression((Expr *) $1);
+	| actuals1 T_COMMA expr {   Actuals *node = (Actuals *) $1; // TODO: may need to be reversed
+	                            node->addExpression((Expr *) $3);
 	                            $$ = node;
 	                            }
 ;
@@ -397,18 +405,6 @@ expr: lvalue T_ASSIGN expr {    ExprToAssignmentExpr *node = new ExprToAssignmen
 	                    node->setExpr((Expr *) $2);
 	                    $$ = node;
 	                    }
-	| expr T_PLUS expr {    ExprToBinaryOperation *node = new ExprToBinaryOperation();
-	                        node->setOperatorSymbol("+");
-	                        node->setOperand1((Expr *) $1);
-	                        node->setOperand2((Expr *) $3);
-	                        $$ = node;
-	                        }
-	| expr T_MINUS expr {    ExprToBinaryOperation *node = new ExprToBinaryOperation();
-                        	 node->setOperatorSymbol("-");
-                        	 node->setOperand1((Expr *) $1);
-                        	 node->setOperand2((Expr *) $3);
-                        	 $$ = node;
-                        	 }
 	| expr T_MUL expr {    ExprToBinaryOperation *node = new ExprToBinaryOperation();
                       	   node->setOperatorSymbol("*");
                       	   node->setOperand1((Expr *) $1);
@@ -427,6 +423,18 @@ expr: lvalue T_ASSIGN expr {    ExprToAssignmentExpr *node = new ExprToAssignmen
                          	   node->setOperand2((Expr *) $3);
                          	   $$ = node;
                          	   }
+	| expr T_PLUS expr {    ExprToBinaryOperation *node = new ExprToBinaryOperation();
+	                        node->setOperatorSymbol("+");
+	                        node->setOperand1((Expr *) $1);
+	                        node->setOperand2((Expr *) $3);
+	                        $$ = node;
+	                        }
+	| expr T_MINUS expr {    ExprToBinaryOperation *node = new ExprToBinaryOperation();
+                        	 node->setOperatorSymbol("-");
+                        	 node->setOperand1((Expr *) $1);
+                        	 node->setOperand2((Expr *) $3);
+                        	 $$ = node;
+                        	 }
 	| T_MINUS expr {    ExprToUnaryOperation *node = new ExprToUnaryOperation();
 	                    node->setOperatorSymbol("-");
 	                    node->setOperand((Expr *) $2);

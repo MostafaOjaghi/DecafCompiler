@@ -28,13 +28,13 @@ void SyntaxTree::ExprToAssignmentExpr::handleScope() {
     this->getLValue()->handleScope();
 }
 
-SyntaxTree::Cgen SyntaxTree::ExprToAssignmentExpr::cgen() {
+SyntaxTree::Cgen SyntaxTree::ExprToAssignmentExpr::cgen() { // TODO handle lvalue correctly
     Cgen cgen;
     Cgen lvalue_cgen = lValue->cgen();
     Cgen expr_cgen = expr->cgen();
-    cgen.code += expr_cgen.code;
-    cgen.code += lvalue_cgen.code;
-    cgen.code += "Assign " + lvalue_cgen.var + " = " + expr_cgen.var + "\n";
+    cgen.append(expr_cgen);
+    cgen.append(lvalue_cgen);
+    cgen.append("Assign " + lvalue_cgen.var + " = " + expr_cgen.var + "\n");
     return cgen;
 }
 
@@ -120,10 +120,10 @@ SyntaxTree::Cgen SyntaxTree::ExprToBinaryOperation::cgen() {
     Cgen cgen, op1, op2;
     op1 = operand1->cgen();
     op2 = operand2->cgen();
-    cgen.code += op1.code + op2.code;
-    cgen.var = UniqueGenerator::newTemp();
-    cgen.code += "Assign " + cgen.var + " = " + op1.var + " " + operatorSymbol + " " + op2.var + "\n";
-    cgen.var_count = op1.var_count + op2.var_count + 1;
+    cgen.append(op1);
+    cgen.append(op2);
+    cgen.createVar();
+    cgen.append("Assign " + cgen.var + " = " + op1.var + " " + operatorSymbol + " " + op2.var + "\n");
     return cgen;
 }
 
@@ -168,8 +168,7 @@ void SyntaxTree::ExprToNewArray::setType(SyntaxTree::Type *type) {
 
 SyntaxTree::Cgen SyntaxTree::ExprToReadInteger::cgen() {
     Cgen cgen;
-    cgen.var = UniqueGenerator::newTemp();
-    cgen.code = "Input " + cgen.var + "\n";
-    cgen.var_count = 1;
+    cgen.createVar();
+    cgen.append("Input " + cgen.var + "\n");
     return cgen;
 }

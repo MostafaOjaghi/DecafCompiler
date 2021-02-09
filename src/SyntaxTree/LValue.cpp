@@ -16,6 +16,7 @@ SyntaxTree::Cgen SyntaxTree::LValueToIdent::cgen() {
     Cgen cgen;
     // TODO check: may need to define new temp
     cgen.var = getScope()->getEntry(id)->getUniqueId();
+    cgen.var_count += 1;
     return cgen;
 }
 

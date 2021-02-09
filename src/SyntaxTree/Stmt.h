@@ -53,6 +53,10 @@ namespace SyntaxTree {
     private:
         WhileStmt *whileStmt;
     public:
+        Cgen cgen() override;
+
+        void handleScope() override;
+
         WhileStmt *getWhileStmt() const;
 
         void setWhileStmt(WhileStmt *whileStmt);
@@ -62,6 +66,10 @@ namespace SyntaxTree {
     private:
         ForStmt *forStmt;
     public:
+        Cgen cgen() override;
+
+        void handleScope() override;
+
         ForStmt *getForStmt() const;
 
         void setForStmt(ForStmt *forStmt);
@@ -71,6 +79,8 @@ namespace SyntaxTree {
     private:
         BreakStmt *breakStmt;
     public:
+        Cgen cgen() override;
+
         BreakStmt *getBreakStmt() const;
 
         void setBreakStmt(BreakStmt *breakStmt);
@@ -80,6 +90,8 @@ namespace SyntaxTree {
     private:
         ContinueStmt *continueStmt;
     public:
+        Cgen cgen() override;
+
         ContinueStmt *getContinueStmt() const;
 
         void setContinueStmt(ContinueStmt *continueStmt);

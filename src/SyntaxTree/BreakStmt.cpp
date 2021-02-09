@@ -3,3 +3,12 @@
 //
 
 #include "BreakStmt.h"
+
+SyntaxTree::Cgen SyntaxTree::BreakStmt::cgen() {
+    Cgen cgen;
+    std::string label = UniqueGenerator::newLabel() + "_break";
+    cgen.append("Goto " + label + "\n");
+    cgen.addBreakLabel(label);
+    return cgen;
+}
+

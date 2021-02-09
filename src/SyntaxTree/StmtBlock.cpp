@@ -23,8 +23,8 @@ void SyntaxTree::StmtBlock::setVariableDecls(SyntaxTree::VariableDecls *variable
 SyntaxTree::Cgen SyntaxTree::StmtBlock::cgen() {
     //TODO handle variables
     Cgen cgen;
-    cgen.code += variableDecls->cgen().code;
-    cgen.code += stmts->cgen().code;
+    cgen.append(variableDecls->cgen());
+    cgen.append(stmts->cgen());
     return cgen;
 }
 

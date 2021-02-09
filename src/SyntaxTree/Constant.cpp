@@ -14,18 +14,19 @@ void SyntaxTree::Constant::setConstantValue(const std::string &constantValue) {
 
 SyntaxTree::Cgen SyntaxTree::Constant::cgen() {
     Cgen cgen;
-    cgen.var = UniqueGenerator::newTemp();
+    cgen.createVar();
     if (constantType == ConstantType::INT) {
-        cgen.code += "Assign " + cgen.var + " = " + constantValue + "\n";
+        cgen.append("Assign " + cgen.var + " = " + constantValue + "\n");
     } else if (constantType == ConstantType::BOOL) {
-        cgen.code += "Assign " + cgen.var + " = ";
+        std::string code = "Assign " + cgen.var + " = ";
         if (constantValue == "true")
-            cgen.code += "1";
+            code += "1";
         else if (constantValue == "false")
-            cgen.code += "0";
+            code += "0";
         else
             assert(0);
-        cgen.code += "\n";
+        code += "\n";
+        cgen.append(code);
     } else {
         assert(0);
     }

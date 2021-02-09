@@ -3,6 +3,7 @@
 //
 
 #include "WhileStmt.h"
+#include "Stmt.h"
 
 SyntaxTree::Expr *SyntaxTree::WhileStmt::getConditionalExpr() const {
     return conditionalExpr;
@@ -18,4 +19,30 @@ SyntaxTree::Stmt *SyntaxTree::WhileStmt::getStmt() const {
 
 void SyntaxTree::WhileStmt::setStmt(SyntaxTree::Stmt *stmt) {
     WhileStmt::stmt = stmt;
+}
+
+SyntaxTree::Cgen SyntaxTree::WhileStmt::cgen() {
+    Cgen cgen;
+    Cgen condition = conditionalExpr->cgen();
+    Cgen body = stmt->cgen();
+    std::string labelPrefix = UniqueGenerator::newLabel();
+    std::string startLabel = labelPrefix + "_startWhile";
+    std::string endLabel = labelPrefix + "_endWhile";
+    cgen.append("Label " + startLabel + ":\n");
+    cgen.append(condition);
+    cgen.append("IfZ " + condition.var + " Goto " + endLabel + "\n");
+    cgen.append(body);
+    cgen.append(cgen.getContinueLabels());
+    cgen.append("Goto " + startLabel + "\n");
+    cgen.append("Label " + endLabel + ":\n");
+    cgen.append(cgen.getBreakLabels());
+    return cgen;
+}
+
+void SyntaxTree::WhileStmt::handleScope() {
+    conditionalExpr->setScope(getScope());
+    conditionalExpr->handleScope();
+    auto *scope = new SymbolTable::Scope("whileBody",getScope());
+    stmt->setScope(scope);
+    stmt->handleScope();
 }

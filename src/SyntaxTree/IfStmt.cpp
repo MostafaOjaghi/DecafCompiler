@@ -39,13 +39,13 @@ SyntaxTree::Cgen SyntaxTree::IfStmt::cgen() {
     std::string afterIf = labelPrefix + "_afterIf";
     if (falseStmt != nullptr)
         falseCgen = falseStmt->cgen();
-    cgen.code += condition.code;
-    cgen.code += "IfZ " + condition.var + " goto " + falseLabel + "\n";
-    cgen.code += trueCgen.code;
-    cgen.code += "Goto " + afterIf + "\n";
-    cgen.code += "Label " + falseLabel + ":\n";
-    cgen.code += falseCgen.code;
-    cgen.code += "Label " + afterIf + ":\n";
+    cgen.append(condition);
+    cgen.append("IfZ " + condition.var + " goto " + falseLabel + "\n");
+    cgen.append(trueCgen);
+    cgen.append("Goto " + afterIf + "\n");
+    cgen.append("Label " + falseLabel + ":\n");
+    cgen.append(falseCgen);
+    cgen.append("Label " + afterIf + ":\n");
     return cgen;
 }
 

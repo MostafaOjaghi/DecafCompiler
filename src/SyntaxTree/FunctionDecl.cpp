@@ -39,10 +39,11 @@ void SyntaxTree::FunctionDecl::handleScope() {
 
 SyntaxTree::Cgen SyntaxTree::FunctionDeclToVoidIdent::cgen() {
     Cgen cgen;
-    cgen.code += "Label func_" + getFunctionIdentifier() + ":\n"; // TODO args
-    cgen.code += "Beginfunc 100\n";
-    cgen.code += getStmtBlock()->cgen().code;
-    cgen.code += "Endfunc\n";
+    Cgen body = getStmtBlock()->cgen();
+    cgen.append("Label func_" + getFunctionIdentifier() + ":\n"); // TODO args
+    cgen.append("Beginfunc " + std::to_string(body.var_count * 4) + "\n");
+    cgen.append(body);
+    cgen.append("Endfunc\n");
 
     return cgen;
 }
