@@ -140,6 +140,19 @@ void printString (string token) {
     output << "syscall \n";
 }
 
+void  printBool (string token) {
+
+    output << "lw $t0 " << getPos(token, 0) << "\n";
+    output << "bne $t0 0 OutputBoolIsTrue\n";
+    output << "la $a0 false\n";
+    output << "j OutputBoolContinue\n";
+    output << "OutputBoolIsTrue:\n";
+    output << "la $a0 true\n";
+    output << "OutputBoolContinue:\n";
+    output << "li $v0 4\n";
+    output << "syscall \n";
+}
+
 string tacToAssembly(istream &inputFile) {
     output.clear();
     string line;
@@ -279,6 +292,9 @@ string tacToAssembly(istream &inputFile) {
             // print whats in token[1]
 
             printInt(tokens[1]);
+        } else if (tokens[0] == "OutputB") {
+
+            printBool(tokens[1]);
         } else if (tokens[0] == "IfZ") {
 
             output << "lw $t0 " << getPos(tokens[1], 0) << "\n";
@@ -421,12 +437,14 @@ string tacToAssembly(istream &inputFile) {
     }
     output << ".data\n";
     output << "newline: .asciiz \"\\n\"\n";
+    output << "true: .asciiz \"true\"\n";
+    output << "false: .asciiz \"false\"\n";
     return output.str();
 }
 
 #ifndef TAC_TO_ASSEMBLY_IN_PROJECT
 int main() {
-    ifstream inputFile ("string_input_output.txt");
+    ifstream inputFile ("boolean_output.txt");
 
 
     if (inputFile.is_open()) {
