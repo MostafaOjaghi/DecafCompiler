@@ -132,8 +132,38 @@ SyntaxTree::Cgen SyntaxTree::ExprToBinaryOperation::cgen() {
     op2 = operand2->cgen();
     cgen.append(op1);
     cgen.append(op2);
-    cgen.createVar("int", 0);
-    cgen.append("Assign " + cgen.var + " = " + op1.var + " " + operatorSymbol + " " + op2.var + "\n");
+    if (operatorSymbol == "==" || operatorSymbol == "!=") {
+        // TODO check compatibility
+        cgen.createVar("bool", 0);
+        cgen.append("Assign " + cgen.var + " = " + op1.var + " " + operatorSymbol + " " + op2.var + "\n");
+    } else if (operatorSymbol == "<" ||
+               operatorSymbol == "<=" ||
+               operatorSymbol == ">" ||
+               operatorSymbol == ">=") {
+        if (op1.typeName.getId() == op2.typeName.getId() && (op1.typeName.getId() == "int" || op1.typeName.getId() == "double")) {
+            cgen.createVar("bool", 0);
+            cgen.append("Assign " + cgen.var + " = " + op1.var + " " + operatorSymbol + " " + op2.var + "\n");
+        } else
+            ; // TODO raise semantic error
+    } else if (operatorSymbol == "+" ||
+               operatorSymbol == "-" ||
+               operatorSymbol == "*" ||
+               operatorSymbol == "/" ||
+               operatorSymbol == "%") {
+        if (op1.typeName.getId() == op2.typeName.getId() && (op1.typeName.getId() == "int" || op1.typeName.getId() == "double")) {
+            cgen.createVar("int", 0);
+            cgen.append("Assign " + cgen.var + " = " + op1.var + " " + operatorSymbol + " " + op2.var + "\n");
+        } else
+            ; // TODO raise semantic error
+    } else if (operatorSymbol == "||" ||
+               operatorSymbol == "&&") {
+        if (op2.typeName.getId() == "bool" && op1.typeName.getId() == "bool") {
+            cgen.createVar("bool", 0);
+            cgen.append("Assign " + cgen.var + " = " + op1.var + " " + operatorSymbol + " " + op2.var + "\n");
+        } else
+            ; // TODO raise semantic error
+    } else
+        assert(0); // unknown binary operation
     return cgen;
 }
 
