@@ -1,38 +1,49 @@
+.text
+main:
 addi $sp $sp -4
 sw $ra ($sp)
 addi $sp $sp -4
 sw $fp ($sp)
 move $fp $sp
-jal main
+jal _main
 lw $fp ($sp)
 addi $sp $sp 4
 lw $ra ($sp)
 addi $sp $sp 4
 li $v0 10
 syscall
-main:
-addiu $sp $sp -100
-li $t0 0
-sw $t0 -4($fp)
-li $t0 0
-sw $t0 -8($fp)
-li $t0 3
-sw $t0 -12($fp)
+_main:
+addiu $sp $sp -48
+li $a0 1000
+li $v0 9
+syscall
+sw $v0 -4($fp)
+li $v0 8
+lw $a0 -4($fp)
+li $a1 1000
+syscall
+li $a0 1000
+li $v0 9
+syscall
+sw $v0 -8($fp)
+li $v0 8
+lw $a0 -8($fp)
+li $a1 1000
+syscall
+li $v0 5 
+syscall 
+sw $v0 -12($fp)
+lw $a0 -8($fp)
+li $v0 4
+syscall 
+li $v0 1 
 lw $t0 -12($fp)
-sw $t0 -4($fp)
-li $t0 5
-sw $t0 -16($fp)
-lw $t0 -16($fp)
-sw $t0 -8($fp)
-li $v0 1 
-lw $t0 -4($fp)
 move $a0 $t0 
 syscall 
-li $v0 1 
-lw $t0 -8($fp)
-move $a0 $t0 
+lw $a0 -4($fp)
+li $v0 4
 syscall 
-addiu $sp $sp 100
+addiu $sp $sp 48
 jr $ra 
 .data
 newline: .asciiz "\n"

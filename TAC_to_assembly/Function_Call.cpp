@@ -19,6 +19,8 @@ int sp;
 
 int gp;
 
+const int string_size = 1000;
+
 int fp;
 int fp_plus;
 int fp_minus;
@@ -110,11 +112,31 @@ void getInt (string token) {
     output << "sw $v0 " << getPos(token, 0) << "\n";
 }
 
+void getString (string token) {
+
+    output << "li $a0 " << string_size << "\n";
+    output << "li $v0 9\n";
+    output << "syscall\n";
+    output << "sw $v0 " << getPos(token, 0) << "\n";
+
+    output << "li $v0 8\n";
+    output << "lw $a0 " << getPos(token, 0) << "\n";
+    output << "li $a1 " << string_size << "\n";
+    output << "syscall\n";
+}
+
 void printInt (string token) {
 
     output << "li $v0 1 \n";
     output << "lw $t0 " << getPos(token, 0) << "\n";
     output << "move $a0 $t0 \n";
+    output << "syscall \n";
+}
+
+void printString (string token) {
+
+    output << "lw $a0 " << getPos(token, 0) << "\n";
+    output << "li $v0 4\n";
     output << "syscall \n";
 }
 
@@ -246,6 +268,12 @@ string tacToAssembly(istream &inputFile) {
             // storing it as token[1] in stack pointer
 
             getInt(tokens[1]);
+        } else if (tokens[0] == "InputS") {
+
+            getString(tokens[1]);
+        } else if (tokens[0] == "OutputS") {
+
+            printString(tokens[1]);
         } else if (tokens[0] == "Output") {
 
             // print whats in token[1]
@@ -340,9 +368,9 @@ string tacToAssembly(istream &inputFile) {
             output << "sw $t0 " << getPos(x, 0) << "\n";
         } else if (tokens[0] == "Pushparam") {
 
-            output << "addi $sp $sp -4\n";
-            output << "lw $t0 " << getPos(tokens[1], 0) << "\n";
-            output << "sw $t0 0($sp)\n";
+                output << "addi $sp $sp -4\n";
+                output << "lw $t0 " << getPos(tokens[1], 0) << "\n";
+                output << "sw $t0 0($sp)\n";
         } else if (tokens[0] == "Lcall") {
 
             output << "addi $sp $sp -4\n";
@@ -398,7 +426,7 @@ string tacToAssembly(istream &inputFile) {
 
 #ifndef TAC_TO_ASSEMBLY_IN_PROJECT
 int main() {
-    ifstream inputFile ("assign_test.txt");
+    ifstream inputFile ("string_input_output.txt");
 
 
     if (inputFile.is_open()) {

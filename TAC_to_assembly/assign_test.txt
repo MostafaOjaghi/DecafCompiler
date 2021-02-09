@@ -1,6 +1,6 @@
-Lcall main
+Lcall _main
 Exit
-Label main:
+Label _main:
 Beginfunc 100
 Assign _main_a = 0
 Assign _main_b = 0
