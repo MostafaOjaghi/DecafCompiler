@@ -122,6 +122,15 @@ void SyntaxTree::StmtToReturnStmt::setReturnStmt(SyntaxTree::ReturnStmt *returnS
     StmtToReturnStmt::returnStmt = returnStmt;
 }
 
+SyntaxTree::Cgen SyntaxTree::StmtToReturnStmt::cgen() {
+    return returnStmt->cgen();
+}
+
+void SyntaxTree::StmtToReturnStmt::handleScope() {
+    returnStmt->setScope(getScope());
+    returnStmt->handleScope();
+}
+
 SyntaxTree::StmtBlock *SyntaxTree::StmtToStmtBlock::getStmtBlock() const {
     return stmtBlock;
 }

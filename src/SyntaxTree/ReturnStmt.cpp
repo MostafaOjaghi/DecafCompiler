@@ -13,5 +13,14 @@ void SyntaxTree::ReturnStmt::setExpr(SyntaxTree::Expr *expr) {
 }
 
 void SyntaxTree::ReturnStmt::handleScope() {
-    // nothing here
+    expr->setScope(getScope());
+    expr->handleScope();
+}
+
+SyntaxTree::Cgen SyntaxTree::ReturnStmt::cgen() {
+    Cgen cgen;
+    Cgen expr_cgen = expr->cgen();
+    cgen.append(expr_cgen);
+    cgen.append("Endfunc " + expr_cgen.var + "\n");
+    return cgen;
 }

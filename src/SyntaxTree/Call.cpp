@@ -3,6 +3,7 @@
 //
 
 #include "Call.h"
+#include "Actuals.h"
 
 const std::string &SyntaxTree::CallToFunctionCall::getFunctionId() const {
     return functionId;
@@ -18,6 +19,22 @@ SyntaxTree::Actuals *SyntaxTree::CallToFunctionCall::getActuals() const {
 
 void SyntaxTree::CallToFunctionCall::setActuals(SyntaxTree::Actuals *actuals) {
     CallToFunctionCall::actuals = actuals;
+}
+
+SyntaxTree::Cgen SyntaxTree::CallToFunctionCall::cgen() {
+    // TODO handle return type
+    Cgen cgen;
+    Cgen actualsCgen = actuals->cgen();
+    cgen.append(actualsCgen);
+    cgen.createVar("int", 0);
+    cgen.append("Lcall func_" + functionId + " -> " + cgen.var + "\n");
+    cgen.append("Popparams " + std::to_string(4 * actuals->getExpressions().size()) + "\n");
+    return cgen;
+}
+
+void SyntaxTree::CallToFunctionCall::handleScope() {
+    actuals->setScope(getScope());
+    actuals->handleScope();
 }
 
 SyntaxTree::Expr *SyntaxTree::CallToMethodCall::getMethodIdent() const {

@@ -29,21 +29,30 @@ void SyntaxTree::FunctionDecl::setStmtBlock(SyntaxTree::StmtBlock *stmtBlock) {
 }
 
 void SyntaxTree::FunctionDecl::handleScope() {
-    this->getFormals()->setScope(this->getScope());
-    this->getFormals()->handleScope();
-    SymbolTable::Scope *scopeStmtBlock = new SymbolTable::Scope();
-    scopeStmtBlock->setPar(this->getScope());
-    this->getStmtBlock()->setScope(scopeStmtBlock);
-    this->getStmtBlock()->handleScope();
+    auto *formalsScope = new SymbolTable::Scope("func_" + functionIdentifier, getScope());
+    auto *scopeStmtBlock = new SymbolTable::Scope("body", formalsScope);
+
+    formals->setScope(formalsScope);
+    formals->handleScope();
+    stmtBlock->setScope(scopeStmtBlock);
+    stmtBlock->handleScope();
 }
 
-SyntaxTree::Cgen SyntaxTree::FunctionDeclToVoidIdent::cgen() {
+SyntaxTree::Cgen SyntaxTree::FunctionDecl::cgen() {
     Cgen cgen;
     Cgen body = getStmtBlock()->cgen();
-    cgen.append("Label func_" + getFunctionIdentifier() + ":\n"); // TODO args
+    std::string args;
+    for (Variable *arg : formals->getVariables()) {
+        args += " " + formals->getScope()->getEntry(arg->getId())->getUniqueId();
+    }
+    cgen.append("Label func_" + getFunctionIdentifier() + ":" + args + "\n");
     cgen.append("Beginfunc " + std::to_string(body.var_count * 4) + "\n");
     cgen.append(body);
     cgen.append("Endfunc\n");
 
     return cgen;
+}
+
+SyntaxTree::Cgen SyntaxTree::FunctionDeclToVoidIdent::cgen() {
+    return FunctionDecl::cgen();
 }

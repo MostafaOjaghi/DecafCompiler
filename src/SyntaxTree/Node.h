@@ -21,6 +21,7 @@ namespace SyntaxTree {
 
         Cgen() = default;
 
+        SymbolTable::TypeName typeName;
         std::string var;
         std::string code;
         int var_count = 0;
@@ -30,7 +31,7 @@ namespace SyntaxTree {
 
         void append(Cgen cgen);
         void append(std::string code);
-        void createVar();
+        void createVar(const std::string &typeId, int dimension);
         void addBreakLabel(std::string label);
         void addContinueLabel(std::string label);
         std::string getBreakLabels();

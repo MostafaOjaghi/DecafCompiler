@@ -101,6 +101,10 @@ namespace SyntaxTree {
     private:
         ReturnStmt *returnStmt;
     public:
+        Cgen cgen() override;
+
+        void handleScope() override;
+
         ReturnStmt *getReturnStmt() const;
 
         void setReturnStmt(ReturnStmt *returnStmt);

@@ -4,6 +4,7 @@
 
 #include "Expr.h"
 #include "Type.h"
+#include "Call.h"
 
 SyntaxTree::LValue *SyntaxTree::ExprToAssignmentExpr::getLValue() const {
     return lValue;
@@ -80,6 +81,15 @@ void SyntaxTree::ExprToCall::setCall(SyntaxTree::Call *call) {
     ExprToCall::call = call;
 }
 
+SyntaxTree::Cgen SyntaxTree::ExprToCall::cgen() {
+    return call->cgen();
+}
+
+void SyntaxTree::ExprToCall::handleScope() {
+    call->setScope(getScope());
+    call->handleScope();
+}
+
 SyntaxTree::Expr *SyntaxTree::ExprToParenthesisExpr::getExpr() const {
     return expr;
 }
@@ -122,7 +132,7 @@ SyntaxTree::Cgen SyntaxTree::ExprToBinaryOperation::cgen() {
     op2 = operand2->cgen();
     cgen.append(op1);
     cgen.append(op2);
-    cgen.createVar();
+    cgen.createVar("int", 0);
     cgen.append("Assign " + cgen.var + " = " + op1.var + " " + operatorSymbol + " " + op2.var + "\n");
     return cgen;
 }
@@ -168,7 +178,7 @@ void SyntaxTree::ExprToNewArray::setType(SyntaxTree::Type *type) {
 
 SyntaxTree::Cgen SyntaxTree::ExprToReadInteger::cgen() {
     Cgen cgen;
-    cgen.createVar();
+    cgen.createVar("int", 0);
     cgen.append("Input " + cgen.var + "\n");
     return cgen;
 }

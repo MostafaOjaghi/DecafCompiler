@@ -15,8 +15,9 @@ void SyntaxTree::LValueToIdent::setId(const std::string &id) {
 SyntaxTree::Cgen SyntaxTree::LValueToIdent::cgen() {
     Cgen cgen;
     // TODO check: may need to define new temp
-    cgen.var = getScope()->getEntry(id)->getUniqueId();
-    cgen.var_count += 1;
+    SymbolTable::SymbolTableEntry *entry = getScope()->getEntry(id);
+    cgen.var = entry->getUniqueId();
+    cgen.typeName = entry->getTypeName();
     return cgen;
 }
 

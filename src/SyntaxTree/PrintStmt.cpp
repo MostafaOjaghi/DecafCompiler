@@ -10,7 +10,15 @@ SyntaxTree::Cgen SyntaxTree::PrintStmt::cgen() {
     for (Expr *actual : actuals->getExpressions()) {
         Cgen expr_cgen = actual->cgen();
         cgen.append(expr_cgen);
-        cgen.append("Output " + expr_cgen.var + '\n');
+        if (cgen.typeName.getDimension() == 0)
+            if (expr_cgen.typeName.getId() == "int")
+                cgen.append("Output " + expr_cgen.var + '\n');
+            else if (expr_cgen.typeName.getId() == "bool")
+                cgen.append("OutputB " + expr_cgen.var + "\n");
+            else
+                assert(0); // type not supported
+        else
+            assert (0); // dimension not supported
     }
     cgen.append("Endl\n");
     return cgen;

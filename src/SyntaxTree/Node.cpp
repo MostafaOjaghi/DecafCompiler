@@ -25,11 +25,6 @@ void SyntaxTree::Cgen::append(std::string code) {
     Cgen::code += code;
 }
 
-void SyntaxTree::Cgen::createVar() {
-    var = UniqueGenerator::newTemp();
-    var_count += 1;
-}
-
 void SyntaxTree::Cgen::addBreakLabel(std::string label) {
     breakLabels.push_back(label);
 }
@@ -52,4 +47,10 @@ std::string SyntaxTree::Cgen::getContinueLabels() {
         st += "Label " + label + ":\n";
     continueLabels.clear();
     return st;
+}
+
+void SyntaxTree::Cgen::createVar(const std::string &typeId, int dimension) {
+    var = UniqueGenerator::newTemp();
+    var_count += 1;
+    typeName = SymbolTable::TypeName(typeId, dimension);
 }

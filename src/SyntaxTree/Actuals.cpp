@@ -18,3 +18,13 @@ void SyntaxTree::Actuals::handleScope() {
         expr->handleScope();
     }
 }
+
+SyntaxTree::Cgen SyntaxTree::Actuals::cgen() {
+    Cgen cgen;
+    for (Expr *expr : expressions) {
+        Cgen expr_cgen = expr->cgen();
+        cgen.append(expr_cgen);
+        cgen.append("Pushparam " + expr_cgen.var + "\n");
+    }
+    return cgen;
+}

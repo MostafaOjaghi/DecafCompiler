@@ -14,10 +14,11 @@ void SyntaxTree::Constant::setConstantValue(const std::string &constantValue) {
 
 SyntaxTree::Cgen SyntaxTree::Constant::cgen() {
     Cgen cgen;
-    cgen.createVar();
     if (constantType == ConstantType::INT) {
+        cgen.createVar("int", 0);
         cgen.append("Assign " + cgen.var + " = " + constantValue + "\n");
     } else if (constantType == ConstantType::BOOL) {
+        cgen.createVar("bool", 0);
         std::string code = "Assign " + cgen.var + " = ";
         if (constantValue == "true")
             code += "1";

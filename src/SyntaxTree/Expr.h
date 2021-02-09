@@ -68,6 +68,10 @@ namespace SyntaxTree {
     private:
         Call *call;
     public:
+        Cgen cgen() override;
+
+        void handleScope() override;
+
         Call *getCall() const;
 
         void setCall(Call *call);
