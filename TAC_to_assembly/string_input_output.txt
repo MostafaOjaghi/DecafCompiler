@@ -1,0 +1,15 @@
+
+Lcall _main
+Exit
+
+Label _main:
+Beginfunc 48
+
+InputS string1
+InputS string2
+Input integer
+OutputS string2
+Output integer
+OutputS string1
+
+Endfunc
