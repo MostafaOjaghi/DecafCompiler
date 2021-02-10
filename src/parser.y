@@ -148,7 +148,7 @@ formals:           {$$ = new Formals();}
 		            node->addVariable((Variable *) $1);
 		            $$ = node;}
 		| formals T_COMMA variable {    Formals *node = (Formals *) $1;
-		                                node->addVariable((Variable *) $2);
+		                                node->addVariable((Variable *) $3);
 		                                $$ = node;
 		                           }
 ;

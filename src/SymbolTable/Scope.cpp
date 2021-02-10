@@ -3,6 +3,7 @@
 //
 
 #include <cassert>
+#include <iostream>
 #include "Scope.h"
 
 std::string SymbolTable::Scope::getName() {return name;}
@@ -14,8 +15,8 @@ SymbolTable::SymbolTableEntry * SymbolTable::Scope::getEntry(const std::string &
         return mp[id];
     if (par != nullptr)
         return par->getEntry(id);
+    std::cerr << "id:" << id << " not found" << std::endl;
     assert(0);
-    return nullptr;
 }
 
 void SymbolTable::Scope::addEntry(const std::string &id, SymbolTable::SymbolTableEntry *entry) {
