@@ -5,7 +5,9 @@
 #include "VariableDecl.h"
 
 SyntaxTree::Cgen SyntaxTree::VariableDecl::cgen() {
-    return Cgen("Assign " + variable->getId() + " = 0\n");
+    Cgen cgen("Assign " + getScope()->getEntry(variable->getId())->getUniqueId() + " = 0\n");
+    cgen.var_count = 1;
+    return cgen;
 }
 
 SyntaxTree::Variable *SyntaxTree::VariableDecl::getVariable() const {

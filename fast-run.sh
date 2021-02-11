@@ -9,7 +9,7 @@ NUMBER_OF_FAILED=0
 mkdir -p $OUTPUT_DIRECTORY
 mkdir -p $REPORT_DIRECTORY
 cd $TEST_DIRECTORY
-prefix="t" ;
+prefix="t"$1 ;
 dirlist=(`ls ${prefix}*.d`) ;
 cd ../
 cd $SOURCE_DIRECTORY
@@ -17,7 +17,7 @@ make clean
 make
 if [ $? -ne 0 ]; then
     echo "Code did not Compile"
-    exit -1;
+    exit 1;
 fi
 cd ..
 for filelist in ${dirlist[*]}

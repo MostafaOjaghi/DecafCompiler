@@ -16,7 +16,7 @@ namespace SyntaxTree {
 
     class LValueToIdent : public LValue {
     private:
-        std::string Id;
+        std::string id;
     public:
         Cgen cgen() override;
 
@@ -31,7 +31,7 @@ namespace SyntaxTree {
     class LValueToFieldAccess : public LValue {
     private:
         Expr *expr;
-        std::string Id;
+        std::string id;
     public:
         Expr *getExpr() const;
 
@@ -47,6 +47,10 @@ namespace SyntaxTree {
         Expr *exprArrayName;
         Expr *exprArrayIndex;
     public:
+        Cgen cgen() override;
+
+        void handleScope() override;
+
         Expr *getExprArrayName() const;
 
         void setExprArrayName(Expr *exprArrayName);

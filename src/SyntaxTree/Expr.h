@@ -22,6 +22,8 @@ namespace SyntaxTree {
         LValue *lValue;
         Expr *expr;
     public:
+        Cgen cgen() override;
+
         void handleScope() override;
 
         LValue *getLValue() const;
@@ -37,6 +39,8 @@ namespace SyntaxTree {
     private:
         Constant *constant;
     public:
+        Cgen cgen() override;
+
         void handleScope() override;
 
         Constant *getConstant() const;
@@ -50,6 +54,8 @@ namespace SyntaxTree {
     public:
         Cgen cgen() override;
 
+        void handleScope() override;
+
         LValue *getLValue() const;
 
         void setLValue(LValue *lValue);
@@ -62,6 +68,10 @@ namespace SyntaxTree {
     private:
         Call *call;
     public:
+        Cgen cgen() override;
+
+        void handleScope() override;
+
         Call *getCall() const;
 
         void setCall(Call *call);
@@ -72,6 +82,8 @@ namespace SyntaxTree {
         Expr *expr;
     public:
         Cgen cgen() override;
+
+        void handleScope() override;
 
         Expr *getExpr() const;
 
@@ -84,6 +96,10 @@ namespace SyntaxTree {
         Expr *operand1;
         Expr *operand2;
     public:
+        Cgen cgen() override;
+
+        void handleScope() override;
+
         const std::string &getOperatorSymbol() const;
 
         void setOperatorSymbol(const std::string &operatorSymbol);
@@ -113,7 +129,8 @@ namespace SyntaxTree {
     };
 
     class ExprToReadInteger : public Expr {
-
+    public:
+        Cgen cgen() override;
     };
 
     class ExprToReadLine : public Expr {
@@ -129,6 +146,10 @@ namespace SyntaxTree {
         Expr *expr;
         Type *type;
     public:
+        Cgen cgen() override;
+
+        void handleScope() override;
+
         Expr *getExpr() const;
 
         void setExpr(Expr *expr);

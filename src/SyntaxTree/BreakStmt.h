@@ -10,11 +10,8 @@
 
 namespace SyntaxTree {
     class BreakStmt : public Node {
-
-    };
-
-    class BreakStmtToBreak : public BreakStmt {
-
+    public:
+        Cgen cgen() override;
     };
 }
 

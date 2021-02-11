@@ -18,6 +18,10 @@ namespace SyntaxTree {
         Expr *forStep;
         Stmt *stmt;
     public:
+        Cgen cgen() override;
+
+        void handleScope() override;
+
         Expr *getForInit() const;
 
         void setForInit(Expr *forInit);

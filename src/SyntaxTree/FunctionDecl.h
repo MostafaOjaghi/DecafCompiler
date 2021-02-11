@@ -18,6 +18,8 @@ namespace SyntaxTree {
         Formals * formals;
         StmtBlock * stmtBlock;
     public:
+        Cgen cgen() override;
+
         void handleScope() override;
 
         const std::string &getFunctionIdentifier() const;

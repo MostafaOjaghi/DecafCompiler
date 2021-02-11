@@ -1,0 +1,44 @@
+
+Assign c = 10
+
+Lcall main
+Exit
+
+Label main:
+Beginfunc 48
+Input a
+Assign b = a / 5
+Pushparam b
+Lcall mu -> x
+Popparams 4
+Assign x = x - 5
+Output x
+Input y
+Input z
+Pushparam x
+Pushparam y
+Pushparam z
+Lcall check -> u
+Popparams 12
+Output u
+Endfunc
+
+Label mu: a
+Beginfunc 48
+Assign x = 1
+IfZ a Goto end
+Assign a = a - 1
+Pushparam a
+Lcall mu -> x
+Popparams 4
+Assign a = a + 1
+Assign x = x * a
+Label end:
+Endfunc x
+
+Label check: z y x
+Beginfunc 48
+Assign a = x + y
+Assign a = a + z
+Assign a = a + c
+Endfunc a

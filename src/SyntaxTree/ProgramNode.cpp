@@ -12,32 +12,30 @@ void SyntaxTree::ProgramNode::addDecl(Decl *decl) {
 }
 
 SyntaxTree::Cgen SyntaxTree::ProgramNode::cgen() {
-    std::string variables;
-    std::string text;
+    Cgen variables;
+    Cgen text;
     Cgen cgen;
     for (Decl *decl : declerations) {
         if (dynamic_cast<DeclToVariableDecl *>(decl))
-            variables += decl->cgen().code;
+            variables.append(decl->cgen());
         else
-            text += decl->cgen().code;
+            text.append(decl->cgen());
     }
-    cgen.code = variables +
-            "LCall main\n" +
-            "Exit\n" +
-            text;
+    cgen.append(variables);
+    cgen.append("Lcall func_main\n"
+                "Exit\n");
+    cgen.append(text);
     return cgen;
 }
 
 void SyntaxTree::ProgramNode::handleScope() {
-    this->setScope(new SymbolTable::Scope("global", nullptr));
+    this->setScope(new SymbolTable::Scope("", nullptr));
     for (Decl *decl : declerations) {
         if (DeclToVariableDecl *node = dynamic_cast<DeclToVariableDecl *>(decl)) {
-
             node->setScope(this->getScope());
             node->handleScope();
 
         } else if (DeclToFunctionDecl * node = dynamic_cast<DeclToFunctionDecl *>(decl)) {
-
             std::string functionIdent = node->getFunctionDecl()->getFunctionIdentifier();
             node->setScope(new SymbolTable::Scope(functionIdent, this->getScope()));
             node->handleScope();
@@ -47,7 +45,7 @@ void SyntaxTree::ProgramNode::handleScope() {
         } else if (DeclToInterfaceDecl * node = dynamic_cast<DeclToInterfaceDecl *>(decl)) {
             // TODO: interface declaration scope setting should be completed
         } else {
-            std::cerr << "Error at create scope of Program node" << std::endl;
+            assert(0);
         }
     }
 }

@@ -9,9 +9,18 @@ SyntaxTree::Cgen SyntaxTree::PrintStmt::cgen() {
     // TODO handle other types
     for (Expr *actual : actuals->getExpressions()) {
         Cgen expr_cgen = actual->cgen();
-        cgen.code += expr_cgen.code;
-        cgen.code += "Output " + expr_cgen.var + '\n';
+        cgen.append(expr_cgen);
+        if (cgen.typeName.getDimension() == 0)
+            if (expr_cgen.typeName.getId() == "int")
+                cgen.append("Output " + expr_cgen.var + '\n');
+            else if (expr_cgen.typeName.getId() == "bool")
+                cgen.append("OutputB " + expr_cgen.var + "\n");
+            else
+                assert(0); // type not supported
+        else
+            assert (0); // dimension not supported
     }
+    cgen.append("Endl\n");
     return cgen;
 }
 
@@ -21,4 +30,9 @@ SyntaxTree::Actuals *SyntaxTree::PrintStmt::getActuals() const {
 
 void SyntaxTree::PrintStmt::setActuals(SyntaxTree::Actuals *actuals) {
     PrintStmt::actuals = actuals;
+}
+
+void SyntaxTree::PrintStmt::handleScope() {
+    actuals->setScope(getScope());
+    actuals->handleScope();
 }

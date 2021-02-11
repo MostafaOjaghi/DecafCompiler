@@ -22,14 +22,16 @@ void SyntaxTree::StmtBlock::setVariableDecls(SyntaxTree::VariableDecls *variable
 
 SyntaxTree::Cgen SyntaxTree::StmtBlock::cgen() {
     //TODO handle variables
-    return stmts->cgen();
+    Cgen cgen;
+    cgen.append(variableDecls->cgen());
+    cgen.append(stmts->cgen());
+    return cgen;
 }
 
 void SyntaxTree::StmtBlock::handleScope() {
     this->getVariableDecls()->setScope(this->getScope());
     this->getVariableDecls()->handleScope();
-
-    SymbolTable::Scope *stmtsScope = new SymbolTable::Scope(this->getScope()->getName() + "_" + "STMTS", this->getScope());
+    auto *stmtsScope = new SymbolTable::Scope("stmts", this->getScope());
     this->getStmts()->setScope(stmtsScope);
     this->getStmts()->handleScope();
 }

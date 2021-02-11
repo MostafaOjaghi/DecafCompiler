@@ -11,3 +11,20 @@ const std::vector<SyntaxTree::Expr *> &SyntaxTree::Actuals::getExpressions() con
 void SyntaxTree::Actuals::addExpression(SyntaxTree::Expr *expr) {
     expressions.push_back(expr);
 }
+
+void SyntaxTree::Actuals::handleScope() {
+    for (Expr *expr : expressions) {
+        expr->setScope(getScope());
+        expr->handleScope();
+    }
+}
+
+SyntaxTree::Cgen SyntaxTree::Actuals::cgen() {
+    Cgen cgen;
+    for (Expr *expr : expressions) {
+        Cgen expr_cgen = expr->cgen();
+        cgen.append(expr_cgen);
+        cgen.append("Pushparam " + expr_cgen.var + "\n");
+    }
+    return cgen;
+}

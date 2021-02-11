@@ -9,7 +9,11 @@ const std::vector<SyntaxTree::VariableDecl *> &SyntaxTree::VariableDecls::getVar
 }
 
 SyntaxTree::Cgen SyntaxTree::VariableDecls::cgen() {
-    return Cgen();
+    Cgen cgen;
+    for (VariableDecl *decl : variableDecls) {
+        cgen.append(decl->cgen());
+    }
+    return cgen;
 }
 
 void SyntaxTree::VariableDecls::addVariableDecl(SyntaxTree::VariableDecl *variableDecl) {
@@ -18,7 +22,7 @@ void SyntaxTree::VariableDecls::addVariableDecl(SyntaxTree::VariableDecl *variab
 
 void SyntaxTree::VariableDecls::handleScope() {
     for (VariableDecl *variableDecl : variableDecls) {
-        this->setScope(this->getScope());
-        this->handleScope();
+        variableDecl->setScope(this->getScope());
+        variableDecl->handleScope();
     }
 }

@@ -34,7 +34,7 @@ FILE *output_file;
 %token T_CLASS T_INTERFACE T_NULL T_THIS T_EXTENDS T_IMPLEMENTS T_PRIVATE T_PROTECTED T_PUBLIC
 %token T_FOR T_WHILE T_IF T_ELSE T_RETURN T_BREAK T_CONTINUE
 %token T_NEW T_NEWARRAY T_PRINT T_READINTEGER T_READLINE T_DTOI T_ITOD T_BTOI T_ITOB
-%token T_PLUS T_MINUS T_MUL T_DIV T_PERCENT T_CMPL T_CMPLE T_CMPG T_CMPGE T_ASSIGN T_CMPE T_CMPNE T_OR T_AND T_NOT T_SEMICOLON T_COMMA T_DOT T_OB T_CB T_OP T_CP T_OCB T_CCB
+%token T_MUL T_DIV T_PERCENT T_PLUS T_MINUS T_CMPL T_CMPLE T_CMPG T_CMPGE T_ASSIGN T_CMPE T_CMPNE T_OR T_AND T_NOT T_SEMICOLON T_COMMA T_DOT T_OB T_CB T_OP T_CP T_OCB T_CCB
 %token T_NEWLINE T_UNDEFINED
 
 %token T_ID
@@ -42,6 +42,15 @@ FILE *output_file;
 %token T_DOUBLELITERAL
 %token T_STRINGLITERAL
 %token T_BOOLEANLITERAL
+
+%right T_ASSIGN
+%left T_OR
+%left T_AND
+%left T_CMPE T_CMPNE
+%left T_CMPL T_CMPLE T_CMPG T_CMPGE
+%left T_PLUS T_MINUS
+%left T_MUL T_DIV T_PERCENT
+%left T_DOT
 
 %start program
 
@@ -134,12 +143,12 @@ function_decl: type T_ID T_OP formals T_CP stmt_block { FunctionDeclToTypeIdent 
                                                        }
 ;
 
-formals:
+formals:           {$$ = new Formals();}
 		| variable {Formals *node = new Formals();
 		            node->addVariable((Variable *) $1);
 		            $$ = node;}
 		| formals T_COMMA variable {    Formals *node = (Formals *) $1;
-		                                node->addVariable((Variable *) $2);
+		                                node->addVariable((Variable *) $3);
 		                                $$ = node;
 		                           }
 ;
@@ -242,6 +251,7 @@ proto_type: type T_ID T_OP formals T_CP T_SEMICOLON {   PrototypeToTypeIdent *no
 
 stmt_block: T_OCB variable_decls stmts T_CCB {  StmtBlock *node = new StmtBlock();
                                                 node->setVariableDecls((VariableDecls *) $2);
+                                                ((Stmts *) $3)->reverseStmts();
                                                 node->setStmts((Stmts *) $3);
                                                 $$ = node;}
 ;
@@ -312,8 +322,8 @@ if_stmt: T_IF T_OP expr T_CP stmt { IfStmt *node = new IfStmt();
                                     }
 		| T_IF T_OP expr T_CP stmt T_ELSE stmt {    IfStmt *node = new IfStmt();
 		                                            node->setConditionalExpr((Expr *) $3);
-                                                    node->setTrueStmt((Stmt *) $4);
-                                                    node->setFalseStmt((Stmt *) $6);
+                                                    node->setTrueStmt((Stmt *) $5);
+                                                    node->setFalseStmt((Stmt *) $7);
                                                     $$ = node;
                                                     }
 
@@ -367,8 +377,8 @@ actuals1: expr {    Actuals *node = new Actuals();
                     node->addExpression((Expr *) $1);
                     $$ = node;
                     }
-	| expr T_COMMA actuals1 {   Actuals *node = (Actuals *) $3; // TODO: may need to be reversed
-	                            node->addExpression((Expr *) $1);
+	| actuals1 T_COMMA expr {   Actuals *node = (Actuals *) $1; // TODO: may need to be reversed
+	                            node->addExpression((Expr *) $3);
 	                            $$ = node;
 	                            }
 ;
@@ -396,18 +406,6 @@ expr: lvalue T_ASSIGN expr {    ExprToAssignmentExpr *node = new ExprToAssignmen
 	                    node->setExpr((Expr *) $2);
 	                    $$ = node;
 	                    }
-	| expr T_PLUS expr {    ExprToBinaryOperation *node = new ExprToBinaryOperation();
-	                        node->setOperatorSymbol("+");
-	                        node->setOperand1((Expr *) $1);
-	                        node->setOperand2((Expr *) $3);
-	                        $$ = node;
-	                        }
-	| expr T_MINUS expr {    ExprToBinaryOperation *node = new ExprToBinaryOperation();
-                        	 node->setOperatorSymbol("-");
-                        	 node->setOperand1((Expr *) $1);
-                        	 node->setOperand2((Expr *) $3);
-                        	 $$ = node;
-                        	 }
 	| expr T_MUL expr {    ExprToBinaryOperation *node = new ExprToBinaryOperation();
                       	   node->setOperatorSymbol("*");
                       	   node->setOperand1((Expr *) $1);
@@ -426,6 +424,18 @@ expr: lvalue T_ASSIGN expr {    ExprToAssignmentExpr *node = new ExprToAssignmen
                          	   node->setOperand2((Expr *) $3);
                          	   $$ = node;
                          	   }
+	| expr T_PLUS expr {    ExprToBinaryOperation *node = new ExprToBinaryOperation();
+	                        node->setOperatorSymbol("+");
+	                        node->setOperand1((Expr *) $1);
+	                        node->setOperand2((Expr *) $3);
+	                        $$ = node;
+	                        }
+	| expr T_MINUS expr {    ExprToBinaryOperation *node = new ExprToBinaryOperation();
+                        	 node->setOperatorSymbol("-");
+                        	 node->setOperand1((Expr *) $1);
+                        	 node->setOperand2((Expr *) $3);
+                        	 $$ = node;
+                        	 }
 	| T_MINUS expr {    ExprToUnaryOperation *node = new ExprToUnaryOperation();
 	                    node->setOperatorSymbol("-");
 	                    node->setOperand((Expr *) $2);
@@ -516,6 +526,15 @@ lvalue: T_ID {  LValueToIdent *node = new LValueToIdent();
                 node->setId(((Token *)$1)->getLexeme());
                 $$ = node;
              }
+    | T_ID T_OB expr T_CB { LValueToArray *node = new LValueToArray();
+			    			LValueToIdent *lvalue = new LValueToIdent();
+			                lvalue->setId(((Token *)$1)->getLexeme());
+			                ExprToLValue *expr = new ExprToLValue();
+	            			expr->setLValue(lvalue);
+	                        node->setExprArrayName(expr);
+	                        node->setExprArrayIndex((Expr *) $3);
+	                        $$ = node;
+	                        }
 	| expr T_DOT T_ID { LValueToFieldAccess *node = new LValueToFieldAccess();
 	                    node->setExpr((Expr *) $1);
 	                    node->setId(((Token *)$2)->getLexeme());
@@ -550,27 +569,27 @@ actuals: {  Actuals *node = nullptr;
 ;
 
 constant: T_INTLITERAL {    Constant *node = new Constant();
-                            node->setConstantIdType("int");
+                            node->setConstantType(ConstantType::INT);
                             node->setConstantValue(((Token *)$1)->getLexeme());
                             $$ = node;
                         }
 		| T_DOUBLELITERAL {    Constant *node = new Constant();
-                               node->setConstantIdType("double");
+                               node->setConstantType(ConstantType::DOUBLE);
                                node->setConstantValue(((Token *)$1)->getLexeme());
                                $$ = node;
                            }
 		| T_BOOLEANLITERAL {    Constant *node = new Constant();
-                                node->setConstantIdType("bool");
+                                node->setConstantType(ConstantType::BOOL);
                                 node->setConstantValue(((Token *)$1)->getLexeme());
                                 $$ = node;
                            }
 		| T_STRINGLITERAL {    Constant *node = new Constant();
-                               node->setConstantIdType("string");
+                               node->setConstantType(ConstantType::STRING);
                                node->setConstantValue(((Token *)$1)->getLexeme());
                                $$ = node;
                           }
 		| T_NULL        {   Constant *node = new Constant();
-		                    node->setConstantIdType("null");
+		                    node->setConstantType(ConstantType::NULL_POINTER);
 		                    node->setConstantValue(((Token *)$1)->getLexeme());
 		                    $$ = node;
 		                    }

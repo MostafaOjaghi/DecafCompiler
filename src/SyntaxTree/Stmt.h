@@ -40,6 +40,10 @@ namespace SyntaxTree {
     private:
         IfStmt *ifStmt;
     public:
+        Cgen cgen() override;
+
+        void handleScope() override;
+
         IfStmt *getIfStmt() const;
 
         void setIfStmt(IfStmt *ifStmt);
@@ -49,6 +53,10 @@ namespace SyntaxTree {
     private:
         WhileStmt *whileStmt;
     public:
+        Cgen cgen() override;
+
+        void handleScope() override;
+
         WhileStmt *getWhileStmt() const;
 
         void setWhileStmt(WhileStmt *whileStmt);
@@ -58,6 +66,10 @@ namespace SyntaxTree {
     private:
         ForStmt *forStmt;
     public:
+        Cgen cgen() override;
+
+        void handleScope() override;
+
         ForStmt *getForStmt() const;
 
         void setForStmt(ForStmt *forStmt);
@@ -67,6 +79,8 @@ namespace SyntaxTree {
     private:
         BreakStmt *breakStmt;
     public:
+        Cgen cgen() override;
+
         BreakStmt *getBreakStmt() const;
 
         void setBreakStmt(BreakStmt *breakStmt);
@@ -76,6 +90,8 @@ namespace SyntaxTree {
     private:
         ContinueStmt *continueStmt;
     public:
+        Cgen cgen() override;
+
         ContinueStmt *getContinueStmt() const;
 
         void setContinueStmt(ContinueStmt *continueStmt);
@@ -85,6 +101,10 @@ namespace SyntaxTree {
     private:
         ReturnStmt *returnStmt;
     public:
+        Cgen cgen() override;
+
+        void handleScope() override;
+
         ReturnStmt *getReturnStmt() const;
 
         void setReturnStmt(ReturnStmt *returnStmt);
@@ -108,6 +128,8 @@ namespace SyntaxTree {
     public:
         StmtBlock *getStmtBlock() const;
         void handleScope() override;
+
+        Cgen cgen() override;
 
         void setStmtBlock(StmtBlock *stmtBlock);
     };

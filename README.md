@@ -100,9 +100,9 @@ be a `Popparams sz`.
 
 **Pointers**:
 The following commands include memory access.
-* `Assign *(a + offset) = b`: Store the value of `b` in offset bytes after `a` in memory.
-* `Assign a = *(b + offset)`: Load the value in addes `b + offset` of memory 
-* `Acall x:` Call the function that its label is located at address `x`
+* `Store *(a + offset) = b`: Store the value of `b` in offset bytes after `a` in memory.
+* `Load a = *(b + offset)`: Load the value in addes `b + offset` of memory
+
 ##TAC tests
 
 **Simple function call example**:
@@ -128,4 +128,36 @@ Assign s = x + y
 Assign s = s - z
 Assign s = s + global1
 Endfunc s
+```
+
+```
+Lcall main
+Exit
+
+Label main:
+Beginfunc 64
+Input s
+Output s
+Input a
+Output a
+Assign b = s / a
+Assign b = - s
+Output b
+Pushparam b
+Lcall f -> x
+Popparams 4
+Output x
+Endfunc
+
+Label f: c
+Beginfunc 64
+Output c
+Lcall check
+Endfunc c
+
+Label check:
+Beginfunc 64
+Input y
+Output y
+Endfunc
 ```

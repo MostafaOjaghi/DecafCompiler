@@ -17,7 +17,6 @@ namespace SyntaxTree {
 
         const std::vector<Variable *> &getVariables() const;
 
-    public:
         void addVariable(Variable *variable);
 
         Cgen cgen() override;

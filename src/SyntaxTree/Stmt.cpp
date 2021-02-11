@@ -47,12 +47,30 @@ void SyntaxTree::StmtToIfStmt::setIfStmt(SyntaxTree::IfStmt *ifStmt) {
     StmtToIfStmt::ifStmt = ifStmt;
 }
 
+SyntaxTree::Cgen SyntaxTree::StmtToIfStmt::cgen() {
+    return ifStmt->cgen();
+}
+
+void SyntaxTree::StmtToIfStmt::handleScope() {
+    ifStmt->setScope(getScope());
+    getIfStmt()->handleScope();
+}
+
 SyntaxTree::WhileStmt *SyntaxTree::StmtToWhileStmt::getWhileStmt() const {
     return whileStmt;
 }
 
 void SyntaxTree::StmtToWhileStmt::setWhileStmt(SyntaxTree::WhileStmt *whileStmt) {
     StmtToWhileStmt::whileStmt = whileStmt;
+}
+
+SyntaxTree::Cgen SyntaxTree::StmtToWhileStmt::cgen() {
+    return whileStmt->cgen();
+}
+
+void SyntaxTree::StmtToWhileStmt::handleScope() {
+    whileStmt->setScope(getScope());
+    whileStmt->handleScope();
 }
 
 SyntaxTree::ForStmt *SyntaxTree::StmtToForStmt::getForStmt() const {
@@ -63,12 +81,25 @@ void SyntaxTree::StmtToForStmt::setForStmt(SyntaxTree::ForStmt *forStmt) {
     StmtToForStmt::forStmt = forStmt;
 }
 
+SyntaxTree::Cgen SyntaxTree::StmtToForStmt::cgen() {
+    return forStmt->cgen();
+}
+
+void SyntaxTree::StmtToForStmt::handleScope() {
+    forStmt->setScope(getScope());
+    forStmt->handleScope();
+}
+
 SyntaxTree::BreakStmt *SyntaxTree::StmtToBreakStmt::getBreakStmt() const {
     return breakStmt;
 }
 
 void SyntaxTree::StmtToBreakStmt::setBreakStmt(SyntaxTree::BreakStmt *breakStmt) {
     StmtToBreakStmt::breakStmt = breakStmt;
+}
+
+SyntaxTree::Cgen SyntaxTree::StmtToBreakStmt::cgen() {
+    return breakStmt->cgen();
 }
 
 SyntaxTree::ContinueStmt *SyntaxTree::StmtToContinueStmt::getContinueStmt() const {
@@ -79,12 +110,25 @@ void SyntaxTree::StmtToContinueStmt::setContinueStmt(SyntaxTree::ContinueStmt *c
     StmtToContinueStmt::continueStmt = continueStmt;
 }
 
+SyntaxTree::Cgen SyntaxTree::StmtToContinueStmt::cgen() {
+    return continueStmt->cgen();
+}
+
 SyntaxTree::ReturnStmt *SyntaxTree::StmtToReturnStmt::getReturnStmt() const {
     return returnStmt;
 }
 
 void SyntaxTree::StmtToReturnStmt::setReturnStmt(SyntaxTree::ReturnStmt *returnStmt) {
     StmtToReturnStmt::returnStmt = returnStmt;
+}
+
+SyntaxTree::Cgen SyntaxTree::StmtToReturnStmt::cgen() {
+    return returnStmt->cgen();
+}
+
+void SyntaxTree::StmtToReturnStmt::handleScope() {
+    returnStmt->setScope(getScope());
+    returnStmt->handleScope();
 }
 
 SyntaxTree::StmtBlock *SyntaxTree::StmtToStmtBlock::getStmtBlock() const {
@@ -96,6 +140,11 @@ void SyntaxTree::StmtToStmtBlock::setStmtBlock(SyntaxTree::StmtBlock *stmtBlock)
 }
 
 void SyntaxTree::StmtToStmtBlock::handleScope() {
-    this->getStmtBlock()->setScope(this->getScope());
+    auto *scope = new SymbolTable::Scope("block", getScope());
+    this->getStmtBlock()->setScope(scope);
     this->getStmtBlock()->handleScope();
+}
+
+SyntaxTree::Cgen SyntaxTree::StmtToStmtBlock::cgen() {
+    return stmtBlock->cgen();
 }

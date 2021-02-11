@@ -1,0 +1,21 @@
+
+Lcall main
+Exit
+
+Label main:
+Beginfunc 48
+Alloc a 32
+Assign b = 10
+Store *(a) = b
+Assign b = 12
+Store *(a + 4) = b
+Assign b = 14
+Store *(a + 8) = b
+
+Load x = *(a + 4)
+Output x
+Endl
+Load x = *(a)
+Output x
+
+Endfunc
