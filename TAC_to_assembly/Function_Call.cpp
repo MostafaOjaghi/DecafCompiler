@@ -143,14 +143,7 @@ void printString (string token) {
 void  printBool (string token) {
 
     output << "lw $t0 " << getPos(token, 0) << "\n";
-    output << "bne $t0 0 OutputBoolIsTrue\n";
-    output << "la $a0 false\n";
-    output << "j OutputBoolContinue\n";
-    output << "OutputBoolIsTrue:\n";
-    output << "la $a0 true\n";
-    output << "OutputBoolContinue:\n";
-    output << "li $v0 4\n";
-    output << "syscall \n";
+    output << "printBool($t0)\n";
 }
 
 string tacToAssembly(istream &inputFile) {
@@ -160,7 +153,18 @@ string tacToAssembly(istream &inputFile) {
 
     int global_flag = true;
 
-    output << ".text\nmain:\n";
+    output << ".text\n";
+    output << ".macro printBool(%s0)\n";
+    output << "bne %s0 0 outputBoolIsTrue\n";
+    output << "la $a0 false\n";
+    output << "j outputBoolContinue\n";
+    output << "outputBoolIsTrue:\n";
+    output << "la $a0 true\n";
+    output << "outputBoolContinue:\n";
+    output << "li $v0 4\n";
+    output << "syscall\n";
+    output << ".end_macro\n";
+    output << "main:\n";
 
     while ( getline(inputFile, line) ) {
 
@@ -324,7 +328,7 @@ string tacToAssembly(istream &inputFile) {
             printInt(tokens[1]);
         } else if (tokens[0] == "OutputB") {
 
-//            printBool(tokens[1]);
+            printBool(tokens[1]);
         } else if (tokens[0] == "IfZ") {
 
             output << "lw $t0 " << getPos(tokens[1], 0) << "\n";
