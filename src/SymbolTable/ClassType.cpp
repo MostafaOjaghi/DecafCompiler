@@ -93,4 +93,9 @@ int SymbolTable::ClassType::getObjectLayoutSize() {
     return (int) objectLayout.size() + 1;
 }
 
+int SymbolTable::ClassType::getFunctionPosition(const std::string &functionName) {
+    // TODO: get function position from Vtable
+    return 112;
+}
+
 

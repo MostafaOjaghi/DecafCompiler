@@ -28,6 +28,7 @@ namespace SymbolTable {
         void addToLayout(const std::string &s);
         int getIndexInObjectLayout(const std::string &s);
         int getObjectLayoutSize();
+
     private:
         bool handleHierarchyCalled = false;
     public:
@@ -35,7 +36,7 @@ namespace SymbolTable {
 
         void setParentName(const std::string &parentName);
 
-        ClassType();
+        ClassType() = default;
 
         explicit ClassType(const std::string &id);
 
@@ -51,6 +52,8 @@ namespace SymbolTable {
 
         static void addType(ClassType *classType);
         static ClassType *getClass(std::string className);
+
+        int getFunctionPosition(const std::string &functionName);
     };
 }
 

@@ -50,7 +50,7 @@ void SyntaxTree::ClassDecl::handleScope() {
             classType->addToLayout(node->getVariableDecl()->getVariable()->getId());
         } else if (FieldToFunctionDecl *node = dynamic_cast<FieldToFunctionDecl *>(f)) {
             // TODO: complete class methods
-            assert(0);
+            //assert(0);
         }
     }
     this->getImplements()->setScope(this->getScope());

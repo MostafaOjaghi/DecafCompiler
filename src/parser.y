@@ -556,7 +556,8 @@ call: T_ID  T_OP actuals T_CP {     CallToFunctionCall *node = new CallToFunctio
                                     $$ = node;
                               }
 	| expr T_DOT T_ID T_OP actuals T_CP {   CallToMethodCall *node = new CallToMethodCall();
-	                                        node->setMethodIdent((Expr *) $1);
+	                                        node->setExpr((Expr *) $1);
+	                                        node->setId(((Token *)$3)->getLexeme());
 	                                        node->setActuals((Actuals *) $5);
 	                                        $$ = node;
 	                                        }
