@@ -10,11 +10,14 @@
 namespace SyntaxTree {
     class AccessMode : public Node {
     private:
-        std::string accessModeId;
+        SymbolTable::AccessMode accessMode;
     public:
-        const std::string &getAccessModeId() const;
+        void handleScope() override;
 
-        void setAccessModeId(const std::string &accessModeId);
+    public:
+        SymbolTable::AccessMode getAccessMode() const;
+
+        void setAccessMode(SymbolTable::AccessMode accessMode);
     };
 }
 

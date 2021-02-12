@@ -13,11 +13,22 @@
 namespace SymbolTable {
     class Scope {
     private:
+        static std::vector<Scope *>definedScopes;
+    public:
+        static const std::vector<Scope *> &getDefinedScopes();
+
+    private:
+
         std::string name;
         Scope *par = nullptr;
         std::map<std::string, SymbolTableEntry *>mp;
+        bool isClss = false;
 
     public:
+        bool isClass() const;
+
+        void setIsClass(bool isClass);
+
         Scope() = default;
         Scope(const std::string &name, Scope *par);
 
@@ -27,8 +38,13 @@ namespace SymbolTable {
         std::string getName();
         std::string getPrefix();
         Scope * getPar();
-        SymbolTableEntry * getEntry(const std::string &id);
+        SymbolTableEntry * getEntry(const std::string &id, Scope * currentScope = nullptr);
         void addEntry(const std::string &id, SymbolTableEntry *entry);
+        std::vector<SymbolTableEntry *> getEntries();
+
+        bool isImmediateClassChild(Scope *classScope);
+
+        bool isClassChild(Scope *classScope);
     };
 }
 

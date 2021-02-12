@@ -47,6 +47,21 @@ void SyntaxTree::DeclToClassDecl::setClassDecl(SyntaxTree::ClassDecl *classDecl)
     DeclToClassDecl::classDecl = classDecl;
 }
 
+void SyntaxTree::DeclToClassDecl::handleScope() {
+    std::string classId = this->getClassDecl()->getId();
+    SymbolTable::ClassType::addType(new SymbolTable::ClassType(classId));
+    auto newScope = new SymbolTable::Scope(classId);
+    newScope->setIsClass(true);
+    this->getClassDecl()->setScope(newScope);
+    this->getClassDecl()->handleScope();
+    if (this->getClassDecl()->getExtends()->getParentClassId().empty())
+        this->getClassDecl()->getScope()->setPar(this->getScope());
+}
+
+void SyntaxTree::DeclToClassDecl::handleClassHierarchy() {
+    this->getClassDecl()->handleClassHierarchy();
+}
+
 SyntaxTree::InterfaceDecl *SyntaxTree::DeclToInterfaceDecl::getInterfaceDecl() const {
     return interfaceDecl;
 }

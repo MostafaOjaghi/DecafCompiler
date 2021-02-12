@@ -137,7 +137,7 @@ function_decl: type T_ID T_OP formals T_CP stmt_block { FunctionDeclToTypeIdent 
                                                       }
 			| T_VOID T_ID T_OP formals T_CP stmt_block {    FunctionDeclToVoidIdent *node = new FunctionDeclToVoidIdent();
                                                             node->setFunctionIdentifier(((Token *)$2)->getLexeme());
-                                                            node->setFormals((Formals *) $4); // TODO: check
+                                                            node->setFormals((Formals *) $4);
                                                             node->setStmtBlock((StmtBlock *) $6);
                                                             $$ = node;
                                                        }
@@ -157,6 +157,7 @@ class_decl: T_CLASS T_ID extends implements T_OCB fields T_CCB {    ClassDecl *n
                                                                     node->setExtends((Extends *) $3);
                                                                     node->setImplements((Implements *) $4);
                                                                     node->setFields((Fields *) $6);
+                                                                    node->setId(((Token *) $2)->getLexeme());
                                                                     $$ = node;
                                                                }
 ;
@@ -170,7 +171,8 @@ extends: {  Extends *node = new Extends();
 	                    }
 ;
 
-implements:
+implements: {   Implements *node = new Implements();
+                $$ = node; }
 	| T_IMPLEMENTS T_ID {  Implements *node = new Implements();
 	                       node->addInterfaceId(((Token *)$2)->getLexeme());
 	                       $$ = node; }
@@ -189,32 +191,32 @@ fields: {   Fields *node = new Fields();
 ;
 
 field: access_mode variable_decl {  FieldToVariableDecl *node = new FieldToVariableDecl();
-                                    node->setAccessMode((AccessMode *) $1);
+                                    node->setAccessMode((SyntaxTree::AccessMode *) $1);
                                     node->setVariableDecl((VariableDecl *) $2);
                                     $$ = node;
                                  }
 	| access_mode function_decl {   FieldToFunctionDecl *node = new FieldToFunctionDecl();
-	                                node->setAccessMode((AccessMode *) $1);
+	                                node->setAccessMode((SyntaxTree::AccessMode *) $1);
 	                                node->setFunctionDecl((FunctionDecl *) $2);
 	                                $$ = node;
 	                            }
 ;
 
-access_mode: {  AccessMode *node = new AccessMode();
-                node->setAccessModeId("public");
+access_mode: {  SyntaxTree::AccessMode *node = new SyntaxTree::AccessMode();
+                node->setAccessMode(SymbolTable::AccessMode::PUBLIC);
                 $$ = node;
                 }
-		| T_PRIVATE {  AccessMode *node = new AccessMode();
-                       node->setAccessModeId("private");
+		| T_PRIVATE {  SyntaxTree::AccessMode *node = new SyntaxTree::AccessMode();
+                       node->setAccessMode(SymbolTable::AccessMode::PRIVATE);
                        $$ = node;
                     }
 
-		| T_PROTECTED {  AccessMode *node = new AccessMode();
-                         node->setAccessModeId("private");
+		| T_PROTECTED {  SyntaxTree::AccessMode *node = new SyntaxTree::AccessMode();
+                         node->setAccessMode(SymbolTable::AccessMode::PROTECTED);
                          $$ = node;
                       }
-		| T_PUBLIC {    AccessMode *node = new AccessMode();
-		                node->setAccessModeId("public");
+		| T_PUBLIC {    SyntaxTree::AccessMode *node = new SyntaxTree::AccessMode();
+		                node->setAccessMode(SymbolTable::AccessMode::PUBLIC);
 		                $$ = node;
 		                }
 ;
@@ -501,6 +503,7 @@ expr: lvalue T_ASSIGN expr {    ExprToAssignmentExpr *node = new ExprToAssignmen
 	                            $$ = node;
 	                            }
 	| T_NEW T_ID    {   ExprToNew *node = new ExprToNew();
+	                    node->setId(((Token *) $2)->getLexeme());
 	                    $$ = node;
 	                    }
 	| T_NEWARRAY T_OP expr T_COMMA type T_CP {  ExprToNewArray *node = new ExprToNewArray();
@@ -537,7 +540,7 @@ lvalue: T_ID {  LValueToIdent *node = new LValueToIdent();
 	                        }
 	| expr T_DOT T_ID { LValueToFieldAccess *node = new LValueToFieldAccess();
 	                    node->setExpr((Expr *) $1);
-	                    node->setId(((Token *)$2)->getLexeme());
+	                    node->setId(((Token *)$3)->getLexeme());
 	                    $$ = node;
 	                    }
 	| expr T_OB expr T_CB { LValueToArray *node = new LValueToArray();

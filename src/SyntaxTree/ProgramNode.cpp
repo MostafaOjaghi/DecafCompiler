@@ -29,7 +29,7 @@ SyntaxTree::Cgen SyntaxTree::ProgramNode::cgen() {
 }
 
 void SyntaxTree::ProgramNode::handleScope() {
-    this->setScope(new SymbolTable::Scope("", nullptr));
+    this->setScope(new SymbolTable::Scope("global", nullptr));
     for (Decl *decl : declerations) {
         if (DeclToVariableDecl *node = dynamic_cast<DeclToVariableDecl *>(decl)) {
             node->setScope(this->getScope());
@@ -41,11 +41,20 @@ void SyntaxTree::ProgramNode::handleScope() {
             node->handleScope();
 
         } else if (DeclToClassDecl * node = dynamic_cast<DeclToClassDecl *>(decl)) {
-            // TODO: class declaration scope setting should be completed
+            node->setScope(this->getScope());
+            node->handleScope();
         } else if (DeclToInterfaceDecl * node = dynamic_cast<DeclToInterfaceDecl *>(decl)) {
             // TODO: interface declaration scope setting should be completed
         } else {
             assert(0);
+        }
+    }
+}
+
+void SyntaxTree::ProgramNode::handleClassHierarchy() {
+    for (Decl *decl : declerations) {
+        if (DeclToClassDecl * node = dynamic_cast<DeclToClassDecl *>(decl)) {
+            node->handleClassHierarchy();
         }
     }
 }

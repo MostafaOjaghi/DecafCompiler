@@ -12,6 +12,8 @@ namespace SyntaxTree {
     private:
         std::string parentClassId;
     public:
+        void handleScope() override;
+
         const std::string &getParentClassId() const;
 
         void setParentClassId(const std::string &parentClassId);
