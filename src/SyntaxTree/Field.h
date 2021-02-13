@@ -20,6 +20,8 @@ namespace SyntaxTree {
         AccessMode * accessMode;
         VariableDecl * variableDecl;
     public:
+        void handleScope() override;
+
         AccessMode *getAccessMode() const;
 
         void setAccessMode(AccessMode *accessMode);

@@ -20,6 +20,16 @@ void SyntaxTree::FieldToVariableDecl::setVariableDecl(SyntaxTree::VariableDecl *
     FieldToVariableDecl::variableDecl = variableDecl;
 }
 
+void SyntaxTree::FieldToVariableDecl::handleScope() {
+    this->getAccessMode()->setScope(this->getScope());
+    this->getAccessMode()->handleScope();
+    SymbolTable::AccessMode accessMode1 = this->getAccessMode()->getAccessMode();
+    this->getVariableDecl()->setScope(this->getScope());
+    this->getVariableDecl()->handleScope();
+    SymbolTable::SymbolTableEntry *entry = this->getVariableDecl()->getVariable()->getScope()->getEntry(this->getVariableDecl()->getVariable()->getId());
+    entry->setAccessMode(accessMode1);
+}
+
 SyntaxTree::AccessMode *SyntaxTree::FieldToFunctionDecl::getAccessMode() const {
     return accessMode;
 }

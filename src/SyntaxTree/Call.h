@@ -17,15 +17,27 @@ namespace SyntaxTree {
 
     class CallToMethodCall : public Call {
     private:
-        // TODO add missing field
-        Expr *methodIdent;
+        Expr *expr;
+        std::string Id;
+    public:
+        const std::string &getId() const;
+
+        void setId(const std::string &id);
+
+    private:
         Actuals *actuals;
     public:
-        Expr *getMethodIdent() const;
-
-        void setMethodIdent(Expr *methodIdent);
-
         Actuals *getActuals() const;
+
+    public:
+        Cgen cgen() override;
+
+        void handleScope() override;
+
+        Expr *getExpr() const;
+
+        void setExpr(Expr *expr);
+
 
         void setActuals(Actuals *actuals);
     };

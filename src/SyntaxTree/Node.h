@@ -32,6 +32,7 @@ namespace SyntaxTree {
         void append(Cgen cgen);
         void append(std::string code);
         void createVar(const std::string &typeId, int dimension);
+        void createVar(SymbolTable::TypeName typeName1);
         void addBreakLabel(std::string label);
         void addContinueLabel(std::string label);
         std::string getBreakLabels();
@@ -42,6 +43,7 @@ namespace SyntaxTree {
     private:
         SymbolTable::Scope *scope = nullptr;
     public:
+        virtual void handleClassHierarchy() {};
         void setScope(SymbolTable::Scope *scope);
         virtual Cgen cgen() {return Cgen();};
         SymbolTable::Scope *getScope();

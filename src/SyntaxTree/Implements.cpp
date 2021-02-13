@@ -11,3 +11,7 @@ const std::vector<std::string> &SyntaxTree::Implements::getInterfaceIds() const 
 void SyntaxTree::Implements::addInterfaceId(const std::string &interfaceId) {
     interfaceIds.push_back(interfaceId);
 }
+
+void SyntaxTree::Implements::handleScope() {
+    // nothing to do!
+}

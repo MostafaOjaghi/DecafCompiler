@@ -4,10 +4,14 @@
 
 #include "AccessMode.h"
 
-const std::string &SyntaxTree::AccessMode::getAccessModeId() const {
-    return accessModeId;
+SymbolTable::AccessMode SyntaxTree::AccessMode::getAccessMode() const {
+    return accessMode;
 }
 
-void SyntaxTree::AccessMode::setAccessModeId(const std::string &accessModeId) {
-    AccessMode::accessModeId = accessModeId;
+void SyntaxTree::AccessMode::setAccessMode(SymbolTable::AccessMode accessMode) {
+    AccessMode::accessMode = accessMode;
+}
+
+void SyntaxTree::AccessMode::handleScope() {
+    // nothing to do!
 }

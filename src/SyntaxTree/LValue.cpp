@@ -42,6 +42,30 @@ void SyntaxTree::LValueToFieldAccess::setId(const std::string &id) {
     LValueToFieldAccess::id = id;
 }
 
+SyntaxTree::Cgen SyntaxTree::LValueToFieldAccess::cgen() {
+    Cgen cgenExpr = this->getExpr()->cgen(), cgen;
+    auto classType = SymbolTable::ClassType::getClass(cgenExpr.typeName.getId());
+    std::cout << "classType: " << classType << std::endl;
+
+    auto entry = classType->getScope()->getEntry(this->getId(), this->getScope());
+    std::cout << "get entry done!" << std::endl;
+
+    int pos = classType->getIndexInObjectLayout(this->getId());
+    std::cout << "get index done!" << std::endl;
+
+    cgen.append(cgenExpr);
+    std::cout << "cgen append!" << std::endl;
+
+    cgen.createVar(entry->getTypeName());
+    cgen.append("Load " + cgen.var + " = *(" + cgenExpr.var + " + " + std::to_string(pos) + ")\n");
+    return cgen;
+}
+
+void SyntaxTree::LValueToFieldAccess::handleScope() {
+    this->getExpr()->setScope(this->getScope());
+    this->getExpr()->handleScope();
+}
+
 SyntaxTree::Expr *SyntaxTree::LValueToArray::getExprArrayName() const {
     return exprArrayName;
 }

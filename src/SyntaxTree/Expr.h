@@ -138,7 +138,17 @@ namespace SyntaxTree {
     };
 
     class ExprToNew : public Expr {
+    private:
+        std::string Id;
+    public:
+        void handleScope() override;
 
+        const std::string &getId() const;
+
+        void setId(const std::string &id);
+
+    public:
+        Cgen cgen() override;
     };
 
     class ExprToNewArray : public Expr {
