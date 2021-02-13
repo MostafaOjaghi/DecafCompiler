@@ -37,11 +37,11 @@ void SyntaxTree::CallToFunctionCall::handleScope() {
     actuals->handleScope();
 }
 
-SyntaxTree::Expr *SyntaxTree::CallToMethodCall::getMethodIdent() const {
+std::string SyntaxTree::CallToMethodCall::getMethodIdent() const {
     return methodIdent;
 }
 
-void SyntaxTree::CallToMethodCall::setMethodIdent(SyntaxTree::Expr *methodIdent) {
+void SyntaxTree::CallToMethodCall::setMethodIdent(std::string methodIdent) {
     CallToMethodCall::methodIdent = methodIdent;
 }
 
@@ -51,4 +51,36 @@ SyntaxTree::Actuals *SyntaxTree::CallToMethodCall::getActuals() const {
 
 void SyntaxTree::CallToMethodCall::setActuals(SyntaxTree::Actuals *actuals) {
     CallToMethodCall::actuals = actuals;
+}
+
+SyntaxTree::Expr *SyntaxTree::CallToMethodCall::getObject() const {
+    return object;
+}
+
+void SyntaxTree::CallToMethodCall::setObject(SyntaxTree::Expr *object) {
+    CallToMethodCall::object = object;
+}
+
+SyntaxTree::Cgen SyntaxTree::CallToMethodCall::cgen() {
+    Cgen cgen;
+    Cgen object_cgen = object->cgen();
+    Cgen actuals_cgen = actuals->cgen();
+    if (object_cgen.typeName.isArray()) {
+        if (methodIdent == "length" && actuals->getExpressions().empty()) {
+            cgen.append(object_cgen);
+            cgen.createVar("int", 0);
+//            cgen.append("Assign " + cgen.var + " = &(" + object_cgen.var + ")\n");
+            cgen.append("Load " + cgen.var + " = *(" + object_cgen.var + ")\n");
+        } else
+            assert(0); // TODO semantic error
+    } else
+        assert(0); // Not implemented yet
+    return cgen;
+}
+
+void SyntaxTree::CallToMethodCall::handleScope() {
+    object->setScope(getScope());
+    object->handleScope();
+    actuals->setScope(getScope());
+    actuals->handleScope();
 }

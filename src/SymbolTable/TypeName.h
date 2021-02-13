@@ -21,8 +21,6 @@ namespace SymbolTable {
 
         void setDimension(int dimension);
 
-    public:
-
         const std::string &getId() const;
 
         void setId(const std::string &id);
@@ -32,6 +30,8 @@ namespace SymbolTable {
         void setClassType(ClassType *classType);
 
         bool isPrimitive() const;
+
+        bool isArray() const;
     };
 }
 

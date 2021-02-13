@@ -38,3 +38,7 @@ void SymbolTable::TypeName::setDimension(int dimension) {
 //  - and if it is not it should be set to a class type
 
 SymbolTable::TypeName::TypeName(std::string id, int dimension) : id(std::move(id)), dimension(dimension) {}
+
+bool SymbolTable::TypeName::isArray() const {
+    return dimension > 0;
+}

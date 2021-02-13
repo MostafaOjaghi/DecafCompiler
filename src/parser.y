@@ -553,14 +553,15 @@ call: T_ID  T_OP actuals T_CP {     CallToFunctionCall *node = new CallToFunctio
                                     $$ = node;
                               }
 	| expr T_DOT T_ID T_OP actuals T_CP {   CallToMethodCall *node = new CallToMethodCall();
-	                                        node->setMethodIdent((Expr *) $1);
+	                                        node->setObject((Expr *) $1);
+	                                        node->setMethodIdent(((Token *)$3)->getLexeme());
 	                                        node->setActuals((Actuals *) $5);
 	                                        $$ = node;
 	                                        }
 
 ;
 
-actuals: {  Actuals *node = nullptr;
+actuals: {  Actuals *node = new Actuals();
             $$ = node;
             }
 	| actuals1  {   Actuals *node = (Actuals *) $1;
