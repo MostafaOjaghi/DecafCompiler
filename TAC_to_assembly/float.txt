@@ -1,0 +1,19 @@
+
+Lcall _main
+Exit
+
+Label _main:
+Beginfunc 48
+
+InputF float1
+OutputF float1
+AssignF float4 = 4.5
+InputF float2
+OutputF float4
+AssignF float3 = float1 + float2
+OutputF float3
+AssignF float5 = float4 - float3
+OutputF float5
+
+
+Endfunc

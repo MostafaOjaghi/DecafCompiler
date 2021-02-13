@@ -245,3 +245,24 @@ SyntaxTree::Cgen SyntaxTree::ExprToReadInteger::cgen() {
     cgen.append("Input " + cgen.var + "\n");
     return cgen;
 }
+
+SyntaxTree::Cgen SyntaxTree::ExprToNew::cgen() {
+    auto classType = SymbolTable::ClassType::getClass(this->getId());
+    int layoutSize = classType->getObjectLayoutSize();
+    auto cgen = Cgen();
+    cgen.createVar(classType->getId(), 0);
+    cgen.append("Alloc " + cgen.var + " " + std::to_string(layoutSize) + "\n");
+    return cgen;
+}
+
+const std::string &SyntaxTree::ExprToNew::getId() const {
+    return Id;
+}
+
+void SyntaxTree::ExprToNew::setId(const std::string &id) {
+    Id = id;
+}
+
+void SyntaxTree::ExprToNew::handleScope() {
+    // nothing to do!
+}

@@ -28,13 +28,26 @@ int main(int argc, char* argv[]) {
     yyparse();
     cout << "---------- Handle Scope: ----------" << endl;
     root.handleScope();
+    cout << "---------- Class Hierarchy ----------" << endl;
+    root.handleClassHierarchy();
+    cout << "=== scope check ===\n";
+    for (auto scope : SymbolTable::Scope::getDefinedScopes()) {
+        std::cout << scope->getName() << ' ';
+        if (scope->getPar() != nullptr)
+            std::cout << scope->getPar()->getName();
+        std::cout << std::endl;
+        cout << ":: ";
+        for (auto y: scope->getEntries())
+            cout << y->getUniqueId() << " ";
+        cout << endl;
+        cout << endl;
+    }
     cout << "---------- Cgen: ----------" << endl;
     string tac = root.cgen().code;
     cout << tac << endl;
     cout << "---------- asm: ----------" << endl;
     string assembly = TacToAssembly::toAssembly(tac);
     cout << assembly << endl;
-//    fprintf(output_file, "main:\nli $v0, 10\nsyscall\n");
     fprintf(output_file, "%s", assembly.c_str());
     fclose(output_file);
     return 0;

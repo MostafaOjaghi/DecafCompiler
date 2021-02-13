@@ -15,6 +15,8 @@ namespace SyntaxTree {
     private:
         std::vector<Decl *> declerations;
     public:
+        void handleClassHierarchy() override;
+
         Cgen cgen() override;
 
         void handleScope() override;

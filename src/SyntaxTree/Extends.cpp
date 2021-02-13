@@ -11,3 +11,7 @@ const std::string &SyntaxTree::Extends::getParentClassId() const {
 void SyntaxTree::Extends::setParentClassId(const std::string &parentClassId) {
     Extends::parentClassId = parentClassId;
 }
+
+void SyntaxTree::Extends::handleScope() {
+    // nothing to do
+}

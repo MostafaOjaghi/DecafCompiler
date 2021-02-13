@@ -33,6 +33,10 @@ namespace SyntaxTree {
         Expr *expr;
         std::string id;
     public:
+        void handleScope() override;
+
+        Cgen cgen() override;
+
         Expr *getExpr() const;
 
         void setExpr(Expr *expr);

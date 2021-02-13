@@ -47,6 +47,10 @@ namespace SyntaxTree {
     private:
         ClassDecl *classDecl;
     public:
+        void handleClassHierarchy() override;
+
+        void handleScope() override;
+
         ClassDecl *getClassDecl() const;
 
         void setClassDecl(ClassDecl *classDecl);

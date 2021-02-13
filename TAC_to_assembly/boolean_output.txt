@@ -1,0 +1,13 @@
+
+Lcall _main
+Exit
+
+Label _main:
+Beginfunc 48
+
+Input bool
+Input bool_1
+OutputB bool
+OutputB bool_1
+
+Endfunc

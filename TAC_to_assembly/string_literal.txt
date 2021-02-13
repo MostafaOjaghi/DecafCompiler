@@ -1,0 +1,18 @@
+
+Lcall _main
+Exit
+
+Label _main:
+Beginfunc 48
+
+AssignS mystring = "HELLO!"
+AssignS mystring_1 = "HELLO!! Again"
+AssignS mystring_2 = "HELLO!!! Yeganeh"
+OutputS mystring
+Endl
+OutputS mystring_2
+Endl
+OutputS mystring_1
+
+
+Endfunc

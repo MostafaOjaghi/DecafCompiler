@@ -24,9 +24,17 @@ void SymbolTable::SymbolTableEntry::setScope(SymbolTable::Scope *scope) {
 }
 
 SymbolTable::SymbolTableEntry::SymbolTableEntry(const std::string &id, const SymbolTable::TypeName &typeName,
-                                                SymbolTable::Scope *scope) : id(id), typeName(typeName), scope(scope) {}
+                                                SymbolTable::Scope *scope) : id(id), typeName(typeName), scope(scope) {this->accessMode = SymbolTable::AccessMode::PUBLIC;}
 
 std::string SymbolTable::SymbolTableEntry::getUniqueId() {
     return getScope()->getPrefix() + "_" + id;
+}
+
+SymbolTable::AccessMode SymbolTable::SymbolTableEntry::getAccessMode() const {
+    return accessMode;
+}
+
+void SymbolTable::SymbolTableEntry::setAccessMode(SymbolTable::AccessMode accessMode) {
+    SymbolTableEntry::accessMode = accessMode;
 }
 
