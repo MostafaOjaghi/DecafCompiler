@@ -13,6 +13,9 @@ map <string, int> frame_pointer_pos;
 map <string, int> global_pointer_pos;
 map <string, int> stack_pointer_pos;
 
+vector <string> stringLiterals;
+vector <string> vtables;
+
 #define SIZE(x) ((int)(x).size())
 
 int sp;
@@ -112,6 +115,13 @@ void getInt (string token) {
     output << "sw $v0 " << getPos(token, 0) << "\n";
 }
 
+void getFloat (string token) {
+
+    output << "li $v0 6 \n";
+    output << "syscall \n";
+    output << "s.s $f0 " << getPos(token, 0) << "\n";
+}
+
 void getString (string token) {
 
     output << "li $a0 " << string_size << "\n";
@@ -130,6 +140,13 @@ void printInt (string token) {
     output << "li $v0 1 \n";
     output << "lw $t0 " << getPos(token, 0) << "\n";
     output << "move $a0 $t0 \n";
+    output << "syscall \n";
+}
+
+void printFloat (string token) {
+
+    output << "li $v0 2 \n";
+    output << "l.s $f12 " << getPos(token, 0) << "\n";
     output << "syscall \n";
 }
 
@@ -318,9 +335,15 @@ string tacToAssembly(istream &inputFile) {
         } else if (tokens[0] == "InputS") {
 
             getString(tokens[1]);
+        } else if (tokens[0] == "InputF") {
+
+            getFloat(tokens[1]);
+        } else if (tokens[0] == "OutputF") {
+
+            printFloat(tokens[1]);
         } else if (tokens[0] == "OutputS") {
 
-            printString(tokens[1]);
+                printString(tokens[1]);
         } else if (tokens[0] == "Output") {
 
             // print whats in token[1]
@@ -416,11 +439,95 @@ string tacToAssembly(istream &inputFile) {
             }
 
             output << "sw $t0 " << getPos(x, 0) << "\n";
+        } else if (tokens[0] == "AssignS") {
+
+            string temp = "_string_";
+            temp += tokens[1];
+            temp += "_: .asciiz ";
+            temp += line.substr(11 + SIZE(tokens[1]), SIZE(line));
+            temp += "\n";
+            stringLiterals.push_back(temp);
+            string addressLabel = "_string_" + tokens[1] + "_";
+            output << "la $t0 " << addressLabel << "\n";
+            output << "sw $t0 " << getPos(tokens[1], 0) << "\n";
+        } else if (tokens[0] == "AssignF") {
+
+            if (SIZE(tokens) == 4) {
+
+                if (tokens[3][0] <= '9' && tokens[3][0] >= '0') {
+
+                }
+                else {
+                    output << "lw $f0 " << getPos(tokens[3], 0) << "\n";
+                }
+                output << "sw $f0 " << getPos(tokens[1], 0) << "\n";
+                continue;
+            } else if (SIZE(tokens) == 5) {
+
+                output << "lw $f0 " << getPos(tokens[4], 0) << "\n";
+                if (tokens[3] == "-") {
+                    output << "mul.s $f0 $t0 -1\n";
+                }
+                output << "sw $f0 " << getPos(tokens[1], 0) << "\n";
+                continue;
+            }
+
+            string t1 = tokens[3];
+            string t2 = tokens[5];
+            string op = tokens[4];
+            string x = tokens[1];
+
+            if (t1[0] <= '9' && t1[0] >= '0') {
+                output << "li $t0 " << t1 << "\n";
+            } else {
+                output << "l.s $f0 " << getPos(t1, 0) << "\n";
+            }
+            if (t2[0] <= '9' && t2[0] >= '0') {
+                output << "li $t1 " << t2 << "\n";
+            } else {
+                output << "l.s $f1 " << getPos(t2, 0) << "\n";
+            }
+
+            if (op == "+") {
+                output << "add.s $f0 $f0 $f1\n";
+            } else if (op == "-") {
+                output << "sub.s $f0 $f0 $f1\n";
+            } else if (op == "*") {
+                output << "mul.s $f0 $f0 $f1\n";
+            } else if (op == "/") {
+                output << "div.s $f0 $f0 $f1\n";
+            } else if (op == "<") {
+                output << "slt.s $f0 $f0 $f1\n";
+            } else if (op == ">") {
+                output << "sgt.s $f0 $f0 $f1\n";
+            } else if (op == "<=") {
+                output << "sle.s $f0 $f0 $f1\n";
+            } else if (op == ">=") {
+                output << "sge.s $f0 $f0 $f1\n";
+            } else if (op == "==") {
+                output << "seq.s $f0 $f0 $f1\n";
+            } else if (op == "!=") {
+                output << "sne.s $f0 $f0 $f1\n";
+            } else if (op == "&&" || op == "&") {
+                output << "and.s $f0 $f0 $f1\n";
+            } else if (op == "||" || op == "|") {
+                output << "or.s $f0 $f0 $f1\n";
+            }
+            output << "s.s $f0 " << getPos(x, 0) << "\n";
+        } else if (tokens[0] == "Vtabel") {
+
+            string temp = "";
+            temp += tokens[1];
+            temp += ":";
+            temp += line.substr(10 + SIZE(tokens[1]), SIZE(line));
+            temp += "\n";
+
+            vtables.push_back(temp);
         } else if (tokens[0] == "Pushparam") {
 
-                output << "addi $sp $sp -4\n";
-                output << "lw $t0 " << getPos(tokens[1], 0) << "\n";
-                output << "sw $t0 0($sp)\n";
+            output << "addi $sp $sp -4\n";
+            output << "lw $t0 " << getPos(tokens[1], 0) << "\n";
+            output << "sw $t0 0($sp)\n";
         } else if (tokens[0] == "Lcall") {
 
             output << "addi $sp $sp -4\n";
@@ -476,12 +583,22 @@ string tacToAssembly(istream &inputFile) {
     output << "newline: .asciiz \"\\n\"\n";
     output << "true: .asciiz \"true\"\n";
     output << "false: .asciiz \"false\"\n";
+
+    // Adding string literals to .data segment
+
+    for (int i = 0; i < SIZE(stringLiterals); i++) {
+        output << stringLiterals[i];
+    }
+
+    for (int i = 0; i < SIZE(vtables); i++) {
+        output << vtables[i];
+    }
     return output.str();
 }
 
 #ifndef TAC_TO_ASSEMBLY_IN_PROJECT
 int main() {
-    ifstream inputFile ("boolean_output.txt");
+    ifstream inputFile ("float.txt");
 
 
     if (inputFile.is_open()) {

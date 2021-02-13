@@ -24,16 +24,22 @@ li $v0 10
 syscall
 _main:
 addiu $sp $sp -48
-li $v0 5 
+li $v0 6 
 syscall 
-sw $v0 -4($fp)
-li $v0 5 
+s.s $f0 -4($fp)
+li $v0 2 
+l.s $f12 -4($fp)
 syscall 
-sw $v0 -8($fp)
-lw $t0 -4($fp)
-printBool($t0)
-lw $t0 -8($fp)
-printBool($t0)
+li $v0 6 
+syscall 
+s.s $f0 -8($fp)
+l.s $f0 -4($fp)
+l.s $f1 -8($fp)
+add.s $f0 $f0 $f1
+s.s $f0 -12($fp)
+li $v0 2 
+l.s $f12 -12($fp)
+syscall 
 addiu $sp $sp 48
 jr $ra 
 .data
