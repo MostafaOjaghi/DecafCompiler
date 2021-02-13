@@ -30,15 +30,27 @@ s.s $f0 -4($fp)
 li $v0 2 
 l.s $f12 -4($fp)
 syscall 
+li.s $f0 4.5
+s.s $f0 -8($fp)
 li $v0 6 
 syscall 
-s.s $f0 -8($fp)
-l.s $f0 -4($fp)
-l.s $f1 -8($fp)
-add.s $f0 $f0 $f1
 s.s $f0 -12($fp)
 li $v0 2 
-l.s $f12 -12($fp)
+l.s $f12 -8($fp)
+syscall 
+l.s $f0 -4($fp)
+l.s $f1 -12($fp)
+add.s $f0 $f0 $f1
+s.s $f0 -16($fp)
+li $v0 2 
+l.s $f12 -16($fp)
+syscall 
+l.s $f0 -8($fp)
+l.s $f1 -16($fp)
+sub.s $f0 $f0 $f1
+s.s $f0 -20($fp)
+li $v0 2 
+l.s $f12 -20($fp)
 syscall 
 addiu $sp $sp 48
 jr $ra 

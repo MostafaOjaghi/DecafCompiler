@@ -171,6 +171,10 @@ string tacToAssembly(istream &inputFile) {
     int global_flag = true;
 
     output << ".text\n";
+
+
+    //macro:
+    /*
     output << ".macro printBool(%s0)\n";
     output << "bne %s0 0 outputBoolIsTrue\n";
     output << "la $a0 false\n";
@@ -181,6 +185,8 @@ string tacToAssembly(istream &inputFile) {
     output << "li $v0 4\n";
     output << "syscall\n";
     output << ".end_macro\n";
+    */
+
     output << "main:\n";
 
     while ( getline(inputFile, line) ) {
@@ -456,19 +462,20 @@ string tacToAssembly(istream &inputFile) {
 
                 if (tokens[3][0] <= '9' && tokens[3][0] >= '0') {
 
+                    output << "li.s $f0 " << tokens[3] << "\n";
                 }
                 else {
-                    output << "lw $f0 " << getPos(tokens[3], 0) << "\n";
+                    output << "l.s $f0 " << getPos(tokens[3], 0) << "\n";
                 }
-                output << "sw $f0 " << getPos(tokens[1], 0) << "\n";
+                output << "s.s $f0 " << getPos(tokens[1], 0) << "\n";
                 continue;
             } else if (SIZE(tokens) == 5) {
 
-                output << "lw $f0 " << getPos(tokens[4], 0) << "\n";
+                output << "l.s $f0 " << getPos(tokens[4], 0) << "\n";
                 if (tokens[3] == "-") {
-                    output << "mul.s $f0 $t0 -1\n";
+                    output << "mul.s $f0 $f0 -1\n";
                 }
-                output << "sw $f0 " << getPos(tokens[1], 0) << "\n";
+                output << "s.s $f0 " << getPos(tokens[1], 0) << "\n";
                 continue;
             }
 
@@ -478,7 +485,7 @@ string tacToAssembly(istream &inputFile) {
             string x = tokens[1];
 
             if (t1[0] <= '9' && t1[0] >= '0') {
-                output << "li $t0 " << t1 << "\n";
+                output << "li.s $t0 " << t1 << "\n";
             } else {
                 output << "l.s $f0 " << getPos(t1, 0) << "\n";
             }
