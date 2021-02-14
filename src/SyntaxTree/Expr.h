@@ -170,19 +170,55 @@ namespace SyntaxTree {
     };
 
     class ExprToITOD : public Expr {
+    private:
+        Expr *expr;
+    public:
+        void handleScope() override;
 
+        Cgen cgen() override;
+
+        Expr *getExpr() const;
+
+        void setExpr(Expr *expr);
     };
 
     class ExprToDTOI : public Expr {
+    private:
+        Expr *expr;
+    public:
+        void handleScope() override;
 
+        Cgen cgen() override;
+
+        Expr *getExpr() const;
+
+        void setExpr(Expr *expr);
     };
 
     class ExprToITOB : public Expr {
+    private:
+        Expr *expr;
+    public:
+        void handleScope() override;
 
+        Cgen cgen() override;
+
+        Expr *getExpr() const;
+
+        void setExpr(Expr *expr);
     };
 
     class ExprToBTOI : public Expr {
+    private:
+        Expr *expr;
+    public:
+        void handleScope() override;
 
+        Cgen cgen() override;
+
+        Expr *getExpr() const;
+
+        void setExpr(Expr *expr);
     };
 }
 

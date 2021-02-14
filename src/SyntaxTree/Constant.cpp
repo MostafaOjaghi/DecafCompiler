@@ -28,6 +28,9 @@ SyntaxTree::Cgen SyntaxTree::Constant::cgen() {
             assert(0);
         code += "\n";
         cgen.append(code);
+    } else if (constantType == ConstantType::DOUBLE ){
+        cgen.createVar("double", 0);
+        cgen.append("AssignF " + cgen.var + " = " + constantValue + "\n");
     } else {
         assert(0);
     }

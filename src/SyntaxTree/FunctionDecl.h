@@ -14,10 +14,15 @@ namespace SyntaxTree {
 
     class FunctionDecl : public Node {
     private:
+        Type* type;
         std::string functionIdentifier;
         Formals * formals;
         StmtBlock * stmtBlock;
     public:
+        Type *getType() const;
+
+        void setType(Type *type);
+
         Cgen cgen() override;
 
         void handleScope() override;
