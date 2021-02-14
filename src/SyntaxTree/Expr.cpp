@@ -35,18 +35,10 @@ SyntaxTree::Cgen SyntaxTree::ExprToAssignmentExpr::cgen() { // TODO handle lvalu
     Cgen expr_cgen = expr->cgen();
     cgen.append(expr_cgen);
     cgen.append(lvalue_cgen);
-    // TODO: type checking required here
-    if (dynamic_cast<LValueToIdent *>(lValue)) {
-        if (lvalue_cgen.typeName.getId() != expr_cgen.typeName.getId()) {
-            // TODO: type error should be complete
-            std::cerr << "Type error in assign!" << std::endl;
-            assert(0);
-        } else if (lvalue_cgen.typeName.getId() == "double") {
-            cgen.append("AssignF " + lvalue_cgen.var + " = " + expr_cgen.var + "\n");
-        } else
-            cgen.append("Assign " + lvalue_cgen.var + " = " + expr_cgen.var + "\n");
-
-    } else
+    // TODO: type error for incompatible assign values
+    if (lvalue_cgen.typeName.getId() == "double")
+        cgen.append("StoreF *(" + lvalue_cgen.var + ") = " + expr_cgen.var + "\n");
+    else
         cgen.append("Store *(" + lvalue_cgen.var + ") = " + expr_cgen.var + "\n");
 
     // TODO: this might need to change
@@ -81,10 +73,13 @@ void SyntaxTree::ExprToLValue::setLValue(SyntaxTree::LValue *lValue) {
 }
 
 SyntaxTree::Cgen SyntaxTree::ExprToLValue::cgen() {
-    std::cout << "problem in lvalue" << std::endl;
-    if (dynamic_cast<LValueToIdent *>(lValue))
-        return lValue->cgen();
-    std::cout << "HERE IN LVALUE!" << std::endl;
+    if (auto *lValueToIdent = dynamic_cast<LValueToIdent *>(lValue)) {
+        Cgen cgen;
+        SymbolTable::SymbolTableEntry *entry = getScope()->getEntry(lValueToIdent->getId());
+        cgen.typeName = entry->getTypeName();
+        cgen.var = entry->getUniqueId();
+        return cgen;
+    }
     Cgen cgen;
     Cgen lvalue_cgen = lValue->cgen();
     cgen.append(lvalue_cgen);
