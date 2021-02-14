@@ -5,47 +5,39 @@ sw $ra ($sp)
 addi $sp $sp -4
 sw $fp ($sp)
 move $fp $sp
-jal func_main
+jal _main
 lw $fp ($sp)
 addi $sp $sp 4
 lw $ra ($sp)
 addi $sp $sp 4
 li $v0 10
 syscall
-func_main:
+_main:
 addiu $sp $sp -48
-li.s $f0 2.3
-s.s $f0 -4($fp)
-li.s $f0 2.3
-s.s $f0 -8($fp)
-l.s $f0 -4($fp)
-l.s $f1 -8($fp)
-c.eq.s $f0 $f1
-li $t0 1
-bc1t _floatFlagCompareIsTrue_0
-j _floatFlagCompareContinue_0
-_floatFlagCompareIsTrue_0:
-li $t0 0
-_floatFlagCompareContinue_0:
-sw $t0 -12($fp)
-l.s $f0 -4($fp)
-l.s $f1 -8($fp)
-c.le.s $f1 $f0
-li $t0 0
-bc1t _floatFlagCompareIsTrue_1
-j _floatFlagCompareContinue_1
-_floatFlagCompareIsTrue_1:
-li $t0 1
-_floatFlagCompareContinue_1:
-sw $t0 -16($fp)
-li $v0 1 
-lw $t0 -12($fp)
-move $a0 $t0 
+li $v0 5 
 syscall 
-li $v0 1 
-lw $t0 -16($fp)
-move $a0 $t0 
+sw $v0 -4($fp)
+li $v0 5 
 syscall 
+sw $v0 -8($fp)
+lw $t0 -4($fp)
+bne $t0 0 outputBoolIsTrue0
+la $a0 false
+j outputBoolContinue0
+outputBoolIsTrue0:
+la $a0 true
+outputBoolContinue0:
+li $v0 4
+syscall
+lw $t0 -8($fp)
+bne $t0 0 outputBoolIsTrue1
+la $a0 false
+j outputBoolContinue1
+outputBoolIsTrue1:
+la $a0 true
+outputBoolContinue1:
+li $v0 4
+syscall
 addiu $sp $sp 48
 jr $ra 
 .data

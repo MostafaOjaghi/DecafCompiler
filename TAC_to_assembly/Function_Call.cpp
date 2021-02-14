@@ -163,8 +163,7 @@ void printString (string token) {
 void  printBool (string token) {
 
     output << "lw $t0 " << getPos(token, 0) << "\n";
-    output << "printBool($t0)\n";
-    output << "bne %s0 0 outputBoolIsTrue" << outputBooleanBranchLabelCnt << "\n";
+    output << "bne $t0 0 outputBoolIsTrue" << outputBooleanBranchLabelCnt << "\n";
     output << "la $a0 false\n";
     output << "j outputBoolContinue" << outputBooleanBranchLabelCnt << "\n";
     output << "outputBoolIsTrue" << outputBooleanBranchLabelCnt << ":\n";
@@ -173,6 +172,22 @@ void  printBool (string token) {
     output << "li $v0 4\n";
     output << "syscall\n";
     outputBooleanBranchLabelCnt++;
+}
+
+void convertFloatToInt(string a, string b) {
+
+    output << "l.s $f0 " << getPos(b, 0) << "\n";
+    output << "cvt.w.s $f0 $f0\n";
+    output << "mfc1 $t0 $f0\n";
+    output << "sw $t0 " << getPos(a, 0) << "\n";
+}
+
+void convertIntToFloat(string a, string b) {
+
+    output << "lw $t0 " << getPos(b, 0) << "\n";
+    output << "mtc1 $t0 $f0\n";
+    output << "cvt.s.w $f0 $f0\n";
+    output << "s.s $f0 " << getPos(a, 0) << "\n";
 }
 
 string tacToAssembly(istream &inputFile) {
@@ -572,6 +587,12 @@ string tacToAssembly(istream &inputFile) {
                 continue;
             }
             output << "s.s $f0 " << getPos(x, 0) << "\n";
+        } else if (tokens[0] == "FTOI") {
+
+            convertFloatToInt(tokens[1], tokens[3]);
+        } else if (tokens[0] == "ITOF") {
+
+            convertIntToFloat(tokens[1], tokens[3]);
         } else if (tokens[0] == "Vtabel") {
 
             string temp = "";
@@ -661,7 +682,7 @@ string tacToAssembly(istream &inputFile) {
 
 #ifndef TAC_TO_ASSEMBLY_IN_PROJECT
 int main() {
-    ifstream inputFile ("float_compare.txt");
+    ifstream inputFile ("boolean_output.txt");
 
 
     if (inputFile.is_open()) {
