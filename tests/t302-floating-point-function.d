@@ -7,6 +7,7 @@ void f(double a) {
 
     ia = 10;
     ib = 20;
+    ex = ia;
     ex = itod(ia) + itod(ib);
     Print(ex);
     b = 3.1;

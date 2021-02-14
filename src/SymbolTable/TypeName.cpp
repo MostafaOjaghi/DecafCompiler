@@ -3,7 +3,7 @@
 //
 
 #include "TypeName.h"
-
+#include <iostream>
 #include <utility>
 
 extern FILE *output_file;
@@ -46,6 +46,7 @@ bool SymbolTable::TypeName::isArray() const {
 }
 
 void SymbolTable::TypeName::semanticError() {
+    std::cerr << "semantic ERROR!" << std::endl;
     char semantic_error_code[] = ".text\n"
                                  ".globl main\n"
                                  "\n"
@@ -60,4 +61,12 @@ void SymbolTable::TypeName::semanticError() {
     fprintf(output_file, "%s", semantic_error_code);
     fclose(output_file);
     exit(0);
+}
+
+bool SymbolTable::TypeName::checkCastable(SymbolTable::TypeName from, SymbolTable::TypeName to) {
+    if (from.isPrimitive() || to.isPrimitive()) {
+        return from.getId() == to.getId();
+    }
+    // TODO: should be implemented for classes
+    return true;
 }
