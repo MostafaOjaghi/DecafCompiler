@@ -17,6 +17,8 @@ namespace SymbolTable {
         TypeName(std::string id, int dimension);
         TypeName() = default;
 
+        static void semanticError();
+
         int getDimension() const;
 
         void setDimension(int dimension);
