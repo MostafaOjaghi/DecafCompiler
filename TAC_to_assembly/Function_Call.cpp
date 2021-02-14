@@ -22,6 +22,9 @@ int sp;
 
 int gp;
 
+int floatBranchLabelCnt;
+int outputBooleanBranchLabelCnt;
+
 const int string_size = 1000;
 
 int fp;
@@ -490,7 +493,7 @@ string tacToAssembly(istream &inputFile) {
                 output << "l.s $f0 " << getPos(t1, 0) << "\n";
             }
             if (t2[0] <= '9' && t2[0] >= '0') {
-                output << "li $t1 " << t2 << "\n";
+                output << "li.s $f1 " << t2 << "\n";
             } else {
                 output << "l.s $f1 " << getPos(t2, 0) << "\n";
             }
