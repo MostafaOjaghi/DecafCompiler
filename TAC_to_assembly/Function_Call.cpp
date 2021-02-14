@@ -232,34 +232,11 @@ string tacToAssembly(istream &inputFile) {
 
         } else if (tokens[0] == "Addr") {
 
-            string base;
-            string v = tokens[1];
-            string offset;
-            int pos;
+            string variable = tokens[3].substr(1);
+            string address = tokens[1];
 
-            if (SIZE(tokens) == 6) {
-
-                base = tokens[3].substr(2, SIZE(tokens[3]) - 1);
-                offset = tokens[5].substr(0, SIZE(tokens[5]) - 1);
-                //cout << "LOOOOK!!!" << offset << endl << endl;
-//                cout << "1\n";
-            } else if (SIZE(tokens) == 4) {
-
-                base = tokens[3].substr(2, SIZE(tokens[3]) - 3);
-                offset = "0";
-//                cout << "2\n";
-            }
-
-//            cout << base << " base " << offset << " offset " << v << " v\n";
-
-            output << "lw $t0 " << getPos(base, 0) << "\n";
-            if (offset[0] <= '9' && offset[0] >= '0')
-                output << "li $t1 " << offset << "\n";
-            else
-                output << "lw $t1 " << getPos(offset, 0) << "\n";
-            output << "sll $t1 $t1 2\n";
-            output << "add $t1 $t1 $t0\n";
-            output << "sw $t1 " << getPos(v, 0) << "\n";
+            output << "la $t0 " << getPos(variable, 0) << "\n";
+            output << "sw $t0 " << getPos(address, 0) << "\n";
         } else if (tokens[0] == "Load") {
 
             string base;

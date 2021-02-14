@@ -16,17 +16,8 @@ void SyntaxTree::LValueToIdent::setId(const std::string &id) {
 SyntaxTree::Cgen SyntaxTree::LValueToIdent::cgen() {
     Cgen cgen;
     SymbolTable::SymbolTableEntry *entry = getScope()->getEntry(id);
-    cgen.var = entry->getUniqueId();
-    cgen.typeName = entry->getTypeName();
-    // TODO check: may need to define new temp: maybe the following code
-//    if (cgen.typeName.isArray()){
-//        std::cout << id << ": " << entry->getTypeName().getDimension() << std::endl;
-//        cgen.createVar(cgen.typeName.getId(), cgen.typeName.getDimension());
-//        cgen.append("Assign " + cgen.var + " = " + entry->getUniqueId() + "\n");
-//    } else if (cgen.typeName.isPrimitive()) {
-//        cgen.var = entry->getUniqueId();
-//    } else
-//        assert(0); // TODO handle other types
+    cgen.createVar(entry->getTypeName());
+    cgen.append("Addr " + cgen.var + " = &" + entry->getUniqueId() + "\n");
     return cgen;
 }
 
@@ -65,7 +56,7 @@ SyntaxTree::Cgen SyntaxTree::LValueToFieldAccess::cgen() {
     std::cout << "cgen append!" << std::endl;
 
     cgen.createVar(entry->getTypeName());
-    cgen.append("Load " + cgen.var + " = *(" + cgenExpr.var + " + " + std::to_string(pos) + ")\n");
+    cgen.append("Assign " + cgen.var + " = " + cgenExpr.var + " + " + std::to_string(pos * 4) + "\n");
     return cgen;
 }
 

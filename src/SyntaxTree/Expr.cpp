@@ -35,9 +35,9 @@ SyntaxTree::Cgen SyntaxTree::ExprToAssignmentExpr::cgen() { // TODO handle lvalu
     Cgen expr_cgen = expr->cgen();
     cgen.append(expr_cgen);
     cgen.append(lvalue_cgen);
-    if (dynamic_cast<LValueToIdent *>(lValue))
-        cgen.append("Assign " + lvalue_cgen.var + " = " + expr_cgen.var + "\n");
-    else
+//    if (dynamic_cast<LValueToIdent *>(lValue))
+//        cgen.append("Assign " + lvalue_cgen.var + " = " + expr_cgen.var + "\n");
+//    else
         cgen.append("Store *(" + lvalue_cgen.var + ") = " + expr_cgen.var + "\n");
     return cgen;
 }
@@ -68,8 +68,8 @@ void SyntaxTree::ExprToLValue::setLValue(SyntaxTree::LValue *lValue) {
 }
 
 SyntaxTree::Cgen SyntaxTree::ExprToLValue::cgen() {
-    if (dynamic_cast<LValueToIdent *>(lValue))
-        return lValue->cgen();
+//    if (dynamic_cast<LValueToIdent *>(lValue))
+//        return lValue->cgen();
     Cgen cgen;
     Cgen lvalue_cgen = lValue->cgen();
     cgen.append(lvalue_cgen);
