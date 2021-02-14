@@ -6,6 +6,8 @@
 
 #include <utility>
 
+extern FILE *output_file;
+
 bool SymbolTable::TypeName::isPrimitive() const {
     return classType == nullptr;
 }
@@ -41,4 +43,21 @@ SymbolTable::TypeName::TypeName(std::string id, int dimension) : id(std::move(id
 
 bool SymbolTable::TypeName::isArray() const {
     return dimension > 0;
+}
+
+void SymbolTable::TypeName::semanticError() {
+    char semantic_error_code[] = ".text\n"
+                                 ".globl main\n"
+                                 "\n"
+                                 "main:\n"
+                                 "la $a0 , errorMsg\n"
+                                 "addi $v0 , $zero, 4\n"
+                                 "syscall\n"
+                                 "jr $ra\n"
+                                 "\n"
+                                 ".data\n"
+                                 "errorMsg: .asciiz \"Semantic Error\"";
+    fprintf(output_file, "%s", semantic_error_code);
+    fclose(output_file);
+    exit(0);
 }
