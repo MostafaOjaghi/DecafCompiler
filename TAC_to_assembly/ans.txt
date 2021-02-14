@@ -12,28 +12,28 @@ lw $ra ($sp)
 addi $sp $sp 4
 li $v0 10
 syscall
-func_main:
-addiu $sp $sp -24
+func_f:
+addiu $sp $sp -16
 li.s $f0 0.0
 s.s $f0 -4($fp)
 li.s $f0 0.0
 s.s $f0 -8($fp)
-li.s $f0 0.0
+li.s $f0 3.1
 s.s $f0 -12($fp)
-li.s $f0 2.3
+l.s $f0 -12($fp)
+s.s $f0 -4($fp)
+l.s $f0 8($fp)
+l.s $f1 -4($fp)
+add.s $f0 $f0 $f1
 s.s $f0 -16($fp)
 l.s $f0 -16($fp)
-s.s $f0 -4($fp)
-li.s $f0 3.1
-s.s $f0 -20($fp)
-l.s $f0 -20($fp)
 s.s $f0 -8($fp)
-l.s $f0 -4($fp)
-l.s $f1 -8($fp)
-add.s $f0 $f0 $f1
-s.s $f0 -24($fp)
-l.s $f0 -24($fp)
-s.s $f0 -12($fp)
+li $v0 2 
+l.s $f12 8($fp)
+syscall 
+li $v0 4
+la $a0 newline
+syscall
 li $v0 2 
 l.s $f12 -4($fp)
 syscall 
@@ -46,13 +46,28 @@ syscall
 li $v0 4
 la $a0 newline
 syscall
-li $v0 2 
-l.s $f12 -12($fp)
-syscall 
-li $v0 4
-la $a0 newline
-syscall
-addiu $sp $sp 24
+addiu $sp $sp 16
+jr $ra 
+func_main:
+addiu $sp $sp -8
+li.s $f0 2.3
+s.s $f0 -4($fp)
+addi $sp $sp -4
+l.s $f0 -4($fp)
+s.s $f0 0($sp)
+addi $sp $sp -4
+sw $ra ($sp)
+addi $sp $sp -4
+sw $fp ($sp)
+move $fp $sp
+jal func_f
+lw $fp ($sp)
+addi $sp $sp 4
+lw $ra ($sp)
+addi $sp $sp 4
+sw $v0 -8($fp)
+addi $sp $sp 4
+addiu $sp $sp 8
 jr $ra 
 .data
 newline: .asciiz "\n"

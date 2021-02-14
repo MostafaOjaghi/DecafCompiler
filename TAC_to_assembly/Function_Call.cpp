@@ -535,10 +535,10 @@ string tacToAssembly(istream &inputFile) {
             output << "addi $sp $sp -4\n";
             output << "lw $t0 " << getPos(tokens[1], 0) << "\n";
             output << "sw $t0 0($sp)\n";
-        } else if (tokens[0] == "Pushparamإ") {
+        } else if (tokens[0] == "PushparamF") {
 
             output << "addi $sp $sp -4\n";
-            output << "lw $f0 " << getPos(tokens[1], 0) << "\n";
+            output << "l.s $f0 " << getPos(tokens[1], 0) << "\n";
             output << "s.s $f0 0($sp)\n";
         } else if (tokens[0] == "Lcall") {
 
