@@ -164,6 +164,15 @@ void  printBool (string token) {
 
     output << "lw $t0 " << getPos(token, 0) << "\n";
     output << "printBool($t0)\n";
+    output << "bne %s0 0 outputBoolIsTrue" << outputBooleanBranchLabelCnt << "\n";
+    output << "la $a0 false\n";
+    output << "j outputBoolContinue" << outputBooleanBranchLabelCnt << "\n";
+    output << "outputBoolIsTrue" << outputBooleanBranchLabelCnt << ":\n";
+    output << "la $a0 true\n";
+    output << "outputBoolContinue" << outputBooleanBranchLabelCnt << ":\n";
+    output << "li $v0 4\n";
+    output << "syscall\n";
+    outputBooleanBranchLabelCnt++;
 }
 
 string tacToAssembly(istream &inputFile) {
@@ -335,6 +344,47 @@ string tacToAssembly(istream &inputFile) {
             */
 
             // TODO
+        } else if (tokens[0] == "LoadF") {
+
+            string base;
+            string v = tokens[1];
+            string offset;
+            int pos;
+
+            if (SIZE(tokens) == 6) {
+
+                base = tokens[3].substr(2, SIZE(tokens[3]) - 1);
+                offset = tokens[5].substr(0, SIZE(tokens[5]) - 1);
+            } else if (SIZE(tokens) == 4) {
+
+                base = tokens[3].substr(2, SIZE(tokens[3]) - 3);
+                offset = "0";
+            }
+
+            output << "lw $t0 " << getPos(base, 0) << "\n";
+            output << "l.s $f0 " << stoi(offset) * 4 << "($t0)\n";
+            output << "s.s $f0 " << getPos(v, 0) << "\n";
+        } else if (tokens[0] == "StoreF") {
+
+            string base;
+            string offset, v;
+
+            if (SIZE(tokens) == 6) {
+
+                base = tokens[1].substr(2, SIZE(tokens[1]) - 1);
+                offset = tokens[3].substr(0, SIZE(tokens[3]) - 1);
+                v = tokens[5];
+            } else if (SIZE(tokens) == 4) {
+
+                offset = "0";
+                v = tokens[3];
+                base = tokens[1].substr(2, SIZE(tokens[1]) - 3);
+            }
+
+            output << "lw $t0 " << getPos(base, 0) << "\n";
+            output << "l.s $f0 " << getPos(v, 0) << "\n";
+            output << "s.s $f0 " << stoi(offset) * 4 << "($t0)\n";
+
         } else if (tokens[0] == "Input") {
 
             // getting an input
@@ -634,7 +684,7 @@ string tacToAssembly(istream &inputFile) {
 
 #ifndef TAC_TO_ASSEMBLY_IN_PROJECT
 int main() {
-    ifstream inputFile ("float_function.txt");
+    ifstream inputFile ("float_compare.txt");
 
 
     if (inputFile.is_open()) {
