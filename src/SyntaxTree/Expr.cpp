@@ -42,9 +42,6 @@ SyntaxTree::Cgen SyntaxTree::ExprToAssignmentExpr::cgen() { // TODO handle lvalu
     else
         cgen.append("Store *(" + lvalue_cgen.var + ") = " + expr_cgen.var + "\n");
 
-    // TODO: this might need to change
-    cgen.typeName = expr_cgen.typeName;
-
     return cgen;
 }
 
@@ -159,7 +156,9 @@ SyntaxTree::Cgen SyntaxTree::ExprToBinaryOperation::cgen() {
     cgen.append(op1);
     cgen.append(op2);
     if (operatorSymbol == "==" || operatorSymbol == "!=") {
-        // TODO check compatibility
+        if (op1.typeName.getId() != op2.typeName.getId()) {
+            SymbolTable::TypeName::semanticError();
+        }
         cgen.createVar("bool", 0);
         if (op1.typeName.getId() == "double" || op2.typeName.getId() == "double")
             cgen.append("AssignF " + cgen.var + " = " + op1.var + " " + operatorSymbol + " " + op2.var + "\n");
@@ -176,7 +175,7 @@ SyntaxTree::Cgen SyntaxTree::ExprToBinaryOperation::cgen() {
             else
                 cgen.append("Assign " + cgen.var + " = " + op1.var + " " + operatorSymbol + " " + op2.var + "\n");
         } else
-            ; // TODO raise semantic error
+            SymbolTable::TypeName::semanticError();
     } else if (operatorSymbol == "+" ||
                operatorSymbol == "-" ||
                operatorSymbol == "*" ||
@@ -190,16 +189,18 @@ SyntaxTree::Cgen SyntaxTree::ExprToBinaryOperation::cgen() {
                 cgen.append("Assign " + cgen.var + " = " + op1.var + " " + operatorSymbol + " " + op2.var + "\n");
 
         } else
-            ; // TODO raise semantic error
+            SymbolTable::TypeName::semanticError();
     } else if (operatorSymbol == "||" ||
                operatorSymbol == "&&") {
         if (op2.typeName.getId() == "bool" && op1.typeName.getId() == "bool") {
             cgen.createVar("bool", 0);
             cgen.append("Assign " + cgen.var + " = " + op1.var + " " + operatorSymbol + " " + op2.var + "\n");
         } else
-            ; // TODO raise semantic error
-    } else
+            SymbolTable::TypeName::semanticError();
+    } else {
+        std::cerr << "Unknown binary operation!" << std::endl;
         assert(0); // unknown binary operation
+    }
     return cgen;
 }
 
@@ -301,8 +302,7 @@ SyntaxTree::Cgen SyntaxTree::ExprToITOD::cgen() {
     Cgen exprCgen = this->getExpr()->cgen();
     cgen.append(exprCgen);
     if (exprCgen.typeName.getId() != "int") {
-        // TODO: type error
-        assert(0);
+        SymbolTable::TypeName::semanticError();
     }
     cgen.createVar("double", 0);
     cgen.append("ITOF " + cgen.var + " = " + exprCgen.var + "\n");
@@ -327,8 +327,7 @@ SyntaxTree::Cgen SyntaxTree::ExprToDTOI::cgen() {
     Cgen exprCgen = this->getExpr()->cgen();
     cgen.append(exprCgen);
     if (exprCgen.typeName.getId() != "double") {
-        // TODO: type error
-        assert(0);
+        SymbolTable::TypeName::semanticError();
     }
     cgen.createVar("int", 0);
     cgen.append("FTOI " + cgen.var + " = " + exprCgen.var + "\n");
@@ -353,8 +352,7 @@ SyntaxTree::Cgen SyntaxTree::ExprToITOB::cgen() {
     Cgen exprCgen = this->getExpr()->cgen();
     cgen.append(exprCgen);
     if (exprCgen.typeName.getId() != "int") {
-        // TODO: type error
-        assert(0);
+        SymbolTable::TypeName::semanticError();
     }
     cgen.createVar("bool", 0);
     cgen.append("Assign " + cgen.var + " != 0\n");
@@ -379,8 +377,7 @@ SyntaxTree::Cgen SyntaxTree::ExprToBTOI::cgen() {
     Cgen exprCgen = this->getExpr()->cgen();
     cgen.append(exprCgen);
     if (exprCgen.typeName.getId() != "bool") {
-        // TODO: type error
-        assert(0);
+        SymbolTable::TypeName::semanticError();
     }
     cgen.createVar("int", 0);
     cgen.append("Assign " + cgen.var + " = " + exprCgen.var + "\n");

@@ -72,8 +72,9 @@ SyntaxTree::Cgen SyntaxTree::CallToMethodCall::cgen() {
             cgen.createVar("int", 0);
 //            cgen.append("Assign " + cgen.var + " = &(" + object_cgen.var + ")\n");
             cgen.append("Load " + cgen.var + " = *(" + expr_cgen.var + ")\n");
-        } else
-            assert(0); // TODO semantic error
+        } else {
+            SymbolTable::TypeName::semanticError();
+        }
     } else {
         // TODO: return type should be set
         cgen.createVar("int", 0);
