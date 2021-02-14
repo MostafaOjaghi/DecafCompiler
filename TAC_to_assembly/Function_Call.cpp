@@ -498,30 +498,51 @@ string tacToAssembly(istream &inputFile) {
                 output << "l.s $f1 " << getPos(t2, 0) << "\n";
             }
 
+            cout << "oppp " << op << endl;
+
+
+            int immediate = 0;
+            int not_immediate = 1;
+            bool compareFlag = true;
+
             if (op == "+") {
                 output << "add.s $f0 $f0 $f1\n";
+                compareFlag = false;
             } else if (op == "-") {
                 output << "sub.s $f0 $f0 $f1\n";
+                compareFlag = false;
             } else if (op == "*") {
                 output << "mul.s $f0 $f0 $f1\n";
+                compareFlag = false;
             } else if (op == "/") {
                 output << "div.s $f0 $f0 $f1\n";
+                compareFlag = false;
             } else if (op == "<") {
-                output << "slt.s $f0 $f0 $f1\n";
+                output << "c.lt.s $f0 $f1\n";
             } else if (op == ">") {
-                output << "sgt.s $f0 $f0 $f1\n";
+                output << "c.lt.s $f1 $f0\n";
             } else if (op == "<=") {
-                output << "sle.s $f0 $f0 $f1\n";
+                output << "c.le.s $f0 $f1\n";
             } else if (op == ">=") {
-                output << "sge.s $f0 $f0 $f1\n";
+                output << "c.le.s $f1 $f0\n";
             } else if (op == "==") {
-                output << "seq.s $f0 $f0 $f1\n";
+                output << "c.eq.s $f0 $f1\n";
             } else if (op == "!=") {
-                output << "sne.s $f0 $f0 $f1\n";
-            } else if (op == "&&" || op == "&") {
-                output << "and.s $f0 $f0 $f1\n";
-            } else if (op == "||" || op == "|") {
-                output << "or.s $f0 $f0 $f1\n";
+                output << "c.eq.s $f0 $f1\n";
+                immediate = 1;
+                not_immediate = 0;
+            }
+
+            if (compareFlag) {
+                output << "li $t0 " << immediate <<"\n";
+                output << "bc1t _floatFlagCompareIsTrue_" << floatBranchLabelCnt << "\n";
+                output << "j _floatFlagCompareContinue_" << floatBranchLabelCnt << "\n";;
+                output << "_floatFlagCompareIsTrue_" << floatBranchLabelCnt << ":\n";
+                output << "li $t0 "<< not_immediate << "\n";
+                output << "_floatFlagCompareContinue_" << floatBranchLabelCnt << ":\n";
+                output << "sw $t0 " << getPos(x, 0) << "\n";
+                floatBranchLabelCnt++;
+                continue;
             }
             output << "s.s $f0 " << getPos(x, 0) << "\n";
         } else if (tokens[0] == "Vtabel") {
@@ -613,7 +634,7 @@ string tacToAssembly(istream &inputFile) {
 
 #ifndef TAC_TO_ASSEMBLY_IN_PROJECT
 int main() {
-    ifstream inputFile ("float_2.txt");
+    ifstream inputFile ("float_function.txt");
 
 
     if (inputFile.is_open()) {
