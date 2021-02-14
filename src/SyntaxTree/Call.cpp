@@ -38,18 +38,20 @@ void SyntaxTree::CallToFunctionCall::handleScope() {
     actuals->handleScope();
 }
 
-
+SyntaxTree::Actuals *SyntaxTree::CallToMethodCall::getActuals() const {
+    return actuals;
+}
 
 void SyntaxTree::CallToMethodCall::setActuals(SyntaxTree::Actuals *actuals) {
     CallToMethodCall::actuals = actuals;
 }
 
 const std::string &SyntaxTree::CallToMethodCall::getId() const {
-    return Id;
+    return id;
 }
 
 void SyntaxTree::CallToMethodCall::setId(const std::string &id) {
-    Id = id;
+    CallToMethodCall::id = id;
 }
 
 SyntaxTree::Expr *SyntaxTree::CallToMethodCall::getExpr() const {
@@ -62,23 +64,32 @@ void SyntaxTree::CallToMethodCall::setExpr(SyntaxTree::Expr *expr) {
 
 SyntaxTree::Cgen SyntaxTree::CallToMethodCall::cgen() {
     Cgen cgen;
-    Cgen cgenExpr = this->getExpr()->cgen();
-    cgen.append(cgenExpr);
-    // TODO: return type should be set
-    cgen.createVar("int", 0);
-    std::string tmpVar = cgen.var;
-    cgen.createVar("int", 0);
-    cgen.append("Load " + cgen.var + " = *(" + cgenExpr.var + " + 0)\n");
-    auto classType = SymbolTable::ClassType::getClass(cgenExpr.typeName.getId());
-    int funcPos =classType->getFunctionPosition(this->getId());
-    cgen.append("Load " + tmpVar + " = *(" + cgen.var + " + 0)\n");
-    cgen.append("Load " + tmpVar + " = *(" + cgenExpr.var + " + " + tmpVar + ")\n");
-    cgen.append("Load " + cgen.var + " = *(" + cgen.var + " + " + std::to_string(funcPos) + ")\n");
-    cgen.append(this->getActuals()->cgen());
-    cgen.append("Pushparam " + tmpVar + "\n");
-    cgen.append("Acall " + cgen.var + " -> " + cgen.var + "\n");
-    cgen.append("Popparams " + std::to_string((int) this->getActuals()->getExpressions().size() + 1) + "\n");
-
+    Cgen expr_cgen = expr->cgen();
+    Cgen actuals_cgen = actuals->cgen();
+    cgen.append(expr_cgen);
+    if (expr_cgen.typeName.isArray()) {
+        if (id == "length" && actuals->getExpressions().empty()) {
+            cgen.createVar("int", 0);
+//            cgen.append("Assign " + cgen.var + " = &(" + object_cgen.var + ")\n");
+            cgen.append("Load " + cgen.var + " = *(" + expr_cgen.var + ")\n");
+        } else
+            assert(0); // TODO semantic error
+    } else {
+        // TODO: return type should be set
+        cgen.createVar("int", 0);
+        std::string tmpVar = cgen.var;
+        cgen.createVar("int", 0);
+        cgen.append("Load " + cgen.var + " = *(" + expr_cgen.var + " + 0)\n");
+        auto classType = SymbolTable::ClassType::getClass(expr_cgen.typeName.getId());
+        int funcPos =classType->getFunctionPosition(this->getId());
+        cgen.append("Load " + tmpVar + " = *(" + cgen.var + " + 0)\n");
+        cgen.append("Load " + tmpVar + " = *(" + expr_cgen.var + " + " + tmpVar + ")\n");
+        cgen.append("Load " + cgen.var + " = *(" + cgen.var + " + " + std::to_string(funcPos) + ")\n");
+        cgen.append(this->getActuals()->cgen());
+        cgen.append("Pushparam " + tmpVar + "\n");
+        cgen.append("Acall " + cgen.var + " -> " + cgen.var + "\n");
+        cgen.append("Popparams " + std::to_string((int) this->getActuals()->getExpressions().size() + 1) + "\n");
+    }
     return cgen;
 }
 
@@ -87,8 +98,4 @@ void SyntaxTree::CallToMethodCall::handleScope() {
     this->getExpr()->handleScope();
     this->getActuals()->setScope(this->getScope());
     this->getActuals()->handleScope();
-}
-
-SyntaxTree::Actuals *SyntaxTree::CallToMethodCall::getActuals() const {
-    return actuals;
 }

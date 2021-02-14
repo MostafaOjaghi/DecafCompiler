@@ -48,7 +48,6 @@ int main(int argc, char* argv[]) {
     cout << "---------- asm: ----------" << endl;
     string assembly = TacToAssembly::toAssembly(tac);
     cout << assembly << endl;
-//    fprintf(output_file, "main:\nli $v0, 10\nsyscall\n");
     fprintf(output_file, "%s", assembly.c_str());
     fclose(output_file);
     return 0;

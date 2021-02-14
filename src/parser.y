@@ -564,7 +564,7 @@ call: T_ID  T_OP actuals T_CP {     CallToFunctionCall *node = new CallToFunctio
 
 ;
 
-actuals: {  Actuals *node = nullptr;
+actuals: {  Actuals *node = new Actuals();
             $$ = node;
             }
 	| actuals1  {   Actuals *node = (Actuals *) $1;

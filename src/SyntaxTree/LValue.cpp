@@ -15,10 +15,18 @@ void SyntaxTree::LValueToIdent::setId(const std::string &id) {
 
 SyntaxTree::Cgen SyntaxTree::LValueToIdent::cgen() {
     Cgen cgen;
-    // TODO check: may need to define new temp
     SymbolTable::SymbolTableEntry *entry = getScope()->getEntry(id);
     cgen.var = entry->getUniqueId();
     cgen.typeName = entry->getTypeName();
+    // TODO check: may need to define new temp: maybe the following code
+//    if (cgen.typeName.isArray()){
+//        std::cout << id << ": " << entry->getTypeName().getDimension() << std::endl;
+//        cgen.createVar(cgen.typeName.getId(), cgen.typeName.getDimension());
+//        cgen.append("Assign " + cgen.var + " = " + entry->getUniqueId() + "\n");
+//    } else if (cgen.typeName.isPrimitive()) {
+//        cgen.var = entry->getUniqueId();
+//    } else
+//        assert(0); // TODO handle other types
     return cgen;
 }
 
@@ -90,7 +98,8 @@ SyntaxTree::Cgen SyntaxTree::LValueToArray::cgen() {
     cgen.append(index);
     cgen.createVar("int", 0); // TODO int?
     cgen.append("Assign " + cgen.var + " = " + index.var + " + 1\n");
-    cgen.append("Addr " + cgen.var + " = &(" + name.var + " + " + index.var + ")\n");
+    cgen.append("Assign " + cgen.var + " = " + cgen.var + " * 4\n");
+    cgen.append("Assign " + cgen.var + " = " + name.var + " + " + cgen.var + "\n");
     return cgen;
 }
 

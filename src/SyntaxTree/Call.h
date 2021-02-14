@@ -18,7 +18,7 @@ namespace SyntaxTree {
     class CallToMethodCall : public Call {
     private:
         Expr *expr;
-        std::string Id;
+        std::string id;
     public:
         const std::string &getId() const;
 
