@@ -35,8 +35,9 @@ SyntaxTree::Cgen SyntaxTree::ExprToAssignmentExpr::cgen() { // TODO handle lvalu
     Cgen expr_cgen = expr->cgen();
     cgen.append(expr_cgen);
     cgen.append(lvalue_cgen);
-    // TODO: type error for incompatible assign values
-    if (lvalue_cgen.typeName.getId() == "double")
+    if (!SymbolTable::TypeName::checkCastable(expr_cgen.typeName, lvalue_cgen.typeName)) {
+      SymbolTable::TypeName::semanticError();
+    } else if (lvalue_cgen.typeName.getId() == "double")
         cgen.append("StoreF *(" + lvalue_cgen.var + ") = " + expr_cgen.var + "\n");
     else
         cgen.append("Store *(" + lvalue_cgen.var + ") = " + expr_cgen.var + "\n");

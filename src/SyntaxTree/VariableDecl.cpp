@@ -9,12 +9,10 @@ SyntaxTree::Cgen SyntaxTree::VariableDecl::cgen() {
     if (typenameId != "double") {
         Cgen cgen("Assign " + getScope()->getEntry(variable->getId())->getUniqueId() + " = 0\n");
         cgen.var_count = 1;
-        cgen.typeName = SymbolTable::TypeName("WF", 0);
         return cgen;
     }
     Cgen cgen("AssignF " + getScope()->getEntry(variable->getId())->getUniqueId() + " = 0.0\n");
     cgen.var_count = 1;
-    cgen.typeName = SymbolTable::TypeName("WF", 0);
     return cgen;
 }
 
