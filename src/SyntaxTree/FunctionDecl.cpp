@@ -53,6 +53,14 @@ SyntaxTree::Cgen SyntaxTree::FunctionDecl::cgen() {
     return cgen;
 }
 
+SyntaxTree::Type *SyntaxTree::FunctionDecl::getType() const {
+    return type;
+}
+
+void SyntaxTree::FunctionDecl::setType(SyntaxTree::Type *type) {
+    FunctionDecl::type = type;
+}
+
 SyntaxTree::Cgen SyntaxTree::FunctionDeclToVoidIdent::cgen() {
     return FunctionDecl::cgen();
 }
