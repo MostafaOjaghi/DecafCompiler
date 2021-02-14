@@ -163,8 +163,7 @@ void printString (string token) {
 void  printBool (string token) {
 
     output << "lw $t0 " << getPos(token, 0) << "\n";
-    output << "printBool($t0)\n";
-    output << "bne %s0 0 outputBoolIsTrue" << outputBooleanBranchLabelCnt << "\n";
+    output << "bne $t0 0 outputBoolIsTrue" << outputBooleanBranchLabelCnt << "\n";
     output << "la $a0 false\n";
     output << "j outputBoolContinue" << outputBooleanBranchLabelCnt << "\n";
     output << "outputBoolIsTrue" << outputBooleanBranchLabelCnt << ":\n";
@@ -683,7 +682,7 @@ string tacToAssembly(istream &inputFile) {
 
 #ifndef TAC_TO_ASSEMBLY_IN_PROJECT
 int main() {
-    ifstream inputFile ("ITOF_FTOI.txt");
+    ifstream inputFile ("boolean_output.txt");
 
 
     if (inputFile.is_open()) {
