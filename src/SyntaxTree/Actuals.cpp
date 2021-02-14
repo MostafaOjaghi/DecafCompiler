@@ -24,7 +24,10 @@ SyntaxTree::Cgen SyntaxTree::Actuals::cgen() {
     for (Expr *expr : expressions) {
         Cgen expr_cgen = expr->cgen();
         cgen.append(expr_cgen);
-        cgen.append("Pushparam " + expr_cgen.var + "\n");
+        if (expr_cgen.typeName.getId() == "double")
+            cgen.append("PushparamF " + expr_cgen.var + "\n");
+        else
+            cgen.append("Pushparam " + expr_cgen.var + "\n");
     }
     return cgen;
 }

@@ -35,10 +35,15 @@ SyntaxTree::Cgen SyntaxTree::ExprToAssignmentExpr::cgen() { // TODO handle lvalu
     Cgen expr_cgen = expr->cgen();
     cgen.append(expr_cgen);
     cgen.append(lvalue_cgen);
-//    if (dynamic_cast<LValueToIdent *>(lValue))
-//        cgen.append("Assign " + lvalue_cgen.var + " = " + expr_cgen.var + "\n");
-//    else
+    // TODO: type error for incompatible assign values
+    if (lvalue_cgen.typeName.getId() == "double")
+        cgen.append("StoreF *(" + lvalue_cgen.var + ") = " + expr_cgen.var + "\n");
+    else
         cgen.append("Store *(" + lvalue_cgen.var + ") = " + expr_cgen.var + "\n");
+
+    // TODO: this might need to change
+    cgen.typeName = expr_cgen.typeName;
+
     return cgen;
 }
 
@@ -155,14 +160,20 @@ SyntaxTree::Cgen SyntaxTree::ExprToBinaryOperation::cgen() {
     if (operatorSymbol == "==" || operatorSymbol == "!=") {
         // TODO check compatibility
         cgen.createVar("bool", 0);
-        cgen.append("Assign " + cgen.var + " = " + op1.var + " " + operatorSymbol + " " + op2.var + "\n");
+        if (op1.typeName.getId() == "double" || op2.typeName.getId() == "double")
+            cgen.append("AssignF " + cgen.var + " = " + op1.var + " " + operatorSymbol + " " + op2.var + "\n");
+        else
+            cgen.append("Assign " + cgen.var + " = " + op1.var + " " + operatorSymbol + " " + op2.var + "\n");
     } else if (operatorSymbol == "<" ||
                operatorSymbol == "<=" ||
                operatorSymbol == ">" ||
                operatorSymbol == ">=") {
         if (op1.typeName.getId() == op2.typeName.getId() && (op1.typeName.getId() == "int" || op1.typeName.getId() == "double")) {
             cgen.createVar("bool", 0);
-            cgen.append("Assign " + cgen.var + " = " + op1.var + " " + operatorSymbol + " " + op2.var + "\n");
+            if (op1.typeName.getId() == "double")
+                cgen.append("AssignF " + cgen.var + " = " + op1.var + " " + operatorSymbol + " " + op2.var + "\n");
+            else
+                cgen.append("Assign " + cgen.var + " = " + op1.var + " " + operatorSymbol + " " + op2.var + "\n");
         } else
             ; // TODO raise semantic error
     } else if (operatorSymbol == "+" ||
@@ -171,8 +182,12 @@ SyntaxTree::Cgen SyntaxTree::ExprToBinaryOperation::cgen() {
                operatorSymbol == "/" ||
                operatorSymbol == "%") {
         if (op1.typeName.getId() == op2.typeName.getId() && (op1.typeName.getId() == "int" || op1.typeName.getId() == "double")) {
-            cgen.createVar("int", 0);
-            cgen.append("Assign " + cgen.var + " = " + op1.var + " " + operatorSymbol + " " + op2.var + "\n");
+            cgen.createVar(op1.typeName.getId(), 0);
+            if (op1.typeName.getId() == "double")
+                cgen.append("AssignF " + cgen.var + " = " + op1.var + " " + operatorSymbol + " " + op2.var + "\n");
+            else
+                cgen.append("Assign " + cgen.var + " = " + op1.var + " " + operatorSymbol + " " + op2.var + "\n");
+
         } else
             ; // TODO raise semantic error
     } else if (operatorSymbol == "||" ||
@@ -270,4 +285,108 @@ void SyntaxTree::ExprToNew::setId(const std::string &id) {
 
 void SyntaxTree::ExprToNew::handleScope() {
     // nothing to do!
+}
+
+SyntaxTree::Expr *SyntaxTree::ExprToITOD::getExpr() const {
+    return expr;
+}
+
+void SyntaxTree::ExprToITOD::setExpr(SyntaxTree::Expr *expr) {
+    ExprToITOD::expr = expr;
+}
+
+SyntaxTree::Cgen SyntaxTree::ExprToITOD::cgen() {
+    Cgen cgen;
+    Cgen exprCgen = this->getExpr()->cgen();
+    cgen.append(exprCgen);
+    if (exprCgen.typeName.getId() != "int") {
+        // TODO: type error
+        assert(0);
+    }
+    cgen.createVar("double", 0);
+    cgen.append("ITOF " + cgen.var + " = " + exprCgen.var + "\n");
+    return cgen;
+}
+
+void SyntaxTree::ExprToITOD::handleScope() {
+    this->getExpr()->setScope(this->getScope());
+    this->getExpr()->handleScope();
+}
+
+SyntaxTree::Expr *SyntaxTree::ExprToDTOI::getExpr() const {
+    return expr;
+}
+
+void SyntaxTree::ExprToDTOI::setExpr(SyntaxTree::Expr *expr) {
+    ExprToDTOI::expr = expr;
+}
+
+SyntaxTree::Cgen SyntaxTree::ExprToDTOI::cgen() {
+    Cgen cgen;
+    Cgen exprCgen = this->getExpr()->cgen();
+    cgen.append(exprCgen);
+    if (exprCgen.typeName.getId() != "double") {
+        // TODO: type error
+        assert(0);
+    }
+    cgen.createVar("int", 0);
+    cgen.append("FTOI " + cgen.var + " = " + exprCgen.var + "\n");
+    return cgen;
+}
+
+void SyntaxTree::ExprToDTOI::handleScope() {
+    this->getExpr()->setScope(this->getScope());
+    this->getExpr()->handleScope();
+}
+
+SyntaxTree::Expr *SyntaxTree::ExprToITOB::getExpr() const {
+    return expr;
+}
+
+void SyntaxTree::ExprToITOB::setExpr(SyntaxTree::Expr *expr) {
+    ExprToITOB::expr = expr;
+}
+
+SyntaxTree::Cgen SyntaxTree::ExprToITOB::cgen() {
+    Cgen cgen;
+    Cgen exprCgen = this->getExpr()->cgen();
+    cgen.append(exprCgen);
+    if (exprCgen.typeName.getId() != "int") {
+        // TODO: type error
+        assert(0);
+    }
+    cgen.createVar("bool", 0);
+    cgen.append("Assign " + cgen.var + " != 0\n");
+    return cgen;
+}
+
+void SyntaxTree::ExprToITOB::handleScope() {
+    this->getExpr()->setScope(this->getScope());
+    this->getExpr()->handleScope();
+}
+
+SyntaxTree::Expr *SyntaxTree::ExprToBTOI::getExpr() const {
+    return expr;
+}
+
+void SyntaxTree::ExprToBTOI::setExpr(SyntaxTree::Expr *expr) {
+    ExprToBTOI::expr = expr;
+}
+
+SyntaxTree::Cgen SyntaxTree::ExprToBTOI::cgen() {
+    Cgen cgen;
+    Cgen exprCgen = this->getExpr()->cgen();
+    cgen.append(exprCgen);
+    if (exprCgen.typeName.getId() != "bool") {
+        // TODO: type error
+        assert(0);
+    }
+    cgen.createVar("int", 0);
+    cgen.append("Assign " + cgen.var + " = " + exprCgen.var + "\n");
+    return cgen;
+}
+
+void SyntaxTree::ExprToBTOI::handleScope() {
+    this->getExpr()->setScope(this->getScope());
+    this->getExpr()->handleScope();
 }

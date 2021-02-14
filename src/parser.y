@@ -130,6 +130,7 @@ array_type: primitive_type T_OB T_CB {  Type *node = (Type *) $1;
 ;
 
 function_decl: type T_ID T_OP formals T_CP stmt_block { FunctionDeclToTypeIdent *node = new FunctionDeclToTypeIdent();
+                                                        node->setType((SyntaxTree::Type *) $1);
                                                         node->setFunctionIdentifier(((Token *)$2)->getLexeme());
                                                         node->setFormals((Formals *) $4);
                                                         node->setStmtBlock((StmtBlock *) $6);
@@ -512,15 +513,19 @@ expr: lvalue T_ASSIGN expr {    ExprToAssignmentExpr *node = new ExprToAssignmen
 	                                            $$ = node;
 	                                            }
 	| T_ITOD T_OP expr T_CP {   ExprToITOD *node = new ExprToITOD();
+	                            node->setExpr((Expr *) $3);
 	                            $$ = node;
 	                            }
 	| T_DTOI T_OP expr T_CP {   ExprToDTOI *node = new ExprToDTOI();
+	                            node->setExpr((Expr *) $3);
 	                            $$ = node;
 	                            }
 	| T_ITOB T_OP expr T_CP {   ExprToITOB *node = new ExprToITOB();
+	                            node->setExpr((Expr *) $3);
 	                            $$ = node;
 	                            }
 	| T_BTOI T_OP expr T_CP {   ExprToBTOI *node = new ExprToBTOI();
+	                            node->setExpr((Expr *) $3);
 	                            $$ = node;
 	                            }
 ;

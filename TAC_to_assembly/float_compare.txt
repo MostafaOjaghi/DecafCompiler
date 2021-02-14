@@ -1,0 +1,11 @@
+Lcall func_main
+Exit
+Label func_main:
+Beginfunc 48
+AssignF _t5 = 2.3
+AssignF _t4 = 2.3
+AssignF b = _t5 != _t4
+AssignF f = _t5 >= _t4
+Output b
+Output f
+Endfunc

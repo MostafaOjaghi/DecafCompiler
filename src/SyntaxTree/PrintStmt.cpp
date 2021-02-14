@@ -15,6 +15,8 @@ SyntaxTree::Cgen SyntaxTree::PrintStmt::cgen() {
                 cgen.append("Output " + expr_cgen.var + '\n');
             else if (expr_cgen.typeName.getId() == "bool")
                 cgen.append("OutputB " + expr_cgen.var + "\n");
+            else if (expr_cgen.typeName.getId() == "double")
+                cgen.append("OutputF " + expr_cgen.var + "\n");
             else
                 assert(0); // type not supported
         else
