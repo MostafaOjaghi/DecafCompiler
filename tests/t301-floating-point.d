@@ -6,7 +6,4 @@ void main() {
     a = 2.3;
     b = 3.1;
     c = a + b;
-    Print(a);
-    Print(b);
-    Print(c);
 }

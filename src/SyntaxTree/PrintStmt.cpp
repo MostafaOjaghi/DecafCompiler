@@ -17,7 +17,9 @@ SyntaxTree::Cgen SyntaxTree::PrintStmt::cgen() {
                 cgen.append("OutputB " + expr_cgen.var + "\n");
             else if (expr_cgen.typeName.getId() == "double")
                 cgen.append("OutputF " + expr_cgen.var + "\n");
-            else
+            else if (expr_cgen.typeName.getId() == "string") {
+                cgen.append("OutputS " + expr_cgen.var + "\n");
+            } else
                 assert(0); // type not supported
         else
             assert (0); // dimension not supported

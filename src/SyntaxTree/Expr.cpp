@@ -39,6 +39,9 @@ SyntaxTree::Cgen SyntaxTree::ExprToAssignmentExpr::cgen() { // TODO handle lvalu
       SymbolTable::TypeName::semanticError();
     } else if (lvalue_cgen.typeName.getId() == "double")
         cgen.append("StoreF *(" + lvalue_cgen.var + ") = " + expr_cgen.var + "\n");
+    else if (lvalue_cgen.typeName.getId() == "string")
+        // TODO: should be handled in TAC
+        cgen.append("StoreS *(" + lvalue_cgen.var + ") = " + expr_cgen.var + "\n");
     else
         cgen.append("Store *(" + lvalue_cgen.var + ") = " + expr_cgen.var + "\n");
 

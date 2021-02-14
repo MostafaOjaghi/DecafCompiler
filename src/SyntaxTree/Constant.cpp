@@ -13,6 +13,8 @@ void SyntaxTree::Constant::setConstantValue(const std::string &constantValue) {
 }
 
 SyntaxTree::Cgen SyntaxTree::Constant::cgen() {
+    std::cerr << "This is the type: " << this->getConstantTypeString() << std::endl;
+
     Cgen cgen;
     if (constantType == ConstantType::INT) {
         cgen.createVar("int", 0);
@@ -28,9 +30,12 @@ SyntaxTree::Cgen SyntaxTree::Constant::cgen() {
             assert(0);
         code += "\n";
         cgen.append(code);
-    } else if (constantType == ConstantType::DOUBLE ){
+    } else if (constantType == ConstantType::DOUBLE) {
         cgen.createVar("double", 0);
         cgen.append("AssignF " + cgen.var + " = " + constantValue + "\n");
+    } else if (constantType == ConstantType::STRING) {
+        cgen.createVar("string", 0);
+        cgen.append("AssignS " + cgen.var + " = " + constantValue + "\n");
     } else {
         assert(0);
     }
@@ -43,4 +48,20 @@ SyntaxTree::ConstantType SyntaxTree::Constant::getConstantType() const {
 
 void SyntaxTree::Constant::setConstantType(SyntaxTree::ConstantType constantType) {
     Constant::constantType = constantType;
+}
+
+std::string SyntaxTree::Constant::getConstantTypeString(){
+    if (constantType == ConstantType::BOOL) {
+        return "bool";
+    } else if (constantType == ConstantType::DOUBLE) {
+        return "double";
+    } else if (constantType == ConstantType::INT) {
+        return "int";
+    } else if (constantType == ConstantType::STRING) {
+        return "string";
+    } else if (constantType == ConstantType::NULL_POINTER) {
+        return "nullptr";
+    } else {
+        return "undefined";
+    }
 }

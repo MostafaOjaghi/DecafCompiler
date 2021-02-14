@@ -30,6 +30,7 @@ namespace SyntaxTree {
         const std::string &getConstantValue() const;
 
         void setConstantValue(const std::string &constantValue);
+        std::string getConstantTypeString();
     };
 }
 
