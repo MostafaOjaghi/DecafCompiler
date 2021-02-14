@@ -535,6 +535,11 @@ string tacToAssembly(istream &inputFile) {
             output << "addi $sp $sp -4\n";
             output << "lw $t0 " << getPos(tokens[1], 0) << "\n";
             output << "sw $t0 0($sp)\n";
+        } else if (tokens[0] == "Pushparamإ") {
+
+            output << "addi $sp $sp -4\n";
+            output << "lw $f0 " << getPos(tokens[1], 0) << "\n";
+            output << "s.s $f0 0($sp)\n";
         } else if (tokens[0] == "Lcall") {
 
             output << "addi $sp $sp -4\n";
@@ -605,7 +610,7 @@ string tacToAssembly(istream &inputFile) {
 
 #ifndef TAC_TO_ASSEMBLY_IN_PROJECT
 int main() {
-    ifstream inputFile ("float.txt");
+    ifstream inputFile ("float_2.txt");
 
 
     if (inputFile.is_open()) {
