@@ -34,6 +34,7 @@ namespace SymbolTable {
         bool isPrimitive() const;
 
         bool isArray() const;
+        static bool checkCastable(TypeName from, TypeName to);
     };
 }
 

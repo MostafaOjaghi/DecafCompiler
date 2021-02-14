@@ -72,8 +72,9 @@ SyntaxTree::Cgen SyntaxTree::CallToMethodCall::cgen() {
             cgen.createVar("int", 0);
 //            cgen.append("Assign " + cgen.var + " = &(" + object_cgen.var + ")\n");
             cgen.append("Load " + cgen.var + " = *(" + expr_cgen.var + ")\n");
-        } else
-            assert(0); // TODO semantic error
+        } else {
+            SymbolTable::TypeName::semanticError();
+        }
     } else {
         // TODO: return type should be set
         cgen.createVar("int", 0);
@@ -83,7 +84,7 @@ SyntaxTree::Cgen SyntaxTree::CallToMethodCall::cgen() {
         auto classType = SymbolTable::ClassType::getClass(expr_cgen.typeName.getId());
         int funcPos =classType->getFunctionPosition(this->getId());
         cgen.append("Load " + tmpVar + " = *(" + cgen.var + " + 0)\n");
-        cgen.append("Load " + tmpVar + " = *(" + expr_cgen.var + " + " + tmpVar + ")\n");
+        cgen.append("Assign " + tmpVar + " = " + expr_cgen.var + " + " + tmpVar + "\n");
         cgen.append("Load " + cgen.var + " = *(" + cgen.var + " + " + std::to_string(funcPos) + ")\n");
         cgen.append(this->getActuals()->cgen());
         cgen.append("Pushparam " + tmpVar + "\n");
