@@ -25,6 +25,7 @@ int gp;
 int floatBranchLabelCnt;
 int outputBooleanBranchLabelCnt;
 int appendStringcnt;
+int appendArraycnt;
 
 const int string_size = 1000;
 
@@ -225,6 +226,42 @@ void appendString(string a, string b, string c) {
 
 
     appendStringcnt++;
+}
+
+void appendArray(string a, string b, string c) {
+
+    // t0 is the address of b
+    output << "lw $t0 " << getPos(b, 0) << "\n";
+    // t1 is the address of c
+    output << "lw $t1 " << getPos(c, 0) << "\n";
+    // allocate space for result
+    output << "li $a0 10" << "\n";
+    output << "li $v0 9\n";
+    output << "syscall\n";
+    output << "sw $v0 " << getPos(a, 0) << "\n";
+
+    // $t2 is the address of a
+    output << "lw $t2 " << getPos(a, 0) << "\n";
+
+    output << "_appendArrayLoop1_" << appendArraycnt << "_:\n";
+    output << "lw $t3 ($t0)\n";
+    output << "beq $t3 0 _appendArrayExit1_" << appendArraycnt << "_\n";
+    output << "sw $t3 ($t2)\n";
+    output << "addi $t0 $t0 4\n";
+    output << "addi $t2 $t2 4\n";
+    output << "j _appendArrayLoop1_" << appendArraycnt << "_\n";
+    output << "_appendArrayExit1_" << appendArraycnt << "_:\n";
+    output << "_appendArrayLoop2_" << appendArraycnt << "_:\n";
+    output << "lw $t3 ($t1)\n";
+    output << "beq $t3 0 _appendArrayExit2_" << appendArraycnt << "_\n";
+    output << "sw $t3 ($t2)\n";
+    output << "addi $t1 $t1 4\n";
+    output << "addi $t2 $t2 4\n";
+    output << "j _appendArrayLoop2_" << appendArraycnt << "_\n";
+    output << "_appendArrayExit2_" << appendArraycnt << "_:\n";
+
+
+    appendArraycnt++;
 }
 
 string tacToAssembly(istream &inputFile) {
@@ -541,6 +578,9 @@ string tacToAssembly(istream &inputFile) {
         } else if (tokens[0] == "AppendS") {
 
             appendString(tokens[1], tokens[3], tokens[5]);
+        } else if (tokens[0] == "AppendA") {
+
+            appendArray(tokens[1], tokens[3], tokens[5]);
         } else if (tokens[0] == "AssignF") {
 
             if (SIZE(tokens) == 4) {
@@ -738,7 +778,7 @@ string tacToAssembly(istream &inputFile) {
 
 #ifndef TAC_TO_ASSEMBLY_IN_PROJECT
 int main() {
-    ifstream inputFile ("AppendS.txt");
+    ifstream inputFile ("AppendA.txt");
 
 
     if (inputFile.is_open()) {

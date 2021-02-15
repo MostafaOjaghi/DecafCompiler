@@ -14,72 +14,95 @@ li $v0 10
 syscall
 func_main:
 addiu $sp $sp -48
-la $t0 _string_s1_
-sw $t0 -4($fp)
-la $t0 _string_s2_
+li $a0 4
+sll $a0 $a0 2
+li $v0 9
+syscall
+sw $v0 -4($fp)
+li $t0 10
 sw $t0 -8($fp)
 lw $t0 -4($fp)
 lw $t1 -8($fp)
-li $a0 1000
+sw $t1 0($t0)
+li $t0 12
+sw $t0 -8($fp)
+lw $t0 -4($fp)
+lw $t1 -8($fp)
+sw $t1 4($t0)
+li $t0 14
+sw $t0 -8($fp)
+lw $t0 -4($fp)
+lw $t1 -8($fp)
+sw $t1 8($t0)
+li $a0 4
+sll $a0 $a0 2
 li $v0 9
 syscall
 sw $v0 -12($fp)
-lw $t2 -12($fp)
-_appendStringLoop1_0_:
-lb $t3 ($t0)
-beq $t3 0 _appendStringExit1_0_
-sb $t3 ($t2)
-addi $t0 $t0 1
-addi $t2 $t2 1
-j _appendStringLoop1_0_
-_appendStringExit1_0_:
-_appendStringLoop2_0_:
-lb $t3 ($t1)
-beq $t3 0 _appendStringExit2_0_
-sb $t3 ($t2)
-addi $t1 $t1 1
-addi $t2 $t2 1
-j _appendStringLoop2_0_
-_appendStringExit2_0_:
-lw $a0 -12($fp)
-li $v0 4
+li $t0 10
+sw $t0 -8($fp)
+lw $t0 -12($fp)
+lw $t1 -8($fp)
+sw $t1 0($t0)
+li $t0 12
+sw $t0 -8($fp)
+lw $t0 -12($fp)
+lw $t1 -8($fp)
+sw $t1 4($t0)
+li $t0 14
+sw $t0 -8($fp)
+lw $t0 -12($fp)
+lw $t1 -8($fp)
+sw $t1 8($t0)
+lw $t0 -4($fp)
+lw $t1 -12($fp)
+li $a0 10
+li $v0 9
+syscall
+sw $v0 -16($fp)
+lw $t2 -16($fp)
+_appendArrayLoop1_0_:
+lw $t3 ($t0)
+beq $t3 0 _appendArrayExit1_0_
+sw $t3 ($t2)
+addi $t0 $t0 4
+addi $t2 $t2 4
+j _appendArrayLoop1_0_
+_appendArrayExit1_0_:
+_appendArrayLoop2_0_:
+lw $t3 ($t1)
+beq $t3 0 _appendArrayExit2_0_
+sw $t3 ($t2)
+addi $t1 $t1 4
+addi $t2 $t2 4
+j _appendArrayLoop2_0_
+_appendArrayExit2_0_:
+lw $t0 -16($fp)
+lw $t1 4($t0)
+sw $t1 -20($fp)
+li $v0 1 
+lw $t0 -20($fp)
+move $a0 $t0 
 syscall 
 li $v0 4
 la $a0 newline
 syscall
-li $a0 1000
-li $v0 9
-syscall
-sw $v0 -16($fp)
-li $v0 8
-lw $a0 -16($fp)
-li $a1 1000
-syscall
-lw $t0 -12($fp)
-lw $t1 -16($fp)
-li $a0 1000
-li $v0 9
-syscall
-sw $v0 -20($fp)
-lw $t2 -20($fp)
-_appendStringLoop1_1_:
-lb $t3 ($t0)
-beq $t3 0 _appendStringExit1_1_
-sb $t3 ($t2)
-addi $t0 $t0 1
-addi $t2 $t2 1
-j _appendStringLoop1_1_
-_appendStringExit1_1_:
-_appendStringLoop2_1_:
-lb $t3 ($t1)
-beq $t3 0 _appendStringExit2_1_
-sb $t3 ($t2)
-addi $t1 $t1 1
-addi $t2 $t2 1
-j _appendStringLoop2_1_
-_appendStringExit2_1_:
-lw $a0 -20($fp)
+lw $t0 -16($fp)
+lw $t1 0($t0)
+sw $t1 -20($fp)
+li $v0 1 
+lw $t0 -20($fp)
+move $a0 $t0 
+syscall 
 li $v0 4
+la $a0 newline
+syscall
+lw $t0 -16($fp)
+lw $t1 20($t0)
+sw $t1 -20($fp)
+li $v0 1 
+lw $t0 -20($fp)
+move $a0 $t0 
 syscall 
 addiu $sp $sp 48
 jr $ra 
@@ -87,5 +110,3 @@ jr $ra
 newline: .asciiz "\n"
 true: .asciiz "true"
 false: .asciiz "false"
-_string_s1_: .asciiz "HELLO!"
-_string_s2_: .asciiz "Yeganeh!!"
