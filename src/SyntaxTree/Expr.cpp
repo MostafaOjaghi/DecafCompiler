@@ -36,7 +36,7 @@ SyntaxTree::Cgen SyntaxTree::ExprToAssignmentExpr::cgen() { // TODO handle lvalu
     cgen.append(expr_cgen);
     cgen.append(lvalue_cgen);
 
-    //std::cerr << expr_cgen.typeName.getClassType()->getId() << " " << lvalue_cgen.typeName.getClassType()->getId() << std::endl;
+    std::cerr << expr_cgen.typeName.getId() << expr_cgen.typeName.getDimension() << " " << lvalue_cgen.typeName.getId() << lvalue_cgen.typeName.getDimension() << std::endl;
 
     if (!SymbolTable::TypeName::checkCastable(expr_cgen.typeName, lvalue_cgen.typeName)) {
       SymbolTable::TypeName::semanticError();
@@ -96,7 +96,7 @@ SyntaxTree::Cgen SyntaxTree::ExprToLValue::cgen() {
     Cgen cgen;
     Cgen lvalue_cgen = lValue->cgen();
     cgen.append(lvalue_cgen);
-    cgen.createVar(lvalue_cgen.typeName.getId(), lvalue_cgen.typeName.getDimension());
+    cgen.createVar(lvalue_cgen.typeName);
     cgen.append("Load " + cgen.var + " = *(" + lvalue_cgen.var + ")\n");
     return cgen;
 }
@@ -272,8 +272,21 @@ void SyntaxTree::ExprToUnaryOperation::handleScope() {
 }
 
 SyntaxTree::Cgen SyntaxTree::ExprToUnaryOperation::cgen() {
-    // TODO: THIS SHOULD BE IMPLEMENTED!
-    return Node::cgen();
+    Cgen cgen;
+    Cgen operand_cgen = operand->cgen();
+    cgen.append(operand_cgen);
+    cgen.createVar(operand_cgen.typeName);
+    if (operand_cgen.typeName.getDimension() != 0)
+        SymbolTable::TypeName::semanticError();
+    else if (operand_cgen.typeName.getId() == "int" && operatorSymbol == "-")
+        cgen.append("Assign " + cgen.var + " = - " + operand_cgen.var + "\n");
+    else if (operand_cgen.typeName.getId() == "double" && operatorSymbol == "-")
+        cgen.append("AssignF " + cgen.var + " = - " + operand_cgen.var + "\n"); // TODO test
+    else if (operand_cgen.typeName.getId() == "bool" && operatorSymbol == "!")
+        cgen.append("Assign " + cgen.var + " = ! " + operand_cgen.var + "\n");
+    else
+        SymbolTable::TypeName::semanticError();
+    return cgen;
 }
 
 SyntaxTree::Expr *SyntaxTree::ExprToNewArray::getExpr() const {
@@ -296,7 +309,7 @@ SyntaxTree::Cgen SyntaxTree::ExprToNewArray::cgen() {
     Cgen cgen;
     Cgen size_cgen = expr->cgen();
     cgen.append(size_cgen);
-    cgen.createVar(type->getTypeNameId(), type->getDimension());
+    cgen.createVar(type->getTypeNameId(), type->getDimension() + 1);
     cgen.append("Assign " + cgen.var + " = " + size_cgen.var + " + 1\n");
     cgen.append("Alloc " + cgen.var + " " + cgen.var + "\n");
     cgen.append("Store *(" + cgen.var + ") = " + size_cgen.var + "\n");

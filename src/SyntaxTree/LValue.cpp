@@ -95,7 +95,7 @@ SyntaxTree::Cgen SyntaxTree::LValueToArray::cgen() {
     Cgen index = exprArrayIndex->cgen();
     cgen.append(name);
     cgen.append(index);
-    cgen.createVar("int", 0); // TODO int?
+    cgen.createVar(name.typeName.getId(), name.typeName.getDimension() - 1);
     cgen.append("Assign " + cgen.var + " = " + index.var + " + 1\n");
     cgen.append("Assign " + cgen.var + " = " + cgen.var + " * 4\n");
     cgen.append("Assign " + cgen.var + " = " + name.var + " + " + cgen.var + "\n");
