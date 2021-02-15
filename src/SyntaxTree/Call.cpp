@@ -26,8 +26,9 @@ SyntaxTree::Cgen SyntaxTree::CallToFunctionCall::cgen() {
     Cgen cgen;
     Cgen actualsCgen = actuals->cgen();
     cgen.append(actualsCgen);
-    cgen.createVar("int", 0);
-    std::string function_id = getScope()->getFunction(functionId)->getUniqueId();
+    SymbolTable::SymbolTableEntry *entry = getScope()->getFunction(functionId);
+    cgen.createVar(entry->getTypeName());
+    std::string function_id = entry->getUniqueId();
     cgen.append("Lcall " + function_id + " -> " + cgen.var + "\n");
     // TODO: 4 * should be removed
     cgen.append("Popparams " + std::to_string(4 * actuals->getExpressions().size()) + "\n");
@@ -82,7 +83,8 @@ SyntaxTree::Cgen SyntaxTree::CallToMethodCall::cgen() {
         cgen.createVar("int", 0);
         cgen.append("Load " + cgen.var + " = *(" + expr_cgen.var + " + 0)\n");
         auto classType = SymbolTable::ClassType::getClass(expr_cgen.typeName.getId());
-        int funcPos =classType->getFunctionPosition(this->getId());
+        classType->getScope()->getFunction(getId()); // just to check method existence.
+        int funcPos = classType->getFunctionPosition(this->getId());
         cgen.append("Load " + tmpVar + " = *(" + cgen.var + " + 0)\n");
         cgen.append("Assign " + tmpVar + " = " + expr_cgen.var + " + " + tmpVar + "\n");
         cgen.append("Load " + cgen.var + " = *(" + cgen.var + " + " + std::to_string(funcPos) + ")\n");

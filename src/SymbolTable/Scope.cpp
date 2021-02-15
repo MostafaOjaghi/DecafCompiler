@@ -21,7 +21,7 @@ SymbolTable::Scope::getFunction(const std::string &id, SymbolTable::Scope *curre
         entry = par->getFunction(id, currentScope);
     if (entry == nullptr) {
         std::cerr << "id:" << id << " not found" << std::endl;
-        assert(0);
+        TypeName::semanticError();
     }
     return entry;
 }
@@ -34,7 +34,7 @@ SymbolTable::SymbolTableEntry * SymbolTable::Scope::getVariable(const std::strin
         entry = par->getVariable(id, currentScope);
     if (entry == nullptr) {
         std::cerr << "id:" << id << " not found" << std::endl;
-        assert(0);
+        TypeName::semanticError();
     }
     return entry;
 }
@@ -47,13 +47,13 @@ SymbolTable::SymbolTableEntry * SymbolTable::Scope::getEntry(std::map<std::strin
         if (entry->getAccessMode() == AccessMode::PRIVATE) {
             if (!currentScope->isImmediateClassChild(this)) {
                 std::cerr << "id: " << id << " illegal private access" << std::endl;
-                assert(0);
+                TypeName::semanticError();
             }
         }
         if (entry->getAccessMode() == AccessMode::PROTECTED) {
             if (!currentScope->isClassChild(this)) {
                 std::cerr << "id: " << id << " illegal protected access" << std::endl;
-                assert(0);
+                TypeName::semanticError();
             }
         }
     }
