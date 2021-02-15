@@ -572,11 +572,11 @@ string tacToAssembly(istream &inputFile) {
                 continue;
             }
             output << "s.s $f0 " << getPos(x, 0) << "\n";
-        } else if (tokens[0] == "Vtabel") {
+        } else if (tokens[0] == "Vtable") {
 
             string temp = "";
             temp += tokens[1];
-            temp += ":";
+            temp += ": .word ";
             temp += line.substr(10 + SIZE(tokens[1]), SIZE(line));
             temp += "\n";
 

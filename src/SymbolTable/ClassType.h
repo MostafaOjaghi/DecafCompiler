@@ -22,6 +22,8 @@ namespace SymbolTable {
         std::vector<std::string> objectLayout;
         std::vector<std::string> methods;
 
+        int getMethodIndex(std::string id);
+
     public:
         Scope *getScope() const;
 
@@ -33,6 +35,7 @@ namespace SymbolTable {
         int getMethodPosition(std::string id);
         int getVtableSize();
         bool hasMethod(std::string id);
+        std::vector<std::string> getVtable();
 
     private:
         bool handleHierarchyCalled = false;

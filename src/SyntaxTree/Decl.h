@@ -47,6 +47,8 @@ namespace SyntaxTree {
     private:
         ClassDecl *classDecl;
     public:
+        Cgen cgen() override;
+
         void handleClassHierarchy() override;
 
         void handleScope() override;

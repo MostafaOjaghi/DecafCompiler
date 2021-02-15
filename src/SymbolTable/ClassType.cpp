@@ -98,9 +98,13 @@ void SymbolTable::ClassType::addMethod(std::string id) {
 }
 
 int SymbolTable::ClassType::getMethodPosition(std::string id) {
+    return 1 + getMethodIndex(id);
+}
+
+int SymbolTable::ClassType::getMethodIndex(std::string id) {
     if (parent != nullptr && parent->hasMethod(id))
-        return parent->getMethodPosition(id);
-    int pos = 1;
+        return parent->getMethodIndex(id);
+    int pos = 0;
     if (parent != nullptr)
         pos = parent->getVtableSize();
     for (const std::string &method : methods) {
@@ -129,6 +133,18 @@ bool SymbolTable::ClassType::hasMethod(std::string id) {
         parent_has = parent->hasMethod(id);
     }
     return has || parent_has;
+}
+
+std::vector<std::string> SymbolTable::ClassType::getVtable() {
+    std::vector<std::string> vtable;
+    if (parent != nullptr)
+        vtable = parent->getVtable();
+    for (const std::string &method : methods)
+        if (parent != nullptr && parent->hasMethod(method))
+            vtable[parent->getMethodIndex(method)] = getScope()->getFunction(method)->getUniqueId();
+        else
+            vtable.push_back(getScope()->getFunction(method)->getUniqueId());
+    return vtable;
 }
 
 

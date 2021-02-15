@@ -272,7 +272,11 @@ SyntaxTree::Cgen SyntaxTree::ExprToNew::cgen() {
     int layoutSize = classType->getObjectLayoutSize();
     auto cgen = Cgen();
     cgen.createVar(classType->getId(), 0);
+    std::string tmpVar = cgen.var;
+    cgen.createVar(classType->getId(), 0);
     cgen.append("Alloc " + cgen.var + " " + std::to_string(layoutSize) + "\n");
+    cgen.append("Addr " + tmpVar + " = &" + getId() + " \n");
+    cgen.append("Store *(" + cgen.var + ") = " + tmpVar + "\n");
     return cgen;
 }
 

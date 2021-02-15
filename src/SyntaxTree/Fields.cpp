@@ -18,3 +18,10 @@ void SyntaxTree::Fields::handleScope() {
         field->handleScope();
     }
 }
+
+SyntaxTree::Cgen SyntaxTree::Fields::cgen() {
+    Cgen cgen;
+    for (Field *field : fields)
+        cgen.append(field->cgen());
+    return cgen;
+}

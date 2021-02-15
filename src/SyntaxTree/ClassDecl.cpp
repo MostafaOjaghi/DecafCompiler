@@ -29,11 +29,11 @@ void SyntaxTree::ClassDecl::setFields(SyntaxTree::Fields *fields) {
 }
 
 const std::string &SyntaxTree::ClassDecl::getId() const {
-    return Id;
+    return id;
 }
 
 void SyntaxTree::ClassDecl::setId(const std::string &id) {
-    Id = id;
+    ClassDecl::id = id;
 }
 
 void SyntaxTree::ClassDecl::handleScope() {
@@ -49,8 +49,7 @@ void SyntaxTree::ClassDecl::handleScope() {
         if (FieldToVariableDecl *node = dynamic_cast<FieldToVariableDecl *>(f)) {
             classType->addToLayout(node->getVariableDecl()->getVariable()->getId());
         } else if (FieldToFunctionDecl *node = dynamic_cast<FieldToFunctionDecl *>(f)) {
-            // TODO: complete class methods
-            //assert(0);
+            classType->addMethod(node->getFunctionDecl()->getFunctionIdentifier());
         }
     }
     this->getImplements()->setScope(this->getScope());
@@ -61,4 +60,14 @@ void SyntaxTree::ClassDecl::handleScope() {
 
 void SyntaxTree::ClassDecl::handleClassHierarchy() {
     SymbolTable::ClassType::getClass(this->getId())->handleHierarchy();
+}
+
+SyntaxTree::Cgen SyntaxTree::ClassDecl::cgen() {
+    Cgen cgen;
+    cgen.append(fields->cgen());
+    std::string vtable = "Vtable " + getId() + " = 0 ";
+    for (const std::string &method_name : SymbolTable::ClassType::getClass(id)->getVtable())
+        vtable += " " + method_name;
+    cgen.append(vtable + "\n");
+    return cgen;
 }
