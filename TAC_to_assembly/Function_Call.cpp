@@ -77,6 +77,18 @@ void addToGlobal(string variable) {
 string getPos(string variable, int offset) {
 
 
+    if (offset == 1) {
+
+        string temp = "global:";
+        if (global_pointer_pos.count(temp + variable)) {
+            return convertIntegerToString(global_pointer_pos[temp + variable])+"($gp)";
+        }
+
+        // If variable is global but was not added
+        addToGlobal(variable);
+        gp += 4;
+        return convertIntegerToString(global_pointer_pos[temp + variable])+"($gp)";
+    }
     string temp = "global:";
 
     // If variable is in current function's frame pointer
@@ -93,7 +105,7 @@ string getPos(string variable, int offset) {
         return convertIntegerToString(global_pointer_pos[temp + variable] + offset)+"($gp)";
     }
 
-    // If variable is global but not adder
+    // If variable is global but was not added
     else if (current_func == temp) {
 
 
@@ -675,6 +687,22 @@ string tacToAssembly(istream &inputFile) {
             convertIntToFloat(tokens[1], tokens[3]);
         } else if (tokens[0] == "Vtable") {
 
+            output << "li $a0 " << 4 * (SIZE(tokens) - 2) << "\n";
+            output << "li $v0 9\nsyscall\n";
+            output << "sw $v0 " << getPos(tokens[1], 1) << "\n"; // code for vtable
+
+            int cnt = 0;
+
+            output << "lw $t1 " << getPos(tokens[1], 1) << "\n";
+            output << "li $t0 " << tokens[3] << "\n";
+            output << "sw $t0 " << cnt * 4 << "($t1)\n";
+            cnt++;
+            for (int i = 4; i < SIZE(tokens); i++) {
+                output << "la $t0 " << tokens[i] << "\n";
+                output << "sw $t0 " << cnt * 4 << "($t1)\n";
+                cnt++;
+            }
+            /*
             string temp = "";
             temp += tokens[1];
             temp += ": .word ";
@@ -682,6 +710,7 @@ string tacToAssembly(istream &inputFile) {
             temp += "\n";
 
             vtables.push_back(temp);
+            */
         } else if (tokens[0] == "Pushparam") {
 
             output << "addi $sp $sp -4\n";
@@ -770,15 +799,17 @@ string tacToAssembly(istream &inputFile) {
         output << stringLiterals[i];
     }
 
+    /*
     for (int i = 0; i < SIZE(vtables); i++) {
         output << vtables[i];
     }
+     */
     return output.str();
 }
 
 #ifndef TAC_TO_ASSEMBLY_IN_PROJECT
 int main() {
-    ifstream inputFile ("AppendA.txt");
+    ifstream inputFile ("Vtable.txt");
 
 
     if (inputFile.is_open()) {
