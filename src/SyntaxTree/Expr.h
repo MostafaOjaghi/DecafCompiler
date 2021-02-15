@@ -157,6 +157,12 @@ namespace SyntaxTree {
     };
 
     class ExprToReadLine : public Expr {
+    public:
+        void handleClassHierarchy() override;
+
+        Cgen cgen() override;
+
+        void handleScope() override;
         // TODO: THIS SHOULD BE IMPLEMENTED
     };
 

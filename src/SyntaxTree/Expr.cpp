@@ -40,12 +40,12 @@ SyntaxTree::Cgen SyntaxTree::ExprToAssignmentExpr::cgen() { // TODO handle lvalu
 
     if (!SymbolTable::TypeName::checkCastable(expr_cgen.typeName, lvalue_cgen.typeName)) {
       SymbolTable::TypeName::semanticError();
-    } else if (lvalue_cgen.typeName.getId() == "double")
+    } else if (lvalue_cgen.typeName.getId() == "double") {
         cgen.append("StoreF *(" + lvalue_cgen.var + ") = " + expr_cgen.var + "\n");
-    else if (lvalue_cgen.typeName.getId() == "string")
+    } else if (lvalue_cgen.typeName.getId() == "string") {
         // TODO: should be handled in TAC
-        cgen.append("StoreS *(" + lvalue_cgen.var + ") = " + expr_cgen.var + "\n");
-    else
+        cgen.append("Store *(" + lvalue_cgen.var + ") = " + expr_cgen.var + "\n");
+    } else
         cgen.append("Store *(" + lvalue_cgen.var + ") = " + expr_cgen.var + "\n");
 
     return cgen;
@@ -466,4 +466,19 @@ void SyntaxTree::ExprToBTOI::handleScope() {
 
 void SyntaxTree::ExprToBTOI::handleClassHierarchy() {
     this->getExpr()->handleClassHierarchy();
+}
+
+void SyntaxTree::ExprToReadLine::handleClassHierarchy() {
+    // nothing to do
+}
+
+SyntaxTree::Cgen SyntaxTree::ExprToReadLine::cgen() {
+    Cgen cgen;
+    cgen.createVar("string", 0);
+    cgen.append("InputS " + cgen.var + "\n");
+    return cgen;
+}
+
+void SyntaxTree::ExprToReadLine::handleScope() {
+    // norhing to do
 }
