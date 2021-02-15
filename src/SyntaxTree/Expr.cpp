@@ -215,6 +215,9 @@ SyntaxTree::Cgen SyntaxTree::ExprToBinaryOperation::cgen() {
             else
                 cgen.append("Assign " + cgen.var + " = " + op1.var + " " + operatorSymbol + " " + op2.var + "\n");
 
+        } else if (op1.typeName.getId() == op2.typeName.getId() && op1.typeName.getId() == "string") {
+            cgen.createVar("string", 0);
+            cgen.append("AppendS " + cgen.var + " = " + op1.var + " + " + op2.var + "\n");
         } else
             SymbolTable::TypeName::semanticError();
     } else if (operatorSymbol == "||" ||
