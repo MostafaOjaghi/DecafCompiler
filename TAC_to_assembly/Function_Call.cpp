@@ -24,6 +24,7 @@ int gp;
 
 int floatBranchLabelCnt;
 int outputBooleanBranchLabelCnt;
+int appendStringcnt;
 
 const int string_size = 1000;
 
@@ -163,12 +164,12 @@ void printString (string token) {
 void  printBool (string token) {
 
     output << "lw $t0 " << getPos(token, 0) << "\n";
-    output << "bne $t0 0 outputBoolIsTrue" << outputBooleanBranchLabelCnt << "\n";
+    output << "bne $t0 0 _outputBoolIsTrue_" << outputBooleanBranchLabelCnt << "\n";
     output << "la $a0 false\n";
-    output << "j outputBoolContinue" << outputBooleanBranchLabelCnt << "\n";
-    output << "outputBoolIsTrue" << outputBooleanBranchLabelCnt << ":\n";
+    output << "j _outputBoolContinue_" << outputBooleanBranchLabelCnt << "\n";
+    output << "_outputBoolIsTrue_" << outputBooleanBranchLabelCnt << ":\n";
     output << "la $a0 true\n";
-    output << "outputBoolContinue" << outputBooleanBranchLabelCnt << ":\n";
+    output << "_outputBoolContinue_" << outputBooleanBranchLabelCnt << ":\n";
     output << "li $v0 4\n";
     output << "syscall\n";
     outputBooleanBranchLabelCnt++;
@@ -188,6 +189,42 @@ void convertIntToFloat(string a, string b) {
     output << "mtc1 $t0 $f0\n";
     output << "cvt.s.w $f0 $f0\n";
     output << "s.s $f0 " << getPos(a, 0) << "\n";
+}
+
+void appendString(string a, string b, string c) {
+
+    // t0 is the address of b
+    output << "lw $t0 " << getPos(b, 0) << "\n";
+    // t1 is the address of c
+    output << "lw $t1 " << getPos(c, 0) << "\n";
+    // allocate space for result
+    output << "li $a0 " << string_size << "\n";
+    output << "li $v0 9\n";
+    output << "syscall\n";
+    output << "sw $v0 " << getPos(a, 0) << "\n";
+
+    // $t2 is the address of a
+    output << "lw $t2 " << getPos(a, 0) << "\n";
+
+    output << "_appendStringLoop1_" << appendStringcnt << "_:\n";
+    output << "lb $t3 ($t0)\n";
+    output << "beq $t3 0 _appendStringExit1_" << appendStringcnt << "_\n";
+    output << "sb $t3 ($t2)\n";
+    output << "addi $t0 $t0 1\n";
+    output << "addi $t2 $t2 1\n";
+    output << "j _appendStringLoop1_" << appendStringcnt << "_\n";
+    output << "_appendStringExit1_" << appendStringcnt << "_:\n";
+    output << "_appendStringLoop2_" << appendStringcnt << "_:\n";
+    output << "lb $t3 ($t1)\n";
+    output << "beq $t3 0 _appendStringExit2_" << appendStringcnt << "_\n";
+    output << "sb $t3 ($t2)\n";
+    output << "addi $t1 $t1 1\n";
+    output << "addi $t2 $t2 1\n";
+    output << "j _appendStringLoop2_" << appendStringcnt << "_\n";
+    output << "_appendStringExit2_" << appendStringcnt << "_:\n";
+
+
+    appendStringcnt++;
 }
 
 string tacToAssembly(istream &inputFile) {
@@ -501,6 +538,9 @@ string tacToAssembly(istream &inputFile) {
             string addressLabel = "_string_" + tokens[1] + "_";
             output << "la $t0 " << addressLabel << "\n";
             output << "sw $t0 " << getPos(tokens[1], 0) << "\n";
+        } else if (tokens[0] == "AppendS") {
+
+            appendString(tokens[1], tokens[3], tokens[5]);
         } else if (tokens[0] == "AssignF") {
 
             if (SIZE(tokens) == 4) {
@@ -593,11 +633,11 @@ string tacToAssembly(istream &inputFile) {
         } else if (tokens[0] == "ITOF") {
 
             convertIntToFloat(tokens[1], tokens[3]);
-        } else if (tokens[0] == "Vtabel") {
+        } else if (tokens[0] == "Vtable") {
 
             string temp = "";
             temp += tokens[1];
-            temp += ":";
+            temp += ": ";
             temp += line.substr(10 + SIZE(tokens[1]), SIZE(line));
             temp += "\n";
 
@@ -620,6 +660,22 @@ string tacToAssembly(istream &inputFile) {
             output << "sw $fp ($sp)\n";
             output << "move $fp $sp\n";
             output << "jal " << tokens[1] << "\n";
+            output << "lw $fp ($sp)\n";
+            output << "addi $sp $sp 4\n";
+            output << "lw $ra ($sp)\n";
+            output << "addi $sp $sp 4\n";
+            if (SIZE(tokens) == 4) {
+                output << "sw $v0 " << getPos(tokens[3], 0) << "\n";
+            }
+        } else if (tokens[0] == "Acall") {
+
+            output << "addi $sp $sp -4\n";
+            output << "sw $ra ($sp)\n";
+            output << "addi $sp $sp -4\n";
+            output << "sw $fp ($sp)\n";
+            output << "move $fp $sp\n";
+            output << "lw $t0 " << getPos(tokens[1], 0) << "\n";
+            output << "jalr $t0\n";
             output << "lw $fp ($sp)\n";
             output << "addi $sp $sp 4\n";
             output << "lw $ra ($sp)\n";
@@ -682,7 +738,7 @@ string tacToAssembly(istream &inputFile) {
 
 #ifndef TAC_TO_ASSEMBLY_IN_PROJECT
 int main() {
-    ifstream inputFile ("boolean_output.txt");
+    ifstream inputFile ("AppendS.txt");
 
 
     if (inputFile.is_open()) {

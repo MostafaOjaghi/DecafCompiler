@@ -5,42 +5,64 @@ sw $ra ($sp)
 addi $sp $sp -4
 sw $fp ($sp)
 move $fp $sp
-jal _main
+jal func_main
 lw $fp ($sp)
 addi $sp $sp 4
 lw $ra ($sp)
 addi $sp $sp 4
 li $v0 10
 syscall
-_main:
+func_main:
 addiu $sp $sp -48
-li $v0 5 
-syscall 
-sw $v0 -4($fp)
-li $v0 5 
-syscall 
-sw $v0 -8($fp)
+la $t0 _string_s1_
+sw $t0 -4($fp)
+la $t0 _string_s2_
+sw $t0 -8($fp)
 lw $t0 -4($fp)
-bne $t0 0 outputBoolIsTrue0
-la $a0 false
-j outputBoolContinue0
-outputBoolIsTrue0:
-la $a0 true
-outputBoolContinue0:
-li $v0 4
+lw $t1 -8($fp)
+li $a0 1000
+li $v0 9
 syscall
-lw $t0 -8($fp)
-bne $t0 0 outputBoolIsTrue1
-la $a0 false
-j outputBoolContinue1
-outputBoolIsTrue1:
-la $a0 true
-outputBoolContinue1:
+sw $v0 -12($fp)
+lw $t2 -12($fp)
+_appendStringLoop1_0_:
+lb $t3 ($t0)
+beq $t3 0 _appendStringExit1_0_
+sb $t3 ($t2)
+addi $t0 $t0 1
+addi $t2 $t2 1
+j _appendStringLoop1_0_
+_appendStringExit1_0_:
+_appendStringLoop2_0_:
+lb $t3 ($t1)
+beq $t3 0 _appendStringExit2_0_
+sb $t3 ($t2)
+addi $t1 $t1 1
+addi $t2 $t2 1
+j _appendStringLoop2_0_
+_appendStringExit2_0_:
+lw $a0 -12($fp)
 li $v0 4
+syscall 
+li $v0 4
+la $a0 newline
 syscall
+li $a0 1000
+li $v0 9
+syscall
+sw $v0 -16($fp)
+li $v0 8
+lw $a0 -16($fp)
+li $a1 1000
+syscall
+lw $a0 -20($fp)
+li $v0 4
+syscall 
 addiu $sp $sp 48
 jr $ra 
 .data
 newline: .asciiz "\n"
 true: .asciiz "true"
 false: .asciiz "false"
+_string_s1_: .asciiz "HELLO!"
+_string_s2_: .asciiz "Yeganeh!!"
