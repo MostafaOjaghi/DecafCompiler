@@ -33,3 +33,7 @@ void SyntaxTree::Type::incrementDimension() {
 SymbolTable::TypeName SyntaxTree::Type::getTypeName() {
     return SymbolTable::TypeName(typeNameID, dimension);
 }
+
+void SyntaxTree::Type::handleClassHierarchy() {
+    // nothing to do
+}

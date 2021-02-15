@@ -11,3 +11,19 @@ const std::vector<SyntaxTree::Prototype *> &SyntaxTree::Prototypes::getPrototype
 void SyntaxTree::Prototypes::addPrototype(SyntaxTree::Prototype *prototype) {
     prototypes.push_back(prototype);
 }
+
+void SyntaxTree::Prototypes::handleClassHierarchy() {
+    for (Prototype * prototype : prototypes) {
+        prototype->handleClassHierarchy();
+    }
+}
+
+SyntaxTree::Cgen SyntaxTree::Prototypes::cgen() {
+    // TODO: SHOULD BE IMPLEMENTED
+    return Node::cgen();
+}
+
+void SyntaxTree::Prototypes::handleScope() {
+    // TODO: SHOULD BE IMPLEMENTED
+    Node::handleScope();
+}

@@ -15,3 +15,7 @@ void SyntaxTree::Implements::addInterfaceId(const std::string &interfaceId) {
 void SyntaxTree::Implements::handleScope() {
     // nothing to do!
 }
+
+void SyntaxTree::Implements::handleClassHierarchy() {
+    // nothing to do!
+}

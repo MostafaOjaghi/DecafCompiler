@@ -27,6 +27,8 @@ namespace SyntaxTree {
     private:
         Expr *expr;
     public:
+        void handleClassHierarchy() override;
+
         Cgen cgen() override;
 
         void handleScope() override;
@@ -40,6 +42,8 @@ namespace SyntaxTree {
     private:
         IfStmt *ifStmt;
     public:
+        void handleClassHierarchy() override;
+
         Cgen cgen() override;
 
         void handleScope() override;
@@ -53,6 +57,8 @@ namespace SyntaxTree {
     private:
         WhileStmt *whileStmt;
     public:
+        void handleClassHierarchy() override;
+
         Cgen cgen() override;
 
         void handleScope() override;
@@ -66,6 +72,8 @@ namespace SyntaxTree {
     private:
         ForStmt *forStmt;
     public:
+        void handleClassHierarchy() override;
+
         Cgen cgen() override;
 
         void handleScope() override;
@@ -101,6 +109,8 @@ namespace SyntaxTree {
     private:
         ReturnStmt *returnStmt;
     public:
+        void handleClassHierarchy() override;
+
         Cgen cgen() override;
 
         void handleScope() override;
@@ -113,6 +123,8 @@ namespace SyntaxTree {
     class StmtToPrintStmt : public Stmt {
         PrintStmt * printStmt;
     public:
+        void handleClassHierarchy() override;
+
         void handleScope() override;
 
         PrintStmt *getPrintStmt() const;
@@ -126,6 +138,8 @@ namespace SyntaxTree {
     private:
         StmtBlock *stmtBlock;
     public:
+        void handleClassHierarchy() override;
+
         StmtBlock *getStmtBlock() const;
         void handleScope() override;
 

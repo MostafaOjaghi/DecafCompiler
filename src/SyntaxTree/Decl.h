@@ -20,6 +20,8 @@ namespace SyntaxTree {
     private:
         VariableDecl *variableDecl;
     public:
+        void handleClassHierarchy() override;
+
         void handleScope() override;
 
         Cgen cgen() override;
@@ -33,6 +35,8 @@ namespace SyntaxTree {
     private:
         FunctionDecl *functionDecl;
     public:
+        void handleClassHierarchy() override;
+
         void handleScope() override;
 
         Cgen cgen() override;
@@ -62,6 +66,8 @@ namespace SyntaxTree {
     private:
         InterfaceDecl *interfaceDecl;
     public:
+        void handleClassHierarchy() override;
+
         InterfaceDecl *getInterfaceDecl() const;
 
         void setInterfaceDecl(InterfaceDecl *interfaceDecl);

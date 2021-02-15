@@ -14,6 +14,8 @@ namespace SyntaxTree {
     private:
         Variable *variable;
     public:
+        void handleClassHierarchy() override;
+
         void handleScope() override;
 
         Variable *getVariable() const;

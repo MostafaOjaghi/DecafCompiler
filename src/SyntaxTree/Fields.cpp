@@ -25,3 +25,9 @@ SyntaxTree::Cgen SyntaxTree::Fields::cgen() {
         cgen.append(field->cgen());
     return cgen;
 }
+
+void SyntaxTree::Fields::handleClassHierarchy() {
+    for (Field *field : fields) {
+        field->handleClassHierarchy();
+    }
+}

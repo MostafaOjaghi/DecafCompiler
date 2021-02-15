@@ -12,6 +12,8 @@ namespace SyntaxTree {
         std::string typeNameID;
         int dimension;
     public:
+        void handleClassHierarchy() override;
+
         Cgen cgen() override;
 
         int getDimension() const;

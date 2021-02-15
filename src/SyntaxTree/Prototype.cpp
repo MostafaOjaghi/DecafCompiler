@@ -28,6 +28,21 @@ void SyntaxTree::PrototypeToTypeIdent::setType(SyntaxTree::Type *type) {
     PrototypeToTypeIdent::type = type;
 }
 
+void SyntaxTree::PrototypeToTypeIdent::handleClassHierarchy() {
+    this->getType()->handleClassHierarchy();
+    this->getFormals()->handleClassHierarchy();
+}
+
+SyntaxTree::Cgen SyntaxTree::PrototypeToTypeIdent::cgen() {
+    // TODO: SHOULD BE IMPLEMENTED
+    return Node::cgen();
+}
+
+void SyntaxTree::PrototypeToTypeIdent::handleScope() {
+    // TODO: SHOULD BE IMPLEMENTED
+    Node::handleScope();
+}
+
 const std::string &SyntaxTree::PrototypeToVoid::getPrototypeDeclId() const {
     return prototypeDeclId;
 }
@@ -42,4 +57,18 @@ SyntaxTree::Formals *SyntaxTree::PrototypeToVoid::getFormals() const {
 
 void SyntaxTree::PrototypeToVoid::setFormals(SyntaxTree::Formals *formals) {
     PrototypeToVoid::formals = formals;
+}
+
+void SyntaxTree::PrototypeToVoid::handleClassHierarchy() {
+    this->getFormals()->handleClassHierarchy();
+}
+
+SyntaxTree::Cgen SyntaxTree::PrototypeToVoid::cgen() {
+    // TODO: SHOULD BE IMPLEMENTED
+    return Node::cgen();
+}
+
+void SyntaxTree::PrototypeToVoid::handleScope() {
+    // TODO: SHOULD BE IMPLEMENTED
+    Node::handleScope();
 }

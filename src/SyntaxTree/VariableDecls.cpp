@@ -26,3 +26,9 @@ void SyntaxTree::VariableDecls::handleScope() {
         variableDecl->handleScope();
     }
 }
+
+void SyntaxTree::VariableDecls::handleClassHierarchy() {
+    for (VariableDecl *variableDecl : variableDecls)  {
+        variableDecl->handleClassHierarchy();
+    }
+}

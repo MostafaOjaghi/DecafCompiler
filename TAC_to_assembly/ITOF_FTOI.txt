@@ -1,0 +1,11 @@
+Lcall func_main
+Exit
+Label func_main:
+Beginfunc 48
+AssignF _t5 = 2.3
+Assign _t4 = 25
+ITOF _t7 = _t4
+OutputF _t7
+FTOI _t3 = _t5
+Output _t3
+Endfunc

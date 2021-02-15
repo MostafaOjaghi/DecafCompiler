@@ -28,3 +28,7 @@ void SyntaxTree::VariableDecl::handleScope() {
     this->getVariable()->setScope(this->getScope());
     this->getVariable()->handleScope();
 }
+
+void SyntaxTree::VariableDecl::handleClassHierarchy() {
+    this->getVariable()->handleClassHierarchy();
+}

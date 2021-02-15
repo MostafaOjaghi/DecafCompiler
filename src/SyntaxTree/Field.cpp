@@ -31,6 +31,11 @@ void SyntaxTree::FieldToVariableDecl::handleScope() {
     entry->setAccessMode(accessMode1);
 }
 
+void SyntaxTree::FieldToVariableDecl::handleClassHierarchy() {
+    this->getVariableDecl()->handleClassHierarchy();
+    this->getAccessMode()->handleClassHierarchy();
+}
+
 SyntaxTree::AccessMode *SyntaxTree::FieldToFunctionDecl::getAccessMode() const {
     return accessMode;
 }
@@ -60,4 +65,9 @@ void SyntaxTree::FieldToFunctionDecl::handleScope() {
     SymbolTable::SymbolTableEntry *entry = this->getFunctionDecl()->getScope()->getFunction(
             this->getFunctionDecl()->getFunctionIdentifier());
     entry->setAccessMode(accessMode1);
+}
+
+void SyntaxTree::FieldToFunctionDecl::handleClassHierarchy() {
+    this->getAccessMode()->handleClassHierarchy();
+    this->getFunctionDecl()->handleClassHierarchy();
 }

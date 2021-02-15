@@ -74,8 +74,9 @@ SyntaxTree::Cgen SyntaxTree::CallToMethodCall::cgen() {
             cgen.createVar("int", 0);
 //            cgen.append("Assign " + cgen.var + " = &(" + object_cgen.var + ")\n");
             cgen.append("Load " + cgen.var + " = *(" + expr_cgen.var + ")\n");
-        } else
-            assert(0); // TODO semantic error
+        } else {
+            SymbolTable::TypeName::semanticError();
+        }
     } else {
         auto classType = SymbolTable::ClassType::getClass(expr_cgen.typeName.getId());
         SymbolTable::SymbolTableEntry *method_entry = classType->getScope()->getFunction(getId());
@@ -101,4 +102,9 @@ void SyntaxTree::CallToMethodCall::handleScope() {
     this->getExpr()->handleScope();
     this->getActuals()->setScope(this->getScope());
     this->getActuals()->handleScope();
+}
+
+void SyntaxTree::CallToMethodCall::handleClassHierarchy() {
+    this->getExpr()->handleClassHierarchy();
+    this->getActuals()->handleClassHierarchy();
 }

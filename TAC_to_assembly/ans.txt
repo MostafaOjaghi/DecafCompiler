@@ -14,37 +14,49 @@ li $v0 10
 syscall
 func_main:
 addiu $sp $sp -48
-li.s $f0 2.3
-s.s $f0 -4($fp)
-li.s $f0 2.3
-s.s $f0 -8($fp)
-l.s $f0 -4($fp)
-l.s $f1 -8($fp)
-c.eq.s $f0 $f1
-li $t0 1
-bc1t _floatFlagCompareIsTrue_0
-j _floatFlagCompareContinue_0
-_floatFlagCompareIsTrue_0:
-li $t0 0
-_floatFlagCompareContinue_0:
-sw $t0 -12($fp)
-l.s $f0 -4($fp)
-l.s $f1 -8($fp)
-c.le.s $f1 $f0
-li $t0 0
-bc1t _floatFlagCompareIsTrue_1
-j _floatFlagCompareContinue_1
-_floatFlagCompareIsTrue_1:
-li $t0 1
-_floatFlagCompareContinue_1:
-sw $t0 -16($fp)
-li $v0 1 
-lw $t0 -12($fp)
-move $a0 $t0 
+la $t0 _string_s1_
+sw $t0 -4($fp)
+la $t0 _string_s2_
+sw $t0 -8($fp)
+lw $t0 -4($fp)
+lw $t1 -8($fp)
+li $a0 1000
+li $v0 9
+syscall
+sw $v0 -12($fp)
+lw $t2 -12($fp)
+_appendStringLoop1_0_:
+lb $t3 ($t0)
+beq $t3 0 _appendStringExit1_0_
+sb $t3 ($t2)
+addi $t0 $t0 1
+addi $t2 $t2 1
+j _appendStringLoop1_0_
+_appendStringExit1_0_:
+_appendStringLoop2_0_:
+lb $t3 ($t1)
+beq $t3 0 _appendStringExit2_0_
+sb $t3 ($t2)
+addi $t1 $t1 1
+addi $t2 $t2 1
+j _appendStringLoop2_0_
+_appendStringExit2_0_:
+lw $a0 -12($fp)
+li $v0 4
 syscall 
-li $v0 1 
-lw $t0 -16($fp)
-move $a0 $t0 
+li $v0 4
+la $a0 newline
+syscall
+li $a0 1000
+li $v0 9
+syscall
+sw $v0 -16($fp)
+li $v0 8
+lw $a0 -16($fp)
+li $a1 1000
+syscall
+lw $a0 -20($fp)
+li $v0 4
 syscall 
 addiu $sp $sp 48
 jr $ra 
@@ -52,3 +64,5 @@ jr $ra
 newline: .asciiz "\n"
 true: .asciiz "true"
 false: .asciiz "false"
+_string_s1_: .asciiz "HELLO!"
+_string_s2_: .asciiz "Yeganeh!!"

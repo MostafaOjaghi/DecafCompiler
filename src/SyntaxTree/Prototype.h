@@ -25,6 +25,12 @@ namespace SyntaxTree {
         std::string prototypeDeclId;
         Formals *formals;
     public:
+        void handleClassHierarchy() override;
+
+        Cgen cgen() override;
+
+        void handleScope() override;
+
         const std::string &getPrototypeDeclId() const;
 
         void setPrototypeDeclId(const std::string &prototypeDeclId);
@@ -39,6 +45,12 @@ namespace SyntaxTree {
         std::string prototypeDeclId;
         Formals *formals;
     public:
+        void handleClassHierarchy() override;
+
+        Cgen cgen() override;
+
+        void handleScope() override;
+
         const std::string &getPrototypeDeclId() const;
 
         void setPrototypeDeclId(const std::string &prototypeDeclId);

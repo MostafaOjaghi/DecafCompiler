@@ -16,6 +16,8 @@ namespace SyntaxTree {
         Expr *conditionalExpr;
         Stmt *stmt;
     public:
+        void handleClassHierarchy() override;
+
         Cgen cgen() override;
 
         void handleScope() override;

@@ -46,3 +46,8 @@ void SyntaxTree::WhileStmt::handleScope() {
     stmt->setScope(scope);
     stmt->handleScope();
 }
+
+void SyntaxTree::WhileStmt::handleClassHierarchy() {
+    this->getStmt()->handleClassHierarchy();
+    this->getConditionalExpr()->handleClassHierarchy();
+}

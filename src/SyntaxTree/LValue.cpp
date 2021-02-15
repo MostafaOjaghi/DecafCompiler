@@ -25,6 +25,10 @@ void SyntaxTree::LValueToIdent::handleScope() {
     // Nothing here
 }
 
+void SyntaxTree::LValueToIdent::handleClassHierarchy() {
+    // nothing to do
+}
+
 SyntaxTree::Expr *SyntaxTree::LValueToFieldAccess::getExpr() const {
     return expr;
 }
@@ -65,6 +69,10 @@ void SyntaxTree::LValueToFieldAccess::handleScope() {
     this->getExpr()->handleScope();
 }
 
+void SyntaxTree::LValueToFieldAccess::handleClassHierarchy() {
+    this->getExpr()->handleClassHierarchy();
+}
+
 SyntaxTree::Expr *SyntaxTree::LValueToArray::getExprArrayName() const {
     return exprArrayName;
 }
@@ -99,4 +107,9 @@ void SyntaxTree::LValueToArray::handleScope() {
     exprArrayName->handleScope();
     exprArrayIndex->setScope(getScope());
     exprArrayIndex->handleScope();
+}
+
+void SyntaxTree::LValueToArray::handleClassHierarchy() {
+    this->getExprArrayIndex()->handleClassHierarchy();
+    this->getExprArrayName()->handleClassHierarchy();
 }

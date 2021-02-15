@@ -14,6 +14,12 @@ namespace SyntaxTree {
         std::string interfaceId;
         Prototypes *prototypes;
     public:
+        void handleClassHierarchy() override;
+
+        Cgen cgen() override;
+
+        void handleScope() override;
+
         Prototypes *getPrototypes() const;
 
         void setPrototypes(Prototypes *prototypes);

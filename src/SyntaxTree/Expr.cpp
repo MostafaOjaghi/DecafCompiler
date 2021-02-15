@@ -35,17 +35,25 @@ SyntaxTree::Cgen SyntaxTree::ExprToAssignmentExpr::cgen() { // TODO handle lvalu
     Cgen expr_cgen = expr->cgen();
     cgen.append(expr_cgen);
     cgen.append(lvalue_cgen);
+
+    //std::cerr << expr_cgen.typeName.getClassType()->getId() << " " << lvalue_cgen.typeName.getClassType()->getId() << std::endl;
+
     if (!SymbolTable::TypeName::checkCastable(expr_cgen.typeName, lvalue_cgen.typeName)) {
       SymbolTable::TypeName::semanticError();
-    } else if (lvalue_cgen.typeName.getId() == "double")
+    } else if (lvalue_cgen.typeName.getId() == "double") {
         cgen.append("StoreF *(" + lvalue_cgen.var + ") = " + expr_cgen.var + "\n");
-    else
+    } else if (lvalue_cgen.typeName.getId() == "string") {
+        // TODO: should be handled in TAC
+        cgen.append("Store *(" + lvalue_cgen.var + ") = " + expr_cgen.var + "\n");
+    } else
         cgen.append("Store *(" + lvalue_cgen.var + ") = " + expr_cgen.var + "\n");
 
-    // TODO: this might need to change
-    cgen.typeName = expr_cgen.typeName;
-
     return cgen;
+}
+
+void SyntaxTree::ExprToAssignmentExpr::handleClassHierarchy() {
+    this->getLValue()->handleClassHierarchy();
+    this->getExpr()->handleClassHierarchy();
 }
 
 SyntaxTree::Constant *SyntaxTree::ExprToConstant::getConstant() const {
@@ -63,6 +71,10 @@ void SyntaxTree::ExprToConstant::handleScope() {
 
 SyntaxTree::Cgen SyntaxTree::ExprToConstant::cgen() {
     return constant->cgen();
+}
+
+void SyntaxTree::ExprToConstant::handleClassHierarchy() {
+
 }
 
 SyntaxTree::LValue *SyntaxTree::ExprToLValue::getLValue() const {
@@ -94,6 +106,10 @@ void SyntaxTree::ExprToLValue::handleScope() {
     lValue->handleScope();
 }
 
+void SyntaxTree::ExprToLValue::handleClassHierarchy() {
+    this->getLValue()->handleClassHierarchy();
+}
+
 SyntaxTree::Call *SyntaxTree::ExprToCall::getCall() const {
     return call;
 }
@@ -111,6 +127,10 @@ void SyntaxTree::ExprToCall::handleScope() {
     call->handleScope();
 }
 
+void SyntaxTree::ExprToCall::handleClassHierarchy() {
+    this->getCall()->handleClassHierarchy();
+}
+
 SyntaxTree::Expr *SyntaxTree::ExprToParenthesisExpr::getExpr() const {
     return expr;
 }
@@ -126,6 +146,10 @@ SyntaxTree::Cgen SyntaxTree::ExprToParenthesisExpr::cgen() {
 void SyntaxTree::ExprToParenthesisExpr::handleScope() {
     expr->setScope(getScope());
     expr->handleScope();
+}
+
+void SyntaxTree::ExprToParenthesisExpr::handleClassHierarchy() {
+    this->getExpr()->handleClassHierarchy();
 }
 
 SyntaxTree::Expr *SyntaxTree::ExprToBinaryOperation::getOperand1() const {
@@ -159,7 +183,9 @@ SyntaxTree::Cgen SyntaxTree::ExprToBinaryOperation::cgen() {
     cgen.append(op1);
     cgen.append(op2);
     if (operatorSymbol == "==" || operatorSymbol == "!=") {
-        // TODO check compatibility
+        if (op1.typeName.getId() != op2.typeName.getId()) {
+            SymbolTable::TypeName::semanticError();
+        }
         cgen.createVar("bool", 0);
         if (op1.typeName.getId() == "double" || op2.typeName.getId() == "double")
             cgen.append("AssignF " + cgen.var + " = " + op1.var + " " + operatorSymbol + " " + op2.var + "\n");
@@ -176,7 +202,7 @@ SyntaxTree::Cgen SyntaxTree::ExprToBinaryOperation::cgen() {
             else
                 cgen.append("Assign " + cgen.var + " = " + op1.var + " " + operatorSymbol + " " + op2.var + "\n");
         } else
-            ; // TODO raise semantic error
+            SymbolTable::TypeName::semanticError();
     } else if (operatorSymbol == "+" ||
                operatorSymbol == "-" ||
                operatorSymbol == "*" ||
@@ -190,16 +216,18 @@ SyntaxTree::Cgen SyntaxTree::ExprToBinaryOperation::cgen() {
                 cgen.append("Assign " + cgen.var + " = " + op1.var + " " + operatorSymbol + " " + op2.var + "\n");
 
         } else
-            ; // TODO raise semantic error
+            SymbolTable::TypeName::semanticError();
     } else if (operatorSymbol == "||" ||
                operatorSymbol == "&&") {
         if (op2.typeName.getId() == "bool" && op1.typeName.getId() == "bool") {
             cgen.createVar("bool", 0);
             cgen.append("Assign " + cgen.var + " = " + op1.var + " " + operatorSymbol + " " + op2.var + "\n");
         } else
-            ; // TODO raise semantic error
-    } else
+            SymbolTable::TypeName::semanticError();
+    } else {
+        std::cerr << "Unknown binary operation!" << std::endl;
         assert(0); // unknown binary operation
+    }
     return cgen;
 }
 
@@ -208,6 +236,11 @@ void SyntaxTree::ExprToBinaryOperation::handleScope() {
     operand2->setScope(getScope());
     operand1->handleScope();
     operand2->handleScope();
+}
+
+void SyntaxTree::ExprToBinaryOperation::handleClassHierarchy() {
+    this->getOperand1()->handleClassHierarchy();
+    this->getOperand2()->handleClassHierarchy();
 }
 
 const std::string &SyntaxTree::ExprToUnaryOperation::getOperatorSymbol() const {
@@ -224,6 +257,20 @@ SyntaxTree::Expr *SyntaxTree::ExprToUnaryOperation::getOperand() const {
 
 void SyntaxTree::ExprToUnaryOperation::setOperand(SyntaxTree::Expr *operand) {
     ExprToUnaryOperation::operand = operand;
+}
+
+void SyntaxTree::ExprToUnaryOperation::handleClassHierarchy() {
+    this->getOperand()->handleClassHierarchy();
+}
+
+void SyntaxTree::ExprToUnaryOperation::handleScope() {
+    this->getOperand()->setScope(this->getScope());
+    this->getOperand()->handleScope();
+}
+
+SyntaxTree::Cgen SyntaxTree::ExprToUnaryOperation::cgen() {
+    // TODO: THIS SHOULD BE IMPLEMENTED!
+    return Node::cgen();
 }
 
 SyntaxTree::Expr *SyntaxTree::ExprToNewArray::getExpr() const {
@@ -260,11 +307,24 @@ void SyntaxTree::ExprToNewArray::handleScope() {
     type->handleScope();
 }
 
+void SyntaxTree::ExprToNewArray::handleClassHierarchy() {
+    this->getExpr()->handleClassHierarchy();
+    this->getType()->handleClassHierarchy();
+}
+
 SyntaxTree::Cgen SyntaxTree::ExprToReadInteger::cgen() {
     Cgen cgen;
     cgen.createVar("int", 0);
     cgen.append("Input " + cgen.var + "\n");
     return cgen;
+}
+
+void SyntaxTree::ExprToReadInteger::handleClassHierarchy() {
+    // nothing here
+}
+
+void SyntaxTree::ExprToReadInteger::handleScope() {
+    // nothing here
 }
 
 SyntaxTree::Cgen SyntaxTree::ExprToNew::cgen() {
@@ -292,6 +352,10 @@ void SyntaxTree::ExprToNew::handleScope() {
     // nothing to do!
 }
 
+void SyntaxTree::ExprToNew::handleClassHierarchy() {
+    // nothing to do
+}
+
 SyntaxTree::Expr *SyntaxTree::ExprToITOD::getExpr() const {
     return expr;
 }
@@ -305,8 +369,7 @@ SyntaxTree::Cgen SyntaxTree::ExprToITOD::cgen() {
     Cgen exprCgen = this->getExpr()->cgen();
     cgen.append(exprCgen);
     if (exprCgen.typeName.getId() != "int") {
-        // TODO: type error
-        assert(0);
+        SymbolTable::TypeName::semanticError();
     }
     cgen.createVar("double", 0);
     cgen.append("ITOF " + cgen.var + " = " + exprCgen.var + "\n");
@@ -316,6 +379,10 @@ SyntaxTree::Cgen SyntaxTree::ExprToITOD::cgen() {
 void SyntaxTree::ExprToITOD::handleScope() {
     this->getExpr()->setScope(this->getScope());
     this->getExpr()->handleScope();
+}
+
+void SyntaxTree::ExprToITOD::handleClassHierarchy() {
+    this->getExpr()->handleClassHierarchy();
 }
 
 SyntaxTree::Expr *SyntaxTree::ExprToDTOI::getExpr() const {
@@ -331,8 +398,7 @@ SyntaxTree::Cgen SyntaxTree::ExprToDTOI::cgen() {
     Cgen exprCgen = this->getExpr()->cgen();
     cgen.append(exprCgen);
     if (exprCgen.typeName.getId() != "double") {
-        // TODO: type error
-        assert(0);
+        SymbolTable::TypeName::semanticError();
     }
     cgen.createVar("int", 0);
     cgen.append("FTOI " + cgen.var + " = " + exprCgen.var + "\n");
@@ -342,6 +408,10 @@ SyntaxTree::Cgen SyntaxTree::ExprToDTOI::cgen() {
 void SyntaxTree::ExprToDTOI::handleScope() {
     this->getExpr()->setScope(this->getScope());
     this->getExpr()->handleScope();
+}
+
+void SyntaxTree::ExprToDTOI::handleClassHierarchy() {
+    this->getExpr()->handleClassHierarchy();
 }
 
 SyntaxTree::Expr *SyntaxTree::ExprToITOB::getExpr() const {
@@ -357,8 +427,7 @@ SyntaxTree::Cgen SyntaxTree::ExprToITOB::cgen() {
     Cgen exprCgen = this->getExpr()->cgen();
     cgen.append(exprCgen);
     if (exprCgen.typeName.getId() != "int") {
-        // TODO: type error
-        assert(0);
+        SymbolTable::TypeName::semanticError();
     }
     cgen.createVar("bool", 0);
     cgen.append("Assign " + cgen.var + " != 0\n");
@@ -368,6 +437,10 @@ SyntaxTree::Cgen SyntaxTree::ExprToITOB::cgen() {
 void SyntaxTree::ExprToITOB::handleScope() {
     this->getExpr()->setScope(this->getScope());
     this->getExpr()->handleScope();
+}
+
+void SyntaxTree::ExprToITOB::handleClassHierarchy() {
+    this->getExpr()->handleClassHierarchy();
 }
 
 SyntaxTree::Expr *SyntaxTree::ExprToBTOI::getExpr() const {
@@ -383,8 +456,7 @@ SyntaxTree::Cgen SyntaxTree::ExprToBTOI::cgen() {
     Cgen exprCgen = this->getExpr()->cgen();
     cgen.append(exprCgen);
     if (exprCgen.typeName.getId() != "bool") {
-        // TODO: type error
-        assert(0);
+        SymbolTable::TypeName::semanticError();
     }
     cgen.createVar("int", 0);
     cgen.append("Assign " + cgen.var + " = " + exprCgen.var + "\n");
@@ -394,4 +466,23 @@ SyntaxTree::Cgen SyntaxTree::ExprToBTOI::cgen() {
 void SyntaxTree::ExprToBTOI::handleScope() {
     this->getExpr()->setScope(this->getScope());
     this->getExpr()->handleScope();
+}
+
+void SyntaxTree::ExprToBTOI::handleClassHierarchy() {
+    this->getExpr()->handleClassHierarchy();
+}
+
+void SyntaxTree::ExprToReadLine::handleClassHierarchy() {
+    // nothing to do
+}
+
+SyntaxTree::Cgen SyntaxTree::ExprToReadLine::cgen() {
+    Cgen cgen;
+    cgen.createVar("string", 0);
+    cgen.append("InputS " + cgen.var + "\n");
+    return cgen;
+}
+
+void SyntaxTree::ExprToReadLine::handleScope() {
+    // norhing to do
 }

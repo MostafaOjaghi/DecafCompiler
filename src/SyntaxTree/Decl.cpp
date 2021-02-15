@@ -21,6 +21,10 @@ void SyntaxTree::DeclToVariableDecl::handleScope() {
     this->getVariableDecl()->handleScope();
 }
 
+void SyntaxTree::DeclToVariableDecl::handleClassHierarchy() {
+    this->getVariableDecl()->handleClassHierarchy();
+}
+
 SyntaxTree::FunctionDecl *SyntaxTree::DeclToFunctionDecl::getFunctionDecl() const {
     return functionDecl;
 }
@@ -37,6 +41,10 @@ SyntaxTree::Cgen SyntaxTree::DeclToFunctionDecl::cgen() {
 void SyntaxTree::DeclToFunctionDecl::handleScope() {
     this->getFunctionDecl()->setScope(this->getScope());
     this->getFunctionDecl()->handleScope();
+}
+
+void SyntaxTree::DeclToFunctionDecl::handleClassHierarchy() {
+    this->getFunctionDecl()->handleClassHierarchy();
 }
 
 SyntaxTree::ClassDecl *SyntaxTree::DeclToClassDecl::getClassDecl() const {
@@ -72,4 +80,8 @@ SyntaxTree::InterfaceDecl *SyntaxTree::DeclToInterfaceDecl::getInterfaceDecl() c
 
 void SyntaxTree::DeclToInterfaceDecl::setInterfaceDecl(SyntaxTree::InterfaceDecl *interfaceDecl) {
     DeclToInterfaceDecl::interfaceDecl = interfaceDecl;
+}
+
+void SyntaxTree::DeclToInterfaceDecl::handleClassHierarchy() {
+    this->getInterfaceDecl()->handleClassHierarchy();
 }

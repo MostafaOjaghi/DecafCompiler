@@ -61,3 +61,11 @@ void SyntaxTree::IfStmt::handleScope() {
         falseStmt->handleScope();
     }
 }
+
+void SyntaxTree::IfStmt::handleClassHierarchy() {
+    this->getConditionalExpr()->handleClassHierarchy();
+    if (this->getFalseStmt() != nullptr)
+        this->getFalseStmt()->handleClassHierarchy();
+    if (this->getTrueStmt() != nullptr)
+        this->getTrueStmt()->handleClassHierarchy();
+}

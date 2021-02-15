@@ -5,7 +5,7 @@
 #include "SymbolTableEntry.h"
 #include "Scope.h"
 
-const SymbolTable::TypeName &SymbolTable::SymbolTableEntry::getTypeName() const {
+SymbolTable::TypeName &SymbolTable::SymbolTableEntry::getTypeName() {
     return typeName;
 }
 

@@ -13,6 +13,8 @@ namespace SyntaxTree {
     private:
         std::vector<Expr *> expressions;
     public:
+        void handleClassHierarchy() override;
+
         Cgen cgen() override;
 
         const std::vector<Expr *> &getExpressions() const;

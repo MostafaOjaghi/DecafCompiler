@@ -20,6 +20,8 @@ namespace SyntaxTree {
         AccessMode * accessMode;
         VariableDecl * variableDecl;
     public:
+        void handleClassHierarchy() override;
+
         void handleScope() override;
 
         AccessMode *getAccessMode() const;
@@ -35,6 +37,8 @@ namespace SyntaxTree {
         AccessMode * accessMode;
         FunctionDecl *functionDecl;
     public:
+        void handleClassHierarchy() override;
+
         Cgen cgen() override;
 
         void handleScope() override;

@@ -19,3 +19,17 @@ SyntaxTree::Prototypes *SyntaxTree::InterfaceDecl::getPrototypes() const {
 void SyntaxTree::InterfaceDecl::setPrototypes(SyntaxTree::Prototypes *prototypes) {
     InterfaceDecl::prototypes = prototypes;
 }
+
+void SyntaxTree::InterfaceDecl::handleClassHierarchy() {
+    this->getPrototypes()->handleClassHierarchy();
+}
+
+SyntaxTree::Cgen SyntaxTree::InterfaceDecl::cgen() {
+    // TODO: SHOULD BE IMPLEMENTED
+    return Node::cgen();
+}
+
+void SyntaxTree::InterfaceDecl::handleScope() {
+    // TODO: SHOULD BE IMPLEMENTED
+    Node::handleScope();
+}
