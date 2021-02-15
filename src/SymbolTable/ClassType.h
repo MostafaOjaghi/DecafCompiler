@@ -19,7 +19,10 @@ namespace SymbolTable {
         std::string parentName;
         std::string Id;
         SymbolTable::Scope *scope;
-        std::vector<std::string>objectLayout;
+        std::vector<std::string> objectLayout;
+        std::vector<std::string> methods;
+
+        int getMethodIndex(std::string id);
 
     public:
         Scope *getScope() const;
@@ -28,6 +31,11 @@ namespace SymbolTable {
         void addToLayout(const std::string &s);
         int getIndexInObjectLayout(const std::string &s);
         int getObjectLayoutSize();
+        void addMethod(std::string id);
+        int getMethodPosition(std::string id);
+        int getVtableSize();
+        bool hasMethod(std::string id);
+        std::vector<std::string> getVtable();
 
     private:
         bool handleHierarchyCalled = false;
@@ -52,8 +60,6 @@ namespace SymbolTable {
 
         static void addType(ClassType *classType);
         static ClassType *getClass(std::string className);
-
-        int getFunctionPosition(const std::string &functionName);
     };
 }
 

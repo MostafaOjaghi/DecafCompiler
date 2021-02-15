@@ -25,7 +25,11 @@ exp ((E|e)((\+|-)?)?{digit}+)
 \"[^\"]*\"					{yylval=new Token(yytext); return T_STRINGLITERAL;}
 ({digit}+|0(X|x)[a-fA-F0-9]+)			{yylval=new Token(yytext); return T_INTLITERAL;}
 
-"void" 			{return T_VOID;}
+"void" 			{Type *node = new Type();
+                    node->setTypeNameId("void");
+                    node->setDimension(0);
+                    yylval = node;
+                    return T_VOID;}
 "int" 			{return T_INT;}
 "double" 		{return T_DOUBLE;}
 "bool" 			{return T_BOOL;}

@@ -88,7 +88,7 @@ void SyntaxTree::ExprToLValue::setLValue(SyntaxTree::LValue *lValue) {
 SyntaxTree::Cgen SyntaxTree::ExprToLValue::cgen() {
     if (auto *lValueToIdent = dynamic_cast<LValueToIdent *>(lValue)) {
         Cgen cgen;
-        SymbolTable::SymbolTableEntry *entry = getScope()->getEntry(lValueToIdent->getId());
+        SymbolTable::SymbolTableEntry *entry = getScope()->getVariable(lValueToIdent->getId());
         cgen.typeName = entry->getTypeName();
         cgen.var = entry->getUniqueId();
         return cgen;
@@ -215,6 +215,9 @@ SyntaxTree::Cgen SyntaxTree::ExprToBinaryOperation::cgen() {
             else
                 cgen.append("Assign " + cgen.var + " = " + op1.var + " " + operatorSymbol + " " + op2.var + "\n");
 
+        } else if (op1.typeName.getId() == op2.typeName.getId() && op1.typeName.getId() == "string") {
+            cgen.createVar("string", 0);
+            cgen.append("AppendS " + cgen.var + " = " + op1.var + " + " + op2.var + "\n");
         } else
             SymbolTable::TypeName::semanticError();
     } else if (operatorSymbol == "||" ||
@@ -332,7 +335,11 @@ SyntaxTree::Cgen SyntaxTree::ExprToNew::cgen() {
     int layoutSize = classType->getObjectLayoutSize();
     auto cgen = Cgen();
     cgen.createVar(classType->getId(), 0);
+    std::string tmpVar = cgen.var;
+    cgen.createVar(classType->getId(), 0);
     cgen.append("Alloc " + cgen.var + " " + std::to_string(layoutSize) + "\n");
+    cgen.append("Addr " + tmpVar + " = &" + getId() + " \n");
+    cgen.append("Store *(" + cgen.var + ") = " + tmpVar + "\n");
     return cgen;
 }
 

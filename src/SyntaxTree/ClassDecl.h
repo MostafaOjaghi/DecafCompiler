@@ -13,11 +13,13 @@
 namespace SyntaxTree {
     class ClassDecl : public Node {
     private:
-        std::string Id;
+        std::string id;
         Extends *extends;
         Implements *implements;
         Fields *fields;
     public:
+        Cgen cgen() override;
+
         void handleClassHierarchy() override;
 
         void handleScope() override;

@@ -15,8 +15,7 @@ void SyntaxTree::LValueToIdent::setId(const std::string &id) {
 
 SyntaxTree::Cgen SyntaxTree::LValueToIdent::cgen() {
     Cgen cgen;
-    SymbolTable::SymbolTableEntry *entry = getScope()->getEntry(id);
-
+    SymbolTable::SymbolTableEntry *entry = getScope()->getVariable(id);
     cgen.createVar(entry->getTypeName());
     cgen.append("Addr " + cgen.var + " = &" + entry->getUniqueId() + "\n");
     return cgen;
@@ -51,7 +50,7 @@ SyntaxTree::Cgen SyntaxTree::LValueToFieldAccess::cgen() {
     auto classType = SymbolTable::ClassType::getClass(cgenExpr.typeName.getId());
     std::cout << "classType: " << classType << std::endl;
 
-    auto entry = classType->getScope()->getEntry(this->getId(), this->getScope());
+    auto entry = classType->getScope()->getVariable(this->getId(), this->getScope());
     std::cout << "get entry done!" << std::endl;
 
     int pos = classType->getIndexInObjectLayout(this->getId());

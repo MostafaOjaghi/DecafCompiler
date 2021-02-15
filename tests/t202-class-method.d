@@ -8,16 +8,8 @@ class Base {
     int b1;
     int b2;
     int f(int x) {
-
+        Print(x);
     }
-}
-
-class Derived3 extends Derived2 {
-
-}
-
-class Derived2 extends Base {
-
 }
 
 void main() {

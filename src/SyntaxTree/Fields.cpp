@@ -19,13 +19,15 @@ void SyntaxTree::Fields::handleScope() {
     }
 }
 
+SyntaxTree::Cgen SyntaxTree::Fields::cgen() {
+    Cgen cgen;
+    for (Field *field : fields)
+        cgen.append(field->cgen());
+    return cgen;
+}
+
 void SyntaxTree::Fields::handleClassHierarchy() {
     for (Field *field : fields) {
         field->handleClassHierarchy();
     }
-}
-
-SyntaxTree::Cgen SyntaxTree::Fields::cgen() {
-    // TODO: SHOULD BE IMPLEMENTED!
-    return Node::cgen();
 }

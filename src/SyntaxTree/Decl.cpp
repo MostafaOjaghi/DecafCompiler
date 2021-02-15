@@ -70,6 +70,10 @@ void SyntaxTree::DeclToClassDecl::handleClassHierarchy() {
     this->getClassDecl()->handleClassHierarchy();
 }
 
+SyntaxTree::Cgen SyntaxTree::DeclToClassDecl::cgen() {
+    return classDecl->cgen();
+}
+
 SyntaxTree::InterfaceDecl *SyntaxTree::DeclToInterfaceDecl::getInterfaceDecl() const {
     return interfaceDecl;
 }

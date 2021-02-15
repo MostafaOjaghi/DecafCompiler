@@ -24,10 +24,19 @@ void SymbolTable::SymbolTableEntry::setScope(SymbolTable::Scope *scope) {
 }
 
 SymbolTable::SymbolTableEntry::SymbolTableEntry(const std::string &id, const SymbolTable::TypeName &typeName,
-                                                SymbolTable::Scope *scope) : id(id), typeName(typeName), scope(scope) {this->accessMode = SymbolTable::AccessMode::PUBLIC;}
+                                                SymbolTable::Scope *scope, bool isFunction) :
+        id(id),
+        typeName(typeName),
+        scope(scope),
+        isFunc(isFunction) {
+    this->accessMode = SymbolTable::AccessMode::PUBLIC;
+}
 
 std::string SymbolTable::SymbolTableEntry::getUniqueId() {
-    return getScope()->getPrefix() + "_" + id;
+    if (isFunction())
+        return "func_" + getScope()->getPrefix() + "_" + id;
+    else
+        return getScope()->getPrefix() + "_" + id;
 }
 
 SymbolTable::AccessMode SymbolTable::SymbolTableEntry::getAccessMode() const {
@@ -36,5 +45,21 @@ SymbolTable::AccessMode SymbolTable::SymbolTableEntry::getAccessMode() const {
 
 void SymbolTable::SymbolTableEntry::setAccessMode(SymbolTable::AccessMode accessMode) {
     SymbolTableEntry::accessMode = accessMode;
+}
+
+bool SymbolTable::SymbolTableEntry::isFunction() const {
+    return isFunc;
+}
+
+void SymbolTable::SymbolTableEntry::setIsFunction(bool isFunction) {
+    SymbolTableEntry::isFunc = isFunction;
+}
+
+const std::vector<SymbolTable::TypeName> &SymbolTable::SymbolTableEntry::getFormals() const {
+    return formals;
+}
+
+void SymbolTable::SymbolTableEntry::addFormal(const SymbolTable::TypeName &formal) {
+    formals.push_back(formal);
 }
 

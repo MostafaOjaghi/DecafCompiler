@@ -21,8 +21,12 @@ namespace SymbolTable {
 
         std::string name;
         Scope *par = nullptr;
-        std::map<std::string, SymbolTableEntry *>mp;
+        std::map<std::string, SymbolTableEntry *> variables;
+        std::map<std::string, SymbolTableEntry *> functions;
         bool isClss = false;
+
+        SymbolTableEntry *getEntry(std::map<std::string, SymbolTableEntry *> &mp,
+                                   const std::string &id, Scope *currentScope);
 
     public:
         bool isClass() const;
@@ -38,7 +42,8 @@ namespace SymbolTable {
         std::string getName();
         std::string getPrefix();
         Scope * getPar();
-        SymbolTableEntry * getEntry(const std::string &id, Scope * currentScope = nullptr);
+        SymbolTableEntry * getVariable(const std::string &id, Scope * currentScope = nullptr);
+        SymbolTableEntry * getFunction(const std::string &id, Scope * currentScope = nullptr);
         void addEntry(const std::string &id, SymbolTableEntry *entry);
         std::vector<SymbolTableEntry *> getEntries();
 

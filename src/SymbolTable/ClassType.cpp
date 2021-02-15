@@ -93,9 +93,58 @@ int SymbolTable::ClassType::getObjectLayoutSize() {
     return (int) objectLayout.size() + 1;
 }
 
-int SymbolTable::ClassType::getFunctionPosition(const std::string &functionName) {
-    // TODO: get function position from Vtable
-    return 112;
+void SymbolTable::ClassType::addMethod(std::string id) {
+    methods.push_back(id);
+}
+
+int SymbolTable::ClassType::getMethodPosition(std::string id) {
+    return 1 + getMethodIndex(id);
+}
+
+int SymbolTable::ClassType::getMethodIndex(std::string id) {
+    if (parent != nullptr && parent->hasMethod(id))
+        return parent->getMethodIndex(id);
+    int pos = 0;
+    if (parent != nullptr)
+        pos = parent->getVtableSize();
+    for (const std::string &method : methods) {
+        if (method == id)
+            break;
+        if (parent == nullptr || !parent->hasMethod(method))
+            pos++;
+    }
+    return pos;
+}
+
+int SymbolTable::ClassType::getVtableSize() {
+    int vtable_size = 1;
+    if (parent != nullptr)
+        vtable_size = parent->getVtableSize();
+    for (std::string id : methods)
+        if (parent == nullptr || !parent->hasMethod(id))
+            vtable_size++;
+    return vtable_size;
+}
+
+bool SymbolTable::ClassType::hasMethod(std::string id) {
+    bool has = std::find(methods.begin(), methods.end(), id) != methods.end();
+    bool parent_has;
+    if (parent != nullptr) {
+        parent_has = parent->hasMethod(id);
+    }
+    return has || parent_has;
+}
+
+std::vector<std::string> SymbolTable::ClassType::getVtable() {
+    std::vector<std::string> vtable;
+    if (parent != nullptr)
+        vtable = parent->getVtable();
+    for (const std::string &method : methods)
+        if (parent != nullptr && parent->hasMethod(method))
+            vtable[parent->getMethodIndex(method)] = getScope()->getFunction(method)->getUniqueId();
+        else
+            vtable.push_back(getScope()->getFunction(method)->getUniqueId());
+    return vtable;
 }
 
 

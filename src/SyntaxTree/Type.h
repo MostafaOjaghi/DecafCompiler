@@ -25,6 +25,8 @@ namespace SyntaxTree {
         const std::string &getTypeNameId() const;
 
         void setTypeNameId(const std::string &typeNameId);
+
+        SymbolTable::TypeName getTypeName();
     };
 
     class TypeToInt : public Type{

@@ -22,7 +22,7 @@ SyntaxTree::Cgen SyntaxTree::ProgramNode::cgen() {
             text.append(decl->cgen());
     }
     cgen.append(variables);
-    cgen.append("Lcall func_main\n"
+    cgen.append("Lcall " + getScope()->getFunction("main")->getUniqueId() + "\n" +
                 "Exit\n");
     cgen.append(text);
     return cgen;
@@ -36,8 +36,7 @@ void SyntaxTree::ProgramNode::handleScope() {
             node->handleScope();
 
         } else if (DeclToFunctionDecl * node = dynamic_cast<DeclToFunctionDecl *>(decl)) {
-            std::string functionIdent = node->getFunctionDecl()->getFunctionIdentifier();
-            node->setScope(new SymbolTable::Scope(functionIdent, this->getScope()));
+            node->setScope(getScope());
             node->handleScope();
 
         } else if (DeclToClassDecl * node = dynamic_cast<DeclToClassDecl *>(decl)) {

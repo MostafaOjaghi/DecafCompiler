@@ -26,8 +26,10 @@ SyntaxTree::Cgen SyntaxTree::CallToFunctionCall::cgen() {
     Cgen cgen;
     Cgen actualsCgen = actuals->cgen();
     cgen.append(actualsCgen);
-    cgen.createVar("int", 0);
-    cgen.append("Lcall func_" + functionId + " -> " + cgen.var + "\n");
+    SymbolTable::SymbolTableEntry *entry = getScope()->getFunction(functionId);
+    cgen.createVar(entry->getTypeName());
+    std::string function_id = entry->getUniqueId();
+    cgen.append("Lcall " + function_id + " -> " + cgen.var + "\n");
     // TODO: 4 * should be removed
     cgen.append("Popparams " + std::to_string(4 * actuals->getExpressions().size()) + "\n");
     return cgen;
@@ -76,16 +78,17 @@ SyntaxTree::Cgen SyntaxTree::CallToMethodCall::cgen() {
             SymbolTable::TypeName::semanticError();
         }
     } else {
-        // TODO: return type should be set
+        auto classType = SymbolTable::ClassType::getClass(expr_cgen.typeName.getId());
+        SymbolTable::SymbolTableEntry *method_entry = classType->getScope()->getFunction(getId());
+        int methodPosition = classType->getMethodPosition(this->getId());
+
         cgen.createVar("int", 0);
         std::string tmpVar = cgen.var;
-        cgen.createVar("int", 0);
+        cgen.createVar(method_entry->getTypeName());
         cgen.append("Load " + cgen.var + " = *(" + expr_cgen.var + " + 0)\n");
-        auto classType = SymbolTable::ClassType::getClass(expr_cgen.typeName.getId());
-        int funcPos =classType->getFunctionPosition(this->getId());
         cgen.append("Load " + tmpVar + " = *(" + cgen.var + " + 0)\n");
         cgen.append("Assign " + tmpVar + " = " + expr_cgen.var + " + " + tmpVar + "\n");
-        cgen.append("Load " + cgen.var + " = *(" + cgen.var + " + " + std::to_string(funcPos) + ")\n");
+        cgen.append("Load " + cgen.var + " = *(" + cgen.var + " + " + std::to_string(methodPosition) + ")\n");
         cgen.append(this->getActuals()->cgen());
         cgen.append("Pushparam " + tmpVar + "\n");
         cgen.append("Acall " + cgen.var + " -> " + cgen.var + "\n");

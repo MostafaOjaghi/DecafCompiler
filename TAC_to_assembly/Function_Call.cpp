@@ -677,7 +677,7 @@ string tacToAssembly(istream &inputFile) {
 
             string temp = "";
             temp += tokens[1];
-            temp += ": ";
+            temp += ": .word ";
             temp += line.substr(10 + SIZE(tokens[1]), SIZE(line));
             temp += "\n";
 

@@ -21,13 +21,16 @@ namespace SymbolTable {
         TypeName typeName;
         Scope *scope;
         AccessMode accessMode;
+
+        bool isFunc;
+        std::vector<TypeName> formals;
     public:
         AccessMode getAccessMode() const;
 
         void setAccessMode(AccessMode accessMode);
 
 //        SymbolTableEntry() = default;
-        SymbolTableEntry(const std::string &id, const TypeName &typeName, Scope *scope);
+        SymbolTableEntry(const std::string &id, const TypeName &typeName, Scope *scope, bool isFunction = false);
 
         Scope *getScope() const;
 
@@ -38,6 +41,14 @@ namespace SymbolTable {
         TypeName &getTypeName();
 
         void setTypeName(const TypeName &type);
+
+        bool isFunction() const;
+
+        void setIsFunction(bool isFunction);
+
+        const std::vector<TypeName> &getFormals() const;
+
+        void addFormal(const TypeName &formal);
     };
 }
 

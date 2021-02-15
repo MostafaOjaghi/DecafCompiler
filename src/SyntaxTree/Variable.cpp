@@ -32,7 +32,7 @@ void SyntaxTree::Variable::handleScope() {
 }
 
 void SyntaxTree::Variable::handleClassHierarchy() {
-    auto *entry = this->getScope()->getEntry(this->getId());
+    auto *entry = this->getScope()->getVariable(this->getId());
     auto typeName = entry->getTypeName();
     typeName.setClassType(SymbolTable::ClassType::getClass(entry->getTypeName().getId()));
     entry->setTypeName(typeName);

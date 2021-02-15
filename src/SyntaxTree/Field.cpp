@@ -26,7 +26,8 @@ void SyntaxTree::FieldToVariableDecl::handleScope() {
     SymbolTable::AccessMode accessMode1 = this->getAccessMode()->getAccessMode();
     this->getVariableDecl()->setScope(this->getScope());
     this->getVariableDecl()->handleScope();
-    SymbolTable::SymbolTableEntry *entry = this->getVariableDecl()->getVariable()->getScope()->getEntry(this->getVariableDecl()->getVariable()->getId());
+    SymbolTable::SymbolTableEntry *entry = this->getVariableDecl()->getVariable()->getScope()->getVariable(
+            this->getVariableDecl()->getVariable()->getId());
     entry->setAccessMode(accessMode1);
 }
 
@@ -51,16 +52,22 @@ void SyntaxTree::FieldToFunctionDecl::setFunctionDecl(SyntaxTree::FunctionDecl *
     FieldToFunctionDecl::functionDecl = functionDecl;
 }
 
-void SyntaxTree::FieldToFunctionDecl::handleClassHierarchy() {
-    this->getAccessMode()->handleClassHierarchy();
-    this->getFunctionDecl()->handleClassHierarchy();
-}
-
 SyntaxTree::Cgen SyntaxTree::FieldToFunctionDecl::cgen() {
-    // TODO: SHOULD BE IMPLEMENTED
-    return Node::cgen();
+    return functionDecl->cgen();
 }
 
 void SyntaxTree::FieldToFunctionDecl::handleScope() {
-    // TODO: SHOULD BE IMPLEMENTED
+    this->getAccessMode()->setScope(this->getScope());
+    this->getAccessMode()->handleScope();
+    SymbolTable::AccessMode accessMode1 = this->getAccessMode()->getAccessMode();
+    this->getFunctionDecl()->setScope(this->getScope());
+    this->getFunctionDecl()->handleScope();
+    SymbolTable::SymbolTableEntry *entry = this->getFunctionDecl()->getScope()->getFunction(
+            this->getFunctionDecl()->getFunctionIdentifier());
+    entry->setAccessMode(accessMode1);
+}
+
+void SyntaxTree::FieldToFunctionDecl::handleClassHierarchy() {
+    this->getAccessMode()->handleClassHierarchy();
+    this->getFunctionDecl()->handleClassHierarchy();
 }
