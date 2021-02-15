@@ -17,6 +17,8 @@ namespace SyntaxTree {
         Actuals *actuals;
 
     public:
+        void handleClassHierarchy() override;
+
         Actuals *getActuals() const;
 
         void setActuals(Actuals *actuals);

@@ -31,3 +31,9 @@ SyntaxTree::Cgen SyntaxTree::Actuals::cgen() {
     }
     return cgen;
 }
+
+void SyntaxTree::Actuals::handleClassHierarchy() {
+    for (Expr *expr : expressions) {
+        expr->handleClassHierarchy();
+    }
+}

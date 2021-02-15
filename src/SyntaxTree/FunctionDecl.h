@@ -19,6 +19,8 @@ namespace SyntaxTree {
         Formals * formals;
         StmtBlock * stmtBlock;
     public:
+        void handleClassHierarchy() override;
+
         Type *getType() const;
 
         void setType(Type *type);

@@ -12,6 +12,8 @@ namespace SyntaxTree {
     private:
         std::vector<std::string>interfaceIds;
     public:
+        void handleClassHierarchy() override;
+
         void handleScope() override;
 
         const std::vector<std::string> &getInterfaceIds() const;

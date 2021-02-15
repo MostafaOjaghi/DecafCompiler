@@ -15,3 +15,7 @@ void SyntaxTree::Extends::setParentClassId(const std::string &parentClassId) {
 void SyntaxTree::Extends::handleScope() {
     // nothing to do
 }
+
+void SyntaxTree::Extends::handleClassHierarchy() {
+    // nothing to do
+}

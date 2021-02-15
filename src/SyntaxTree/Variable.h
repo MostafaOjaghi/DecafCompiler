@@ -12,6 +12,8 @@ namespace SyntaxTree {
     class Variable : public Node {
         Type *type;
     public:
+        void handleClassHierarchy() override;
+
         void handleScope() override;
 
         Type *getType() const;

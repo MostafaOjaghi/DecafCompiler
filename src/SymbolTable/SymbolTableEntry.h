@@ -35,7 +35,7 @@ namespace SymbolTable {
 
         std::string getUniqueId();
 
-        const TypeName &getTypeName() const;
+        TypeName &getTypeName();
 
         void setTypeName(const TypeName &type);
     };

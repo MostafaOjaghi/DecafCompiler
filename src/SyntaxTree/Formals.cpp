@@ -22,3 +22,9 @@ void SyntaxTree::Formals::handleScope() {
         variable->handleScope();
     }
 }
+
+void SyntaxTree::Formals::handleClassHierarchy() {
+    for (Variable* variable : variables) {
+        variable->handleClassHierarchy();
+    }
+}

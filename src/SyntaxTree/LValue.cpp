@@ -16,6 +16,7 @@ void SyntaxTree::LValueToIdent::setId(const std::string &id) {
 SyntaxTree::Cgen SyntaxTree::LValueToIdent::cgen() {
     Cgen cgen;
     SymbolTable::SymbolTableEntry *entry = getScope()->getEntry(id);
+
     cgen.createVar(entry->getTypeName());
     cgen.append("Addr " + cgen.var + " = &" + entry->getUniqueId() + "\n");
     return cgen;
@@ -23,6 +24,10 @@ SyntaxTree::Cgen SyntaxTree::LValueToIdent::cgen() {
 
 void SyntaxTree::LValueToIdent::handleScope() {
     // Nothing here
+}
+
+void SyntaxTree::LValueToIdent::handleClassHierarchy() {
+    // nothing to do
 }
 
 SyntaxTree::Expr *SyntaxTree::LValueToFieldAccess::getExpr() const {
@@ -65,6 +70,10 @@ void SyntaxTree::LValueToFieldAccess::handleScope() {
     this->getExpr()->handleScope();
 }
 
+void SyntaxTree::LValueToFieldAccess::handleClassHierarchy() {
+    this->getExpr()->handleClassHierarchy();
+}
+
 SyntaxTree::Expr *SyntaxTree::LValueToArray::getExprArrayName() const {
     return exprArrayName;
 }
@@ -99,4 +108,9 @@ void SyntaxTree::LValueToArray::handleScope() {
     exprArrayName->handleScope();
     exprArrayIndex->setScope(getScope());
     exprArrayIndex->handleScope();
+}
+
+void SyntaxTree::LValueToArray::handleClassHierarchy() {
+    this->getExprArrayIndex()->handleClassHierarchy();
+    this->getExprArrayName()->handleClassHierarchy();
 }

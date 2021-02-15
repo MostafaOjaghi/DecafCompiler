@@ -13,6 +13,8 @@ namespace SyntaxTree {
     private:
         std::vector<Variable *>variables;
     public:
+        void handleClassHierarchy() override;
+
         void handleScope() override;
 
         const std::vector<Variable *> &getVariables() const;

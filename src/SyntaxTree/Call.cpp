@@ -100,3 +100,8 @@ void SyntaxTree::CallToMethodCall::handleScope() {
     this->getActuals()->setScope(this->getScope());
     this->getActuals()->handleScope();
 }
+
+void SyntaxTree::CallToMethodCall::handleClassHierarchy() {
+    this->getExpr()->handleClassHierarchy();
+    this->getActuals()->handleClassHierarchy();
+}

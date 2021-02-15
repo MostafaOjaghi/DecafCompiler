@@ -24,3 +24,7 @@ SyntaxTree::Cgen SyntaxTree::ReturnStmt::cgen() {
     cgen.append("Endfunc " + expr_cgen.var + "\n");
     return cgen;
 }
+
+void SyntaxTree::ReturnStmt::handleClassHierarchy() {
+    this->getExpr()->handleClassHierarchy();
+}

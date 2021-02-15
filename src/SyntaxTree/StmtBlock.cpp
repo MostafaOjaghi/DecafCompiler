@@ -35,3 +35,8 @@ void SyntaxTree::StmtBlock::handleScope() {
     this->getStmts()->setScope(stmtsScope);
     this->getStmts()->handleScope();
 }
+
+void SyntaxTree::StmtBlock::handleClassHierarchy() {
+    this->getStmts()->handleClassHierarchy();
+    this->getVariableDecls()->handleClassHierarchy();
+}

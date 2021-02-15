@@ -30,3 +30,10 @@ void SyntaxTree::Variable::handleScope() {
     auto *entry = new SymbolTable::SymbolTableEntry(id, typeName, this->getScope());
     this->getScope()->addEntry(this->getId(), entry);
 }
+
+void SyntaxTree::Variable::handleClassHierarchy() {
+    auto *entry = this->getScope()->getEntry(this->getId());
+    auto typeName = entry->getTypeName();
+    typeName.setClassType(SymbolTable::ClassType::getClass(entry->getTypeName().getId()));
+    entry->setTypeName(typeName);
+}

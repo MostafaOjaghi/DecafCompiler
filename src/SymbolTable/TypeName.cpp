@@ -46,7 +46,7 @@ bool SymbolTable::TypeName::isArray() const {
 }
 
 void SymbolTable::TypeName::semanticError() {
-    std::cerr << "semantic ERROR!" << std::endl;
+    std::cout << "semantic ERROR!" << std::endl;
     char semantic_error_code[] = ".text\n"
                                  ".globl main\n"
                                  "\n"
@@ -67,6 +67,11 @@ bool SymbolTable::TypeName::checkCastable(SymbolTable::TypeName from, SymbolTabl
     if (from.isPrimitive() || to.isPrimitive()) {
         return from.getId() == to.getId();
     }
-    // TODO: should be implemented for classes
-    return true;
+
+    SymbolTable::ClassType *classTypeFrom = from.getClassType();
+    SymbolTable::ClassType *classTypeTo = to.getClassType();
+    while (classTypeFrom != nullptr && classTypeFrom != classTypeTo) {
+        classTypeFrom = classTypeFrom->getParent();
+    }
+    return classTypeFrom == classTypeTo;
 }

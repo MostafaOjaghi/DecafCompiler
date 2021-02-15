@@ -55,6 +55,10 @@ void SyntaxTree::ProgramNode::handleClassHierarchy() {
     for (Decl *decl : declerations) {
         if (DeclToClassDecl * node = dynamic_cast<DeclToClassDecl *>(decl)) {
             node->handleClassHierarchy();
+        } else if (DeclToVariableDecl * node = dynamic_cast<DeclToVariableDecl *>(decl)) {
+            node->handleClassHierarchy();
+        } else if (DeclToFunctionDecl * node = dynamic_cast<DeclToFunctionDecl *>(decl)) {
+            node->handleClassHierarchy();
         }
     }
 }

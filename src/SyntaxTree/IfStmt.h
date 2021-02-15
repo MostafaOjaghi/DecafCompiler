@@ -17,6 +17,8 @@ namespace SyntaxTree {
         Stmt *trueStmt;
         Stmt *falseStmt;
     public:
+        void handleClassHierarchy() override;
+
         Cgen cgen() override;
 
         void handleScope() override;

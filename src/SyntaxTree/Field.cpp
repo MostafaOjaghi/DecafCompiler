@@ -30,6 +30,11 @@ void SyntaxTree::FieldToVariableDecl::handleScope() {
     entry->setAccessMode(accessMode1);
 }
 
+void SyntaxTree::FieldToVariableDecl::handleClassHierarchy() {
+    this->getVariableDecl()->handleClassHierarchy();
+    this->getAccessMode()->handleClassHierarchy();
+}
+
 SyntaxTree::AccessMode *SyntaxTree::FieldToFunctionDecl::getAccessMode() const {
     return accessMode;
 }
@@ -44,4 +49,18 @@ SyntaxTree::FunctionDecl *SyntaxTree::FieldToFunctionDecl::getFunctionDecl() con
 
 void SyntaxTree::FieldToFunctionDecl::setFunctionDecl(SyntaxTree::FunctionDecl *functionDecl) {
     FieldToFunctionDecl::functionDecl = functionDecl;
+}
+
+void SyntaxTree::FieldToFunctionDecl::handleClassHierarchy() {
+    this->getAccessMode()->handleClassHierarchy();
+    this->getFunctionDecl()->handleClassHierarchy();
+}
+
+SyntaxTree::Cgen SyntaxTree::FieldToFunctionDecl::cgen() {
+    // TODO: SHOULD BE IMPLEMENTED
+    return Node::cgen();
+}
+
+void SyntaxTree::FieldToFunctionDecl::handleScope() {
+    // TODO: SHOULD BE IMPLEMENTED
 }
