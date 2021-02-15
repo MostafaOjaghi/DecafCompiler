@@ -67,6 +67,11 @@ bool SymbolTable::TypeName::checkCastable(SymbolTable::TypeName from, SymbolTabl
     if (from.isPrimitive() || to.isPrimitive()) {
         return from.getId() == to.getId();
     }
-    // TODO: should be implemented for classes
-    return true;
+
+    SymbolTable::ClassType *classTypeFrom = from.getClassType();
+    SymbolTable::ClassType *classTypeTo = to.getClassType();
+    while (classTypeFrom != nullptr && classTypeFrom != classTypeTo) {
+        classTypeFrom = classTypeFrom->getParent();
+    }
+    return classTypeFrom == classTypeTo;
 }

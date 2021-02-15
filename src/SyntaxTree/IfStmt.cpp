@@ -61,3 +61,7 @@ void SyntaxTree::IfStmt::handleScope() {
         falseStmt->handleScope();
     }
 }
+
+void SyntaxTree::IfStmt::handleClassHierarchy() {
+    // TODO: should continue creating class hierarchies
+}

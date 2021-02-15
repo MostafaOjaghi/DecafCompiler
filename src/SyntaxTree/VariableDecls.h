@@ -15,6 +15,8 @@ namespace SyntaxTree {
     private:
         std::vector<VariableDecl *> variableDecls;
     public:
+        void handleClassHierarchy() override;
+
         void handleScope() override;
 
         const std::vector<VariableDecl *> &getVariableDecls() const;

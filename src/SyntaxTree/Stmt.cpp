@@ -22,6 +22,10 @@ void SyntaxTree::StmtToPrintStmt::handleScope() {
     this->getPrintStmt()->handleScope();
 }
 
+void SyntaxTree::StmtToPrintStmt::handleClassHierarchy() {
+    this->getPrintStmt()->handleClassHierarchy();
+}
+
 SyntaxTree::Expr *SyntaxTree::StmtToExpr::getExpr() const {
     return expr;
 }
@@ -37,6 +41,10 @@ SyntaxTree::Cgen SyntaxTree::StmtToExpr::cgen() {
 void SyntaxTree::StmtToExpr::handleScope() {
     this->getExpr()->setScope(this->getScope());
     this->getExpr()->handleScope();
+}
+
+void SyntaxTree::StmtToExpr::handleClassHierarchy() {
+    this->getExpr()->handleClassHierarchy();
 }
 
 SyntaxTree::IfStmt *SyntaxTree::StmtToIfStmt::getIfStmt() const {
@@ -56,6 +64,10 @@ void SyntaxTree::StmtToIfStmt::handleScope() {
     getIfStmt()->handleScope();
 }
 
+void SyntaxTree::StmtToIfStmt::handleClassHierarchy() {
+    this->getIfStmt()->handleClassHierarchy();
+}
+
 SyntaxTree::WhileStmt *SyntaxTree::StmtToWhileStmt::getWhileStmt() const {
     return whileStmt;
 }
@@ -73,6 +85,10 @@ void SyntaxTree::StmtToWhileStmt::handleScope() {
     whileStmt->handleScope();
 }
 
+void SyntaxTree::StmtToWhileStmt::handleClassHierarchy() {
+    this->getWhileStmt()->handleClassHierarchy();
+}
+
 SyntaxTree::ForStmt *SyntaxTree::StmtToForStmt::getForStmt() const {
     return forStmt;
 }
@@ -88,6 +104,10 @@ SyntaxTree::Cgen SyntaxTree::StmtToForStmt::cgen() {
 void SyntaxTree::StmtToForStmt::handleScope() {
     forStmt->setScope(getScope());
     forStmt->handleScope();
+}
+
+void SyntaxTree::StmtToForStmt::handleClassHierarchy() {
+    this->getForStmt()->handleClassHierarchy();
 }
 
 SyntaxTree::BreakStmt *SyntaxTree::StmtToBreakStmt::getBreakStmt() const {
@@ -131,6 +151,10 @@ void SyntaxTree::StmtToReturnStmt::handleScope() {
     returnStmt->handleScope();
 }
 
+void SyntaxTree::StmtToReturnStmt::handleClassHierarchy() {
+    this->getReturnStmt()->handleClassHierarchy();
+}
+
 SyntaxTree::StmtBlock *SyntaxTree::StmtToStmtBlock::getStmtBlock() const {
     return stmtBlock;
 }
@@ -147,4 +171,8 @@ void SyntaxTree::StmtToStmtBlock::handleScope() {
 
 SyntaxTree::Cgen SyntaxTree::StmtToStmtBlock::cgen() {
     return stmtBlock->cgen();
+}
+
+void SyntaxTree::StmtToStmtBlock::handleClassHierarchy() {
+    this->getStmtBlock()->handleClassHierarchy();
 }

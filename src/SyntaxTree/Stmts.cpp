@@ -31,3 +31,9 @@ void SyntaxTree::Stmts::handleScope() {
 void SyntaxTree::Stmts::reverseStmts() {
     std::reverse(stmts.begin(), stmts.end());
 }
+
+void SyntaxTree::Stmts::handleClassHierarchy() {
+    for (Stmt *stmt : stmts) {
+        stmt->handleClassHierarchy();
+    }
+}

@@ -35,6 +35,9 @@ SyntaxTree::Cgen SyntaxTree::ExprToAssignmentExpr::cgen() { // TODO handle lvalu
     Cgen expr_cgen = expr->cgen();
     cgen.append(expr_cgen);
     cgen.append(lvalue_cgen);
+
+    //std::cerr << expr_cgen.typeName.getClassType()->getId() << " " << lvalue_cgen.typeName.getClassType()->getId() << std::endl;
+
     if (!SymbolTable::TypeName::checkCastable(expr_cgen.typeName, lvalue_cgen.typeName)) {
       SymbolTable::TypeName::semanticError();
     } else if (lvalue_cgen.typeName.getId() == "double")

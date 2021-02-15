@@ -29,3 +29,7 @@ void SyntaxTree::Type::setDimension(int dimension) {
 void SyntaxTree::Type::incrementDimension() {
     Type::dimension++;
 }
+
+void SyntaxTree::Type::handleClassHierarchy() {
+    // nothing to do
+}

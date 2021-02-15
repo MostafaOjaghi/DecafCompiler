@@ -61,6 +61,13 @@ void SyntaxTree::FunctionDecl::setType(SyntaxTree::Type *type) {
     FunctionDecl::type = type;
 }
 
+void SyntaxTree::FunctionDecl::handleClassHierarchy() {
+    if (this->getType() != nullptr)
+        this->getType()->handleClassHierarchy();
+    this->getFormals()->handleClassHierarchy();
+    this->getStmtBlock()->handleClassHierarchy();
+}
+
 SyntaxTree::Cgen SyntaxTree::FunctionDeclToVoidIdent::cgen() {
     return FunctionDecl::cgen();
 }
