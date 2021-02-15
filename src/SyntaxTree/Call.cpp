@@ -77,14 +77,14 @@ SyntaxTree::Cgen SyntaxTree::CallToMethodCall::cgen() {
         } else
             assert(0); // TODO semantic error
     } else {
-        // TODO: return type should be set
+        auto classType = SymbolTable::ClassType::getClass(expr_cgen.typeName.getId());
+        SymbolTable::SymbolTableEntry *method_entry = classType->getScope()->getFunction(getId());
+        int funcPos = classType->getFunctionPosition(this->getId());
+
         cgen.createVar("int", 0);
         std::string tmpVar = cgen.var;
-        cgen.createVar("int", 0);
+        cgen.createVar(method_entry->getTypeName());
         cgen.append("Load " + cgen.var + " = *(" + expr_cgen.var + " + 0)\n");
-        auto classType = SymbolTable::ClassType::getClass(expr_cgen.typeName.getId());
-        classType->getScope()->getFunction(getId()); // just to check method existence.
-        int funcPos = classType->getFunctionPosition(this->getId());
         cgen.append("Load " + tmpVar + " = *(" + cgen.var + " + 0)\n");
         cgen.append("Assign " + tmpVar + " = " + expr_cgen.var + " + " + tmpVar + "\n");
         cgen.append("Load " + cgen.var + " = *(" + cgen.var + " + " + std::to_string(funcPos) + ")\n");
