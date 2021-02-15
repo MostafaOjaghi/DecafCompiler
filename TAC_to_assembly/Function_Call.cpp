@@ -81,13 +81,13 @@ string getPos(string variable, int offset) {
 
         string temp = "global:";
         if (global_pointer_pos.count(temp + variable)) {
-            return convertIntegerToString(global_pointer_pos[temp + variable] + offset)+"($gp)";
+            return convertIntegerToString(global_pointer_pos[temp + variable])+"($gp)";
         }
 
         // If variable is global but was not added
         addToGlobal(variable);
         gp += 4;
-        return convertIntegerToString(global_pointer_pos[temp + variable] + offset)+"($gp)";
+        return convertIntegerToString(global_pointer_pos[temp + variable])+"($gp)";
     }
     string temp = "global:";
 
@@ -809,7 +809,7 @@ string tacToAssembly(istream &inputFile) {
 
 #ifndef TAC_TO_ASSEMBLY_IN_PROJECT
 int main() {
-    ifstream inputFile ("AppendA.txt");
+    ifstream inputFile ("Vtable.txt");
 
 
     if (inputFile.is_open()) {
