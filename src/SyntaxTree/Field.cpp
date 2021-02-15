@@ -46,3 +46,18 @@ SyntaxTree::FunctionDecl *SyntaxTree::FieldToFunctionDecl::getFunctionDecl() con
 void SyntaxTree::FieldToFunctionDecl::setFunctionDecl(SyntaxTree::FunctionDecl *functionDecl) {
     FieldToFunctionDecl::functionDecl = functionDecl;
 }
+
+SyntaxTree::Cgen SyntaxTree::FieldToFunctionDecl::cgen() {
+    return functionDecl->cgen();
+}
+
+void SyntaxTree::FieldToFunctionDecl::handleScope() {
+    this->getAccessMode()->setScope(this->getScope());
+    this->getAccessMode()->handleScope();
+    SymbolTable::AccessMode accessMode1 = this->getAccessMode()->getAccessMode();
+    this->getFunctionDecl()->setScope(this->getScope());
+    this->getFunctionDecl()->handleScope();
+    SymbolTable::SymbolTableEntry *entry = this->getFunctionDecl()->getScope()->getFunction(
+            this->getFunctionDecl()->getFunctionIdentifier());
+    entry->setAccessMode(accessMode1);
+}

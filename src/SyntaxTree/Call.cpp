@@ -79,7 +79,7 @@ SyntaxTree::Cgen SyntaxTree::CallToMethodCall::cgen() {
     } else {
         auto classType = SymbolTable::ClassType::getClass(expr_cgen.typeName.getId());
         SymbolTable::SymbolTableEntry *method_entry = classType->getScope()->getFunction(getId());
-        int funcPos = classType->getFunctionPosition(this->getId());
+        int methodPosition = classType->getMethodPosition(this->getId());
 
         cgen.createVar("int", 0);
         std::string tmpVar = cgen.var;
@@ -87,7 +87,7 @@ SyntaxTree::Cgen SyntaxTree::CallToMethodCall::cgen() {
         cgen.append("Load " + cgen.var + " = *(" + expr_cgen.var + " + 0)\n");
         cgen.append("Load " + tmpVar + " = *(" + cgen.var + " + 0)\n");
         cgen.append("Assign " + tmpVar + " = " + expr_cgen.var + " + " + tmpVar + "\n");
-        cgen.append("Load " + cgen.var + " = *(" + cgen.var + " + " + std::to_string(funcPos) + ")\n");
+        cgen.append("Load " + cgen.var + " = *(" + cgen.var + " + " + std::to_string(methodPosition) + ")\n");
         cgen.append(this->getActuals()->cgen());
         cgen.append("Pushparam " + tmpVar + "\n");
         cgen.append("Acall " + cgen.var + " -> " + cgen.var + "\n");

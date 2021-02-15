@@ -98,6 +98,8 @@ std::vector<SymbolTable::SymbolTableEntry *> SymbolTable::Scope::getEntries() {
     std::vector<SymbolTableEntry *>ret;
     for (const auto &x : variables)
         ret.push_back(x.second);
+    for (const auto  &x : functions)
+        ret.push_back(x.second);
     return ret;
 }
 

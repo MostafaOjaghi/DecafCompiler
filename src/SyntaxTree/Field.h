@@ -35,6 +35,10 @@ namespace SyntaxTree {
         AccessMode * accessMode;
         FunctionDecl *functionDecl;
     public:
+        Cgen cgen() override;
+
+        void handleScope() override;
+
         AccessMode *getAccessMode() const;
 
         void setAccessMode(AccessMode *accessMode);
