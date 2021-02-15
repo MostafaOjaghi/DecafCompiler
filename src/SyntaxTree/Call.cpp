@@ -27,7 +27,8 @@ SyntaxTree::Cgen SyntaxTree::CallToFunctionCall::cgen() {
     Cgen actualsCgen = actuals->cgen();
     cgen.append(actualsCgen);
     cgen.createVar("int", 0);
-    cgen.append("Lcall func_" + functionId + " -> " + cgen.var + "\n");
+    std::string function_id = getScope()->getFunction(functionId)->getUniqueId();
+    cgen.append("Lcall " + function_id + " -> " + cgen.var + "\n");
     // TODO: 4 * should be removed
     cgen.append("Popparams " + std::to_string(4 * actuals->getExpressions().size()) + "\n");
     return cgen;

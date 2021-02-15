@@ -26,7 +26,8 @@ void SyntaxTree::FieldToVariableDecl::handleScope() {
     SymbolTable::AccessMode accessMode1 = this->getAccessMode()->getAccessMode();
     this->getVariableDecl()->setScope(this->getScope());
     this->getVariableDecl()->handleScope();
-    SymbolTable::SymbolTableEntry *entry = this->getVariableDecl()->getVariable()->getScope()->getEntry(this->getVariableDecl()->getVariable()->getId());
+    SymbolTable::SymbolTableEntry *entry = this->getVariableDecl()->getVariable()->getScope()->getVariable(
+            this->getVariableDecl()->getVariable()->getId());
     entry->setAccessMode(accessMode1);
 }
 

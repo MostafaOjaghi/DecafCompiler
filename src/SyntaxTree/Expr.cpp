@@ -76,7 +76,7 @@ void SyntaxTree::ExprToLValue::setLValue(SyntaxTree::LValue *lValue) {
 SyntaxTree::Cgen SyntaxTree::ExprToLValue::cgen() {
     if (auto *lValueToIdent = dynamic_cast<LValueToIdent *>(lValue)) {
         Cgen cgen;
-        SymbolTable::SymbolTableEntry *entry = getScope()->getEntry(lValueToIdent->getId());
+        SymbolTable::SymbolTableEntry *entry = getScope()->getVariable(lValueToIdent->getId());
         cgen.typeName = entry->getTypeName();
         cgen.var = entry->getUniqueId();
         return cgen;

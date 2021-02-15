@@ -12,10 +12,35 @@ std::string SymbolTable::Scope::getName() {return name;}
 
 SymbolTable::Scope * SymbolTable::Scope::getPar() {return par;}
 
-SymbolTable::SymbolTableEntry * SymbolTable::Scope::getEntry(const std::string &id, Scope *currentScope) {
+SymbolTable::SymbolTableEntry *
+SymbolTable::Scope::getFunction(const std::string &id, SymbolTable::Scope *currentScope) {
     if (currentScope == nullptr)
         currentScope = this;
+    SymbolTableEntry *entry = getEntry(functions, id, currentScope);
+    if (entry == nullptr && par != nullptr)
+        entry = par->getFunction(id, currentScope);
+    if (entry == nullptr) {
+        std::cerr << "id:" << id << " not found" << std::endl;
+        assert(0);
+    }
+    return entry;
+}
 
+SymbolTable::SymbolTableEntry * SymbolTable::Scope::getVariable(const std::string &id, Scope *currentScope) {
+    if (currentScope == nullptr)
+        currentScope = this;
+    SymbolTableEntry *entry = getEntry(variables, id, currentScope);
+    if (entry == nullptr && par != nullptr)
+        entry = par->getVariable(id, currentScope);
+    if (entry == nullptr) {
+        std::cerr << "id:" << id << " not found" << std::endl;
+        assert(0);
+    }
+    return entry;
+}
+
+SymbolTable::SymbolTableEntry * SymbolTable::Scope::getEntry(std::map<std::string, SymbolTableEntry *> &mp,
+                                                             const std::string &id, Scope *currentScope) {
     SymbolTableEntry *entry = nullptr;
     if (mp.count(id)) {
         entry = mp[id];
@@ -31,19 +56,15 @@ SymbolTable::SymbolTableEntry * SymbolTable::Scope::getEntry(const std::string &
                 assert(0);
             }
         }
-        return entry;
-    }
-    if (par != nullptr)
-        entry = par->getEntry(id, currentScope);
-    if (entry == nullptr) {
-        std::cerr << "id:" << id << " not found" << std::endl;
-        assert(0);
     }
     return entry;
 }
 
 void SymbolTable::Scope::addEntry(const std::string &id, SymbolTable::SymbolTableEntry *entry) {
-    mp[id]=entry;
+    if (entry->isFunction())
+        functions[id] = entry;
+    else
+        variables[id] = entry;
 }
 
 SymbolTable::Scope::Scope(const std::string &name, SymbolTable::Scope *par) : name(name), par(par) {
@@ -75,7 +96,7 @@ const std::vector<SymbolTable::Scope *> &SymbolTable::Scope::getDefinedScopes() 
 
 std::vector<SymbolTable::SymbolTableEntry *> SymbolTable::Scope::getEntries() {
     std::vector<SymbolTableEntry *>ret;
-    for (const auto &x : mp)
+    for (const auto &x : variables)
         ret.push_back(x.second);
     return ret;
 }

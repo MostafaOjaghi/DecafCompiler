@@ -3,6 +3,7 @@
 //
 
 #include "FunctionDecl.h"
+#include "SymbolTable/SymbolTableEntry.h"
 
 const std::string &SyntaxTree::FunctionDecl::getFunctionIdentifier() const {
     return functionIdentifier;
@@ -32,6 +33,13 @@ void SyntaxTree::FunctionDecl::handleScope() {
     auto *formalsScope = new SymbolTable::Scope("func_" + functionIdentifier, getScope());
     auto *scopeStmtBlock = new SymbolTable::Scope("body", formalsScope);
 
+    SymbolTable::TypeName typeName =this->getType()->getTypeName();
+    bool isFunction = true;
+    auto *entry = new SymbolTable::SymbolTableEntry(functionIdentifier, typeName, this->getScope(), isFunction);
+    for (Variable *formal : formals->getVariables())
+        entry->addFormal(formal->getType()->getTypeName());
+    this->getScope()->addEntry(functionIdentifier, entry);
+
     formals->setScope(formalsScope);
     formals->handleScope();
     stmtBlock->setScope(scopeStmtBlock);
@@ -43,9 +51,9 @@ SyntaxTree::Cgen SyntaxTree::FunctionDecl::cgen() {
     Cgen body = getStmtBlock()->cgen();
     std::string args;
     for (Variable *arg : formals->getVariables()) {
-        args += " " + formals->getScope()->getEntry(arg->getId())->getUniqueId();
+        args += " " + formals->getScope()->getVariable(arg->getId())->getUniqueId();
     }
-    cgen.append("Label func_" + getFunctionIdentifier() + ":" + args + "\n");
+    cgen.append("Label " + getScope()->getFunction(getFunctionIdentifier())->getUniqueId() + ":" + args + "\n");
     cgen.append("Beginfunc " + std::to_string(body.var_count * 4) + "\n");
     cgen.append(body);
     cgen.append("Endfunc\n");

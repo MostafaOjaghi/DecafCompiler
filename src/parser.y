@@ -137,6 +137,7 @@ function_decl: type T_ID T_OP formals T_CP stmt_block { FunctionDeclToTypeIdent 
                                                         $$ = node;
                                                       }
 			| T_VOID T_ID T_OP formals T_CP stmt_block {    FunctionDeclToVoidIdent *node = new FunctionDeclToVoidIdent();
+			                                                node->setType((SyntaxTree::Type *) $1);
                                                             node->setFunctionIdentifier(((Token *)$2)->getLexeme());
                                                             node->setFormals((Formals *) $4);
                                                             node->setStmtBlock((StmtBlock *) $6);

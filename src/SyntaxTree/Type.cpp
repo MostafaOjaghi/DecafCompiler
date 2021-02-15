@@ -29,3 +29,7 @@ void SyntaxTree::Type::setDimension(int dimension) {
 void SyntaxTree::Type::incrementDimension() {
     Type::dimension++;
 }
+
+SymbolTable::TypeName SyntaxTree::Type::getTypeName() {
+    return SymbolTable::TypeName(typeNameID, dimension);
+}
