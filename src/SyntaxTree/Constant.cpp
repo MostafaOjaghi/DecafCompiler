@@ -13,8 +13,6 @@ void SyntaxTree::Constant::setConstantValue(const std::string &constantValue) {
 }
 
 SyntaxTree::Cgen SyntaxTree::Constant::cgen() {
-    std::cerr << "This is the type: " << this->getConstantTypeString() << std::endl;
-
     Cgen cgen;
     if (constantType == ConstantType::INT) {
         cgen.createVar("int", 0);

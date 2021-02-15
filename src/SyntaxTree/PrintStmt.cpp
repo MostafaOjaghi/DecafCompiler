@@ -40,3 +40,7 @@ void SyntaxTree::PrintStmt::handleScope() {
     actuals->setScope(getScope());
     actuals->handleScope();
 }
+
+void SyntaxTree::PrintStmt::handleClassHierarchy() {
+    this->getActuals()->handleClassHierarchy();
+}

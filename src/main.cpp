@@ -44,10 +44,10 @@ int main(int argc, char* argv[]) {
     }
     cout << "---------- Cgen: ----------" << endl;
     string tac = root.cgen().code;
-    cout << tac << endl;
+    //cout << tac << endl;
     cout << "---------- asm: ----------" << endl;
     string assembly = TacToAssembly::toAssembly(tac);
-    cout << assembly << endl;
+    //cout << assembly << endl;
     fprintf(output_file, "%s", assembly.c_str());
     fclose(output_file);
     return 0;

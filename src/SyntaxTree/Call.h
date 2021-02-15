@@ -20,6 +20,8 @@ namespace SyntaxTree {
         Expr *expr;
         std::string id;
     public:
+        void handleClassHierarchy() override;
+
         const std::string &getId() const;
 
         void setId(const std::string &id);

@@ -63,5 +63,9 @@ void SyntaxTree::IfStmt::handleScope() {
 }
 
 void SyntaxTree::IfStmt::handleClassHierarchy() {
-    // TODO: should continue creating class hierarchies
+    this->getConditionalExpr()->handleClassHierarchy();
+    if (this->getFalseStmt() != nullptr)
+        this->getFalseStmt()->handleClassHierarchy();
+    if (this->getTrueStmt() != nullptr)
+        this->getTrueStmt()->handleClassHierarchy();
 }

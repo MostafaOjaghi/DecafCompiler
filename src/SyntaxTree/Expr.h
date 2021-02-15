@@ -22,6 +22,8 @@ namespace SyntaxTree {
         LValue *lValue;
         Expr *expr;
     public:
+        void handleClassHierarchy() override;
+
         Cgen cgen() override;
 
         void handleScope() override;
@@ -39,6 +41,8 @@ namespace SyntaxTree {
     private:
         Constant *constant;
     public:
+        void handleClassHierarchy() override;
+
         Cgen cgen() override;
 
         void handleScope() override;
@@ -52,6 +56,8 @@ namespace SyntaxTree {
     private:
         LValue *lValue;
     public:
+        void handleClassHierarchy() override;
+
         Cgen cgen() override;
 
         void handleScope() override;
@@ -62,12 +68,15 @@ namespace SyntaxTree {
     };
 
     class ExprToThis : public Expr {
+        // TODO: THIS SHOULD BE IMPLEMENTED!
     };
 
     class ExprToCall : public Expr {
     private:
         Call *call;
     public:
+        void handleClassHierarchy() override;
+
         Cgen cgen() override;
 
         void handleScope() override;
@@ -81,6 +90,8 @@ namespace SyntaxTree {
     private:
         Expr *expr;
     public:
+        void handleClassHierarchy() override;
+
         Cgen cgen() override;
 
         void handleScope() override;
@@ -96,6 +107,8 @@ namespace SyntaxTree {
         Expr *operand1;
         Expr *operand2;
     public:
+        void handleClassHierarchy() override;
+
         Cgen cgen() override;
 
         void handleScope() override;
@@ -119,6 +132,12 @@ namespace SyntaxTree {
         std::string operatorSymbol;
         Expr *operand;
     public:
+        Cgen cgen() override;
+
+        void handleScope() override;
+
+        void handleClassHierarchy() override;
+
         const std::string &getOperatorSymbol() const;
 
         void setOperatorSymbol(const std::string &operatorSymbol);
@@ -130,17 +149,23 @@ namespace SyntaxTree {
 
     class ExprToReadInteger : public Expr {
     public:
+        void handleClassHierarchy() override;
+
+        void handleScope() override;
+
         Cgen cgen() override;
     };
 
     class ExprToReadLine : public Expr {
-
+        // TODO: THIS SHOULD BE IMPLEMENTED
     };
 
     class ExprToNew : public Expr {
     private:
         std::string Id;
     public:
+        void handleClassHierarchy() override;
+
         void handleScope() override;
 
         const std::string &getId() const;
@@ -156,6 +181,8 @@ namespace SyntaxTree {
         Expr *expr;
         Type *type;
     public:
+        void handleClassHierarchy() override;
+
         Cgen cgen() override;
 
         void handleScope() override;
@@ -173,6 +200,8 @@ namespace SyntaxTree {
     private:
         Expr *expr;
     public:
+        void handleClassHierarchy() override;
+
         void handleScope() override;
 
         Cgen cgen() override;
@@ -186,6 +215,8 @@ namespace SyntaxTree {
     private:
         Expr *expr;
     public:
+        void handleClassHierarchy() override;
+
         void handleScope() override;
 
         Cgen cgen() override;
@@ -199,6 +230,8 @@ namespace SyntaxTree {
     private:
         Expr *expr;
     public:
+        void handleClassHierarchy() override;
+
         void handleScope() override;
 
         Cgen cgen() override;
@@ -212,6 +245,8 @@ namespace SyntaxTree {
     private:
         Expr *expr;
     public:
+        void handleClassHierarchy() override;
+
         void handleScope() override;
 
         Cgen cgen() override;

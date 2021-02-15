@@ -51,6 +51,11 @@ SyntaxTree::Cgen SyntaxTree::ExprToAssignmentExpr::cgen() { // TODO handle lvalu
     return cgen;
 }
 
+void SyntaxTree::ExprToAssignmentExpr::handleClassHierarchy() {
+    this->getLValue()->handleClassHierarchy();
+    this->getExpr()->handleClassHierarchy();
+}
+
 SyntaxTree::Constant *SyntaxTree::ExprToConstant::getConstant() const {
     return constant;
 }
@@ -66,6 +71,10 @@ void SyntaxTree::ExprToConstant::handleScope() {
 
 SyntaxTree::Cgen SyntaxTree::ExprToConstant::cgen() {
     return constant->cgen();
+}
+
+void SyntaxTree::ExprToConstant::handleClassHierarchy() {
+
 }
 
 SyntaxTree::LValue *SyntaxTree::ExprToLValue::getLValue() const {
@@ -97,6 +106,10 @@ void SyntaxTree::ExprToLValue::handleScope() {
     lValue->handleScope();
 }
 
+void SyntaxTree::ExprToLValue::handleClassHierarchy() {
+    this->getLValue()->handleClassHierarchy();
+}
+
 SyntaxTree::Call *SyntaxTree::ExprToCall::getCall() const {
     return call;
 }
@@ -114,6 +127,10 @@ void SyntaxTree::ExprToCall::handleScope() {
     call->handleScope();
 }
 
+void SyntaxTree::ExprToCall::handleClassHierarchy() {
+    this->getCall()->handleClassHierarchy();
+}
+
 SyntaxTree::Expr *SyntaxTree::ExprToParenthesisExpr::getExpr() const {
     return expr;
 }
@@ -129,6 +146,10 @@ SyntaxTree::Cgen SyntaxTree::ExprToParenthesisExpr::cgen() {
 void SyntaxTree::ExprToParenthesisExpr::handleScope() {
     expr->setScope(getScope());
     expr->handleScope();
+}
+
+void SyntaxTree::ExprToParenthesisExpr::handleClassHierarchy() {
+    this->getExpr()->handleClassHierarchy();
 }
 
 SyntaxTree::Expr *SyntaxTree::ExprToBinaryOperation::getOperand1() const {
@@ -217,6 +238,11 @@ void SyntaxTree::ExprToBinaryOperation::handleScope() {
     operand2->handleScope();
 }
 
+void SyntaxTree::ExprToBinaryOperation::handleClassHierarchy() {
+    this->getOperand1()->handleClassHierarchy();
+    this->getOperand2()->handleClassHierarchy();
+}
+
 const std::string &SyntaxTree::ExprToUnaryOperation::getOperatorSymbol() const {
     return operatorSymbol;
 }
@@ -231,6 +257,20 @@ SyntaxTree::Expr *SyntaxTree::ExprToUnaryOperation::getOperand() const {
 
 void SyntaxTree::ExprToUnaryOperation::setOperand(SyntaxTree::Expr *operand) {
     ExprToUnaryOperation::operand = operand;
+}
+
+void SyntaxTree::ExprToUnaryOperation::handleClassHierarchy() {
+    this->getOperand()->handleClassHierarchy();
+}
+
+void SyntaxTree::ExprToUnaryOperation::handleScope() {
+    this->getOperand()->setScope(this->getScope());
+    this->getOperand()->handleScope();
+}
+
+SyntaxTree::Cgen SyntaxTree::ExprToUnaryOperation::cgen() {
+    // TODO: THIS SHOULD BE IMPLEMENTED!
+    return Node::cgen();
 }
 
 SyntaxTree::Expr *SyntaxTree::ExprToNewArray::getExpr() const {
@@ -267,11 +307,24 @@ void SyntaxTree::ExprToNewArray::handleScope() {
     type->handleScope();
 }
 
+void SyntaxTree::ExprToNewArray::handleClassHierarchy() {
+    this->getExpr()->handleClassHierarchy();
+    this->getType()->handleClassHierarchy();
+}
+
 SyntaxTree::Cgen SyntaxTree::ExprToReadInteger::cgen() {
     Cgen cgen;
     cgen.createVar("int", 0);
     cgen.append("Input " + cgen.var + "\n");
     return cgen;
+}
+
+void SyntaxTree::ExprToReadInteger::handleClassHierarchy() {
+    // nothing here
+}
+
+void SyntaxTree::ExprToReadInteger::handleScope() {
+    // nothing here
 }
 
 SyntaxTree::Cgen SyntaxTree::ExprToNew::cgen() {
@@ -293,6 +346,10 @@ void SyntaxTree::ExprToNew::setId(const std::string &id) {
 
 void SyntaxTree::ExprToNew::handleScope() {
     // nothing to do!
+}
+
+void SyntaxTree::ExprToNew::handleClassHierarchy() {
+    // nothing to do
 }
 
 SyntaxTree::Expr *SyntaxTree::ExprToITOD::getExpr() const {
@@ -320,6 +377,10 @@ void SyntaxTree::ExprToITOD::handleScope() {
     this->getExpr()->handleScope();
 }
 
+void SyntaxTree::ExprToITOD::handleClassHierarchy() {
+    this->getExpr()->handleClassHierarchy();
+}
+
 SyntaxTree::Expr *SyntaxTree::ExprToDTOI::getExpr() const {
     return expr;
 }
@@ -343,6 +404,10 @@ SyntaxTree::Cgen SyntaxTree::ExprToDTOI::cgen() {
 void SyntaxTree::ExprToDTOI::handleScope() {
     this->getExpr()->setScope(this->getScope());
     this->getExpr()->handleScope();
+}
+
+void SyntaxTree::ExprToDTOI::handleClassHierarchy() {
+    this->getExpr()->handleClassHierarchy();
 }
 
 SyntaxTree::Expr *SyntaxTree::ExprToITOB::getExpr() const {
@@ -370,6 +435,10 @@ void SyntaxTree::ExprToITOB::handleScope() {
     this->getExpr()->handleScope();
 }
 
+void SyntaxTree::ExprToITOB::handleClassHierarchy() {
+    this->getExpr()->handleClassHierarchy();
+}
+
 SyntaxTree::Expr *SyntaxTree::ExprToBTOI::getExpr() const {
     return expr;
 }
@@ -393,4 +462,8 @@ SyntaxTree::Cgen SyntaxTree::ExprToBTOI::cgen() {
 void SyntaxTree::ExprToBTOI::handleScope() {
     this->getExpr()->setScope(this->getScope());
     this->getExpr()->handleScope();
+}
+
+void SyntaxTree::ExprToBTOI::handleClassHierarchy() {
+    this->getExpr()->handleClassHierarchy();
 }

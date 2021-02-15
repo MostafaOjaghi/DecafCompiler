@@ -77,3 +77,7 @@ SyntaxTree::InterfaceDecl *SyntaxTree::DeclToInterfaceDecl::getInterfaceDecl() c
 void SyntaxTree::DeclToInterfaceDecl::setInterfaceDecl(SyntaxTree::InterfaceDecl *interfaceDecl) {
     DeclToInterfaceDecl::interfaceDecl = interfaceDecl;
 }
+
+void SyntaxTree::DeclToInterfaceDecl::handleClassHierarchy() {
+    this->getInterfaceDecl()->handleClassHierarchy();
+}

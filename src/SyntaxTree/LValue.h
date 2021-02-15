@@ -18,6 +18,8 @@ namespace SyntaxTree {
     private:
         std::string id;
     public:
+        void handleClassHierarchy() override;
+
         Cgen cgen() override;
 
         void handleScope() override;
@@ -33,6 +35,8 @@ namespace SyntaxTree {
         Expr *expr;
         std::string id;
     public:
+        void handleClassHierarchy() override;
+
         void handleScope() override;
 
         Cgen cgen() override;
@@ -51,6 +55,8 @@ namespace SyntaxTree {
         Expr *exprArrayName;
         Expr *exprArrayIndex;
     public:
+        void handleClassHierarchy() override;
+
         Cgen cgen() override;
 
         void handleScope() override;

@@ -13,6 +13,10 @@ namespace SyntaxTree {
     private:
         std::vector<Field *>fields;
     public:
+        void handleClassHierarchy() override;
+
+        Cgen cgen() override;
+
         void handleScope() override;
 
         const std::vector<Field *> &getFields() const;

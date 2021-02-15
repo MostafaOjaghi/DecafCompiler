@@ -14,6 +14,8 @@ namespace SyntaxTree {
     private:
         Expr *expr;
     public:
+        void handleClassHierarchy() override;
+
         Cgen cgen() override;
 
         void handleScope() override;

@@ -18,6 +18,8 @@ namespace SyntaxTree {
         Expr *forStep;
         Stmt *stmt;
     public:
+        void handleClassHierarchy() override;
+
         Cgen cgen() override;
 
         void handleScope() override;

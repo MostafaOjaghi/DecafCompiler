@@ -46,7 +46,7 @@ bool SymbolTable::TypeName::isArray() const {
 }
 
 void SymbolTable::TypeName::semanticError() {
-    std::cerr << "semantic ERROR!" << std::endl;
+    std::cout << "semantic ERROR!" << std::endl;
     char semantic_error_code[] = ".text\n"
                                  ".globl main\n"
                                  "\n"

@@ -64,6 +64,8 @@ namespace SyntaxTree {
     private:
         InterfaceDecl *interfaceDecl;
     public:
+        void handleClassHierarchy() override;
+
         InterfaceDecl *getInterfaceDecl() const;
 
         void setInterfaceDecl(InterfaceDecl *interfaceDecl);

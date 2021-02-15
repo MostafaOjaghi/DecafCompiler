@@ -13,6 +13,12 @@ namespace SyntaxTree {
     private:
         std::vector<Prototype *>prototypes;
     public:
+        void handleClassHierarchy() override;
+
+        Cgen cgen() override;
+
+        void handleScope() override;
+
         const std::vector<Prototype *> &getPrototypes() const;
         void addPrototype(Prototype * prototype);
     };

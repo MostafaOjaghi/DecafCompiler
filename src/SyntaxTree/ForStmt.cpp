@@ -76,3 +76,14 @@ void SyntaxTree::ForStmt::handleScope() {
     stmt->setScope(scope);
     stmt->handleScope();
 }
+
+void SyntaxTree::ForStmt::handleClassHierarchy() {
+    if (this->getForCondition() != nullptr)
+        this->getForCondition()->handleClassHierarchy();
+    if (this->getForInit() != nullptr)
+        this->getForInit()->handleClassHierarchy();
+    if (this->getForStep() != nullptr)
+        this->getForStep()->handleClassHierarchy();
+    if (this->getStmt() != nullptr)
+        this->getStmt()->handleClassHierarchy();
+}

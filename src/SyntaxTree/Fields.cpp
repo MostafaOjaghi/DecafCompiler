@@ -18,3 +18,14 @@ void SyntaxTree::Fields::handleScope() {
         field->handleScope();
     }
 }
+
+void SyntaxTree::Fields::handleClassHierarchy() {
+    for (Field *field : fields) {
+        field->handleClassHierarchy();
+    }
+}
+
+SyntaxTree::Cgen SyntaxTree::Fields::cgen() {
+    // TODO: SHOULD BE IMPLEMENTED!
+    return Node::cgen();
+}
