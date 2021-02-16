@@ -26,7 +26,7 @@ int outputBooleanBranchLabelCnt;
 int appendStringcnt;
 int appendArraycnt;
 
-const int string_size = 1000;
+const int string_size = 100;
 
 int fp;
 int fp_plus;
@@ -837,7 +837,7 @@ string tacToAssembly(istream &inputFile) {
 
 #ifndef TAC_TO_ASSEMBLY_IN_PROJECT
 int main() {
-    ifstream inputFile ("log2.txt");
+    ifstream inputFile ("log4.txt");
 
 
     if (inputFile.is_open()) {
