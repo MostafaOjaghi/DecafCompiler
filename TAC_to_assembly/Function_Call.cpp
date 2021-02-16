@@ -25,6 +25,7 @@ int floatBranchLabelCnt;
 int outputBooleanBranchLabelCnt;
 int appendStringcnt;
 int appendArraycnt;
+int compareStringCnt;
 
 const int string_size = 100;
 
@@ -304,6 +305,47 @@ void appendArray(string a, string b, string c) {
 
 
     appendArraycnt++;
+}
+
+void compareString(string b, string s1, string s2, string op) {
+
+    // s1 address
+    output << "lw $t0 " << getPos(s1, 0) << "\n";
+    // s2 address
+    output << "lw $t1 " << getPos(s2, 0) << "\n";
+
+    output << "_compareStringLoop_" << compareStringCnt << "_:\n";
+    output << "lb $t2 ($t0)\n";
+    output << "lb $t3 ($t1)\n";
+    output << "beq $t2 0 _compareStringEnd1_" << compareStringCnt << "_\n";
+    output << "beq $t3 0 _compareStringGreater_" << compareStringCnt << "_\n";
+    output << "blt $t2 $t3 _compareStringLess_" << compareStringCnt << "_\n";
+    output << "addi $t0 $t0 1\n";
+    output << "addi $t1 $t1 1\n";
+    output << "beq $t2 $t3 _compareStringLoop_" << compareStringCnt << "_\n";
+    output << "j _compareStringGreater_" << compareStringCnt << "_\n";
+
+    output << "_compareStringEnd1_" << compareStringCnt << "_:\n";
+    output << "beq $t3 0 _compareStringEqual_" << compareStringCnt << "_\n";
+    output << "j _compareStringLess_" << compareStringCnt << "_\n";
+    output << "_compareStringLess_" << compareStringCnt << "_:\n";
+    if (op == "<")
+        output << "li $t4 1\n";
+    else
+        output << "li $t4 0\n";
+    output << "j _compareStringFinal_" << compareStringCnt << "_\n";
+    output << "_compareStringGreater_" << compareStringCnt << "_:\n";
+    output << "li $t4 0\n";
+    output << "j _compareStringFinal_" << compareStringCnt << "_\n";
+    output << "_compareStringEqual_" << compareStringCnt << "_:\n";
+    if (op == "<")
+        output << "li $t4 0\n";
+    else
+        output << "li $t4 1\n";
+    output << "_compareStringFinal_" << compareStringCnt << "_:\n";
+    output << "sw $t4 " << getPos(b, 0) << "\n";
+
+    compareStringCnt++;
 }
 
 string tacToAssembly(istream &inputFile) {
@@ -615,6 +657,9 @@ string tacToAssembly(istream &inputFile) {
             string addressLabel = "__string_" + tokens[1] + "_";
             output << "la $t0 " << addressLabel << "\n";
             output << "sw $t0 " << getPos(tokens[1], 0) << "\n";
+        } else if (tokens[0] == "CompareS") {
+
+            compareString(tokens[1], tokens[3], tokens[5], tokens[4]);
         } else if (tokens[0] == "AppendS") {
 
             appendString(tokens[1], tokens[3], tokens[5]);
@@ -650,7 +695,7 @@ string tacToAssembly(istream &inputFile) {
             string x = tokens[1];
 
             if (t1[0] <= '9' && t1[0] >= '0') {
-                output << "li.s $t0 " << t1 << "\n";
+                output << "li.s $f0 " << t1 << "\n";
             } else {
                 output << "l.s $f0 " << getPos(t1, 0) << "\n";
             }
@@ -837,7 +882,7 @@ string tacToAssembly(istream &inputFile) {
 
 #ifndef TAC_TO_ASSEMBLY_IN_PROJECT
 int main() {
-    ifstream inputFile ("log4.txt");
+    ifstream inputFile ("log5.txt");
 
 
     if (inputFile.is_open()) {
