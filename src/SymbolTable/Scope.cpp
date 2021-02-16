@@ -134,3 +134,16 @@ std::string SymbolTable::Scope::getClassName() {
         return par->getClassName();
     return "";
 }
+
+SymbolTable::ClassType *SymbolTable::Scope::getParentClass() {
+    Scope *cur = this;
+    while (cur != nullptr && !cur->isClass()) {
+        cur = cur->getPar();
+    }
+    if (cur == nullptr) {
+        std::cerr << "can't get parent class from scope!" << std::endl;
+        return nullptr;
+    }
+    std::cerr << "THIS IS Scope name! " << cur->getName() << std::endl;
+    return SymbolTable::ClassType::getClass(cur->getName());
+}

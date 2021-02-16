@@ -52,6 +52,8 @@ namespace SymbolTable {
         bool isClassChild(Scope *classScope);
 
         std::string getClassName();
+
+        ClassType *getParentClass();
     };
 }
 

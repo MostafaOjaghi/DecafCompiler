@@ -185,16 +185,45 @@ SyntaxTree::Cgen SyntaxTree::ExprToBinaryOperation::cgen() {
         if (op1.typeName.getId() != op2.typeName.getId()) {
             SymbolTable::TypeName::semanticError();
         }
-        cgen.createVar("bool", 0);
-        if (op1.typeName.getId() == "double" || op2.typeName.getId() == "double")
+        if (op1.typeName.getId() == "double") {
+            cgen.createVar("bool", 0);
             cgen.append("AssignF " + cgen.var + " = " + op1.var + " " + operatorSymbol + " " + op2.var + "\n");
-        else
+        } else if (op1.typeName.getId() == "string") {
+            cgen.createVar("bool", 0);
+            if (operatorSymbol == "==") {
+                cgen.append("CompareS " + cgen.var + " = " + op1.var + " == " + op2.var + "\n");
+            } else {
+                cgen.append("CompareS " + cgen.var + " = " + op1.var + " == " + op2.var + "\n");
+                cgen.append("Assign " + cgen.var + " = 1 - " + cgen.var + "\n");
+            }
+        } else {
+            cgen.createVar("bool", 0);
             cgen.append("Assign " + cgen.var + " = " + op1.var + " " + operatorSymbol + " " + op2.var + "\n");
+        }
     } else if (operatorSymbol == "<" ||
                operatorSymbol == "<=" ||
                operatorSymbol == ">" ||
                operatorSymbol == ">=") {
-        if (op1.typeName.getId() == op2.typeName.getId() &&
+        if (op1.typeName.getId() == "string" && op2.typeName.getId() == "string") {
+            cgen.createVar("bool", 0);
+            if (operatorSymbol == "<") {
+                cgen.append("CompareS " + cgen.var + " = " + op1.var + " < " + op2.var + "\n");
+            } else if (operatorSymbol == ">") {
+                cgen.append("CompareS " + cgen.var + " = " + op2.var + " < " + op1.var + "\n");
+            } else if (operatorSymbol == "<=") {
+                std::string tmpVar = cgen.var;
+                cgen.append("CompareS " + tmpVar + " = " + op1.var + " < " + op2.var + "\n");
+                cgen.createVar("bool", 0);
+                cgen.append("CompareS " + cgen.var + " = " + op1.var + " == " + op2.var + "\n");
+                cgen.append("Assign " + cgen.var + " = " + cgen.var + " || " + tmpVar + "\n");
+            } else if (operatorSymbol == ">="){
+                std::string tmpVar = cgen.var;
+                cgen.append("CompareS " + tmpVar + " = " + op2.var + " < " + op1.var + "\n");
+                cgen.createVar("bool", 0);
+                cgen.append("CompareS " + cgen.var + " = " + op1.var + " == " + op2.var + "\n");
+                cgen.append("Assign " + cgen.var + " = " + cgen.var + " || " + tmpVar + "\n");
+            }
+        } else if (op1.typeName.getId() == op2.typeName.getId() &&
             (op1.typeName.getId() == "int" || op1.typeName.getId() == "double")) {
             cgen.createVar("bool", 0);
             if (op1.typeName.getId() == "double")
@@ -525,7 +554,14 @@ void SyntaxTree::ExprToThis::handleClassHierarchy() {
 
 SyntaxTree::Cgen SyntaxTree::ExprToThis::cgen() {
     Cgen cgen;
-    cgen.createVar("int", 0);
+
+    // EZAFE:
+    SymbolTable::ClassType *classType = this->getScope()->getParentClass();
+    cgen.createVar(classType->getId(), 0);
+    cgen.typeName.setClassType(classType);
+    // before:
+    //cgen.createVar("int", 0);
+
     cgen.append("Assign " + cgen.var + " = this\n");
     return cgen;
 }
