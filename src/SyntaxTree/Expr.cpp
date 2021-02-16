@@ -36,8 +36,6 @@ SyntaxTree::Cgen SyntaxTree::ExprToAssignmentExpr::cgen() { // TODO handle lvalu
     cgen.append(expr_cgen);
     cgen.append(lvalue_cgen);
 
-    std::cerr << expr_cgen.typeName.getId() << expr_cgen.typeName.getDimension() << " " << lvalue_cgen.typeName.getId() << lvalue_cgen.typeName.getDimension() << std::endl;
-
     if (!SymbolTable::TypeName::checkCastable(expr_cgen.typeName, lvalue_cgen.typeName)) {
       SymbolTable::TypeName::semanticError();
     } else if (lvalue_cgen.typeName.getId() == "double") {

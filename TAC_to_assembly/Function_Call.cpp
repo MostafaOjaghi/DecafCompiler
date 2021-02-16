@@ -139,6 +139,7 @@ void getFloat (string token) {
 }
 
 void getString (string token) {
+    static int n = 0;
 
     output << "li $a0 " << string_size << "\n";
     output << "li $v0 9\n";
@@ -149,6 +150,18 @@ void getString (string token) {
     output << "lw $a0 " << getPos(token, 0) << "\n";
     output << "li $a1 " << string_size << "\n";
     output << "syscall\n";
+
+    string label = "__ReadLineLabel" + to_string(n++);
+    string label2 = label + "_1";
+    output << "li $t0 " << string_size << "\n";
+    output << "add $t0 $t0 $a0\n";
+    output << label << ":\n";
+    output << "addi $t0 $t0 -1\n";
+    output << "lb $t1 ($t0)\n";
+    output << "li $t2 10\n";
+    output << "bne $t1 $t2 " << label2 << "\n";
+    output << "sb $0 ($t0)\n";
+    output << label2 << ": beq $t1 $0 " << label << "\n";
 }
 
 void printInt (string token) {
@@ -575,13 +588,13 @@ string tacToAssembly(istream &inputFile) {
             output << "sw $t0 " << getPos(x, 0) << "\n";
         } else if (tokens[0] == "AssignS") {
 
-            string temp = "_string_";
+            string temp = "__string_";
             temp += tokens[1];
             temp += "_: .asciiz ";
             temp += line.substr(11 + SIZE(tokens[1]), SIZE(line));
             temp += "\n";
             stringLiterals.push_back(temp);
-            string addressLabel = "_string_" + tokens[1] + "_";
+            string addressLabel = "__string_" + tokens[1] + "_";
             output << "la $t0 " << addressLabel << "\n";
             output << "sw $t0 " << getPos(tokens[1], 0) << "\n";
         } else if (tokens[0] == "AppendS") {
