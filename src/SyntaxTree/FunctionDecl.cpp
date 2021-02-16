@@ -49,11 +49,6 @@ void SyntaxTree::FunctionDecl::handleScope() {
 SyntaxTree::Cgen SyntaxTree::FunctionDecl::cgen() {
     Cgen cgen;
     Cgen body = getStmtBlock()->cgen();
-    std::string args;
-    for (Variable *arg : formals->getVariables()) {
-        args += " " + formals->getScope()->getVariable(arg->getId())->getUniqueId();
-    }
-    cgen.append("Label " + getScope()->getFunction(getFunctionIdentifier())->getUniqueId() + ":" + args + "\n");
     cgen.append("Beginfunc " + std::to_string(body.var_count * 4) + "\n");
     cgen.append(body);
     cgen.append("Endfunc\n");

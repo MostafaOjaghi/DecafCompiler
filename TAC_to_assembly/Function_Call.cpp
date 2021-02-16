@@ -14,7 +14,6 @@ map <string, int> global_pointer_pos;
 map <string, int> stack_pointer_pos;
 
 vector <string> stringLiterals;
-vector <string> vtables;
 
 #define SIZE(x) ((int)(x).size())
 
@@ -278,12 +277,12 @@ void appendArray(string a, string b, string c) {
 
 string tacToAssembly(istream &inputFile) {
     output.clear();
+
+    stringstream vtables;
     string line;
     current_func = "global:";
 
     int global_flag = true;
-
-    output << ".text\n";
 
 
     //macro:
@@ -299,8 +298,6 @@ string tacToAssembly(istream &inputFile) {
     output << "syscall\n";
     output << ".end_macro\n";
     */
-
-    output << "main:\n";
 
     while ( getline(inputFile, line) ) {
 
@@ -687,19 +684,19 @@ string tacToAssembly(istream &inputFile) {
             convertIntToFloat(tokens[1], tokens[3]);
         } else if (tokens[0] == "Vtable") {
 
-            output << "li $a0 " << 4 * (SIZE(tokens) - 2) << "\n";
-            output << "li $v0 9\nsyscall\n";
-            output << "sw $v0 " << getPos(tokens[1], 1) << "\n"; // code for vtable
+            vtables << "li $a0 " << 4 * (SIZE(tokens) - 3) << "\n";
+            vtables << "li $v0 9\nsyscall\n";
+            vtables << "sw $v0 " << getPos(tokens[1], 1) << "\n"; // code for vtable
 
             int cnt = 0;
 
-            output << "lw $t1 " << getPos(tokens[1], 1) << "\n";
-            output << "li $t0 " << tokens[3] << "\n";
-            output << "sw $t0 " << cnt * 4 << "($t1)\n";
+            vtables << "lw $t1 " << getPos(tokens[1], 1) << "\n";
+            vtables << "li $t0 " << tokens[3] << "\n";
+            vtables << "sw $t0 " << cnt * 4 << "($t1)\n";
             cnt++;
             for (int i = 4; i < SIZE(tokens); i++) {
-                output << "la $t0 " << tokens[i] << "\n";
-                output << "sw $t0 " << cnt * 4 << "($t1)\n";
+                vtables << "la $t0 " << tokens[i] << "\n";
+                vtables << "sw $t0 " << cnt * 4 << "($t1)\n";
                 cnt++;
             }
             /*
@@ -738,12 +735,12 @@ string tacToAssembly(istream &inputFile) {
             }
         } else if (tokens[0] == "Acall") {
 
+            output << "lw $t0 " << getPos(tokens[1], 0) << "\n";
             output << "addi $sp $sp -4\n";
             output << "sw $ra ($sp)\n";
             output << "addi $sp $sp -4\n";
             output << "sw $fp ($sp)\n";
             output << "move $fp $sp\n";
-            output << "lw $t0 " << getPos(tokens[1], 0) << "\n";
             output << "jalr $t0\n";
             output << "lw $fp ($sp)\n";
             output << "addi $sp $sp 4\n";
@@ -762,7 +759,7 @@ string tacToAssembly(istream &inputFile) {
             output << "sw $v0 " << getPos(tokens[1], 0) << "\n";
         } else if (tokens[0] == "Popparams") {
 
-            output << "addi $sp $sp " << stoi(tokens[1]) << "\n";
+            output << "addi $sp $sp " << 4 * stoi(tokens[1]) << "\n";
         } else if (tokens[0] == "Endfunc") {
 
             sp -= current_func_size;
@@ -804,7 +801,9 @@ string tacToAssembly(istream &inputFile) {
         output << vtables[i];
     }
      */
-    return output.str();
+
+    std::string program = ".text\nmain:\n" + vtables.str() + output.str();
+    return program;
 }
 
 #ifndef TAC_TO_ASSEMBLY_IN_PROJECT

@@ -17,7 +17,13 @@ SyntaxTree::Cgen SyntaxTree::LValueToIdent::cgen() {
     Cgen cgen;
     SymbolTable::SymbolTableEntry *entry = getScope()->getVariable(id);
     cgen.createVar(entry->getTypeName());
-    cgen.append("Addr " + cgen.var + " = &" + entry->getUniqueId() + "\n");
+    if (entry->isField()) {
+        auto classType = SymbolTable::ClassType::getClass(getScope()->getClassName());
+        int pos = classType->getIndexInObjectLayout(this->getId());
+        cgen.append("Assign " + cgen.var + " = this + " + std::to_string(pos * 4) + "\n");
+    }
+    else
+        cgen.append("Addr " + cgen.var + " = &" + entry->getUniqueId() + "\n");
     return cgen;
 }
 
@@ -48,17 +54,9 @@ void SyntaxTree::LValueToFieldAccess::setId(const std::string &id) {
 SyntaxTree::Cgen SyntaxTree::LValueToFieldAccess::cgen() {
     Cgen cgenExpr = this->getExpr()->cgen(), cgen;
     auto classType = SymbolTable::ClassType::getClass(cgenExpr.typeName.getId());
-    std::cout << "classType: " << classType << std::endl;
-
     auto entry = classType->getScope()->getVariable(this->getId(), this->getScope());
-    std::cout << "get entry done!" << std::endl;
-
     int pos = classType->getIndexInObjectLayout(this->getId());
-    std::cout << "get index done!" << std::endl;
-
     cgen.append(cgenExpr);
-    std::cout << "cgen append!" << std::endl;
-
     cgen.createVar(entry->getTypeName());
     cgen.append("Assign " + cgen.var + " = " + cgenExpr.var + " + " + std::to_string(pos * 4) + "\n");
     return cgen;

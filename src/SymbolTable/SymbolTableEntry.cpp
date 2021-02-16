@@ -29,7 +29,7 @@ SymbolTable::SymbolTableEntry::SymbolTableEntry(const std::string &id, const Sym
         typeName(typeName),
         scope(scope),
         isFunc(isFunction) {
-    this->accessMode = SymbolTable::AccessMode::PUBLIC;
+    this->accessMode = SymbolTable::AccessMode::NOT_FIELD;
 }
 
 std::string SymbolTable::SymbolTableEntry::getUniqueId() {
@@ -61,5 +61,9 @@ const std::vector<SymbolTable::TypeName> &SymbolTable::SymbolTableEntry::getForm
 
 void SymbolTable::SymbolTableEntry::addFormal(const SymbolTable::TypeName &formal) {
     formals.push_back(formal);
+}
+
+bool SymbolTable::SymbolTableEntry::isField() {
+    return accessMode != AccessMode::NOT_FIELD;
 }
 

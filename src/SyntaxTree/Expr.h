@@ -68,7 +68,12 @@ namespace SyntaxTree {
     };
 
     class ExprToThis : public Expr {
-        // TODO: THIS SHOULD BE IMPLEMENTED!
+    public:
+        void handleClassHierarchy() override;
+
+        Cgen cgen() override;
+
+        void handleScope() override;
     };
 
     class ExprToCall : public Expr {

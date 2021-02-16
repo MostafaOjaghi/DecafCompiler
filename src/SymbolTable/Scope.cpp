@@ -126,3 +126,11 @@ bool SymbolTable::Scope::isClass() const {
 void SymbolTable::Scope::setIsClass(bool isClass) {
     Scope::isClss = isClass;
 }
+
+std::string SymbolTable::Scope::getClassName() {
+    if (isClass())
+        return name;
+    if (par)
+        return par->getClassName();
+    return "";
+}

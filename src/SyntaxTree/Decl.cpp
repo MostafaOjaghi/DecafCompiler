@@ -34,7 +34,15 @@ void SyntaxTree::DeclToFunctionDecl::setFunctionDecl(SyntaxTree::FunctionDecl *f
 }
 
 SyntaxTree::Cgen SyntaxTree::DeclToFunctionDecl::cgen() {
-    return functionDecl->cgen();
+    Cgen cgen;
+    std::string args;
+    Formals *formals = functionDecl->getFormals();
+    for (Variable *arg : formals->getVariables()) {
+        args += " " + formals->getScope()->getVariable(arg->getId())->getUniqueId();
+    }
+    cgen.append("Label " + getScope()->getFunction(functionDecl->getFunctionIdentifier())->getUniqueId() + ":" + args + "\n");
+    cgen.append(functionDecl->cgen());
+    return cgen;
 }
 
 // handling scope

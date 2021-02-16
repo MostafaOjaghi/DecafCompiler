@@ -89,9 +89,11 @@ SyntaxTree::Cgen SyntaxTree::ExprToLValue::cgen() {
     if (auto *lValueToIdent = dynamic_cast<LValueToIdent *>(lValue)) {
         Cgen cgen;
         SymbolTable::SymbolTableEntry *entry = getScope()->getVariable(lValueToIdent->getId());
-        cgen.typeName = entry->getTypeName();
-        cgen.var = entry->getUniqueId();
-        return cgen;
+        if (!entry->isField()) {
+            cgen.typeName = entry->getTypeName();
+            cgen.var = entry->getUniqueId();
+            return cgen;
+        }
     }
     Cgen cgen;
     Cgen lvalue_cgen = lValue->cgen();
@@ -351,7 +353,7 @@ SyntaxTree::Cgen SyntaxTree::ExprToNew::cgen() {
     std::string tmpVar = cgen.var;
     cgen.createVar(classType->getId(), 0);
     cgen.append("Alloc " + cgen.var + " " + std::to_string(layoutSize) + "\n");
-    cgen.append("Addr " + tmpVar + " = &" + getId() + " \n");
+    cgen.append("Assign " + tmpVar + " = " + getId() + " \n");
     cgen.append("Store *(" + cgen.var + ") = " + tmpVar + "\n");
     return cgen;
 }
@@ -501,4 +503,19 @@ SyntaxTree::Cgen SyntaxTree::ExprToReadLine::cgen() {
 
 void SyntaxTree::ExprToReadLine::handleScope() {
     // norhing to do
+}
+
+void SyntaxTree::ExprToThis::handleClassHierarchy() {
+    // Nothing
+}
+
+SyntaxTree::Cgen SyntaxTree::ExprToThis::cgen() {
+    Cgen cgen;
+    cgen.createVar("int", 0);
+    cgen.append("Assign " + cgen.var + " = this\n");
+    return cgen;
+}
+
+void SyntaxTree::ExprToThis::handleScope() {
+    // Nothing
 }

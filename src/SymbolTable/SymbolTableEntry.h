@@ -13,7 +13,8 @@ namespace SymbolTable {
     enum class AccessMode {
         PRIVATE,
         PROTECTED,
-        PUBLIC
+        PUBLIC,
+        NOT_FIELD
     };
 
     class SymbolTableEntry {
@@ -49,6 +50,8 @@ namespace SymbolTable {
         const std::vector<TypeName> &getFormals() const;
 
         void addFormal(const TypeName &formal);
+
+        bool isField();
     };
 }
 

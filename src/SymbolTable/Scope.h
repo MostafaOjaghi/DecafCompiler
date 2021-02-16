@@ -50,6 +50,8 @@ namespace SymbolTable {
         bool isImmediateClassChild(Scope *classScope);
 
         bool isClassChild(Scope *classScope);
+
+        std::string getClassName();
     };
 }
 
