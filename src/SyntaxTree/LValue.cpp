@@ -97,6 +97,8 @@ SyntaxTree::Cgen SyntaxTree::LValueToArray::cgen() {
     cgen.append("Assign " + cgen.var + " = " + index.var + " + 1\n");
     cgen.append("Assign " + cgen.var + " = " + cgen.var + " * 4\n");
     cgen.append("Assign " + cgen.var + " = " + name.var + " + " + cgen.var + "\n");
+    if (index.typeName.getId() != "int" || index.typeName.getDimension() != 0)
+        SymbolTable::TypeName::semanticError();
     return cgen;
 }
 
