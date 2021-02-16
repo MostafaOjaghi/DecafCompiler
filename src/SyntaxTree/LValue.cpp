@@ -93,6 +93,8 @@ SyntaxTree::Cgen SyntaxTree::LValueToArray::cgen() {
     Cgen index = exprArrayIndex->cgen();
     cgen.append(name);
     cgen.append(index);
+    if (index.typeName.getId() != "int")
+        SymbolTable::TypeName::semanticError();
     cgen.createVar(name.typeName.getId(), name.typeName.getDimension() - 1);
     cgen.append("Assign " + cgen.var + " = " + index.var + " + 1\n");
     cgen.append("Assign " + cgen.var + " = " + cgen.var + " * 4\n");
