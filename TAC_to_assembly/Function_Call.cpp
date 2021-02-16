@@ -642,8 +642,6 @@ string tacToAssembly(istream &inputFile) {
                 output << "l.s $f1 " << getPos(t2, 0) << "\n";
             }
 
-            cout << "oppp " << op << endl;
-
 
             int immediate = 0;
             int not_immediate = 1;
