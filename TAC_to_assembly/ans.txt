@@ -13,7 +13,7 @@ addi $sp $sp 4
 li $v0 10
 syscall
 func_global_main:
-addiu $sp $sp -164
+addiu $sp $sp -224
 li $t0 0
 sw $t0 -4($fp)
 li $t0 0
@@ -22,244 +22,324 @@ li $t0 0
 sw $t0 -12($fp)
 li $t0 0
 sw $t0 -16($fp)
-li $t0 5
+li $t0 0
 sw $t0 -20($fp)
-lw $t0 -20($fp)
-li $t1 1
-add $t0 $t0 $t1
-sw $t0 -24($fp)
-lw $a0 -24($fp)
-sll $a0 $a0 2
-li $v0 9
-syscall
+li $v0 5 
+syscall 
 sw $v0 -24($fp)
-lw $t0 -24($fp)
-lw $t1 -20($fp)
-sw $t1 0($t0)
-la $t0 -4($fp)
+la $t0 -12($fp)
 sw $t0 -28($fp)
 lw $t0 -28($fp)
 lw $t1 -24($fp)
 sw $t1 0($t0)
-li $t0 0
+li $t0 1
 sw $t0 -32($fp)
-la $t0 -16($fp)
+lw $t0 -12($fp)
+lw $t1 -32($fp)
+add $t0 $t0 $t1
 sw $t0 -36($fp)
 lw $t0 -36($fp)
-lw $t1 -32($fp)
-sw $t1 0($t0)
-_l0_startFor:
-li $t0 5
+li $t1 1
+add $t0 $t0 $t1
 sw $t0 -40($fp)
-lw $t0 -16($fp)
-lw $t1 -40($fp)
-slt $t0 $t0 $t1
-sw $t0 -44($fp)
-lw $t0 -44($fp)
-beq $t0 0 _l0_endFor
-li $t0 50
-sw $t0 -48($fp)
-lw $t0 -16($fp)
-lw $t1 -48($fp)
-add $t0 $t0 $t1
-sw $t0 -52($fp)
-lw $t0 -16($fp)
-li $t1 1
-add $t0 $t0 $t1
-sw $t0 -56($fp)
-lw $t0 -56($fp)
-li $t1 4
-mul $t0 $t0 $t1
-sw $t0 -56($fp)
-lw $t0 -4($fp)
-lw $t1 -56($fp)
-add $t0 $t0 $t1
-sw $t0 -56($fp)
-lw $t0 -56($fp)
-lw $t1 -52($fp)
-sw $t1 0($t0)
-_l0_stepFor:
-li $t0 1
-sw $t0 -60($fp)
-lw $t0 -16($fp)
-lw $t1 -60($fp)
-add $t0 $t0 $t1
-sw $t0 -64($fp)
-la $t0 -16($fp)
-sw $t0 -68($fp)
-lw $t0 -68($fp)
-lw $t1 -64($fp)
-sw $t1 0($t0)
-j _l0_startFor
-_l0_endFor:
-li $t0 6
-sw $t0 -72($fp)
-lw $t0 -72($fp)
-li $t1 1
-add $t0 $t0 $t1
-sw $t0 -76($fp)
-lw $a0 -76($fp)
+lw $a0 -40($fp)
 sll $a0 $a0 2
 li $v0 9
 syscall
-sw $v0 -76($fp)
+sw $v0 -40($fp)
+lw $t0 -40($fp)
+lw $t1 -36($fp)
+sw $t1 0($t0)
+la $t0 -16($fp)
+sw $t0 -44($fp)
+lw $t0 -44($fp)
+lw $t1 -40($fp)
+sw $t1 0($t0)
+li $t0 0
+sw $t0 -48($fp)
+la $t0 -4($fp)
+sw $t0 -52($fp)
+lw $t0 -52($fp)
+lw $t1 -48($fp)
+sw $t1 0($t0)
+_l0_startFor:
+lw $t0 -4($fp)
+lw $t1 -12($fp)
+sle $t0 $t0 $t1
+sw $t0 -56($fp)
+lw $t0 -56($fp)
+beq $t0 0 _l0_endFor
+li $t0 0
+sw $t0 -60($fp)
+lw $t0 -4($fp)
+li $t1 1
+add $t0 $t0 $t1
+sw $t0 -64($fp)
+lw $t0 -64($fp)
+li $t1 4
+mul $t0 $t0 $t1
+sw $t0 -64($fp)
+lw $t0 -16($fp)
+lw $t1 -64($fp)
+add $t0 $t0 $t1
+sw $t0 -64($fp)
+lw $t0 -64($fp)
+lw $t1 -60($fp)
+sw $t1 0($t0)
+_l0_stepFor:
+li $t0 1
+sw $t0 -68($fp)
+lw $t0 -4($fp)
+lw $t1 -68($fp)
+add $t0 $t0 $t1
+sw $t0 -72($fp)
+la $t0 -4($fp)
+sw $t0 -76($fp)
 lw $t0 -76($fp)
 lw $t1 -72($fp)
 sw $t1 0($t0)
-la $t0 -8($fp)
+j _l0_startFor
+_l0_endFor:
+li $t0 2
 sw $t0 -80($fp)
-lw $t0 -80($fp)
-lw $t1 -76($fp)
-sw $t1 0($t0)
-li $t0 0
+la $t0 -4($fp)
 sw $t0 -84($fp)
-la $t0 -16($fp)
+lw $t0 -84($fp)
+lw $t1 -80($fp)
+sw $t1 0($t0)
+_l3_startFor:
+lw $t0 -4($fp)
+lw $t1 -12($fp)
+sle $t0 $t0 $t1
 sw $t0 -88($fp)
 lw $t0 -88($fp)
-lw $t1 -84($fp)
-sw $t1 0($t0)
-_l1_startFor:
-li $t0 6
+beq $t0 0 _l3_endFor
+lw $t0 -4($fp)
+lw $t1 -4($fp)
+add $t0 $t0 $t1
 sw $t0 -92($fp)
-lw $t0 -16($fp)
-lw $t1 -92($fp)
-slt $t0 $t0 $t1
+la $t0 -8($fp)
 sw $t0 -96($fp)
 lw $t0 -96($fp)
-beq $t0 0 _l1_endFor
-li $t0 40
+lw $t1 -92($fp)
+sw $t1 0($t0)
+_l2_startFor:
+lw $t0 -8($fp)
+lw $t1 -4($fp)
+slt $t0 $t0 $t1
 sw $t0 -100($fp)
-lw $t0 -16($fp)
-lw $t1 -100($fp)
-add $t0 $t0 $t1
+lw $t0 -100($fp)
+beq $t0 0 _l2_endFor
+lw $t0 -8($fp)
+lw $t1 -4($fp)
+rem $t0 $t0 $t1
 sw $t0 -104($fp)
-lw $t0 -16($fp)
+li $t0 0
+sw $t0 -108($fp)
+lw $t0 -104($fp)
+lw $t1 -108($fp)
+seq $t0 $t0 $t1
+sw $t0 -112($fp)
+lw $t0 -112($fp)
+beq $t0 0 _l1_false
+li $t0 1
+sw $t0 -116($fp)
+lw $t0 -8($fp)
 li $t1 1
 add $t0 $t0 $t1
-sw $t0 -108($fp)
-lw $t0 -108($fp)
+sw $t0 -120($fp)
+lw $t0 -120($fp)
 li $t1 4
 mul $t0 $t0 $t1
-sw $t0 -108($fp)
-lw $t0 -8($fp)
-lw $t1 -108($fp)
-add $t0 $t0 $t1
-sw $t0 -108($fp)
-lw $t0 -108($fp)
-lw $t1 -104($fp)
-sw $t1 0($t0)
-_l1_stepFor:
-li $t0 1
-sw $t0 -112($fp)
+sw $t0 -120($fp)
 lw $t0 -16($fp)
-lw $t1 -112($fp)
+lw $t1 -120($fp)
 add $t0 $t0 $t1
-sw $t0 -116($fp)
-la $t0 -16($fp)
 sw $t0 -120($fp)
 lw $t0 -120($fp)
 lw $t1 -116($fp)
 sw $t1 0($t0)
-j _l1_startFor
-_l1_endFor:
-lw $t0 -4($fp)
-lw $t1 -8($fp)
-lw $t4 ($t0)
-lw $t5 ($t1)
-addi $t0 $t0 4
-addi $t1 $t1 4
-add $a0 $t4 $t5
-addi $a0 $a0 1
-sll $a0 $a0 2
-li $v0 9
-syscall
-srl $a0 $a0 2
-li $t7 1
-sub $a0 $a0 $t7
-sw $a0 ($v0)
-sw $v0 -124($fp)
-lw $t2 -124($fp)
-li $t6 0
-addi $t2 $t2 4
-_appendArrayLoop1_0_:
-lw $t3 ($t0)
-beq $t6 $t4 _appendArrayExit1_0_
-sw $t3 ($t2)
-addi $t6 $t6 1
-addi $t0 $t0 4
-addi $t2 $t2 4
-j _appendArrayLoop1_0_
-_appendArrayExit1_0_:
-li $t6 0
-_appendArrayLoop2_0_:
-lw $t3 ($t1)
-beq $t6 $t5 _appendArrayExit2_0_
-sw $t3 ($t2)
-addi $t6 $t6 1
-addi $t1 $t1 4
-addi $t2 $t2 4
-j _appendArrayLoop2_0_
-_appendArrayExit2_0_:
-la $t0 -12($fp)
+j _l1_afterIf
+_l1_false:
+_l1_afterIf:
+_l2_stepFor:
+lw $t0 -8($fp)
+lw $t1 -4($fp)
+add $t0 $t0 $t1
+sw $t0 -124($fp)
+la $t0 -8($fp)
 sw $t0 -128($fp)
 lw $t0 -128($fp)
 lw $t1 -124($fp)
 sw $t1 0($t0)
-li $t0 0
+j _l2_startFor
+_l2_endFor:
+_l3_stepFor:
+li $t0 1
 sw $t0 -132($fp)
-la $t0 -16($fp)
-sw $t0 -136($fp)
-lw $t0 -136($fp)
+lw $t0 -4($fp)
 lw $t1 -132($fp)
-sw $t1 0($t0)
-_l2_startFor:
-li $t0 11
+add $t0 $t0 $t1
+sw $t0 -136($fp)
+la $t0 -4($fp)
 sw $t0 -140($fp)
-lw $t0 -16($fp)
-lw $t1 -140($fp)
-slt $t0 $t0 $t1
+lw $t0 -140($fp)
+lw $t1 -136($fp)
+sw $t1 0($t0)
+j _l3_startFor
+_l3_endFor:
+li $t0 1
 sw $t0 -144($fp)
-lw $t0 -144($fp)
-beq $t0 0 _l2_endFor
-lw $t0 -16($fp)
+li $t0 1
+sw $t0 -148($fp)
+lw $t0 -148($fp)
 li $t1 1
 add $t0 $t0 $t1
-sw $t0 -148($fp)
-lw $t0 -148($fp)
+sw $t0 -152($fp)
+lw $t0 -152($fp)
 li $t1 4
 mul $t0 $t0 $t1
-sw $t0 -148($fp)
-lw $t0 -12($fp)
-lw $t1 -148($fp)
+sw $t0 -152($fp)
+lw $t0 -16($fp)
+lw $t1 -152($fp)
 add $t0 $t0 $t1
-sw $t0 -148($fp)
-lw $t0 -148($fp)
-lw $t1 0($t0)
-sw $t1 -152($fp)
-li $v0 1 
+sw $t0 -152($fp)
 lw $t0 -152($fp)
-move $a0 $t0 
+lw $t1 -144($fp)
+sw $t1 0($t0)
+la $t0 __string__t34_
+sw $t0 -156($fp)
+la $t0 -20($fp)
+sw $t0 -160($fp)
+lw $t0 -160($fp)
+lw $t1 -156($fp)
+sw $t1 0($t0)
+li $t0 1
+sw $t0 -164($fp)
+la $t0 -4($fp)
+sw $t0 -168($fp)
+lw $t0 -168($fp)
+lw $t1 -164($fp)
+sw $t1 0($t0)
+_l5_startFor:
+lw $t0 -4($fp)
+lw $t1 -12($fp)
+sle $t0 $t0 $t1
+sw $t0 -172($fp)
+lw $t0 -172($fp)
+beq $t0 0 _l5_endFor
+lw $t0 -4($fp)
+li $t1 1
+add $t0 $t0 $t1
+sw $t0 -176($fp)
+lw $t0 -176($fp)
+li $t1 4
+mul $t0 $t0 $t1
+sw $t0 -176($fp)
+lw $t0 -16($fp)
+lw $t1 -176($fp)
+add $t0 $t0 $t1
+sw $t0 -176($fp)
+lw $t0 -176($fp)
+lw $t1 0($t0)
+sw $t1 -180($fp)
+li $t0 1
+sw $t0 -184($fp)
+lw $t0 -180($fp)
+lw $t1 -184($fp)
+seq $t0 $t0 $t1
+sw $t0 -188($fp)
+lw $t0 -188($fp)
+beq $t0 0 _l4_false
+la $t0 __string__t41_
+sw $t0 -192($fp)
+lw $t0 -20($fp)
+lw $t1 -192($fp)
+li $a0 1000
+li $v0 9
+syscall
+sw $v0 -196($fp)
+lw $t2 -196($fp)
+_appendStringLoop1_0_:
+lb $t3 ($t0)
+beq $t3 0 _appendStringExit1_0_
+sb $t3 ($t2)
+addi $t0 $t0 1
+addi $t2 $t2 1
+j _appendStringLoop1_0_
+_appendStringExit1_0_:
+_appendStringLoop2_0_:
+lb $t3 ($t1)
+beq $t3 0 _appendStringExit2_0_
+sb $t3 ($t2)
+addi $t1 $t1 1
+addi $t2 $t2 1
+j _appendStringLoop2_0_
+_appendStringExit2_0_:
+la $t0 -20($fp)
+sw $t0 -200($fp)
+lw $t0 -200($fp)
+lw $t1 -196($fp)
+sw $t1 0($t0)
+j _l4_afterIf
+_l4_false:
+la $t0 __string__t44_
+sw $t0 -204($fp)
+lw $t0 -20($fp)
+lw $t1 -204($fp)
+li $a0 1000
+li $v0 9
+syscall
+sw $v0 -208($fp)
+lw $t2 -208($fp)
+_appendStringLoop1_1_:
+lb $t3 ($t0)
+beq $t3 0 _appendStringExit1_1_
+sb $t3 ($t2)
+addi $t0 $t0 1
+addi $t2 $t2 1
+j _appendStringLoop1_1_
+_appendStringExit1_1_:
+_appendStringLoop2_1_:
+lb $t3 ($t1)
+beq $t3 0 _appendStringExit2_1_
+sb $t3 ($t2)
+addi $t1 $t1 1
+addi $t2 $t2 1
+j _appendStringLoop2_1_
+_appendStringExit2_1_:
+la $t0 -20($fp)
+sw $t0 -212($fp)
+lw $t0 -212($fp)
+lw $t1 -208($fp)
+sw $t1 0($t0)
+_l4_afterIf:
+_l5_stepFor:
+li $t0 1
+sw $t0 -216($fp)
+lw $t0 -4($fp)
+lw $t1 -216($fp)
+add $t0 $t0 $t1
+sw $t0 -220($fp)
+la $t0 -4($fp)
+sw $t0 -224($fp)
+lw $t0 -224($fp)
+lw $t1 -220($fp)
+sw $t1 0($t0)
+j _l5_startFor
+_l5_endFor:
+lw $a0 -20($fp)
+li $v0 4
 syscall 
 li $v0 4
 la $a0 newline
 syscall
-_l2_stepFor:
-li $t0 1
-sw $t0 -156($fp)
-lw $t0 -16($fp)
-lw $t1 -156($fp)
-add $t0 $t0 $t1
-sw $t0 -160($fp)
-la $t0 -16($fp)
-sw $t0 -164($fp)
-lw $t0 -164($fp)
-lw $t1 -160($fp)
-sw $t1 0($t0)
-j _l2_startFor
-_l2_endFor:
-addiu $sp $sp 164
+addiu $sp $sp 224
 jr $ra 
 .data
 newline: .asciiz "\n"
 true: .asciiz "true"
 false: .asciiz "false"
+__string__t34_: .asciiz ""
+__string__t41_: .asciiz "a"
+__string__t44_: .asciiz "b"
