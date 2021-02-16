@@ -307,6 +307,7 @@ void SyntaxTree::ExprToNewArray::setType(SyntaxTree::Type *type) {
 
 SyntaxTree::Cgen SyntaxTree::ExprToNewArray::cgen() {
     Cgen cgen;
+
     Cgen size_cgen = expr->cgen();
     cgen.append(size_cgen);
     cgen.createVar(type->getTypeNameId(), type->getDimension() + 1);

@@ -6,6 +6,7 @@
 
 SyntaxTree::Cgen SyntaxTree::VariableDecl::cgen() {
     std::string typenameId = this->getVariable()->getType()->getTypeNameId();
+
     if (typenameId != "double") {
         Cgen cgen("Assign " + getScope()->getVariable(variable->getId())->getUniqueId() + " = 0\n");
         cgen.var_count = 1;

@@ -36,4 +36,5 @@ void SyntaxTree::Variable::handleClassHierarchy() {
     auto typeName = entry->getTypeName();
     typeName.setClassType(SymbolTable::ClassType::getClass(entry->getTypeName().getId()));
     entry->setTypeName(typeName);
+    //std::cerr << this->getScope()->getVariable("animals")->getTypeName().getClassType()->getId() << std::endl;
 }

@@ -15,8 +15,10 @@ void SyntaxTree::Stmts::addStmt(SyntaxTree::Stmt *stmt) {
 
 SyntaxTree::Cgen SyntaxTree::Stmts::cgen() {
     Cgen cgen;
-    for (Stmt *stmt : stmts)
+    for (Stmt *stmt : stmts) {
+
         cgen.append(stmt->cgen());
+    }
     return cgen;
 }
 

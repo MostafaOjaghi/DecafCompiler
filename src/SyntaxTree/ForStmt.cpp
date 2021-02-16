@@ -84,6 +84,7 @@ void SyntaxTree::ForStmt::handleClassHierarchy() {
         this->getForInit()->handleClassHierarchy();
     if (this->getForStep() != nullptr)
         this->getForStep()->handleClassHierarchy();
-    if (this->getStmt() != nullptr)
+    if (this->getStmt() != nullptr) {
         this->getStmt()->handleClassHierarchy();
+    }
 }

@@ -21,8 +21,9 @@ void SyntaxTree::Fields::handleScope() {
 
 SyntaxTree::Cgen SyntaxTree::Fields::cgen() {
     Cgen cgen;
-    for (Field *field : fields)
+    for (Field *field : fields) {
         cgen.append(field->cgen());
+    }
     return cgen;
 }
 

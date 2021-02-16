@@ -53,6 +53,9 @@ void SyntaxTree::Cgen::createVar(const std::string &typeId, int dimension) {
     var = UniqueGenerator::newTemp();
     var_count += 1;
     typeName = SymbolTable::TypeName(typeId, dimension);
+    SymbolTable::ClassType *ct = SymbolTable::ClassType::getClass(typeId);
+    if (ct != nullptr)
+        typeName.setClassType(ct);
 }
 
 void SyntaxTree::Cgen::createVar(SymbolTable::TypeName typeName1) {
