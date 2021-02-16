@@ -258,27 +258,42 @@ void appendArray(string a, string b, string c) {
     output << "lw $t0 " << getPos(b, 0) << "\n";
     // t1 is the address of c
     output << "lw $t1 " << getPos(c, 0) << "\n";
+
+    output << "lw $t4 ($t0)\n";
+    output << "lw $t5 ($t1)\n";
+    output << "addi $t0 $t0 4\n";
+    output << "addi $t1 $t1 4\n";
+
     // allocate space for result
-    output << "li $a0 10" << "\n";
+    output << "add $a0 $t4 $t5\n";
+    output << "addi $a0 $a0 1\n";
     output << "li $v0 9\n";
     output << "syscall\n";
+    output << "subi $a0 $a0 1\n";
+    output << "sw $a0 ($v0)\n";
     output << "sw $v0 " << getPos(a, 0) << "\n";
 
     // $t2 is the address of a
     output << "lw $t2 " << getPos(a, 0) << "\n";
+    output << "li $t6 0\n";
+    output << "addi $t2 $t2 4\n";
 
     output << "_appendArrayLoop1_" << appendArraycnt << "_:\n";
     output << "lw $t3 ($t0)\n";
-    output << "beq $t3 0 _appendArrayExit1_" << appendArraycnt << "_\n";
+    output << "beq $t6 $t4 _appendArrayExit1_" << appendArraycnt << "_\n";
     output << "sw $t3 ($t2)\n";
+    output << "addi $t6 $t6 1\n";
     output << "addi $t0 $t0 4\n";
     output << "addi $t2 $t2 4\n";
     output << "j _appendArrayLoop1_" << appendArraycnt << "_\n";
     output << "_appendArrayExit1_" << appendArraycnt << "_:\n";
+
+    output << "li $t6 0\n";
     output << "_appendArrayLoop2_" << appendArraycnt << "_:\n";
     output << "lw $t3 ($t1)\n";
-    output << "beq $t3 0 _appendArrayExit2_" << appendArraycnt << "_\n";
+    output << "beq $t6 $t5 _appendArrayExit2_" << appendArraycnt << "_\n";
     output << "sw $t3 ($t2)\n";
+    output << "addi $t6 $t6 1\n";
     output << "addi $t1 $t1 4\n";
     output << "addi $t2 $t2 4\n";
     output << "j _appendArrayLoop2_" << appendArraycnt << "_\n";
@@ -819,7 +834,7 @@ string tacToAssembly(istream &inputFile) {
 
 #ifndef TAC_TO_ASSEMBLY_IN_PROJECT
 int main() {
-    ifstream inputFile ("Vtable.txt");
+    ifstream inputFile ("log2.txt");
 
 
     if (inputFile.is_open()) {
