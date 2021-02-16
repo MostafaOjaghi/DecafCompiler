@@ -5,53 +5,42 @@
 #include "Call.h"
 #include "Actuals.h"
 
-const std::string &SyntaxTree::CallToFunctionCall::getFunctionId() const {
-    return functionId;
-}
-
-void SyntaxTree::CallToFunctionCall::setFunctionId(const std::string &functionId) {
-    CallToFunctionCall::functionId = functionId;
-}
-
-SyntaxTree::Actuals *SyntaxTree::CallToFunctionCall::getActuals() const {
+SyntaxTree::Actuals *SyntaxTree::Call::getActuals() const {
     return actuals;
 }
 
-void SyntaxTree::CallToFunctionCall::setActuals(SyntaxTree::Actuals *actuals) {
-    CallToFunctionCall::actuals = actuals;
+void SyntaxTree::Call::setActuals(SyntaxTree::Actuals *actuals) {
+    Call::actuals = actuals;
+}
+
+const std::string &SyntaxTree::Call::getId() const {
+    return id;
+}
+
+void SyntaxTree::Call::setId(const std::string &id) {
+    Call::id = id;
 }
 
 SyntaxTree::Cgen SyntaxTree::CallToFunctionCall::cgen() {
     Cgen cgen;
     Cgen actualsCgen = actuals->cgen();
     cgen.append(actualsCgen);
-    SymbolTable::SymbolTableEntry *entry = getScope()->getFunction(functionId);
+    SymbolTable::SymbolTableEntry *entry = getScope()->getFunction(id);
     cgen.createVar(entry->getTypeName());
-    std::string function_id = entry->getUniqueId();
-    cgen.append("Lcall " + function_id + " -> " + cgen.var + "\n");
-    cgen.append("Popparams " + std::to_string(actuals->getExpressions().size()) + "\n");
+    if (entry->isField()) {
+        SymbolTable::ClassType *classType = getScope()->getParentClass();
+        cgenMethodCall(cgen, classType, "this");
+    } else {
+        std::string function_id = entry->getUniqueId();
+        cgen.append("Lcall " + function_id + " -> " + cgen.var + "\n");
+        cgen.append("Popparams " + std::to_string(actuals->getExpressions().size()) + "\n");
+    }
     return cgen;
 }
 
 void SyntaxTree::CallToFunctionCall::handleScope() {
     actuals->setScope(getScope());
     actuals->handleScope();
-}
-
-SyntaxTree::Actuals *SyntaxTree::CallToMethodCall::getActuals() const {
-    return actuals;
-}
-
-void SyntaxTree::CallToMethodCall::setActuals(SyntaxTree::Actuals *actuals) {
-    CallToMethodCall::actuals = actuals;
-}
-
-const std::string &SyntaxTree::CallToMethodCall::getId() const {
-    return id;
-}
-
-void SyntaxTree::CallToMethodCall::setId(const std::string &id) {
-    CallToMethodCall::id = id;
 }
 
 SyntaxTree::Expr *SyntaxTree::CallToMethodCall::getExpr() const {
@@ -77,22 +66,30 @@ SyntaxTree::Cgen SyntaxTree::CallToMethodCall::cgen() {
         }
     } else {
         auto classType = SymbolTable::ClassType::getClass(expr_cgen.typeName.getId());
-        SymbolTable::SymbolTableEntry *method_entry = classType->getScope()->getFunction(getId());
-        int methodPosition = classType->getMethodPosition(this->getId());
+        std::string object_var = expr_cgen.var;
 
-        cgen.createVar("int", 0);
-        std::string tmpVar = cgen.var;
-        cgen.createVar(method_entry->getTypeName());
-        cgen.append("Load " + cgen.var + " = *(" + expr_cgen.var + " + 0)\n");
-        cgen.append("Load " + tmpVar + " = *(" + cgen.var + " + 0)\n");
-        cgen.append("Assign " + tmpVar + " = " + expr_cgen.var + " + " + tmpVar + "\n");
-        cgen.append("Load " + cgen.var + " = *(" + cgen.var + " + " + std::to_string(methodPosition) + ")\n");
-        cgen.append(this->getActuals()->cgen());
-        cgen.append("Pushparam " + tmpVar + "\n");
-        cgen.append("Acall " + cgen.var + " -> " + cgen.var + "\n");
-        cgen.append("Popparams " + std::to_string((int) this->getActuals()->getExpressions().size() + 1) + "\n");
+        cgenMethodCall(cgen, classType, object_var);
+
     }
     return cgen;
+}
+
+void SyntaxTree::Call::cgenMethodCall(SyntaxTree::Cgen &cgen, SymbolTable::ClassType *classType,
+                                      const std::string &object_var) const {
+    SymbolTable::SymbolTableEntry *method_entry = classType->getScope()->getFunction(this->getId());
+    int methodPosition = classType->getMethodPosition(this->getId());
+
+    cgen.createVar("int", 0);
+    std::string tmpVar = cgen.var;
+    cgen.createVar(method_entry->getTypeName());
+    cgen.append("Load " + cgen.var + " = *(" + object_var + " + 0)\n");
+    cgen.append("Load " + tmpVar + " = *(" + cgen.var + " + 0)\n");
+    cgen.append("Assign " + tmpVar + " = " + object_var + " + " + tmpVar + "\n");
+    cgen.append("Load " + cgen.var + " = *(" + cgen.var + " + " + std::to_string(methodPosition) + ")\n");
+    cgen.append(this->getActuals()->cgen());
+    cgen.append("Pushparam " + tmpVar + "\n");
+    cgen.append("Acall " + cgen.var + " -> " + cgen.var + "\n");
+    cgen.append("Popparams " + std::to_string((int) this->getActuals()->getExpressions().size() + 1) + "\n");
 }
 
 void SyntaxTree::CallToMethodCall::handleScope() {

@@ -557,7 +557,7 @@ lvalue: T_ID {  LValueToIdent *node = new LValueToIdent();
 ;
 
 call: T_ID  T_OP actuals T_CP {     CallToFunctionCall *node = new CallToFunctionCall();
-                                    node->setFunctionId(((Token *)$1)->getLexeme());
+                                    node->setId(((Token *)$1)->getLexeme());
                                     node->setActuals((Actuals *) $3);
                                     $$ = node;
                               }
