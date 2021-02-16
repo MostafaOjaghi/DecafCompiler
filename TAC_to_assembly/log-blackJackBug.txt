@@ -1,0 +1,5643 @@
+ *** !SAG TOO WINDOWS! ***
+rm ../main lex.yy.cpp lex.yy.h parser.tab.cpp parser.tab.h
+bison parser.y -o parser.tab.cpp --defines=parser.tab.h -r all
+flex scanner.l
+clang++ -std=c++14 -I . **/*.cpp *.cpp -o ../main
+Running Test t507-blackjack -------------------------------------
+---------- Parsing: ----------
+---------- Handle Scope: ----------
+---------- Class Hierarchy ----------
+---------- Cgen: ----------
+Assign global_gRnd = 0
+Lcall func_global_main
+Exit
+Label func_global_Random_Init: this global_Random_func_Init_seedVal
+Beginfunc 4
+Assign _t0 = this + 4
+Store *(_t0) = global_Random_func_Init_seedVal
+Endfunc
+Label func_global_Random_GenRandom: this
+Beginfunc 52
+Assign _t2 = 15625
+Assign _t3 = this + 4
+Load _t4 = *(_t3)
+Assign _t5 = 10000
+Assign _t6 = _t4 % _t5
+Assign _t7 = _t2 * _t6
+Assign _t8 = 22221
+Assign _t9 = _t7 + _t8
+Assign _t10 = 65536
+Assign _t11 = _t9 % _t10
+Assign _t1 = this + 4
+Store *(_t1) = _t11
+Assign _t12 = this + 4
+Load _t13 = *(_t12)
+Endfunc _t13
+Endfunc
+Label func_global_Random_RndInt: this global_Random_func_RndInt_max
+Beginfunc 16
+Load _t16 = *(this + 0)
+Load _t15 = *(_t16 + 0)
+Assign _t15 = this + _t15
+Load _t16 = *(_t16 + 2)
+Pushparam _t15
+Acall _t16 -> _t16
+Popparams 1
+Assign _t17 = _t16 % global_Random_func_RndInt_max
+Endfunc _t17
+Endfunc
+Vtable Random = 0  func_global_Random_Init func_global_Random_GenRandom func_global_Random_RndInt
+Label func_global_Deck_Init: this
+Beginfunc 12
+Assign _t19 = 52
+Assign _t20 = _t19 + 1
+Alloc _t20 _t20
+Store *(_t20) = _t19
+Assign _t18 = this + 8
+Store *(_t18) = _t20
+Endfunc
+Label func_global_Deck_Shuffle: this
+Beginfunc 228
+Assign _t37 = 0
+Assign _t36 = this + 4
+Store *(_t36) = _t37
+Label _l0_startFor:
+Assign _t21 = this + 4
+Load _t22 = *(_t21)
+Assign _t23 = 52
+Assign _t24 = _t22 < _t23
+IfZ _t24 Goto _l0_endFor
+Assign _t30 = this + 4
+Load _t31 = *(_t30)
+Assign _t32 = 1
+Assign _t33 = _t31 + _t32
+Assign _t34 = 13
+Assign _t35 = _t33 % _t34
+Assign _t25 = this + 8
+Load _t26 = *(_t25)
+Assign _t27 = this + 4
+Load _t28 = *(_t27)
+Assign _t29 = _t28 + 1
+Assign _t29 = _t29 * 4
+Assign _t29 = _t26 + _t29
+Store *(_t29) = _t35
+Label _l0_stepFor:
+Assign _t39 = this + 4
+Load _t40 = *(_t39)
+Assign _t41 = 1
+Assign _t42 = _t40 + _t41
+Assign _t38 = this + 4
+Store *(_t38) = _t42
+Goto _l0_startFor
+Label _l0_endFor:
+Label _l1_startWhile:
+Assign _t43 = this + 4
+Load _t44 = *(_t43)
+Assign _t45 = 0
+Assign _t46 = _t44 > _t45
+IfZ _t46 Goto _l1_endWhile
+Assign global_Deck_func_Shuffle_body_stmts_whileBody_block_r = 0
+Assign global_Deck_func_Shuffle_body_stmts_whileBody_block_temp = 0
+Load _t51 = *(global_gRnd + 0)
+Load _t50 = *(_t51 + 0)
+Assign _t50 = global_gRnd + _t50
+Load _t51 = *(_t51 + 3)
+Assign _t52 = this + 4
+Load _t53 = *(_t52)
+Pushparam _t53
+Pushparam _t50
+Acall _t51 -> _t51
+Popparams 2
+Addr _t47 = &global_Deck_func_Shuffle_body_stmts_whileBody_block_r
+Store *(_t47) = _t51
+Assign _t55 = this + 4
+Load _t56 = *(_t55)
+Assign _t57 = 1
+Assign _t58 = _t56 - _t57
+Assign _t54 = this + 4
+Store *(_t54) = _t58
+Assign _t60 = this + 8
+Load _t61 = *(_t60)
+Assign _t62 = this + 4
+Load _t63 = *(_t62)
+Assign _t64 = _t63 + 1
+Assign _t64 = _t64 * 4
+Assign _t64 = _t61 + _t64
+Load _t65 = *(_t64)
+Addr _t59 = &global_Deck_func_Shuffle_body_stmts_whileBody_block_temp
+Store *(_t59) = _t65
+Assign _t71 = this + 8
+Load _t72 = *(_t71)
+Assign _t73 = global_Deck_func_Shuffle_body_stmts_whileBody_block_r + 1
+Assign _t73 = _t73 * 4
+Assign _t73 = _t72 + _t73
+Load _t74 = *(_t73)
+Assign _t66 = this + 8
+Load _t67 = *(_t66)
+Assign _t68 = this + 4
+Load _t69 = *(_t68)
+Assign _t70 = _t69 + 1
+Assign _t70 = _t70 * 4
+Assign _t70 = _t67 + _t70
+Store *(_t70) = _t74
+Assign _t75 = this + 8
+Load _t76 = *(_t75)
+Assign _t77 = global_Deck_func_Shuffle_body_stmts_whileBody_block_r + 1
+Assign _t77 = _t77 * 4
+Assign _t77 = _t76 + _t77
+Store *(_t77) = global_Deck_func_Shuffle_body_stmts_whileBody_block_temp
+Goto _l1_startWhile
+Label _l1_endWhile:
+Endfunc
+Label func_global_Deck_GetCard: this
+Beginfunc 72
+Assign global_Deck_func_GetCard_body_result = 0
+Assign _t78 = this + 4
+Load _t79 = *(_t78)
+Assign _t80 = 52
+Assign _t81 = _t79 >= _t80
+IfZ _t81 goto _l2_false
+Assign _t82 = 0
+Endfunc _t82
+Goto _l2_afterIf
+Label _l2_false:
+Label _l2_afterIf:
+Assign _t84 = this + 8
+Load _t85 = *(_t84)
+Assign _t86 = this + 4
+Load _t87 = *(_t86)
+Assign _t88 = _t87 + 1
+Assign _t88 = _t88 * 4
+Assign _t88 = _t85 + _t88
+Load _t89 = *(_t88)
+Addr _t83 = &global_Deck_func_GetCard_body_result
+Store *(_t83) = _t89
+Assign _t91 = this + 4
+Load _t92 = *(_t91)
+Assign _t93 = 1
+Assign _t94 = _t92 + _t93
+Assign _t90 = this + 4
+Store *(_t90) = _t94
+Endfunc global_Deck_func_GetCard_body_result
+Endfunc
+Vtable Deck = 0  func_global_Deck_Init func_global_Deck_Shuffle func_global_Deck_GetCard
+Label func_global_BJDeck_Init: this
+Beginfunc 88
+Assign global_BJDeck_func_Init_body_i = 0
+Assign _t96 = 8
+Assign _t97 = _t96 + 1
+Alloc _t97 _t97
+Store *(_t97) = _t96
+Assign _t95 = this + 4
+Store *(_t95) = _t97
+Assign _t112 = 0
+Addr _t111 = &global_BJDeck_func_Init_body_i
+Store *(_t111) = _t112
+Label _l3_startFor:
+Assign _t98 = 8
+Assign _t99 = global_BJDeck_func_Init_body_i < _t98
+IfZ _t99 Goto _l3_endFor
+Alloc _t104 3
+Assign _t103 = Deck 
+Store *(_t104) = _t103
+Assign _t100 = this + 4
+Load _t101 = *(_t100)
+Assign _t102 = global_BJDeck_func_Init_body_i + 1
+Assign _t102 = _t102 * 4
+Assign _t102 = _t101 + _t102
+Store *(_t102) = _t104
+Assign _t105 = this + 4
+Load _t106 = *(_t105)
+Assign _t107 = global_BJDeck_func_Init_body_i + 1
+Assign _t107 = _t107 * 4
+Assign _t107 = _t106 + _t107
+Load _t108 = *(_t107)
+Load _t110 = *(_t108 + 0)
+Load _t109 = *(_t110 + 0)
+Assign _t109 = _t108 + _t109
+Load _t110 = *(_t110 + 1)
+Pushparam _t109
+Acall _t110 -> _t110
+Popparams 1
+Label _l3_stepFor:
+Assign _t114 = 1
+Assign _t115 = global_BJDeck_func_Init_body_i + _t114
+Addr _t113 = &global_BJDeck_func_Init_body_i
+Store *(_t113) = _t115
+Goto _l3_startFor
+Label _l3_endFor:
+Endfunc
+Label func_global_BJDeck_DealCard: this
+Beginfunc 148
+Assign global_BJDeck_func_DealCard_body_c = 0
+Assign _t117 = 0
+Addr _t116 = &global_BJDeck_func_DealCard_body_c
+Store *(_t116) = _t117
+Assign _t118 = this + 8
+Load _t119 = *(_t118)
+Assign _t120 = 8
+Assign _t121 = 52
+Assign _t122 = _t120 * _t121
+Assign _t123 = _t119 >= _t122
+IfZ _t123 goto _l4_false
+Assign _t124 = 11
+Endfunc _t124
+Goto _l4_afterIf
+Label _l4_false:
+Label _l4_afterIf:
+Label _l5_startWhile:
+Assign _t125 = 0
+Assign _t126 = global_BJDeck_func_DealCard_body_c == _t125
+IfZ _t126 Goto _l5_endWhile
+Assign global_BJDeck_func_DealCard_body_stmts_whileBody_block_d = 0
+Load _t130 = *(global_gRnd + 0)
+Load _t129 = *(_t130 + 0)
+Assign _t129 = global_gRnd + _t129
+Load _t130 = *(_t130 + 3)
+Assign _t131 = 8
+Pushparam _t131
+Pushparam _t129
+Acall _t130 -> _t130
+Popparams 2
+Addr _t127 = &global_BJDeck_func_DealCard_body_stmts_whileBody_block_d
+Store *(_t127) = _t130
+Assign _t133 = this + 4
+Load _t134 = *(_t133)
+Assign _t135 = global_BJDeck_func_DealCard_body_stmts_whileBody_block_d + 1
+Assign _t135 = _t135 * 4
+Assign _t135 = _t134 + _t135
+Load _t136 = *(_t135)
+Load _t138 = *(_t136 + 0)
+Load _t137 = *(_t138 + 0)
+Assign _t137 = _t136 + _t137
+Load _t138 = *(_t138 + 3)
+Pushparam _t137
+Acall _t138 -> _t138
+Popparams 1
+Addr _t132 = &global_BJDeck_func_DealCard_body_c
+Store *(_t132) = _t138
+Goto _l5_startWhile
+Label _l5_endWhile:
+Assign _t139 = 10
+Assign _t140 = global_BJDeck_func_DealCard_body_c > _t139
+IfZ _t140 goto _l6_false
+Assign _t142 = 10
+Addr _t141 = &global_BJDeck_func_DealCard_body_c
+Store *(_t141) = _t142
+Goto _l6_afterIf
+Label _l6_false:
+Assign _t143 = 1
+Assign _t144 = global_BJDeck_func_DealCard_body_c == _t143
+IfZ _t144 goto _l7_false
+Assign _t146 = 11
+Addr _t145 = &global_BJDeck_func_DealCard_body_c
+Store *(_t145) = _t146
+Goto _l7_afterIf
+Label _l7_false:
+Label _l7_afterIf:
+Label _l6_afterIf:
+Assign _t148 = this + 8
+Load _t149 = *(_t148)
+Assign _t150 = 1
+Assign _t151 = _t149 + _t150
+Assign _t147 = this + 8
+Store *(_t147) = _t151
+Endfunc global_BJDeck_func_DealCard_body_c
+Endfunc
+Label func_global_BJDeck_Shuffle: this
+Beginfunc 72
+Assign global_BJDeck_func_Shuffle_body_i = 0
+AssignS _t152 = "Shuffling..."
+OutputS _t152
+Endl
+Assign _t162 = 0
+Addr _t161 = &global_BJDeck_func_Shuffle_body_i
+Store *(_t161) = _t162
+Label _l8_startFor:
+Assign _t153 = 8
+Assign _t154 = global_BJDeck_func_Shuffle_body_i < _t153
+IfZ _t154 Goto _l8_endFor
+Assign _t155 = this + 4
+Load _t156 = *(_t155)
+Assign _t157 = global_BJDeck_func_Shuffle_body_i + 1
+Assign _t157 = _t157 * 4
+Assign _t157 = _t156 + _t157
+Load _t158 = *(_t157)
+Load _t160 = *(_t158 + 0)
+Load _t159 = *(_t160 + 0)
+Assign _t159 = _t158 + _t159
+Load _t160 = *(_t160 + 2)
+Pushparam _t159
+Acall _t160 -> _t160
+Popparams 1
+Label _l8_stepFor:
+Assign _t164 = 1
+Assign _t165 = global_BJDeck_func_Shuffle_body_i + _t164
+Addr _t163 = &global_BJDeck_func_Shuffle_body_i
+Store *(_t163) = _t165
+Goto _l8_startFor
+Label _l8_endFor:
+Assign _t167 = 0
+Assign _t166 = this + 8
+Store *(_t166) = _t167
+AssignS _t168 = "done.\n"
+OutputS _t168
+Endl
+Endfunc
+Label func_global_BJDeck_NumCardsRemaining: this
+Beginfunc 24
+Assign _t169 = 8
+Assign _t170 = 52
+Assign _t171 = _t169 * _t170
+Assign _t172 = this + 8
+Load _t173 = *(_t172)
+Assign _t174 = _t171 - _t173
+Endfunc _t174
+Endfunc
+Vtable BJDeck = 0  func_global_BJDeck_Init func_global_BJDeck_DealCard func_global_BJDeck_Shuffle func_global_BJDeck_NumCardsRemaining
+Label func_global_Player_Init: this global_Player_func_Init_num
+Beginfunc 24
+Assign _t176 = 1000
+Assign _t175 = this + 20
+Store *(_t175) = _t176
+AssignS _t177 = "What is the name of player #"
+OutputS _t177
+Output global_Player_func_Init_num
+AssignS _t178 = "? "
+OutputS _t178
+Endl
+InputS _t180
+Assign _t179 = this + 24
+Store *(_t179) = _t180
+Endfunc
+Label func_global_Player_Hit: this global_Player_func_Hit_deck
+Beginfunc 172
+Assign global_Player_func_Hit_body_card = 0
+Load _t183 = *(global_Player_func_Hit_deck + 0)
+Load _t182 = *(_t183 + 0)
+Assign _t182 = global_Player_func_Hit_deck + _t182
+Load _t183 = *(_t183 + 2)
+Pushparam _t182
+Acall _t183 -> _t183
+Popparams 1
+Addr _t181 = &global_Player_func_Hit_body_card
+Store *(_t181) = _t183
+Assign _t184 = this + 24
+Load _t185 = *(_t184)
+OutputS _t185
+AssignS _t186 = " was dealt a "
+OutputS _t186
+Output global_Player_func_Hit_body_card
+AssignS _t187 = ".\n"
+OutputS _t187
+Endl
+Assign _t189 = this + 4
+Load _t190 = *(_t189)
+Assign _t191 = _t190 + global_Player_func_Hit_body_card
+Assign _t188 = this + 4
+Store *(_t188) = _t191
+Assign _t193 = this + 12
+Load _t194 = *(_t193)
+Assign _t195 = 1
+Assign _t196 = _t194 + _t195
+Assign _t192 = this + 12
+Store *(_t192) = _t196
+Assign _t197 = 11
+Assign _t198 = global_Player_func_Hit_body_card == _t197
+IfZ _t198 goto _l9_false
+Assign _t200 = this + 8
+Load _t201 = *(_t200)
+Assign _t202 = 1
+Assign _t203 = _t201 + _t202
+Assign _t199 = this + 8
+Store *(_t199) = _t203
+Goto _l9_afterIf
+Label _l9_false:
+Label _l9_afterIf:
+Label _l10_startWhile:
+Assign _t204 = this + 4
+Load _t205 = *(_t204)
+Assign _t206 = 21
+Assign _t207 = _t205 > _t206
+Assign _t208 = this + 8
+Load _t209 = *(_t208)
+Assign _t210 = 0
+Assign _t211 = _t209 > _t210
+Assign _t212 = _t207 && _t211
+IfZ _t212 Goto _l10_endWhile
+Assign _t214 = this + 4
+Load _t215 = *(_t214)
+Assign _t216 = 10
+Assign _t217 = _t215 - _t216
+Assign _t213 = this + 4
+Store *(_t213) = _t217
+Assign _t219 = this + 8
+Load _t220 = *(_t219)
+Assign _t221 = 1
+Assign _t222 = _t220 - _t221
+Assign _t218 = this + 8
+Store *(_t218) = _t222
+Goto _l10_startWhile
+Label _l10_endWhile:
+Endfunc
+Label func_global_Player_DoubleDown: this global_Player_func_DoubleDown_deck
+Beginfunc 116
+Assign global_Player_func_DoubleDown_body_result = 0
+Assign _t223 = this + 4
+Load _t224 = *(_t223)
+Assign _t225 = 10
+Assign _t226 = _t224 != _t225
+Assign _t227 = this + 4
+Load _t228 = *(_t227)
+Assign _t229 = 11
+Assign _t230 = _t228 != _t229
+Assign _t231 = _t226 && _t230
+IfZ _t231 goto _l11_false
+Assign _t232 = 0
+Endfunc _t232
+Goto _l11_afterIf
+Label _l11_false:
+Label _l11_afterIf:
+AssignS _t233 = "Would you like to double down?"
+Pushparam _t233
+Lcall func_global_GetYesOrNo -> _t234
+Popparams 1
+IfZ _t234 goto _l12_false
+Assign _t236 = this + 16
+Load _t237 = *(_t236)
+Assign _t238 = 2
+Assign _t239 = _t237 * _t238
+Assign _t235 = this + 16
+Store *(_t235) = _t239
+Pushparam global_Player_func_DoubleDown_deck
+Load _t242 = *(this + 0)
+Load _t241 = *(_t242 + 0)
+Assign _t241 = this + _t241
+Load _t242 = *(_t242 + 2)
+Pushparam global_Player_func_DoubleDown_deck
+Pushparam _t241
+Acall _t242 -> _t242
+Popparams 2
+Assign _t243 = this + 24
+Load _t244 = *(_t243)
+OutputS _t244
+AssignS _t245 = ", your total is "
+OutputS _t245
+Assign _t246 = this + 4
+Load _t247 = *(_t246)
+Output _t247
+AssignS _t248 = ".\n"
+OutputS _t248
+Endl
+Assign _t249 = 1
+Endfunc _t249
+Goto _l12_afterIf
+Label _l12_false:
+Label _l12_afterIf:
+Assign _t250 = 0
+Endfunc _t250
+Endfunc
+Label func_global_Player_TakeTurn: this global_Player_func_TakeTurn_deck
+Beginfunc 224
+Assign global_Player_func_TakeTurn_body_stillGoing = 0
+AssignS _t251 = "\n"
+OutputS _t251
+Assign _t252 = this + 24
+Load _t253 = *(_t252)
+OutputS _t253
+AssignS _t254 = "'s turn.\n"
+OutputS _t254
+Endl
+Assign _t256 = 0
+Assign _t255 = this + 4
+Store *(_t255) = _t256
+Assign _t258 = 0
+Assign _t257 = this + 8
+Store *(_t257) = _t258
+Assign _t260 = 0
+Assign _t259 = this + 12
+Store *(_t259) = _t260
+Pushparam global_Player_func_TakeTurn_deck
+Load _t263 = *(this + 0)
+Load _t262 = *(_t263 + 0)
+Assign _t262 = this + _t262
+Load _t263 = *(_t263 + 2)
+Pushparam global_Player_func_TakeTurn_deck
+Pushparam _t262
+Acall _t263 -> _t263
+Popparams 2
+Pushparam global_Player_func_TakeTurn_deck
+Load _t266 = *(this + 0)
+Load _t265 = *(_t266 + 0)
+Assign _t265 = this + _t265
+Load _t266 = *(_t266 + 2)
+Pushparam global_Player_func_TakeTurn_deck
+Pushparam _t265
+Acall _t266 -> _t266
+Popparams 2
+Pushparam global_Player_func_TakeTurn_deck
+Load _t269 = *(this + 0)
+Load _t268 = *(_t269 + 0)
+Assign _t268 = this + _t268
+Load _t269 = *(_t269 + 3)
+Pushparam global_Player_func_TakeTurn_deck
+Pushparam _t268
+Acall _t269 -> _t269
+Popparams 2
+Assign _t270 = ! _t269
+IfZ _t270 goto _l15_false
+Assign _t272 = 1
+Addr _t271 = &global_Player_func_TakeTurn_body_stillGoing
+Store *(_t271) = _t272
+Label _l14_startWhile:
+Assign _t273 = this + 4
+Load _t274 = *(_t273)
+Assign _t275 = 21
+Assign _t276 = _t274 <= _t275
+Assign _t277 = _t276 && global_Player_func_TakeTurn_body_stillGoing
+IfZ _t277 Goto _l14_endWhile
+Assign _t278 = this + 24
+Load _t279 = *(_t278)
+OutputS _t279
+AssignS _t280 = ", your total is "
+OutputS _t280
+Assign _t281 = this + 4
+Load _t282 = *(_t281)
+Output _t282
+AssignS _t283 = ".\n"
+OutputS _t283
+Endl
+AssignS _t285 = "Would you like a hit?"
+Pushparam _t285
+Lcall func_global_GetYesOrNo -> _t286
+Popparams 1
+Addr _t284 = &global_Player_func_TakeTurn_body_stillGoing
+Store *(_t284) = _t286
+IfZ global_Player_func_TakeTurn_body_stillGoing goto _l13_false
+Pushparam global_Player_func_TakeTurn_deck
+Load _t289 = *(this + 0)
+Load _t288 = *(_t289 + 0)
+Assign _t288 = this + _t288
+Load _t289 = *(_t289 + 2)
+Pushparam global_Player_func_TakeTurn_deck
+Pushparam _t288
+Acall _t289 -> _t289
+Popparams 2
+Goto _l13_afterIf
+Label _l13_false:
+Label _l13_afterIf:
+Goto _l14_startWhile
+Label _l14_endWhile:
+Goto _l15_afterIf
+Label _l15_false:
+Label _l15_afterIf:
+Assign _t290 = this + 4
+Load _t291 = *(_t290)
+Assign _t292 = 21
+Assign _t293 = _t291 > _t292
+IfZ _t293 goto _l16_false
+Assign _t294 = this + 24
+Load _t295 = *(_t294)
+OutputS _t295
+AssignS _t296 = " busts with the big "
+OutputS _t296
+Assign _t297 = this + 4
+Load _t298 = *(_t297)
+Output _t298
+AssignS _t299 = "!\n"
+OutputS _t299
+Endl
+Goto _l16_afterIf
+Label _l16_false:
+Assign _t300 = this + 24
+Load _t301 = *(_t300)
+OutputS _t301
+AssignS _t302 = " stays at "
+OutputS _t302
+Assign _t303 = this + 4
+Load _t304 = *(_t303)
+Output _t304
+AssignS _t305 = ".\n"
+OutputS _t305
+Endl
+Label _l16_afterIf:
+Endfunc
+Label func_global_Player_HasMoney: this
+Beginfunc 16
+Assign _t306 = this + 20
+Load _t307 = *(_t306)
+Assign _t308 = 0
+Assign _t309 = _t307 > _t308
+Endfunc _t309
+Endfunc
+Label func_global_Player_PrintMoney: this
+Beginfunc 24
+Assign _t310 = this + 24
+Load _t311 = *(_t310)
+OutputS _t311
+AssignS _t312 = ", you have $"
+OutputS _t312
+Assign _t313 = this + 20
+Load _t314 = *(_t313)
+Output _t314
+AssignS _t315 = ".\n"
+OutputS _t315
+Endl
+Endfunc
+Label func_global_Player_PlaceBet: this
+Beginfunc 72
+Assign _t317 = 0
+Assign _t316 = this + 16
+Store *(_t316) = _t317
+Load _t320 = *(this + 0)
+Load _t319 = *(_t320 + 0)
+Assign _t319 = this + _t319
+Load _t320 = *(_t320 + 6)
+Pushparam _t319
+Acall _t320 -> _t320
+Popparams 1
+Label _l17_startWhile:
+Assign _t321 = this + 16
+Load _t322 = *(_t321)
+Assign _t323 = 0
+Assign _t324 = _t322 <= _t323
+Assign _t325 = this + 16
+Load _t326 = *(_t325)
+Assign _t327 = this + 20
+Load _t328 = *(_t327)
+Assign _t329 = _t326 > _t328
+Assign _t330 = _t324 || _t329
+IfZ _t330 Goto _l17_endWhile
+AssignS _t331 = "How much would you like to bet? "
+OutputS _t331
+Endl
+Input _t333
+Assign _t332 = this + 16
+Store *(_t332) = _t333
+Goto _l17_startWhile
+Label _l17_endWhile:
+Endfunc
+Label func_global_Player_GetTotal: this
+Beginfunc 8
+Assign _t334 = this + 4
+Load _t335 = *(_t334)
+Endfunc _t335
+Endfunc
+Label func_global_Player_Resolve: this global_Player_func_Resolve_dealer
+Beginfunc 276
+Assign global_Player_func_Resolve_body_win = 0
+Assign global_Player_func_Resolve_body_lose = 0
+Assign _t337 = 0
+Addr _t336 = &global_Player_func_Resolve_body_win
+Store *(_t336) = _t337
+Assign _t339 = 0
+Addr _t338 = &global_Player_func_Resolve_body_lose
+Store *(_t338) = _t339
+Assign _t340 = this + 4
+Load _t341 = *(_t340)
+Assign _t342 = 21
+Assign _t343 = _t341 == _t342
+Assign _t344 = this + 12
+Load _t345 = *(_t344)
+Assign _t346 = 2
+Assign _t347 = _t345 == _t346
+Assign _t348 = _t343 && _t347
+IfZ _t348 goto _l18_false
+Assign _t350 = 2
+Addr _t349 = &global_Player_func_Resolve_body_win
+Store *(_t349) = _t350
+Goto _l18_afterIf
+Label _l18_false:
+Assign _t351 = this + 4
+Load _t352 = *(_t351)
+Assign _t353 = 21
+Assign _t354 = _t352 > _t353
+IfZ _t354 goto _l19_false
+Assign _t356 = 1
+Addr _t355 = &global_Player_func_Resolve_body_lose
+Store *(_t355) = _t356
+Goto _l19_afterIf
+Label _l19_false:
+Assign _t357 = 21
+Assign _t358 = global_Player_func_Resolve_dealer > _t357
+IfZ _t358 goto _l20_false
+Assign _t360 = 1
+Addr _t359 = &global_Player_func_Resolve_body_win
+Store *(_t359) = _t360
+Goto _l20_afterIf
+Label _l20_false:
+Assign _t361 = this + 4
+Load _t362 = *(_t361)
+Assign _t363 = _t362 > global_Player_func_Resolve_dealer
+IfZ _t363 goto _l21_false
+Assign _t365 = 1
+Addr _t364 = &global_Player_func_Resolve_body_win
+Store *(_t364) = _t365
+Goto _l21_afterIf
+Label _l21_false:
+Assign _t366 = this + 4
+Load _t367 = *(_t366)
+Assign _t368 = global_Player_func_Resolve_dealer > _t367
+IfZ _t368 goto _l22_false
+Assign _t370 = 1
+Addr _t369 = &global_Player_func_Resolve_body_lose
+Store *(_t369) = _t370
+Goto _l22_afterIf
+Label _l22_false:
+Label _l22_afterIf:
+Label _l21_afterIf:
+Label _l20_afterIf:
+Label _l19_afterIf:
+Label _l18_afterIf:
+Assign _t371 = 1
+Assign _t372 = global_Player_func_Resolve_body_win >= _t371
+IfZ _t372 goto _l23_false
+Assign _t373 = this + 24
+Load _t374 = *(_t373)
+OutputS _t374
+AssignS _t375 = ", you won $"
+OutputS _t375
+Assign _t376 = this + 16
+Load _t377 = *(_t376)
+Output _t377
+AssignS _t378 = ".\n"
+OutputS _t378
+Endl
+Goto _l23_afterIf
+Label _l23_false:
+Assign _t379 = 1
+Assign _t380 = global_Player_func_Resolve_body_lose >= _t379
+IfZ _t380 goto _l24_false
+Assign _t381 = this + 24
+Load _t382 = *(_t381)
+OutputS _t382
+AssignS _t383 = ", you lost $"
+OutputS _t383
+Assign _t384 = this + 16
+Load _t385 = *(_t384)
+Output _t385
+AssignS _t386 = ".\n"
+OutputS _t386
+Endl
+Goto _l24_afterIf
+Label _l24_false:
+Assign _t387 = this + 24
+Load _t388 = *(_t387)
+OutputS _t388
+AssignS _t389 = ", you push!\n"
+OutputS _t389
+Endl
+Label _l24_afterIf:
+Label _l23_afterIf:
+Assign _t391 = this + 16
+Load _t392 = *(_t391)
+Assign _t393 = global_Player_func_Resolve_body_win * _t392
+Addr _t390 = &global_Player_func_Resolve_body_win
+Store *(_t390) = _t393
+Assign _t395 = this + 16
+Load _t396 = *(_t395)
+Assign _t397 = global_Player_func_Resolve_body_lose * _t396
+Addr _t394 = &global_Player_func_Resolve_body_lose
+Store *(_t394) = _t397
+Assign _t399 = this + 20
+Load _t400 = *(_t399)
+Assign _t401 = _t400 + global_Player_func_Resolve_body_win
+Assign _t402 = _t401 - global_Player_func_Resolve_body_lose
+Assign _t398 = this + 20
+Store *(_t398) = _t402
+Endfunc
+Vtable Player = 0  func_global_Player_Init func_global_Player_Hit func_global_Player_DoubleDown func_global_Player_TakeTurn func_global_Player_HasMoney func_global_Player_PrintMoney func_global_Player_PlaceBet func_global_Player_GetTotal func_global_Player_Resolve
+Label func_global_Player_Dealer_Init: this global_Player_Dealer_func_Init_id
+Beginfunc 32
+Assign _t404 = 0
+Assign _t403 = this + 4
+Store *(_t403) = _t404
+Assign _t406 = 0
+Assign _t405 = this + 8
+Store *(_t405) = _t406
+Assign _t408 = 0
+Assign _t407 = this + 12
+Store *(_t407) = _t408
+AssignS _t410 = "Dealer"
+Assign _t409 = this + 24
+Store *(_t409) = _t410
+Endfunc
+Label func_global_Player_Dealer_TakeTurn: this global_Player_Dealer_func_TakeTurn_deck
+Beginfunc 108
+AssignS _t411 = "\n"
+OutputS _t411
+Assign _t412 = this + 24
+Load _t413 = *(_t412)
+OutputS _t413
+AssignS _t414 = "'s turn.\n"
+OutputS _t414
+Endl
+Label _l25_startWhile:
+Assign _t415 = this + 4
+Load _t416 = *(_t415)
+Assign _t417 = 16
+Assign _t418 = _t416 <= _t417
+IfZ _t418 Goto _l25_endWhile
+Pushparam global_Player_Dealer_func_TakeTurn_deck
+Load _t421 = *(this + 0)
+Load _t420 = *(_t421 + 0)
+Assign _t420 = this + _t420
+Load _t421 = *(_t421 + 2)
+Pushparam global_Player_Dealer_func_TakeTurn_deck
+Pushparam _t420
+Acall _t421 -> _t421
+Popparams 2
+Goto _l25_startWhile
+Label _l25_endWhile:
+Assign _t422 = this + 4
+Load _t423 = *(_t422)
+Assign _t424 = 21
+Assign _t425 = _t423 > _t424
+IfZ _t425 goto _l26_false
+Assign _t426 = this + 24
+Load _t427 = *(_t426)
+OutputS _t427
+AssignS _t428 = " busts with the big "
+OutputS _t428
+Assign _t429 = this + 4
+Load _t430 = *(_t429)
+Output _t430
+AssignS _t431 = "!\n"
+OutputS _t431
+Endl
+Goto _l26_afterIf
+Label _l26_false:
+Assign _t432 = this + 24
+Load _t433 = *(_t432)
+OutputS _t433
+AssignS _t434 = " stays at "
+OutputS _t434
+Assign _t435 = this + 4
+Load _t436 = *(_t435)
+Output _t436
+AssignS _t437 = ".\n"
+OutputS _t437
+Endl
+Label _l26_afterIf:
+Endfunc
+Vtable Dealer = 0  func_global_Player_Dealer_Init func_global_Player_Hit func_global_Player_DoubleDown func_global_Player_Dealer_TakeTurn func_global_Player_HasMoney func_global_Player_PrintMoney func_global_Player_PlaceBet func_global_Player_GetTotal func_global_Player_Resolve
+Label func_global_House_SetupGame: this
+Beginfunc 92
+AssignS _t438 = "\nWelcome to CS143 BlackJack!\n"
+OutputS _t438
+Endl
+AssignS _t439 = "---------------------------\n"
+OutputS _t439
+Endl
+Alloc _t442 2
+Assign _t441 = Random 
+Store *(_t442) = _t441
+Addr _t440 = &global_gRnd
+Store *(_t440) = _t442
+AssignS _t443 = "Please enter a random number seed: "
+OutputS _t443
+Endl
+Load _t446 = *(global_gRnd + 0)
+Load _t445 = *(_t446 + 0)
+Assign _t445 = global_gRnd + _t445
+Load _t446 = *(_t446 + 1)
+Input _t447
+Pushparam _t447
+Pushparam _t445
+Acall _t446 -> _t446
+Popparams 2
+Alloc _t450 3
+Assign _t449 = BJDeck 
+Store *(_t450) = _t449
+Assign _t448 = this + 12
+Store *(_t448) = _t450
+Alloc _t453 7
+Assign _t452 = Dealer 
+Store *(_t453) = _t452
+Assign _t451 = this + 8
+Store *(_t451) = _t453
+Assign _t454 = this + 12
+Load _t455 = *(_t454)
+Load _t457 = *(_t455 + 0)
+Load _t456 = *(_t457 + 0)
+Assign _t456 = _t455 + _t456
+Load _t457 = *(_t457 + 1)
+Pushparam _t456
+Acall _t457 -> _t457
+Popparams 1
+Assign _t458 = this + 12
+Load _t459 = *(_t458)
+Load _t461 = *(_t459 + 0)
+Load _t460 = *(_t461 + 0)
+Assign _t460 = _t459 + _t460
+Load _t461 = *(_t461 + 3)
+Pushparam _t460
+Acall _t461 -> _t461
+Popparams 1
+Endfunc
+Label func_global_House_SetupPlayers: this
+Beginfunc 116
+Assign global_House_func_SetupPlayers_body_i = 0
+Assign global_House_func_SetupPlayers_body_numPlayers = 0
+AssignS _t462 = "How many players do we have today? "
+OutputS _t462
+Endl
+Input _t464
+Addr _t463 = &global_House_func_SetupPlayers_body_numPlayers
+Store *(_t463) = _t464
+Assign _t466 = global_House_func_SetupPlayers_body_numPlayers + 1
+Alloc _t466 _t466
+Store *(_t466) = global_House_func_SetupPlayers_body_numPlayers
+Assign _t465 = this + 4
+Store *(_t465) = _t466
+Assign _t487 = 0
+Addr _t486 = &global_House_func_SetupPlayers_body_i
+Store *(_t486) = _t487
+Label _l27_startFor:
+Assign _t467 = this + 4
+Load _t468 = *(_t467)
+Load _t469 = *(_t468)
+Assign _t470 = global_House_func_SetupPlayers_body_i < _t469
+IfZ _t470 Goto _l27_endFor
+Alloc _t475 7
+Assign _t474 = Player 
+Store *(_t475) = _t474
+Assign _t471 = this + 4
+Load _t472 = *(_t471)
+Assign _t473 = global_House_func_SetupPlayers_body_i + 1
+Assign _t473 = _t473 * 4
+Assign _t473 = _t472 + _t473
+Store *(_t473) = _t475
+Assign _t476 = this + 4
+Load _t477 = *(_t476)
+Assign _t478 = global_House_func_SetupPlayers_body_i + 1
+Assign _t478 = _t478 * 4
+Assign _t478 = _t477 + _t478
+Load _t479 = *(_t478)
+Load _t483 = *(_t479 + 0)
+Load _t482 = *(_t483 + 0)
+Assign _t482 = _t479 + _t482
+Load _t483 = *(_t483 + 1)
+Assign _t484 = 1
+Assign _t485 = global_House_func_SetupPlayers_body_i + _t484
+Pushparam _t485
+Pushparam _t482
+Acall _t483 -> _t483
+Popparams 2
+Label _l27_stepFor:
+Assign _t489 = 1
+Assign _t490 = global_House_func_SetupPlayers_body_i + _t489
+Addr _t488 = &global_House_func_SetupPlayers_body_i
+Store *(_t488) = _t490
+Goto _l27_startFor
+Label _l27_endFor:
+Endfunc
+Label func_global_House_TakeAllBets: this
+Beginfunc 92
+Assign global_House_func_TakeAllBets_body_i = 0
+AssignS _t491 = "\nFirst, let's take bets.\n"
+OutputS _t491
+Endl
+Assign _t509 = 0
+Addr _t508 = &global_House_func_TakeAllBets_body_i
+Store *(_t508) = _t509
+Label _l29_startFor:
+Assign _t492 = this + 4
+Load _t493 = *(_t492)
+Load _t494 = *(_t493)
+Assign _t495 = global_House_func_TakeAllBets_body_i < _t494
+IfZ _t495 Goto _l29_endFor
+Assign _t496 = this + 4
+Load _t497 = *(_t496)
+Assign _t498 = global_House_func_TakeAllBets_body_i + 1
+Assign _t498 = _t498 * 4
+Assign _t498 = _t497 + _t498
+Load _t499 = *(_t498)
+Load _t501 = *(_t499 + 0)
+Load _t500 = *(_t501 + 0)
+Assign _t500 = _t499 + _t500
+Load _t501 = *(_t501 + 5)
+Pushparam _t500
+Acall _t501 -> _t501
+Popparams 1
+IfZ _t501 goto _l28_false
+Assign _t502 = this + 4
+Load _t503 = *(_t502)
+Assign _t504 = global_House_func_TakeAllBets_body_i + 1
+Assign _t504 = _t504 * 4
+Assign _t504 = _t503 + _t504
+Load _t505 = *(_t504)
+Load _t507 = *(_t505 + 0)
+Load _t506 = *(_t507 + 0)
+Assign _t506 = _t505 + _t506
+Load _t507 = *(_t507 + 7)
+Pushparam _t506
+Acall _t507 -> _t507
+Popparams 1
+Goto _l28_afterIf
+Label _l28_false:
+Label _l28_afterIf:
+Label _l29_stepFor:
+Assign _t511 = 1
+Assign _t512 = global_House_func_TakeAllBets_body_i + _t511
+Addr _t510 = &global_House_func_TakeAllBets_body_i
+Store *(_t510) = _t512
+Goto _l29_startFor
+Label _l29_endFor:
+Endfunc
+Label func_global_House_TakeAllTurns: this
+Beginfunc 96
+Assign global_House_func_TakeAllTurns_body_i = 0
+Assign _t534 = 0
+Addr _t533 = &global_House_func_TakeAllTurns_body_i
+Store *(_t533) = _t534
+Label _l31_startFor:
+Assign _t513 = this + 4
+Load _t514 = *(_t513)
+Load _t515 = *(_t514)
+Assign _t516 = global_House_func_TakeAllTurns_body_i < _t515
+IfZ _t516 Goto _l31_endFor
+Assign _t517 = this + 4
+Load _t518 = *(_t517)
+Assign _t519 = global_House_func_TakeAllTurns_body_i + 1
+Assign _t519 = _t519 * 4
+Assign _t519 = _t518 + _t519
+Load _t520 = *(_t519)
+Load _t522 = *(_t520 + 0)
+Load _t521 = *(_t522 + 0)
+Assign _t521 = _t520 + _t521
+Load _t522 = *(_t522 + 5)
+Pushparam _t521
+Acall _t522 -> _t522
+Popparams 1
+IfZ _t522 goto _l30_false
+Assign _t523 = this + 4
+Load _t524 = *(_t523)
+Assign _t525 = global_House_func_TakeAllTurns_body_i + 1
+Assign _t525 = _t525 * 4
+Assign _t525 = _t524 + _t525
+Load _t526 = *(_t525)
+Load _t530 = *(_t526 + 0)
+Load _t529 = *(_t530 + 0)
+Assign _t529 = _t526 + _t529
+Load _t530 = *(_t530 + 4)
+Assign _t531 = this + 12
+Load _t532 = *(_t531)
+Pushparam _t532
+Pushparam _t529
+Acall _t530 -> _t530
+Popparams 2
+Goto _l30_afterIf
+Label _l30_false:
+Label _l30_afterIf:
+Label _l31_stepFor:
+Assign _t536 = 1
+Assign _t537 = global_House_func_TakeAllTurns_body_i + _t536
+Addr _t535 = &global_House_func_TakeAllTurns_body_i
+Store *(_t535) = _t537
+Goto _l31_startFor
+Label _l31_endFor:
+Endfunc
+Label func_global_House_ResolveAllPlayers: this
+Beginfunc 108
+Assign global_House_func_ResolveAllPlayers_body_i = 0
+AssignS _t538 = "\nTime to resolve bets.\n"
+OutputS _t538
+Endl
+Assign _t564 = 0
+Addr _t563 = &global_House_func_ResolveAllPlayers_body_i
+Store *(_t563) = _t564
+Label _l33_startFor:
+Assign _t539 = this + 4
+Load _t540 = *(_t539)
+Load _t541 = *(_t540)
+Assign _t542 = global_House_func_ResolveAllPlayers_body_i < _t541
+IfZ _t542 Goto _l33_endFor
+Assign _t543 = this + 4
+Load _t544 = *(_t543)
+Assign _t545 = global_House_func_ResolveAllPlayers_body_i + 1
+Assign _t545 = _t545 * 4
+Assign _t545 = _t544 + _t545
+Load _t546 = *(_t545)
+Load _t548 = *(_t546 + 0)
+Load _t547 = *(_t548 + 0)
+Assign _t547 = _t546 + _t547
+Load _t548 = *(_t548 + 5)
+Pushparam _t547
+Acall _t548 -> _t548
+Popparams 1
+IfZ _t548 goto _l32_false
+Assign _t549 = this + 4
+Load _t550 = *(_t549)
+Assign _t551 = global_House_func_ResolveAllPlayers_body_i + 1
+Assign _t551 = _t551 * 4
+Assign _t551 = _t550 + _t551
+Load _t552 = *(_t551)
+Load _t558 = *(_t552 + 0)
+Load _t557 = *(_t558 + 0)
+Assign _t557 = _t552 + _t557
+Load _t558 = *(_t558 + 9)
+Assign _t559 = this + 8
+Load _t560 = *(_t559)
+Load _t562 = *(_t560 + 0)
+Load _t561 = *(_t562 + 0)
+Assign _t561 = _t560 + _t561
+Load _t562 = *(_t562 + 8)
+Pushparam _t561
+Acall _t562 -> _t562
+Popparams 1
+Pushparam _t562
+Pushparam _t557
+Acall _t558 -> _t558
+Popparams 2
+Goto _l32_afterIf
+Label _l32_false:
+Label _l32_afterIf:
+Label _l33_stepFor:
+Assign _t566 = 1
+Assign _t567 = global_House_func_ResolveAllPlayers_body_i + _t566
+Addr _t565 = &global_House_func_ResolveAllPlayers_body_i
+Store *(_t565) = _t567
+Goto _l33_startFor
+Label _l33_endFor:
+Endfunc
+Label func_global_House_PrintAllMoney: this
+Beginfunc 64
+Assign global_House_func_PrintAllMoney_body_i = 0
+Assign _t579 = 0
+Addr _t578 = &global_House_func_PrintAllMoney_body_i
+Store *(_t578) = _t579
+Label _l34_startFor:
+Assign _t568 = this + 4
+Load _t569 = *(_t568)
+Load _t570 = *(_t569)
+Assign _t571 = global_House_func_PrintAllMoney_body_i < _t570
+IfZ _t571 Goto _l34_endFor
+Assign _t572 = this + 4
+Load _t573 = *(_t572)
+Assign _t574 = global_House_func_PrintAllMoney_body_i + 1
+Assign _t574 = _t574 * 4
+Assign _t574 = _t573 + _t574
+Load _t575 = *(_t574)
+Load _t577 = *(_t575 + 0)
+Load _t576 = *(_t577 + 0)
+Assign _t576 = _t575 + _t576
+Load _t577 = *(_t577 + 6)
+Pushparam _t576
+Acall _t577 -> _t577
+Popparams 1
+Label _l34_stepFor:
+Assign _t581 = 1
+Assign _t582 = global_House_func_PrintAllMoney_body_i + _t581
+Addr _t580 = &global_House_func_PrintAllMoney_body_i
+Store *(_t580) = _t582
+Goto _l34_startFor
+Label _l34_endFor:
+Endfunc
+Label func_global_House_PlayOneGame: this
+Beginfunc 148
+Assign _t583 = this + 12
+Load _t584 = *(_t583)
+Load _t586 = *(_t584 + 0)
+Load _t585 = *(_t586 + 0)
+Assign _t585 = _t584 + _t585
+Load _t586 = *(_t586 + 4)
+Pushparam _t585
+Acall _t586 -> _t586
+Popparams 1
+Assign _t587 = 26
+Assign _t588 = _t586 < _t587
+IfZ _t588 goto _l35_false
+Assign _t589 = this + 12
+Load _t590 = *(_t589)
+Load _t592 = *(_t590 + 0)
+Load _t591 = *(_t592 + 0)
+Assign _t591 = _t590 + _t591
+Load _t592 = *(_t592 + 3)
+Pushparam _t591
+Acall _t592 -> _t592
+Popparams 1
+Goto _l35_afterIf
+Label _l35_false:
+Label _l35_afterIf:
+Load _t595 = *(this + 0)
+Load _t594 = *(_t595 + 0)
+Assign _t594 = this + _t594
+Load _t595 = *(_t595 + 3)
+Pushparam _t594
+Acall _t595 -> _t595
+Popparams 1
+AssignS _t596 = "\nDealer starts. "
+OutputS _t596
+Endl
+Assign _t597 = this + 8
+Load _t598 = *(_t597)
+Load _t601 = *(_t598 + 0)
+Load _t600 = *(_t601 + 0)
+Assign _t600 = _t598 + _t600
+Load _t601 = *(_t601 + 1)
+Assign _t602 = 0
+Pushparam _t602
+Pushparam _t600
+Acall _t601 -> _t601
+Popparams 2
+Assign _t603 = this + 8
+Load _t604 = *(_t603)
+Load _t608 = *(_t604 + 0)
+Load _t607 = *(_t608 + 0)
+Assign _t607 = _t604 + _t607
+Load _t608 = *(_t608 + 2)
+Assign _t609 = this + 12
+Load _t610 = *(_t609)
+Pushparam _t610
+Pushparam _t607
+Acall _t608 -> _t608
+Popparams 2
+Load _t613 = *(this + 0)
+Load _t612 = *(_t613 + 0)
+Assign _t612 = this + _t612
+Load _t613 = *(_t613 + 4)
+Pushparam _t612
+Acall _t613 -> _t613
+Popparams 1
+Assign _t614 = this + 8
+Load _t615 = *(_t614)
+Load _t619 = *(_t615 + 0)
+Load _t618 = *(_t619 + 0)
+Assign _t618 = _t615 + _t618
+Load _t619 = *(_t619 + 4)
+Assign _t620 = this + 12
+Load _t621 = *(_t620)
+Pushparam _t621
+Pushparam _t618
+Acall _t619 -> _t619
+Popparams 2
+Load _t624 = *(this + 0)
+Load _t623 = *(_t624 + 0)
+Assign _t623 = this + _t623
+Load _t624 = *(_t624 + 5)
+Pushparam _t623
+Acall _t624 -> _t624
+Popparams 1
+Endfunc
+Vtable House = 0  func_global_House_SetupGame func_global_House_SetupPlayers func_global_House_TakeAllBets func_global_House_TakeAllTurns func_global_House_ResolveAllPlayers func_global_House_PrintAllMoney func_global_House_PlayOneGame
+Label func_global_GetYesOrNo: global_func_GetYesOrNo_prompt
+Beginfunc 36
+Assign global_func_GetYesOrNo_body_answer = 0
+OutputS global_func_GetYesOrNo_prompt
+AssignS _t625 = " (y/n) "
+OutputS _t625
+Endl
+InputS _t627
+Addr _t626 = &global_func_GetYesOrNo_body_answer
+Store *(_t626) = _t627
+AssignS _t628 = "y"
+CompareS _t629 = global_func_GetYesOrNo_body_answer == _t628
+AssignS _t630 = "Y"
+CompareS _t631 = global_func_GetYesOrNo_body_answer == _t630
+Assign _t632 = _t629 || _t631
+Endfunc _t632
+Endfunc
+Label func_global_main:
+Beginfunc 84
+Assign global_func_main_body_keepPlaying = 0
+Assign global_func_main_body_house = 0
+Assign _t634 = 1
+Addr _t633 = &global_func_main_body_keepPlaying
+Store *(_t633) = _t634
+Alloc _t637 4
+Assign _t636 = House 
+Store *(_t637) = _t636
+Addr _t635 = &global_func_main_body_house
+Store *(_t635) = _t637
+Load _t639 = *(global_func_main_body_house + 0)
+Load _t638 = *(_t639 + 0)
+Assign _t638 = global_func_main_body_house + _t638
+Load _t639 = *(_t639 + 1)
+Pushparam _t638
+Acall _t639 -> _t639
+Popparams 1
+Load _t641 = *(global_func_main_body_house + 0)
+Load _t640 = *(_t641 + 0)
+Assign _t640 = global_func_main_body_house + _t640
+Load _t641 = *(_t641 + 2)
+Pushparam _t640
+Acall _t641 -> _t641
+Popparams 1
+Label _l36_startWhile:
+IfZ global_func_main_body_keepPlaying Goto _l36_endWhile
+Load _t643 = *(global_func_main_body_house + 0)
+Load _t642 = *(_t643 + 0)
+Assign _t642 = global_func_main_body_house + _t642
+Load _t643 = *(_t643 + 7)
+Pushparam _t642
+Acall _t643 -> _t643
+Popparams 1
+AssignS _t645 = "\nDo you want to play another hand?"
+Pushparam _t645
+Lcall func_global_GetYesOrNo -> _t646
+Popparams 1
+Addr _t644 = &global_func_main_body_keepPlaying
+Store *(_t644) = _t646
+Goto _l36_startWhile
+Label _l36_endWhile:
+Load _t648 = *(global_func_main_body_house + 0)
+Load _t647 = *(_t648 + 0)
+Assign _t647 = global_func_main_body_house + _t647
+Load _t648 = *(_t648 + 6)
+Pushparam _t647
+Acall _t648 -> _t648
+Popparams 1
+AssignS _t649 = "Thank you for playing...come again soon.\n"
+OutputS _t649
+Endl
+AssignS _t650 = "\nCS143 BlackJack Copyright (c) 1999 by Peter Mork.\n"
+OutputS _t650
+Endl
+AssignS _t651 = "(2001 mods by jdz)\n"
+OutputS _t651
+Endl
+Endfunc
+
+---------- asm: ----------
+.text
+main:
+li $a0 16
+li $v0 9
+syscall
+sw $v0 4($gp)
+lw $t1 4($gp)
+li $t0 0
+sw $t0 0($t1)
+la $t0 func_global_Random_Init
+sw $t0 4($t1)
+la $t0 func_global_Random_GenRandom
+sw $t0 8($t1)
+la $t0 func_global_Random_RndInt
+sw $t0 12($t1)
+li $a0 16
+li $v0 9
+syscall
+sw $v0 8($gp)
+lw $t1 8($gp)
+li $t0 0
+sw $t0 0($t1)
+la $t0 func_global_Deck_Init
+sw $t0 4($t1)
+la $t0 func_global_Deck_Shuffle
+sw $t0 8($t1)
+la $t0 func_global_Deck_GetCard
+sw $t0 12($t1)
+li $a0 20
+li $v0 9
+syscall
+sw $v0 12($gp)
+lw $t1 12($gp)
+li $t0 0
+sw $t0 0($t1)
+la $t0 func_global_BJDeck_Init
+sw $t0 4($t1)
+la $t0 func_global_BJDeck_DealCard
+sw $t0 8($t1)
+la $t0 func_global_BJDeck_Shuffle
+sw $t0 12($t1)
+la $t0 func_global_BJDeck_NumCardsRemaining
+sw $t0 16($t1)
+li $a0 40
+li $v0 9
+syscall
+sw $v0 16($gp)
+lw $t1 16($gp)
+li $t0 0
+sw $t0 0($t1)
+la $t0 func_global_Player_Init
+sw $t0 4($t1)
+la $t0 func_global_Player_Hit
+sw $t0 8($t1)
+la $t0 func_global_Player_DoubleDown
+sw $t0 12($t1)
+la $t0 func_global_Player_TakeTurn
+sw $t0 16($t1)
+la $t0 func_global_Player_HasMoney
+sw $t0 20($t1)
+la $t0 func_global_Player_PrintMoney
+sw $t0 24($t1)
+la $t0 func_global_Player_PlaceBet
+sw $t0 28($t1)
+la $t0 func_global_Player_GetTotal
+sw $t0 32($t1)
+la $t0 func_global_Player_Resolve
+sw $t0 36($t1)
+li $a0 40
+li $v0 9
+syscall
+sw $v0 20($gp)
+lw $t1 20($gp)
+li $t0 0
+sw $t0 0($t1)
+la $t0 func_global_Player_Dealer_Init
+sw $t0 4($t1)
+la $t0 func_global_Player_Hit
+sw $t0 8($t1)
+la $t0 func_global_Player_DoubleDown
+sw $t0 12($t1)
+la $t0 func_global_Player_Dealer_TakeTurn
+sw $t0 16($t1)
+la $t0 func_global_Player_HasMoney
+sw $t0 20($t1)
+la $t0 func_global_Player_PrintMoney
+sw $t0 24($t1)
+la $t0 func_global_Player_PlaceBet
+sw $t0 28($t1)
+la $t0 func_global_Player_GetTotal
+sw $t0 32($t1)
+la $t0 func_global_Player_Resolve
+sw $t0 36($t1)
+li $a0 32
+li $v0 9
+syscall
+sw $v0 24($gp)
+lw $t1 24($gp)
+li $t0 0
+sw $t0 0($t1)
+la $t0 func_global_House_SetupGame
+sw $t0 4($t1)
+la $t0 func_global_House_SetupPlayers
+sw $t0 8($t1)
+la $t0 func_global_House_TakeAllBets
+sw $t0 12($t1)
+la $t0 func_global_House_TakeAllTurns
+sw $t0 16($t1)
+la $t0 func_global_House_ResolveAllPlayers
+sw $t0 20($t1)
+la $t0 func_global_House_PrintAllMoney
+sw $t0 24($t1)
+la $t0 func_global_House_PlayOneGame
+sw $t0 28($t1)
+li $t0 0
+sw $t0 0($gp)
+addi $sp $sp -4
+sw $ra ($sp)
+addi $sp $sp -4
+sw $fp ($sp)
+move $fp $sp
+jal func_global_main
+lw $fp ($sp)
+addi $sp $sp 4
+lw $ra ($sp)
+addi $sp $sp 4
+li $v0 10
+syscall
+func_global_Random_Init:
+addiu $sp $sp -4
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -4($fp)
+lw $t0 -4($fp)
+lw $t1 12($fp)
+sw $t1 0($t0)
+addiu $sp $sp 4
+jr $ra 
+func_global_Random_GenRandom:
+addiu $sp $sp -52
+li $t0 15625
+sw $t0 -4($fp)
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -8($fp)
+lw $t0 -8($fp)
+lw $t1 0($t0)
+sw $t1 -12($fp)
+li $t0 10000
+sw $t0 -16($fp)
+lw $t0 -12($fp)
+lw $t1 -16($fp)
+rem $t0 $t0 $t1
+sw $t0 -20($fp)
+lw $t0 -4($fp)
+lw $t1 -20($fp)
+mul $t0 $t0 $t1
+sw $t0 -24($fp)
+li $t0 22221
+sw $t0 -28($fp)
+lw $t0 -24($fp)
+lw $t1 -28($fp)
+add $t0 $t0 $t1
+sw $t0 -32($fp)
+li $t0 65536
+sw $t0 -36($fp)
+lw $t0 -32($fp)
+lw $t1 -36($fp)
+rem $t0 $t0 $t1
+sw $t0 -40($fp)
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -44($fp)
+lw $t0 -44($fp)
+lw $t1 -40($fp)
+sw $t1 0($t0)
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -48($fp)
+lw $t0 -48($fp)
+lw $t1 0($t0)
+sw $t1 -52($fp)
+lw $t0 -52($fp)
+addi $v0 $t0 0
+addiu $sp $sp 52
+jr $ra 
+addiu $sp $sp 52
+jr $ra 
+func_global_Random_RndInt:
+addiu $sp $sp -16
+lw $t0 8($fp)
+lw $t1 0($t0)
+sw $t1 -4($fp)
+lw $t0 -4($fp)
+lw $t1 0($t0)
+sw $t1 -8($fp)
+lw $t0 8($fp)
+lw $t1 -8($fp)
+add $t0 $t0 $t1
+sw $t0 -8($fp)
+lw $t0 -4($fp)
+lw $t1 8($t0)
+sw $t1 -4($fp)
+addi $sp $sp -4
+lw $t0 -8($fp)
+sw $t0 0($sp)
+lw $t0 -4($fp)
+addi $sp $sp -4
+sw $ra ($sp)
+addi $sp $sp -4
+sw $fp ($sp)
+move $fp $sp
+jalr $t0
+lw $fp ($sp)
+addi $sp $sp 4
+lw $ra ($sp)
+addi $sp $sp 4
+sw $v0 -4($fp)
+addi $sp $sp 4
+lw $t0 -4($fp)
+lw $t1 12($fp)
+rem $t0 $t0 $t1
+sw $t0 -12($fp)
+lw $t0 -12($fp)
+addi $v0 $t0 0
+addiu $sp $sp 16
+jr $ra 
+addiu $sp $sp 16
+jr $ra 
+func_global_Deck_Init:
+addiu $sp $sp -12
+li $t0 52
+sw $t0 -4($fp)
+lw $t0 -4($fp)
+li $t1 1
+add $t0 $t0 $t1
+sw $t0 -8($fp)
+lw $a0 -8($fp)
+sll $a0 $a0 2
+li $v0 9
+syscall
+sw $v0 -8($fp)
+lw $t0 -8($fp)
+lw $t1 -4($fp)
+sw $t1 0($t0)
+lw $t0 8($fp)
+li $t1 8
+add $t0 $t0 $t1
+sw $t0 -12($fp)
+lw $t0 -12($fp)
+lw $t1 -8($fp)
+sw $t1 0($t0)
+addiu $sp $sp 12
+jr $ra 
+func_global_Deck_Shuffle:
+addiu $sp $sp -228
+li $t0 0
+sw $t0 -4($fp)
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -8($fp)
+lw $t0 -8($fp)
+lw $t1 -4($fp)
+sw $t1 0($t0)
+_l0_startFor:
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -12($fp)
+lw $t0 -12($fp)
+lw $t1 0($t0)
+sw $t1 -16($fp)
+li $t0 52
+sw $t0 -20($fp)
+lw $t0 -16($fp)
+lw $t1 -20($fp)
+slt $t0 $t0 $t1
+sw $t0 -24($fp)
+lw $t0 -24($fp)
+beq $t0 0 _l0_endFor
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -28($fp)
+lw $t0 -28($fp)
+lw $t1 0($t0)
+sw $t1 -32($fp)
+li $t0 1
+sw $t0 -36($fp)
+lw $t0 -32($fp)
+lw $t1 -36($fp)
+add $t0 $t0 $t1
+sw $t0 -40($fp)
+li $t0 13
+sw $t0 -44($fp)
+lw $t0 -40($fp)
+lw $t1 -44($fp)
+rem $t0 $t0 $t1
+sw $t0 -48($fp)
+lw $t0 8($fp)
+li $t1 8
+add $t0 $t0 $t1
+sw $t0 -52($fp)
+lw $t0 -52($fp)
+lw $t1 0($t0)
+sw $t1 -56($fp)
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -60($fp)
+lw $t0 -60($fp)
+lw $t1 0($t0)
+sw $t1 -64($fp)
+lw $t0 -64($fp)
+li $t1 1
+add $t0 $t0 $t1
+sw $t0 -68($fp)
+lw $t0 -68($fp)
+li $t1 4
+mul $t0 $t0 $t1
+sw $t0 -68($fp)
+lw $t0 -56($fp)
+lw $t1 -68($fp)
+add $t0 $t0 $t1
+sw $t0 -68($fp)
+lw $t0 -68($fp)
+lw $t1 -48($fp)
+sw $t1 0($t0)
+_l0_stepFor:
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -72($fp)
+lw $t0 -72($fp)
+lw $t1 0($t0)
+sw $t1 -76($fp)
+li $t0 1
+sw $t0 -80($fp)
+lw $t0 -76($fp)
+lw $t1 -80($fp)
+add $t0 $t0 $t1
+sw $t0 -84($fp)
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -88($fp)
+lw $t0 -88($fp)
+lw $t1 -84($fp)
+sw $t1 0($t0)
+j _l0_startFor
+_l0_endFor:
+_l1_startWhile:
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -92($fp)
+lw $t0 -92($fp)
+lw $t1 0($t0)
+sw $t1 -96($fp)
+li $t0 0
+sw $t0 -100($fp)
+lw $t0 -96($fp)
+lw $t1 -100($fp)
+sgt $t0 $t0 $t1
+sw $t0 -104($fp)
+lw $t0 -104($fp)
+beq $t0 0 _l1_endWhile
+li $t0 0
+sw $t0 -108($fp)
+li $t0 0
+sw $t0 -112($fp)
+lw $t0 0($gp)
+lw $t1 0($t0)
+sw $t1 -116($fp)
+lw $t0 -116($fp)
+lw $t1 0($t0)
+sw $t1 -120($fp)
+lw $t0 0($gp)
+lw $t1 -120($fp)
+add $t0 $t0 $t1
+sw $t0 -120($fp)
+lw $t0 -116($fp)
+lw $t1 12($t0)
+sw $t1 -116($fp)
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -124($fp)
+lw $t0 -124($fp)
+lw $t1 0($t0)
+sw $t1 -128($fp)
+addi $sp $sp -4
+lw $t0 -128($fp)
+sw $t0 0($sp)
+addi $sp $sp -4
+lw $t0 -120($fp)
+sw $t0 0($sp)
+lw $t0 -116($fp)
+addi $sp $sp -4
+sw $ra ($sp)
+addi $sp $sp -4
+sw $fp ($sp)
+move $fp $sp
+jalr $t0
+lw $fp ($sp)
+addi $sp $sp 4
+lw $ra ($sp)
+addi $sp $sp 4
+sw $v0 -116($fp)
+addi $sp $sp 8
+la $t0 -108($fp)
+sw $t0 -132($fp)
+lw $t0 -132($fp)
+lw $t1 -116($fp)
+sw $t1 0($t0)
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -136($fp)
+lw $t0 -136($fp)
+lw $t1 0($t0)
+sw $t1 -140($fp)
+li $t0 1
+sw $t0 -144($fp)
+lw $t0 -140($fp)
+lw $t1 -144($fp)
+sub $t0 $t0 $t1
+sw $t0 -148($fp)
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -152($fp)
+lw $t0 -152($fp)
+lw $t1 -148($fp)
+sw $t1 0($t0)
+lw $t0 8($fp)
+li $t1 8
+add $t0 $t0 $t1
+sw $t0 -156($fp)
+lw $t0 -156($fp)
+lw $t1 0($t0)
+sw $t1 -160($fp)
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -164($fp)
+lw $t0 -164($fp)
+lw $t1 0($t0)
+sw $t1 -168($fp)
+lw $t0 -168($fp)
+li $t1 1
+add $t0 $t0 $t1
+sw $t0 -172($fp)
+lw $t0 -172($fp)
+li $t1 4
+mul $t0 $t0 $t1
+sw $t0 -172($fp)
+lw $t0 -160($fp)
+lw $t1 -172($fp)
+add $t0 $t0 $t1
+sw $t0 -172($fp)
+lw $t0 -172($fp)
+lw $t1 0($t0)
+sw $t1 -176($fp)
+la $t0 -112($fp)
+sw $t0 -180($fp)
+lw $t0 -180($fp)
+lw $t1 -176($fp)
+sw $t1 0($t0)
+lw $t0 8($fp)
+li $t1 8
+add $t0 $t0 $t1
+sw $t0 -184($fp)
+lw $t0 -184($fp)
+lw $t1 0($t0)
+sw $t1 -188($fp)
+lw $t0 -108($fp)
+li $t1 1
+add $t0 $t0 $t1
+sw $t0 -192($fp)
+lw $t0 -192($fp)
+li $t1 4
+mul $t0 $t0 $t1
+sw $t0 -192($fp)
+lw $t0 -188($fp)
+lw $t1 -192($fp)
+add $t0 $t0 $t1
+sw $t0 -192($fp)
+lw $t0 -192($fp)
+lw $t1 0($t0)
+sw $t1 -196($fp)
+lw $t0 8($fp)
+li $t1 8
+add $t0 $t0 $t1
+sw $t0 -200($fp)
+lw $t0 -200($fp)
+lw $t1 0($t0)
+sw $t1 -204($fp)
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -208($fp)
+lw $t0 -208($fp)
+lw $t1 0($t0)
+sw $t1 -212($fp)
+lw $t0 -212($fp)
+li $t1 1
+add $t0 $t0 $t1
+sw $t0 -216($fp)
+lw $t0 -216($fp)
+li $t1 4
+mul $t0 $t0 $t1
+sw $t0 -216($fp)
+lw $t0 -204($fp)
+lw $t1 -216($fp)
+add $t0 $t0 $t1
+sw $t0 -216($fp)
+lw $t0 -216($fp)
+lw $t1 -196($fp)
+sw $t1 0($t0)
+lw $t0 8($fp)
+li $t1 8
+add $t0 $t0 $t1
+sw $t0 -220($fp)
+lw $t0 -220($fp)
+lw $t1 0($t0)
+sw $t1 -224($fp)
+lw $t0 -108($fp)
+li $t1 1
+add $t0 $t0 $t1
+sw $t0 -228($fp)
+lw $t0 -228($fp)
+li $t1 4
+mul $t0 $t0 $t1
+sw $t0 -228($fp)
+lw $t0 -224($fp)
+lw $t1 -228($fp)
+add $t0 $t0 $t1
+sw $t0 -228($fp)
+lw $t0 -228($fp)
+lw $t1 -112($fp)
+sw $t1 0($t0)
+j _l1_startWhile
+_l1_endWhile:
+addiu $sp $sp 228
+jr $ra 
+func_global_Deck_GetCard:
+addiu $sp $sp -72
+li $t0 0
+sw $t0 -4($fp)
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -8($fp)
+lw $t0 -8($fp)
+lw $t1 0($t0)
+sw $t1 -12($fp)
+li $t0 52
+sw $t0 -16($fp)
+lw $t0 -12($fp)
+lw $t1 -16($fp)
+sge $t0 $t0 $t1
+sw $t0 -20($fp)
+lw $t0 -20($fp)
+beq $t0 0 _l2_false
+li $t0 0
+sw $t0 -24($fp)
+lw $t0 -24($fp)
+addi $v0 $t0 0
+addiu $sp $sp 72
+jr $ra 
+j _l2_afterIf
+_l2_false:
+_l2_afterIf:
+lw $t0 8($fp)
+li $t1 8
+add $t0 $t0 $t1
+sw $t0 -28($fp)
+lw $t0 -28($fp)
+lw $t1 0($t0)
+sw $t1 -32($fp)
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -36($fp)
+lw $t0 -36($fp)
+lw $t1 0($t0)
+sw $t1 -40($fp)
+lw $t0 -40($fp)
+li $t1 1
+add $t0 $t0 $t1
+sw $t0 -44($fp)
+lw $t0 -44($fp)
+li $t1 4
+mul $t0 $t0 $t1
+sw $t0 -44($fp)
+lw $t0 -32($fp)
+lw $t1 -44($fp)
+add $t0 $t0 $t1
+sw $t0 -44($fp)
+lw $t0 -44($fp)
+lw $t1 0($t0)
+sw $t1 -48($fp)
+la $t0 -4($fp)
+sw $t0 -52($fp)
+lw $t0 -52($fp)
+lw $t1 -48($fp)
+sw $t1 0($t0)
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -56($fp)
+lw $t0 -56($fp)
+lw $t1 0($t0)
+sw $t1 -60($fp)
+li $t0 1
+sw $t0 -64($fp)
+lw $t0 -60($fp)
+lw $t1 -64($fp)
+add $t0 $t0 $t1
+sw $t0 -68($fp)
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -72($fp)
+lw $t0 -72($fp)
+lw $t1 -68($fp)
+sw $t1 0($t0)
+lw $t0 -4($fp)
+addi $v0 $t0 0
+addiu $sp $sp 72
+jr $ra 
+addiu $sp $sp 72
+jr $ra 
+func_global_BJDeck_Init:
+addiu $sp $sp -88
+li $t0 0
+sw $t0 -4($fp)
+li $t0 8
+sw $t0 -8($fp)
+lw $t0 -8($fp)
+li $t1 1
+add $t0 $t0 $t1
+sw $t0 -12($fp)
+lw $a0 -12($fp)
+sll $a0 $a0 2
+li $v0 9
+syscall
+sw $v0 -12($fp)
+lw $t0 -12($fp)
+lw $t1 -8($fp)
+sw $t1 0($t0)
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -16($fp)
+lw $t0 -16($fp)
+lw $t1 -12($fp)
+sw $t1 0($t0)
+li $t0 0
+sw $t0 -20($fp)
+la $t0 -4($fp)
+sw $t0 -24($fp)
+lw $t0 -24($fp)
+lw $t1 -20($fp)
+sw $t1 0($t0)
+_l3_startFor:
+li $t0 8
+sw $t0 -28($fp)
+lw $t0 -4($fp)
+lw $t1 -28($fp)
+slt $t0 $t0 $t1
+sw $t0 -32($fp)
+lw $t0 -32($fp)
+beq $t0 0 _l3_endFor
+li $a0 3
+sll $a0 $a0 2
+li $v0 9
+syscall
+sw $v0 -36($fp)
+lw $t0 8($gp)
+sw $t0 -40($fp)
+lw $t0 -36($fp)
+lw $t1 -40($fp)
+sw $t1 0($t0)
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -44($fp)
+lw $t0 -44($fp)
+lw $t1 0($t0)
+sw $t1 -48($fp)
+lw $t0 -4($fp)
+li $t1 1
+add $t0 $t0 $t1
+sw $t0 -52($fp)
+lw $t0 -52($fp)
+li $t1 4
+mul $t0 $t0 $t1
+sw $t0 -52($fp)
+lw $t0 -48($fp)
+lw $t1 -52($fp)
+add $t0 $t0 $t1
+sw $t0 -52($fp)
+lw $t0 -52($fp)
+lw $t1 -36($fp)
+sw $t1 0($t0)
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -56($fp)
+lw $t0 -56($fp)
+lw $t1 0($t0)
+sw $t1 -60($fp)
+lw $t0 -4($fp)
+li $t1 1
+add $t0 $t0 $t1
+sw $t0 -64($fp)
+lw $t0 -64($fp)
+li $t1 4
+mul $t0 $t0 $t1
+sw $t0 -64($fp)
+lw $t0 -60($fp)
+lw $t1 -64($fp)
+add $t0 $t0 $t1
+sw $t0 -64($fp)
+lw $t0 -64($fp)
+lw $t1 0($t0)
+sw $t1 -68($fp)
+lw $t0 -68($fp)
+lw $t1 0($t0)
+sw $t1 -72($fp)
+lw $t0 -72($fp)
+lw $t1 0($t0)
+sw $t1 -76($fp)
+lw $t0 -68($fp)
+lw $t1 -76($fp)
+add $t0 $t0 $t1
+sw $t0 -76($fp)
+lw $t0 -72($fp)
+lw $t1 4($t0)
+sw $t1 -72($fp)
+addi $sp $sp -4
+lw $t0 -76($fp)
+sw $t0 0($sp)
+lw $t0 -72($fp)
+addi $sp $sp -4
+sw $ra ($sp)
+addi $sp $sp -4
+sw $fp ($sp)
+move $fp $sp
+jalr $t0
+lw $fp ($sp)
+addi $sp $sp 4
+lw $ra ($sp)
+addi $sp $sp 4
+sw $v0 -72($fp)
+addi $sp $sp 4
+_l3_stepFor:
+li $t0 1
+sw $t0 -80($fp)
+lw $t0 -4($fp)
+lw $t1 -80($fp)
+add $t0 $t0 $t1
+sw $t0 -84($fp)
+la $t0 -4($fp)
+sw $t0 -88($fp)
+lw $t0 -88($fp)
+lw $t1 -84($fp)
+sw $t1 0($t0)
+j _l3_startFor
+_l3_endFor:
+addiu $sp $sp 88
+jr $ra 
+func_global_BJDeck_DealCard:
+addiu $sp $sp -148
+li $t0 0
+sw $t0 -4($fp)
+li $t0 0
+sw $t0 -8($fp)
+la $t0 -4($fp)
+sw $t0 -12($fp)
+lw $t0 -12($fp)
+lw $t1 -8($fp)
+sw $t1 0($t0)
+lw $t0 8($fp)
+li $t1 8
+add $t0 $t0 $t1
+sw $t0 -16($fp)
+lw $t0 -16($fp)
+lw $t1 0($t0)
+sw $t1 -20($fp)
+li $t0 8
+sw $t0 -24($fp)
+li $t0 52
+sw $t0 -28($fp)
+lw $t0 -24($fp)
+lw $t1 -28($fp)
+mul $t0 $t0 $t1
+sw $t0 -32($fp)
+lw $t0 -20($fp)
+lw $t1 -32($fp)
+sge $t0 $t0 $t1
+sw $t0 -36($fp)
+lw $t0 -36($fp)
+beq $t0 0 _l4_false
+li $t0 11
+sw $t0 -40($fp)
+lw $t0 -40($fp)
+addi $v0 $t0 0
+addiu $sp $sp 148
+jr $ra 
+j _l4_afterIf
+_l4_false:
+_l4_afterIf:
+_l5_startWhile:
+li $t0 0
+sw $t0 -44($fp)
+lw $t0 -4($fp)
+lw $t1 -44($fp)
+seq $t0 $t0 $t1
+sw $t0 -48($fp)
+lw $t0 -48($fp)
+beq $t0 0 _l5_endWhile
+li $t0 0
+sw $t0 -52($fp)
+lw $t0 0($gp)
+lw $t1 0($t0)
+sw $t1 -56($fp)
+lw $t0 -56($fp)
+lw $t1 0($t0)
+sw $t1 -60($fp)
+lw $t0 0($gp)
+lw $t1 -60($fp)
+add $t0 $t0 $t1
+sw $t0 -60($fp)
+lw $t0 -56($fp)
+lw $t1 12($t0)
+sw $t1 -56($fp)
+li $t0 8
+sw $t0 -64($fp)
+addi $sp $sp -4
+lw $t0 -64($fp)
+sw $t0 0($sp)
+addi $sp $sp -4
+lw $t0 -60($fp)
+sw $t0 0($sp)
+lw $t0 -56($fp)
+addi $sp $sp -4
+sw $ra ($sp)
+addi $sp $sp -4
+sw $fp ($sp)
+move $fp $sp
+jalr $t0
+lw $fp ($sp)
+addi $sp $sp 4
+lw $ra ($sp)
+addi $sp $sp 4
+sw $v0 -56($fp)
+addi $sp $sp 8
+la $t0 -52($fp)
+sw $t0 -68($fp)
+lw $t0 -68($fp)
+lw $t1 -56($fp)
+sw $t1 0($t0)
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -72($fp)
+lw $t0 -72($fp)
+lw $t1 0($t0)
+sw $t1 -76($fp)
+lw $t0 -52($fp)
+li $t1 1
+add $t0 $t0 $t1
+sw $t0 -80($fp)
+lw $t0 -80($fp)
+li $t1 4
+mul $t0 $t0 $t1
+sw $t0 -80($fp)
+lw $t0 -76($fp)
+lw $t1 -80($fp)
+add $t0 $t0 $t1
+sw $t0 -80($fp)
+lw $t0 -80($fp)
+lw $t1 0($t0)
+sw $t1 -84($fp)
+lw $t0 -84($fp)
+lw $t1 0($t0)
+sw $t1 -88($fp)
+lw $t0 -88($fp)
+lw $t1 0($t0)
+sw $t1 -92($fp)
+lw $t0 -84($fp)
+lw $t1 -92($fp)
+add $t0 $t0 $t1
+sw $t0 -92($fp)
+lw $t0 -88($fp)
+lw $t1 12($t0)
+sw $t1 -88($fp)
+addi $sp $sp -4
+lw $t0 -92($fp)
+sw $t0 0($sp)
+lw $t0 -88($fp)
+addi $sp $sp -4
+sw $ra ($sp)
+addi $sp $sp -4
+sw $fp ($sp)
+move $fp $sp
+jalr $t0
+lw $fp ($sp)
+addi $sp $sp 4
+lw $ra ($sp)
+addi $sp $sp 4
+sw $v0 -88($fp)
+addi $sp $sp 4
+la $t0 -4($fp)
+sw $t0 -96($fp)
+lw $t0 -96($fp)
+lw $t1 -88($fp)
+sw $t1 0($t0)
+j _l5_startWhile
+_l5_endWhile:
+li $t0 10
+sw $t0 -100($fp)
+lw $t0 -4($fp)
+lw $t1 -100($fp)
+sgt $t0 $t0 $t1
+sw $t0 -104($fp)
+lw $t0 -104($fp)
+beq $t0 0 _l6_false
+li $t0 10
+sw $t0 -108($fp)
+la $t0 -4($fp)
+sw $t0 -112($fp)
+lw $t0 -112($fp)
+lw $t1 -108($fp)
+sw $t1 0($t0)
+j _l6_afterIf
+_l6_false:
+li $t0 1
+sw $t0 -116($fp)
+lw $t0 -4($fp)
+lw $t1 -116($fp)
+seq $t0 $t0 $t1
+sw $t0 -120($fp)
+lw $t0 -120($fp)
+beq $t0 0 _l7_false
+li $t0 11
+sw $t0 -124($fp)
+la $t0 -4($fp)
+sw $t0 -128($fp)
+lw $t0 -128($fp)
+lw $t1 -124($fp)
+sw $t1 0($t0)
+j _l7_afterIf
+_l7_false:
+_l7_afterIf:
+_l6_afterIf:
+lw $t0 8($fp)
+li $t1 8
+add $t0 $t0 $t1
+sw $t0 -132($fp)
+lw $t0 -132($fp)
+lw $t1 0($t0)
+sw $t1 -136($fp)
+li $t0 1
+sw $t0 -140($fp)
+lw $t0 -136($fp)
+lw $t1 -140($fp)
+add $t0 $t0 $t1
+sw $t0 -144($fp)
+lw $t0 8($fp)
+li $t1 8
+add $t0 $t0 $t1
+sw $t0 -148($fp)
+lw $t0 -148($fp)
+lw $t1 -144($fp)
+sw $t1 0($t0)
+lw $t0 -4($fp)
+addi $v0 $t0 0
+addiu $sp $sp 148
+jr $ra 
+addiu $sp $sp 148
+jr $ra 
+func_global_BJDeck_Shuffle:
+addiu $sp $sp -72
+li $t0 0
+sw $t0 -4($fp)
+la $t0 __string__t152_
+sw $t0 -8($fp)
+lw $a0 -8($fp)
+li $v0 4
+syscall 
+li $v0 4
+la $a0 newline
+syscall
+li $t0 0
+sw $t0 -12($fp)
+la $t0 -4($fp)
+sw $t0 -16($fp)
+lw $t0 -16($fp)
+lw $t1 -12($fp)
+sw $t1 0($t0)
+_l8_startFor:
+li $t0 8
+sw $t0 -20($fp)
+lw $t0 -4($fp)
+lw $t1 -20($fp)
+slt $t0 $t0 $t1
+sw $t0 -24($fp)
+lw $t0 -24($fp)
+beq $t0 0 _l8_endFor
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -28($fp)
+lw $t0 -28($fp)
+lw $t1 0($t0)
+sw $t1 -32($fp)
+lw $t0 -4($fp)
+li $t1 1
+add $t0 $t0 $t1
+sw $t0 -36($fp)
+lw $t0 -36($fp)
+li $t1 4
+mul $t0 $t0 $t1
+sw $t0 -36($fp)
+lw $t0 -32($fp)
+lw $t1 -36($fp)
+add $t0 $t0 $t1
+sw $t0 -36($fp)
+lw $t0 -36($fp)
+lw $t1 0($t0)
+sw $t1 -40($fp)
+lw $t0 -40($fp)
+lw $t1 0($t0)
+sw $t1 -44($fp)
+lw $t0 -44($fp)
+lw $t1 0($t0)
+sw $t1 -48($fp)
+lw $t0 -40($fp)
+lw $t1 -48($fp)
+add $t0 $t0 $t1
+sw $t0 -48($fp)
+lw $t0 -44($fp)
+lw $t1 8($t0)
+sw $t1 -44($fp)
+addi $sp $sp -4
+lw $t0 -48($fp)
+sw $t0 0($sp)
+lw $t0 -44($fp)
+addi $sp $sp -4
+sw $ra ($sp)
+addi $sp $sp -4
+sw $fp ($sp)
+move $fp $sp
+jalr $t0
+lw $fp ($sp)
+addi $sp $sp 4
+lw $ra ($sp)
+addi $sp $sp 4
+sw $v0 -44($fp)
+addi $sp $sp 4
+_l8_stepFor:
+li $t0 1
+sw $t0 -52($fp)
+lw $t0 -4($fp)
+lw $t1 -52($fp)
+add $t0 $t0 $t1
+sw $t0 -56($fp)
+la $t0 -4($fp)
+sw $t0 -60($fp)
+lw $t0 -60($fp)
+lw $t1 -56($fp)
+sw $t1 0($t0)
+j _l8_startFor
+_l8_endFor:
+li $t0 0
+sw $t0 -64($fp)
+lw $t0 8($fp)
+li $t1 8
+add $t0 $t0 $t1
+sw $t0 -68($fp)
+lw $t0 -68($fp)
+lw $t1 -64($fp)
+sw $t1 0($t0)
+la $t0 __string__t168_
+sw $t0 -72($fp)
+lw $a0 -72($fp)
+li $v0 4
+syscall 
+li $v0 4
+la $a0 newline
+syscall
+addiu $sp $sp 72
+jr $ra 
+func_global_BJDeck_NumCardsRemaining:
+addiu $sp $sp -24
+li $t0 8
+sw $t0 -4($fp)
+li $t0 52
+sw $t0 -8($fp)
+lw $t0 -4($fp)
+lw $t1 -8($fp)
+mul $t0 $t0 $t1
+sw $t0 -12($fp)
+lw $t0 8($fp)
+li $t1 8
+add $t0 $t0 $t1
+sw $t0 -16($fp)
+lw $t0 -16($fp)
+lw $t1 0($t0)
+sw $t1 -20($fp)
+lw $t0 -12($fp)
+lw $t1 -20($fp)
+sub $t0 $t0 $t1
+sw $t0 -24($fp)
+lw $t0 -24($fp)
+addi $v0 $t0 0
+addiu $sp $sp 24
+jr $ra 
+addiu $sp $sp 24
+jr $ra 
+func_global_Player_Init:
+addiu $sp $sp -24
+li $t0 1000
+sw $t0 -4($fp)
+lw $t0 8($fp)
+li $t1 20
+add $t0 $t0 $t1
+sw $t0 -8($fp)
+lw $t0 -8($fp)
+lw $t1 -4($fp)
+sw $t1 0($t0)
+la $t0 __string__t177_
+sw $t0 -12($fp)
+lw $a0 -12($fp)
+li $v0 4
+syscall 
+li $v0 1 
+lw $t0 12($fp)
+move $a0 $t0 
+syscall 
+la $t0 __string__t178_
+sw $t0 -16($fp)
+lw $a0 -16($fp)
+li $v0 4
+syscall 
+li $v0 4
+la $a0 newline
+syscall
+li $a0 100
+li $v0 9
+syscall
+sw $v0 -20($fp)
+li $v0 8
+lw $a0 -20($fp)
+li $a1 100
+syscall
+li $t0 100
+add $t0 $t0 $a0
+__ReadLineLabel0:
+addi $t0 $t0 -1
+lb $t1 ($t0)
+li $t2 10
+bne $t1 $t2 __ReadLineLabel0_1
+sb $0 ($t0)
+__ReadLineLabel0_1: beq $t1 $0 __ReadLineLabel0
+lw $t0 8($fp)
+li $t1 24
+add $t0 $t0 $t1
+sw $t0 -24($fp)
+lw $t0 -24($fp)
+lw $t1 -20($fp)
+sw $t1 0($t0)
+addiu $sp $sp 24
+jr $ra 
+func_global_Player_Hit:
+addiu $sp $sp -172
+li $t0 0
+sw $t0 -4($fp)
+lw $t0 12($fp)
+lw $t1 0($t0)
+sw $t1 -8($fp)
+lw $t0 -8($fp)
+lw $t1 0($t0)
+sw $t1 -12($fp)
+lw $t0 12($fp)
+lw $t1 -12($fp)
+add $t0 $t0 $t1
+sw $t0 -12($fp)
+lw $t0 -8($fp)
+lw $t1 8($t0)
+sw $t1 -8($fp)
+addi $sp $sp -4
+lw $t0 -12($fp)
+sw $t0 0($sp)
+lw $t0 -8($fp)
+addi $sp $sp -4
+sw $ra ($sp)
+addi $sp $sp -4
+sw $fp ($sp)
+move $fp $sp
+jalr $t0
+lw $fp ($sp)
+addi $sp $sp 4
+lw $ra ($sp)
+addi $sp $sp 4
+sw $v0 -8($fp)
+addi $sp $sp 4
+la $t0 -4($fp)
+sw $t0 -16($fp)
+lw $t0 -16($fp)
+lw $t1 -8($fp)
+sw $t1 0($t0)
+lw $t0 8($fp)
+li $t1 24
+add $t0 $t0 $t1
+sw $t0 -20($fp)
+lw $t0 -20($fp)
+lw $t1 0($t0)
+sw $t1 -24($fp)
+lw $a0 -24($fp)
+li $v0 4
+syscall 
+la $t0 __string__t186_
+sw $t0 -28($fp)
+lw $a0 -28($fp)
+li $v0 4
+syscall 
+li $v0 1 
+lw $t0 -4($fp)
+move $a0 $t0 
+syscall 
+la $t0 __string__t187_
+sw $t0 -32($fp)
+lw $a0 -32($fp)
+li $v0 4
+syscall 
+li $v0 4
+la $a0 newline
+syscall
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -36($fp)
+lw $t0 -36($fp)
+lw $t1 0($t0)
+sw $t1 -40($fp)
+lw $t0 -40($fp)
+lw $t1 -4($fp)
+add $t0 $t0 $t1
+sw $t0 -44($fp)
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -48($fp)
+lw $t0 -48($fp)
+lw $t1 -44($fp)
+sw $t1 0($t0)
+lw $t0 8($fp)
+li $t1 12
+add $t0 $t0 $t1
+sw $t0 -52($fp)
+lw $t0 -52($fp)
+lw $t1 0($t0)
+sw $t1 -56($fp)
+li $t0 1
+sw $t0 -60($fp)
+lw $t0 -56($fp)
+lw $t1 -60($fp)
+add $t0 $t0 $t1
+sw $t0 -64($fp)
+lw $t0 8($fp)
+li $t1 12
+add $t0 $t0 $t1
+sw $t0 -68($fp)
+lw $t0 -68($fp)
+lw $t1 -64($fp)
+sw $t1 0($t0)
+li $t0 11
+sw $t0 -72($fp)
+lw $t0 -4($fp)
+lw $t1 -72($fp)
+seq $t0 $t0 $t1
+sw $t0 -76($fp)
+lw $t0 -76($fp)
+beq $t0 0 _l9_false
+lw $t0 8($fp)
+li $t1 8
+add $t0 $t0 $t1
+sw $t0 -80($fp)
+lw $t0 -80($fp)
+lw $t1 0($t0)
+sw $t1 -84($fp)
+li $t0 1
+sw $t0 -88($fp)
+lw $t0 -84($fp)
+lw $t1 -88($fp)
+add $t0 $t0 $t1
+sw $t0 -92($fp)
+lw $t0 8($fp)
+li $t1 8
+add $t0 $t0 $t1
+sw $t0 -96($fp)
+lw $t0 -96($fp)
+lw $t1 -92($fp)
+sw $t1 0($t0)
+j _l9_afterIf
+_l9_false:
+_l9_afterIf:
+_l10_startWhile:
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -100($fp)
+lw $t0 -100($fp)
+lw $t1 0($t0)
+sw $t1 -104($fp)
+li $t0 21
+sw $t0 -108($fp)
+lw $t0 -104($fp)
+lw $t1 -108($fp)
+sgt $t0 $t0 $t1
+sw $t0 -112($fp)
+lw $t0 8($fp)
+li $t1 8
+add $t0 $t0 $t1
+sw $t0 -116($fp)
+lw $t0 -116($fp)
+lw $t1 0($t0)
+sw $t1 -120($fp)
+li $t0 0
+sw $t0 -124($fp)
+lw $t0 -120($fp)
+lw $t1 -124($fp)
+sgt $t0 $t0 $t1
+sw $t0 -128($fp)
+lw $t0 -112($fp)
+lw $t1 -128($fp)
+and $t0 $t0 $t1
+sw $t0 -132($fp)
+lw $t0 -132($fp)
+beq $t0 0 _l10_endWhile
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -136($fp)
+lw $t0 -136($fp)
+lw $t1 0($t0)
+sw $t1 -140($fp)
+li $t0 10
+sw $t0 -144($fp)
+lw $t0 -140($fp)
+lw $t1 -144($fp)
+sub $t0 $t0 $t1
+sw $t0 -148($fp)
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -152($fp)
+lw $t0 -152($fp)
+lw $t1 -148($fp)
+sw $t1 0($t0)
+lw $t0 8($fp)
+li $t1 8
+add $t0 $t0 $t1
+sw $t0 -156($fp)
+lw $t0 -156($fp)
+lw $t1 0($t0)
+sw $t1 -160($fp)
+li $t0 1
+sw $t0 -164($fp)
+lw $t0 -160($fp)
+lw $t1 -164($fp)
+sub $t0 $t0 $t1
+sw $t0 -168($fp)
+lw $t0 8($fp)
+li $t1 8
+add $t0 $t0 $t1
+sw $t0 -172($fp)
+lw $t0 -172($fp)
+lw $t1 -168($fp)
+sw $t1 0($t0)
+j _l10_startWhile
+_l10_endWhile:
+addiu $sp $sp 172
+jr $ra 
+func_global_Player_DoubleDown:
+addiu $sp $sp -116
+li $t0 0
+sw $t0 -4($fp)
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -8($fp)
+lw $t0 -8($fp)
+lw $t1 0($t0)
+sw $t1 -12($fp)
+li $t0 10
+sw $t0 -16($fp)
+lw $t0 -12($fp)
+lw $t1 -16($fp)
+sne $t0 $t0 $t1
+sw $t0 -20($fp)
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -24($fp)
+lw $t0 -24($fp)
+lw $t1 0($t0)
+sw $t1 -28($fp)
+li $t0 11
+sw $t0 -32($fp)
+lw $t0 -28($fp)
+lw $t1 -32($fp)
+sne $t0 $t0 $t1
+sw $t0 -36($fp)
+lw $t0 -20($fp)
+lw $t1 -36($fp)
+and $t0 $t0 $t1
+sw $t0 -40($fp)
+lw $t0 -40($fp)
+beq $t0 0 _l11_false
+li $t0 0
+sw $t0 -44($fp)
+lw $t0 -44($fp)
+addi $v0 $t0 0
+addiu $sp $sp 116
+jr $ra 
+j _l11_afterIf
+_l11_false:
+_l11_afterIf:
+la $t0 __string__t233_
+sw $t0 -48($fp)
+addi $sp $sp -4
+lw $t0 -48($fp)
+sw $t0 0($sp)
+addi $sp $sp -4
+sw $ra ($sp)
+addi $sp $sp -4
+sw $fp ($sp)
+move $fp $sp
+jal func_global_GetYesOrNo
+lw $fp ($sp)
+addi $sp $sp 4
+lw $ra ($sp)
+addi $sp $sp 4
+sw $v0 -52($fp)
+addi $sp $sp 4
+lw $t0 -52($fp)
+beq $t0 0 _l12_false
+lw $t0 8($fp)
+li $t1 16
+add $t0 $t0 $t1
+sw $t0 -56($fp)
+lw $t0 -56($fp)
+lw $t1 0($t0)
+sw $t1 -60($fp)
+li $t0 2
+sw $t0 -64($fp)
+lw $t0 -60($fp)
+lw $t1 -64($fp)
+mul $t0 $t0 $t1
+sw $t0 -68($fp)
+lw $t0 8($fp)
+li $t1 16
+add $t0 $t0 $t1
+sw $t0 -72($fp)
+lw $t0 -72($fp)
+lw $t1 -68($fp)
+sw $t1 0($t0)
+addi $sp $sp -4
+lw $t0 12($fp)
+sw $t0 0($sp)
+lw $t0 8($fp)
+lw $t1 0($t0)
+sw $t1 -76($fp)
+lw $t0 -76($fp)
+lw $t1 0($t0)
+sw $t1 -80($fp)
+lw $t0 8($fp)
+lw $t1 -80($fp)
+add $t0 $t0 $t1
+sw $t0 -80($fp)
+lw $t0 -76($fp)
+lw $t1 8($t0)
+sw $t1 -76($fp)
+addi $sp $sp -4
+lw $t0 12($fp)
+sw $t0 0($sp)
+addi $sp $sp -4
+lw $t0 -80($fp)
+sw $t0 0($sp)
+lw $t0 -76($fp)
+addi $sp $sp -4
+sw $ra ($sp)
+addi $sp $sp -4
+sw $fp ($sp)
+move $fp $sp
+jalr $t0
+lw $fp ($sp)
+addi $sp $sp 4
+lw $ra ($sp)
+addi $sp $sp 4
+sw $v0 -76($fp)
+addi $sp $sp 8
+lw $t0 8($fp)
+li $t1 24
+add $t0 $t0 $t1
+sw $t0 -84($fp)
+lw $t0 -84($fp)
+lw $t1 0($t0)
+sw $t1 -88($fp)
+lw $a0 -88($fp)
+li $v0 4
+syscall 
+la $t0 __string__t245_
+sw $t0 -92($fp)
+lw $a0 -92($fp)
+li $v0 4
+syscall 
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -96($fp)
+lw $t0 -96($fp)
+lw $t1 0($t0)
+sw $t1 -100($fp)
+li $v0 1 
+lw $t0 -100($fp)
+move $a0 $t0 
+syscall 
+la $t0 __string__t248_
+sw $t0 -104($fp)
+lw $a0 -104($fp)
+li $v0 4
+syscall 
+li $v0 4
+la $a0 newline
+syscall
+li $t0 1
+sw $t0 -108($fp)
+lw $t0 -108($fp)
+addi $v0 $t0 0
+addiu $sp $sp 116
+jr $ra 
+j _l12_afterIf
+_l12_false:
+_l12_afterIf:
+li $t0 0
+sw $t0 -112($fp)
+lw $t0 -112($fp)
+addi $v0 $t0 0
+addiu $sp $sp 116
+jr $ra 
+addiu $sp $sp 116
+jr $ra 
+func_global_Player_TakeTurn:
+addiu $sp $sp -224
+li $t0 0
+sw $t0 -4($fp)
+la $t0 __string__t251_
+sw $t0 -8($fp)
+lw $a0 -8($fp)
+li $v0 4
+syscall 
+lw $t0 8($fp)
+li $t1 24
+add $t0 $t0 $t1
+sw $t0 -12($fp)
+lw $t0 -12($fp)
+lw $t1 0($t0)
+sw $t1 -16($fp)
+lw $a0 -16($fp)
+li $v0 4
+syscall 
+la $t0 __string__t254_
+sw $t0 -20($fp)
+lw $a0 -20($fp)
+li $v0 4
+syscall 
+li $v0 4
+la $a0 newline
+syscall
+li $t0 0
+sw $t0 -24($fp)
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -28($fp)
+lw $t0 -28($fp)
+lw $t1 -24($fp)
+sw $t1 0($t0)
+li $t0 0
+sw $t0 -32($fp)
+lw $t0 8($fp)
+li $t1 8
+add $t0 $t0 $t1
+sw $t0 -36($fp)
+lw $t0 -36($fp)
+lw $t1 -32($fp)
+sw $t1 0($t0)
+li $t0 0
+sw $t0 -40($fp)
+lw $t0 8($fp)
+li $t1 12
+add $t0 $t0 $t1
+sw $t0 -44($fp)
+lw $t0 -44($fp)
+lw $t1 -40($fp)
+sw $t1 0($t0)
+addi $sp $sp -4
+lw $t0 12($fp)
+sw $t0 0($sp)
+lw $t0 8($fp)
+lw $t1 0($t0)
+sw $t1 -48($fp)
+lw $t0 -48($fp)
+lw $t1 0($t0)
+sw $t1 -52($fp)
+lw $t0 8($fp)
+lw $t1 -52($fp)
+add $t0 $t0 $t1
+sw $t0 -52($fp)
+lw $t0 -48($fp)
+lw $t1 8($t0)
+sw $t1 -48($fp)
+addi $sp $sp -4
+lw $t0 12($fp)
+sw $t0 0($sp)
+addi $sp $sp -4
+lw $t0 -52($fp)
+sw $t0 0($sp)
+lw $t0 -48($fp)
+addi $sp $sp -4
+sw $ra ($sp)
+addi $sp $sp -4
+sw $fp ($sp)
+move $fp $sp
+jalr $t0
+lw $fp ($sp)
+addi $sp $sp 4
+lw $ra ($sp)
+addi $sp $sp 4
+sw $v0 -48($fp)
+addi $sp $sp 8
+addi $sp $sp -4
+lw $t0 12($fp)
+sw $t0 0($sp)
+lw $t0 8($fp)
+lw $t1 0($t0)
+sw $t1 -56($fp)
+lw $t0 -56($fp)
+lw $t1 0($t0)
+sw $t1 -60($fp)
+lw $t0 8($fp)
+lw $t1 -60($fp)
+add $t0 $t0 $t1
+sw $t0 -60($fp)
+lw $t0 -56($fp)
+lw $t1 8($t0)
+sw $t1 -56($fp)
+addi $sp $sp -4
+lw $t0 12($fp)
+sw $t0 0($sp)
+addi $sp $sp -4
+lw $t0 -60($fp)
+sw $t0 0($sp)
+lw $t0 -56($fp)
+addi $sp $sp -4
+sw $ra ($sp)
+addi $sp $sp -4
+sw $fp ($sp)
+move $fp $sp
+jalr $t0
+lw $fp ($sp)
+addi $sp $sp 4
+lw $ra ($sp)
+addi $sp $sp 4
+sw $v0 -56($fp)
+addi $sp $sp 8
+addi $sp $sp -4
+lw $t0 12($fp)
+sw $t0 0($sp)
+lw $t0 8($fp)
+lw $t1 0($t0)
+sw $t1 -64($fp)
+lw $t0 -64($fp)
+lw $t1 0($t0)
+sw $t1 -68($fp)
+lw $t0 8($fp)
+lw $t1 -68($fp)
+add $t0 $t0 $t1
+sw $t0 -68($fp)
+lw $t0 -64($fp)
+lw $t1 12($t0)
+sw $t1 -64($fp)
+addi $sp $sp -4
+lw $t0 12($fp)
+sw $t0 0($sp)
+addi $sp $sp -4
+lw $t0 -68($fp)
+sw $t0 0($sp)
+lw $t0 -64($fp)
+addi $sp $sp -4
+sw $ra ($sp)
+addi $sp $sp -4
+sw $fp ($sp)
+move $fp $sp
+jalr $t0
+lw $fp ($sp)
+addi $sp $sp 4
+lw $ra ($sp)
+addi $sp $sp 4
+sw $v0 -64($fp)
+addi $sp $sp 8
+lw $t0 -64($fp)
+seq $t0 $t0 0
+sw $t0 -72($fp)
+lw $t0 -72($fp)
+beq $t0 0 _l15_false
+li $t0 1
+sw $t0 -76($fp)
+la $t0 -4($fp)
+sw $t0 -80($fp)
+lw $t0 -80($fp)
+lw $t1 -76($fp)
+sw $t1 0($t0)
+_l14_startWhile:
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -84($fp)
+lw $t0 -84($fp)
+lw $t1 0($t0)
+sw $t1 -88($fp)
+li $t0 21
+sw $t0 -92($fp)
+lw $t0 -88($fp)
+lw $t1 -92($fp)
+sle $t0 $t0 $t1
+sw $t0 -96($fp)
+lw $t0 -96($fp)
+lw $t1 -4($fp)
+and $t0 $t0 $t1
+sw $t0 -100($fp)
+lw $t0 -100($fp)
+beq $t0 0 _l14_endWhile
+lw $t0 8($fp)
+li $t1 24
+add $t0 $t0 $t1
+sw $t0 -104($fp)
+lw $t0 -104($fp)
+lw $t1 0($t0)
+sw $t1 -108($fp)
+lw $a0 -108($fp)
+li $v0 4
+syscall 
+la $t0 __string__t280_
+sw $t0 -112($fp)
+lw $a0 -112($fp)
+li $v0 4
+syscall 
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -116($fp)
+lw $t0 -116($fp)
+lw $t1 0($t0)
+sw $t1 -120($fp)
+li $v0 1 
+lw $t0 -120($fp)
+move $a0 $t0 
+syscall 
+la $t0 __string__t283_
+sw $t0 -124($fp)
+lw $a0 -124($fp)
+li $v0 4
+syscall 
+li $v0 4
+la $a0 newline
+syscall
+la $t0 __string__t285_
+sw $t0 -128($fp)
+addi $sp $sp -4
+lw $t0 -128($fp)
+sw $t0 0($sp)
+addi $sp $sp -4
+sw $ra ($sp)
+addi $sp $sp -4
+sw $fp ($sp)
+move $fp $sp
+jal func_global_GetYesOrNo
+lw $fp ($sp)
+addi $sp $sp 4
+lw $ra ($sp)
+addi $sp $sp 4
+sw $v0 -132($fp)
+addi $sp $sp 4
+la $t0 -4($fp)
+sw $t0 -136($fp)
+lw $t0 -136($fp)
+lw $t1 -132($fp)
+sw $t1 0($t0)
+lw $t0 -4($fp)
+beq $t0 0 _l13_false
+addi $sp $sp -4
+lw $t0 12($fp)
+sw $t0 0($sp)
+lw $t0 8($fp)
+lw $t1 0($t0)
+sw $t1 -140($fp)
+lw $t0 -140($fp)
+lw $t1 0($t0)
+sw $t1 -144($fp)
+lw $t0 8($fp)
+lw $t1 -144($fp)
+add $t0 $t0 $t1
+sw $t0 -144($fp)
+lw $t0 -140($fp)
+lw $t1 8($t0)
+sw $t1 -140($fp)
+addi $sp $sp -4
+lw $t0 12($fp)
+sw $t0 0($sp)
+addi $sp $sp -4
+lw $t0 -144($fp)
+sw $t0 0($sp)
+lw $t0 -140($fp)
+addi $sp $sp -4
+sw $ra ($sp)
+addi $sp $sp -4
+sw $fp ($sp)
+move $fp $sp
+jalr $t0
+lw $fp ($sp)
+addi $sp $sp 4
+lw $ra ($sp)
+addi $sp $sp 4
+sw $v0 -140($fp)
+addi $sp $sp 8
+j _l13_afterIf
+_l13_false:
+_l13_afterIf:
+j _l14_startWhile
+_l14_endWhile:
+j _l15_afterIf
+_l15_false:
+_l15_afterIf:
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -148($fp)
+lw $t0 -148($fp)
+lw $t1 0($t0)
+sw $t1 -152($fp)
+li $t0 21
+sw $t0 -156($fp)
+lw $t0 -152($fp)
+lw $t1 -156($fp)
+sgt $t0 $t0 $t1
+sw $t0 -160($fp)
+lw $t0 -160($fp)
+beq $t0 0 _l16_false
+lw $t0 8($fp)
+li $t1 24
+add $t0 $t0 $t1
+sw $t0 -164($fp)
+lw $t0 -164($fp)
+lw $t1 0($t0)
+sw $t1 -168($fp)
+lw $a0 -168($fp)
+li $v0 4
+syscall 
+la $t0 __string__t296_
+sw $t0 -172($fp)
+lw $a0 -172($fp)
+li $v0 4
+syscall 
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -176($fp)
+lw $t0 -176($fp)
+lw $t1 0($t0)
+sw $t1 -180($fp)
+li $v0 1 
+lw $t0 -180($fp)
+move $a0 $t0 
+syscall 
+la $t0 __string__t299_
+sw $t0 -184($fp)
+lw $a0 -184($fp)
+li $v0 4
+syscall 
+li $v0 4
+la $a0 newline
+syscall
+j _l16_afterIf
+_l16_false:
+lw $t0 8($fp)
+li $t1 24
+add $t0 $t0 $t1
+sw $t0 -188($fp)
+lw $t0 -188($fp)
+lw $t1 0($t0)
+sw $t1 -192($fp)
+lw $a0 -192($fp)
+li $v0 4
+syscall 
+la $t0 __string__t302_
+sw $t0 -196($fp)
+lw $a0 -196($fp)
+li $v0 4
+syscall 
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -200($fp)
+lw $t0 -200($fp)
+lw $t1 0($t0)
+sw $t1 -204($fp)
+li $v0 1 
+lw $t0 -204($fp)
+move $a0 $t0 
+syscall 
+la $t0 __string__t305_
+sw $t0 -208($fp)
+lw $a0 -208($fp)
+li $v0 4
+syscall 
+li $v0 4
+la $a0 newline
+syscall
+_l16_afterIf:
+addiu $sp $sp 224
+jr $ra 
+func_global_Player_HasMoney:
+addiu $sp $sp -16
+lw $t0 8($fp)
+li $t1 20
+add $t0 $t0 $t1
+sw $t0 -4($fp)
+lw $t0 -4($fp)
+lw $t1 0($t0)
+sw $t1 -8($fp)
+li $t0 0
+sw $t0 -12($fp)
+lw $t0 -8($fp)
+lw $t1 -12($fp)
+sgt $t0 $t0 $t1
+sw $t0 -16($fp)
+lw $t0 -16($fp)
+addi $v0 $t0 0
+addiu $sp $sp 16
+jr $ra 
+addiu $sp $sp 16
+jr $ra 
+func_global_Player_PrintMoney:
+addiu $sp $sp -24
+lw $t0 8($fp)
+li $t1 24
+add $t0 $t0 $t1
+sw $t0 -4($fp)
+lw $t0 -4($fp)
+lw $t1 0($t0)
+sw $t1 -8($fp)
+lw $a0 -8($fp)
+li $v0 4
+syscall 
+la $t0 __string__t312_
+sw $t0 -12($fp)
+lw $a0 -12($fp)
+li $v0 4
+syscall 
+lw $t0 8($fp)
+li $t1 20
+add $t0 $t0 $t1
+sw $t0 -16($fp)
+lw $t0 -16($fp)
+lw $t1 0($t0)
+sw $t1 -20($fp)
+li $v0 1 
+lw $t0 -20($fp)
+move $a0 $t0 
+syscall 
+la $t0 __string__t315_
+sw $t0 -24($fp)
+lw $a0 -24($fp)
+li $v0 4
+syscall 
+li $v0 4
+la $a0 newline
+syscall
+addiu $sp $sp 24
+jr $ra 
+func_global_Player_PlaceBet:
+addiu $sp $sp -72
+li $t0 0
+sw $t0 -4($fp)
+lw $t0 8($fp)
+li $t1 16
+add $t0 $t0 $t1
+sw $t0 -8($fp)
+lw $t0 -8($fp)
+lw $t1 -4($fp)
+sw $t1 0($t0)
+lw $t0 8($fp)
+lw $t1 0($t0)
+sw $t1 -12($fp)
+lw $t0 -12($fp)
+lw $t1 0($t0)
+sw $t1 -16($fp)
+lw $t0 8($fp)
+lw $t1 -16($fp)
+add $t0 $t0 $t1
+sw $t0 -16($fp)
+lw $t0 -12($fp)
+lw $t1 24($t0)
+sw $t1 -12($fp)
+addi $sp $sp -4
+lw $t0 -16($fp)
+sw $t0 0($sp)
+lw $t0 -12($fp)
+addi $sp $sp -4
+sw $ra ($sp)
+addi $sp $sp -4
+sw $fp ($sp)
+move $fp $sp
+jalr $t0
+lw $fp ($sp)
+addi $sp $sp 4
+lw $ra ($sp)
+addi $sp $sp 4
+sw $v0 -12($fp)
+addi $sp $sp 4
+_l17_startWhile:
+lw $t0 8($fp)
+li $t1 16
+add $t0 $t0 $t1
+sw $t0 -20($fp)
+lw $t0 -20($fp)
+lw $t1 0($t0)
+sw $t1 -24($fp)
+li $t0 0
+sw $t0 -28($fp)
+lw $t0 -24($fp)
+lw $t1 -28($fp)
+sle $t0 $t0 $t1
+sw $t0 -32($fp)
+lw $t0 8($fp)
+li $t1 16
+add $t0 $t0 $t1
+sw $t0 -36($fp)
+lw $t0 -36($fp)
+lw $t1 0($t0)
+sw $t1 -40($fp)
+lw $t0 8($fp)
+li $t1 20
+add $t0 $t0 $t1
+sw $t0 -44($fp)
+lw $t0 -44($fp)
+lw $t1 0($t0)
+sw $t1 -48($fp)
+lw $t0 -40($fp)
+lw $t1 -48($fp)
+sgt $t0 $t0 $t1
+sw $t0 -52($fp)
+lw $t0 -32($fp)
+lw $t1 -52($fp)
+or $t0 $t0 $t1
+sw $t0 -56($fp)
+lw $t0 -56($fp)
+beq $t0 0 _l17_endWhile
+la $t0 __string__t331_
+sw $t0 -60($fp)
+lw $a0 -60($fp)
+li $v0 4
+syscall 
+li $v0 4
+la $a0 newline
+syscall
+li $v0 5 
+syscall 
+sw $v0 -64($fp)
+lw $t0 8($fp)
+li $t1 16
+add $t0 $t0 $t1
+sw $t0 -68($fp)
+lw $t0 -68($fp)
+lw $t1 -64($fp)
+sw $t1 0($t0)
+j _l17_startWhile
+_l17_endWhile:
+addiu $sp $sp 72
+jr $ra 
+func_global_Player_GetTotal:
+addiu $sp $sp -8
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -4($fp)
+lw $t0 -4($fp)
+lw $t1 0($t0)
+sw $t1 -8($fp)
+lw $t0 -8($fp)
+addi $v0 $t0 0
+addiu $sp $sp 8
+jr $ra 
+addiu $sp $sp 8
+jr $ra 
+func_global_Player_Resolve:
+addiu $sp $sp -276
+li $t0 0
+sw $t0 -4($fp)
+li $t0 0
+sw $t0 -8($fp)
+li $t0 0
+sw $t0 -12($fp)
+la $t0 -4($fp)
+sw $t0 -16($fp)
+lw $t0 -16($fp)
+lw $t1 -12($fp)
+sw $t1 0($t0)
+li $t0 0
+sw $t0 -20($fp)
+la $t0 -8($fp)
+sw $t0 -24($fp)
+lw $t0 -24($fp)
+lw $t1 -20($fp)
+sw $t1 0($t0)
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -28($fp)
+lw $t0 -28($fp)
+lw $t1 0($t0)
+sw $t1 -32($fp)
+li $t0 21
+sw $t0 -36($fp)
+lw $t0 -32($fp)
+lw $t1 -36($fp)
+seq $t0 $t0 $t1
+sw $t0 -40($fp)
+lw $t0 8($fp)
+li $t1 12
+add $t0 $t0 $t1
+sw $t0 -44($fp)
+lw $t0 -44($fp)
+lw $t1 0($t0)
+sw $t1 -48($fp)
+li $t0 2
+sw $t0 -52($fp)
+lw $t0 -48($fp)
+lw $t1 -52($fp)
+seq $t0 $t0 $t1
+sw $t0 -56($fp)
+lw $t0 -40($fp)
+lw $t1 -56($fp)
+and $t0 $t0 $t1
+sw $t0 -60($fp)
+lw $t0 -60($fp)
+beq $t0 0 _l18_false
+li $t0 2
+sw $t0 -64($fp)
+la $t0 -4($fp)
+sw $t0 -68($fp)
+lw $t0 -68($fp)
+lw $t1 -64($fp)
+sw $t1 0($t0)
+j _l18_afterIf
+_l18_false:
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -72($fp)
+lw $t0 -72($fp)
+lw $t1 0($t0)
+sw $t1 -76($fp)
+li $t0 21
+sw $t0 -80($fp)
+lw $t0 -76($fp)
+lw $t1 -80($fp)
+sgt $t0 $t0 $t1
+sw $t0 -84($fp)
+lw $t0 -84($fp)
+beq $t0 0 _l19_false
+li $t0 1
+sw $t0 -88($fp)
+la $t0 -8($fp)
+sw $t0 -92($fp)
+lw $t0 -92($fp)
+lw $t1 -88($fp)
+sw $t1 0($t0)
+j _l19_afterIf
+_l19_false:
+li $t0 21
+sw $t0 -96($fp)
+lw $t0 12($fp)
+lw $t1 -96($fp)
+sgt $t0 $t0 $t1
+sw $t0 -100($fp)
+lw $t0 -100($fp)
+beq $t0 0 _l20_false
+li $t0 1
+sw $t0 -104($fp)
+la $t0 -4($fp)
+sw $t0 -108($fp)
+lw $t0 -108($fp)
+lw $t1 -104($fp)
+sw $t1 0($t0)
+j _l20_afterIf
+_l20_false:
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -112($fp)
+lw $t0 -112($fp)
+lw $t1 0($t0)
+sw $t1 -116($fp)
+lw $t0 -116($fp)
+lw $t1 12($fp)
+sgt $t0 $t0 $t1
+sw $t0 -120($fp)
+lw $t0 -120($fp)
+beq $t0 0 _l21_false
+li $t0 1
+sw $t0 -124($fp)
+la $t0 -4($fp)
+sw $t0 -128($fp)
+lw $t0 -128($fp)
+lw $t1 -124($fp)
+sw $t1 0($t0)
+j _l21_afterIf
+_l21_false:
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -132($fp)
+lw $t0 -132($fp)
+lw $t1 0($t0)
+sw $t1 -136($fp)
+lw $t0 12($fp)
+lw $t1 -136($fp)
+sgt $t0 $t0 $t1
+sw $t0 -140($fp)
+lw $t0 -140($fp)
+beq $t0 0 _l22_false
+li $t0 1
+sw $t0 -144($fp)
+la $t0 -8($fp)
+sw $t0 -148($fp)
+lw $t0 -148($fp)
+lw $t1 -144($fp)
+sw $t1 0($t0)
+j _l22_afterIf
+_l22_false:
+_l22_afterIf:
+_l21_afterIf:
+_l20_afterIf:
+_l19_afterIf:
+_l18_afterIf:
+li $t0 1
+sw $t0 -152($fp)
+lw $t0 -4($fp)
+lw $t1 -152($fp)
+sge $t0 $t0 $t1
+sw $t0 -156($fp)
+lw $t0 -156($fp)
+beq $t0 0 _l23_false
+lw $t0 8($fp)
+li $t1 24
+add $t0 $t0 $t1
+sw $t0 -160($fp)
+lw $t0 -160($fp)
+lw $t1 0($t0)
+sw $t1 -164($fp)
+lw $a0 -164($fp)
+li $v0 4
+syscall 
+la $t0 __string__t375_
+sw $t0 -168($fp)
+lw $a0 -168($fp)
+li $v0 4
+syscall 
+lw $t0 8($fp)
+li $t1 16
+add $t0 $t0 $t1
+sw $t0 -172($fp)
+lw $t0 -172($fp)
+lw $t1 0($t0)
+sw $t1 -176($fp)
+li $v0 1 
+lw $t0 -176($fp)
+move $a0 $t0 
+syscall 
+la $t0 __string__t378_
+sw $t0 -180($fp)
+lw $a0 -180($fp)
+li $v0 4
+syscall 
+li $v0 4
+la $a0 newline
+syscall
+j _l23_afterIf
+_l23_false:
+li $t0 1
+sw $t0 -184($fp)
+lw $t0 -8($fp)
+lw $t1 -184($fp)
+sge $t0 $t0 $t1
+sw $t0 -188($fp)
+lw $t0 -188($fp)
+beq $t0 0 _l24_false
+lw $t0 8($fp)
+li $t1 24
+add $t0 $t0 $t1
+sw $t0 -192($fp)
+lw $t0 -192($fp)
+lw $t1 0($t0)
+sw $t1 -196($fp)
+lw $a0 -196($fp)
+li $v0 4
+syscall 
+la $t0 __string__t383_
+sw $t0 -200($fp)
+lw $a0 -200($fp)
+li $v0 4
+syscall 
+lw $t0 8($fp)
+li $t1 16
+add $t0 $t0 $t1
+sw $t0 -204($fp)
+lw $t0 -204($fp)
+lw $t1 0($t0)
+sw $t1 -208($fp)
+li $v0 1 
+lw $t0 -208($fp)
+move $a0 $t0 
+syscall 
+la $t0 __string__t386_
+sw $t0 -212($fp)
+lw $a0 -212($fp)
+li $v0 4
+syscall 
+li $v0 4
+la $a0 newline
+syscall
+j _l24_afterIf
+_l24_false:
+lw $t0 8($fp)
+li $t1 24
+add $t0 $t0 $t1
+sw $t0 -216($fp)
+lw $t0 -216($fp)
+lw $t1 0($t0)
+sw $t1 -220($fp)
+lw $a0 -220($fp)
+li $v0 4
+syscall 
+la $t0 __string__t389_
+sw $t0 -224($fp)
+lw $a0 -224($fp)
+li $v0 4
+syscall 
+li $v0 4
+la $a0 newline
+syscall
+_l24_afterIf:
+_l23_afterIf:
+lw $t0 8($fp)
+li $t1 16
+add $t0 $t0 $t1
+sw $t0 -228($fp)
+lw $t0 -228($fp)
+lw $t1 0($t0)
+sw $t1 -232($fp)
+lw $t0 -4($fp)
+lw $t1 -232($fp)
+mul $t0 $t0 $t1
+sw $t0 -236($fp)
+la $t0 -4($fp)
+sw $t0 -240($fp)
+lw $t0 -240($fp)
+lw $t1 -236($fp)
+sw $t1 0($t0)
+lw $t0 8($fp)
+li $t1 16
+add $t0 $t0 $t1
+sw $t0 -244($fp)
+lw $t0 -244($fp)
+lw $t1 0($t0)
+sw $t1 -248($fp)
+lw $t0 -8($fp)
+lw $t1 -248($fp)
+mul $t0 $t0 $t1
+sw $t0 -252($fp)
+la $t0 -8($fp)
+sw $t0 -256($fp)
+lw $t0 -256($fp)
+lw $t1 -252($fp)
+sw $t1 0($t0)
+lw $t0 8($fp)
+li $t1 20
+add $t0 $t0 $t1
+sw $t0 -260($fp)
+lw $t0 -260($fp)
+lw $t1 0($t0)
+sw $t1 -264($fp)
+lw $t0 -264($fp)
+lw $t1 -4($fp)
+add $t0 $t0 $t1
+sw $t0 -268($fp)
+lw $t0 -268($fp)
+lw $t1 -8($fp)
+sub $t0 $t0 $t1
+sw $t0 -272($fp)
+lw $t0 8($fp)
+li $t1 20
+add $t0 $t0 $t1
+sw $t0 -276($fp)
+lw $t0 -276($fp)
+lw $t1 -272($fp)
+sw $t1 0($t0)
+addiu $sp $sp 276
+jr $ra 
+func_global_Player_Dealer_Init:
+addiu $sp $sp -32
+li $t0 0
+sw $t0 -4($fp)
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -8($fp)
+lw $t0 -8($fp)
+lw $t1 -4($fp)
+sw $t1 0($t0)
+li $t0 0
+sw $t0 -12($fp)
+lw $t0 8($fp)
+li $t1 8
+add $t0 $t0 $t1
+sw $t0 -16($fp)
+lw $t0 -16($fp)
+lw $t1 -12($fp)
+sw $t1 0($t0)
+li $t0 0
+sw $t0 -20($fp)
+lw $t0 8($fp)
+li $t1 12
+add $t0 $t0 $t1
+sw $t0 -24($fp)
+lw $t0 -24($fp)
+lw $t1 -20($fp)
+sw $t1 0($t0)
+la $t0 __string__t410_
+sw $t0 -28($fp)
+lw $t0 8($fp)
+li $t1 24
+add $t0 $t0 $t1
+sw $t0 -32($fp)
+lw $t0 -32($fp)
+lw $t1 -28($fp)
+sw $t1 0($t0)
+addiu $sp $sp 32
+jr $ra 
+func_global_Player_Dealer_TakeTurn:
+addiu $sp $sp -108
+la $t0 __string__t411_
+sw $t0 -4($fp)
+lw $a0 -4($fp)
+li $v0 4
+syscall 
+lw $t0 8($fp)
+li $t1 24
+add $t0 $t0 $t1
+sw $t0 -8($fp)
+lw $t0 -8($fp)
+lw $t1 0($t0)
+sw $t1 -12($fp)
+lw $a0 -12($fp)
+li $v0 4
+syscall 
+la $t0 __string__t414_
+sw $t0 -16($fp)
+lw $a0 -16($fp)
+li $v0 4
+syscall 
+li $v0 4
+la $a0 newline
+syscall
+_l25_startWhile:
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -20($fp)
+lw $t0 -20($fp)
+lw $t1 0($t0)
+sw $t1 -24($fp)
+li $t0 16
+sw $t0 -28($fp)
+lw $t0 -24($fp)
+lw $t1 -28($fp)
+sle $t0 $t0 $t1
+sw $t0 -32($fp)
+lw $t0 -32($fp)
+beq $t0 0 _l25_endWhile
+addi $sp $sp -4
+lw $t0 12($fp)
+sw $t0 0($sp)
+lw $t0 8($fp)
+lw $t1 0($t0)
+sw $t1 -36($fp)
+lw $t0 -36($fp)
+lw $t1 0($t0)
+sw $t1 -40($fp)
+lw $t0 8($fp)
+lw $t1 -40($fp)
+add $t0 $t0 $t1
+sw $t0 -40($fp)
+lw $t0 -36($fp)
+lw $t1 8($t0)
+sw $t1 -36($fp)
+addi $sp $sp -4
+lw $t0 12($fp)
+sw $t0 0($sp)
+addi $sp $sp -4
+lw $t0 -40($fp)
+sw $t0 0($sp)
+lw $t0 -36($fp)
+addi $sp $sp -4
+sw $ra ($sp)
+addi $sp $sp -4
+sw $fp ($sp)
+move $fp $sp
+jalr $t0
+lw $fp ($sp)
+addi $sp $sp 4
+lw $ra ($sp)
+addi $sp $sp 4
+sw $v0 -36($fp)
+addi $sp $sp 8
+j _l25_startWhile
+_l25_endWhile:
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -44($fp)
+lw $t0 -44($fp)
+lw $t1 0($t0)
+sw $t1 -48($fp)
+li $t0 21
+sw $t0 -52($fp)
+lw $t0 -48($fp)
+lw $t1 -52($fp)
+sgt $t0 $t0 $t1
+sw $t0 -56($fp)
+lw $t0 -56($fp)
+beq $t0 0 _l26_false
+lw $t0 8($fp)
+li $t1 24
+add $t0 $t0 $t1
+sw $t0 -60($fp)
+lw $t0 -60($fp)
+lw $t1 0($t0)
+sw $t1 -64($fp)
+lw $a0 -64($fp)
+li $v0 4
+syscall 
+la $t0 __string__t428_
+sw $t0 -68($fp)
+lw $a0 -68($fp)
+li $v0 4
+syscall 
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -72($fp)
+lw $t0 -72($fp)
+lw $t1 0($t0)
+sw $t1 -76($fp)
+li $v0 1 
+lw $t0 -76($fp)
+move $a0 $t0 
+syscall 
+la $t0 __string__t431_
+sw $t0 -80($fp)
+lw $a0 -80($fp)
+li $v0 4
+syscall 
+li $v0 4
+la $a0 newline
+syscall
+j _l26_afterIf
+_l26_false:
+lw $t0 8($fp)
+li $t1 24
+add $t0 $t0 $t1
+sw $t0 -84($fp)
+lw $t0 -84($fp)
+lw $t1 0($t0)
+sw $t1 -88($fp)
+lw $a0 -88($fp)
+li $v0 4
+syscall 
+la $t0 __string__t434_
+sw $t0 -92($fp)
+lw $a0 -92($fp)
+li $v0 4
+syscall 
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -96($fp)
+lw $t0 -96($fp)
+lw $t1 0($t0)
+sw $t1 -100($fp)
+li $v0 1 
+lw $t0 -100($fp)
+move $a0 $t0 
+syscall 
+la $t0 __string__t437_
+sw $t0 -104($fp)
+lw $a0 -104($fp)
+li $v0 4
+syscall 
+li $v0 4
+la $a0 newline
+syscall
+_l26_afterIf:
+addiu $sp $sp 108
+jr $ra 
+func_global_House_SetupGame:
+addiu $sp $sp -92
+la $t0 __string__t438_
+sw $t0 -4($fp)
+lw $a0 -4($fp)
+li $v0 4
+syscall 
+li $v0 4
+la $a0 newline
+syscall
+la $t0 __string__t439_
+sw $t0 -8($fp)
+lw $a0 -8($fp)
+li $v0 4
+syscall 
+li $v0 4
+la $a0 newline
+syscall
+li $a0 2
+sll $a0 $a0 2
+li $v0 9
+syscall
+sw $v0 -12($fp)
+lw $t0 4($gp)
+sw $t0 -16($fp)
+lw $t0 -12($fp)
+lw $t1 -16($fp)
+sw $t1 0($t0)
+la $t0 0($gp)
+sw $t0 -20($fp)
+lw $t0 -20($fp)
+lw $t1 -12($fp)
+sw $t1 0($t0)
+la $t0 __string__t443_
+sw $t0 -24($fp)
+lw $a0 -24($fp)
+li $v0 4
+syscall 
+li $v0 4
+la $a0 newline
+syscall
+lw $t0 0($gp)
+lw $t1 0($t0)
+sw $t1 -28($fp)
+lw $t0 -28($fp)
+lw $t1 0($t0)
+sw $t1 -32($fp)
+lw $t0 0($gp)
+lw $t1 -32($fp)
+add $t0 $t0 $t1
+sw $t0 -32($fp)
+lw $t0 -28($fp)
+lw $t1 4($t0)
+sw $t1 -28($fp)
+li $v0 5 
+syscall 
+sw $v0 -36($fp)
+addi $sp $sp -4
+lw $t0 -36($fp)
+sw $t0 0($sp)
+addi $sp $sp -4
+lw $t0 -32($fp)
+sw $t0 0($sp)
+lw $t0 -28($fp)
+addi $sp $sp -4
+sw $ra ($sp)
+addi $sp $sp -4
+sw $fp ($sp)
+move $fp $sp
+jalr $t0
+lw $fp ($sp)
+addi $sp $sp 4
+lw $ra ($sp)
+addi $sp $sp 4
+sw $v0 -28($fp)
+addi $sp $sp 8
+li $a0 3
+sll $a0 $a0 2
+li $v0 9
+syscall
+sw $v0 -40($fp)
+lw $t0 12($gp)
+sw $t0 -44($fp)
+lw $t0 -40($fp)
+lw $t1 -44($fp)
+sw $t1 0($t0)
+lw $t0 8($fp)
+li $t1 12
+add $t0 $t0 $t1
+sw $t0 -48($fp)
+lw $t0 -48($fp)
+lw $t1 -40($fp)
+sw $t1 0($t0)
+li $a0 7
+sll $a0 $a0 2
+li $v0 9
+syscall
+sw $v0 -52($fp)
+lw $t0 20($gp)
+sw $t0 -56($fp)
+lw $t0 -52($fp)
+lw $t1 -56($fp)
+sw $t1 0($t0)
+lw $t0 8($fp)
+li $t1 8
+add $t0 $t0 $t1
+sw $t0 -60($fp)
+lw $t0 -60($fp)
+lw $t1 -52($fp)
+sw $t1 0($t0)
+lw $t0 8($fp)
+li $t1 12
+add $t0 $t0 $t1
+sw $t0 -64($fp)
+lw $t0 -64($fp)
+lw $t1 0($t0)
+sw $t1 -68($fp)
+lw $t0 -68($fp)
+lw $t1 0($t0)
+sw $t1 -72($fp)
+lw $t0 -72($fp)
+lw $t1 0($t0)
+sw $t1 -76($fp)
+lw $t0 -68($fp)
+lw $t1 -76($fp)
+add $t0 $t0 $t1
+sw $t0 -76($fp)
+lw $t0 -72($fp)
+lw $t1 4($t0)
+sw $t1 -72($fp)
+addi $sp $sp -4
+lw $t0 -76($fp)
+sw $t0 0($sp)
+lw $t0 -72($fp)
+addi $sp $sp -4
+sw $ra ($sp)
+addi $sp $sp -4
+sw $fp ($sp)
+move $fp $sp
+jalr $t0
+lw $fp ($sp)
+addi $sp $sp 4
+lw $ra ($sp)
+addi $sp $sp 4
+sw $v0 -72($fp)
+addi $sp $sp 4
+lw $t0 8($fp)
+li $t1 12
+add $t0 $t0 $t1
+sw $t0 -80($fp)
+lw $t0 -80($fp)
+lw $t1 0($t0)
+sw $t1 -84($fp)
+lw $t0 -84($fp)
+lw $t1 0($t0)
+sw $t1 -88($fp)
+lw $t0 -88($fp)
+lw $t1 0($t0)
+sw $t1 -92($fp)
+lw $t0 -84($fp)
+lw $t1 -92($fp)
+add $t0 $t0 $t1
+sw $t0 -92($fp)
+lw $t0 -88($fp)
+lw $t1 12($t0)
+sw $t1 -88($fp)
+addi $sp $sp -4
+lw $t0 -92($fp)
+sw $t0 0($sp)
+lw $t0 -88($fp)
+addi $sp $sp -4
+sw $ra ($sp)
+addi $sp $sp -4
+sw $fp ($sp)
+move $fp $sp
+jalr $t0
+lw $fp ($sp)
+addi $sp $sp 4
+lw $ra ($sp)
+addi $sp $sp 4
+sw $v0 -88($fp)
+addi $sp $sp 4
+addiu $sp $sp 92
+jr $ra 
+func_global_House_SetupPlayers:
+addiu $sp $sp -116
+li $t0 0
+sw $t0 -4($fp)
+li $t0 0
+sw $t0 -8($fp)
+la $t0 __string__t462_
+sw $t0 -12($fp)
+lw $a0 -12($fp)
+li $v0 4
+syscall 
+li $v0 4
+la $a0 newline
+syscall
+li $v0 5 
+syscall 
+sw $v0 -16($fp)
+la $t0 -8($fp)
+sw $t0 -20($fp)
+lw $t0 -20($fp)
+lw $t1 -16($fp)
+sw $t1 0($t0)
+lw $t0 -8($fp)
+li $t1 1
+add $t0 $t0 $t1
+sw $t0 -24($fp)
+lw $a0 -24($fp)
+sll $a0 $a0 2
+li $v0 9
+syscall
+sw $v0 -24($fp)
+lw $t0 -24($fp)
+lw $t1 -8($fp)
+sw $t1 0($t0)
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -28($fp)
+lw $t0 -28($fp)
+lw $t1 -24($fp)
+sw $t1 0($t0)
+li $t0 0
+sw $t0 -32($fp)
+la $t0 -4($fp)
+sw $t0 -36($fp)
+lw $t0 -36($fp)
+lw $t1 -32($fp)
+sw $t1 0($t0)
+_l27_startFor:
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -40($fp)
+lw $t0 -40($fp)
+lw $t1 0($t0)
+sw $t1 -44($fp)
+lw $t0 -44($fp)
+lw $t1 0($t0)
+sw $t1 -48($fp)
+lw $t0 -4($fp)
+lw $t1 -48($fp)
+slt $t0 $t0 $t1
+sw $t0 -52($fp)
+lw $t0 -52($fp)
+beq $t0 0 _l27_endFor
+li $a0 7
+sll $a0 $a0 2
+li $v0 9
+syscall
+sw $v0 -56($fp)
+lw $t0 16($gp)
+sw $t0 -60($fp)
+lw $t0 -56($fp)
+lw $t1 -60($fp)
+sw $t1 0($t0)
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -64($fp)
+lw $t0 -64($fp)
+lw $t1 0($t0)
+sw $t1 -68($fp)
+lw $t0 -4($fp)
+li $t1 1
+add $t0 $t0 $t1
+sw $t0 -72($fp)
+lw $t0 -72($fp)
+li $t1 4
+mul $t0 $t0 $t1
+sw $t0 -72($fp)
+lw $t0 -68($fp)
+lw $t1 -72($fp)
+add $t0 $t0 $t1
+sw $t0 -72($fp)
+lw $t0 -72($fp)
+lw $t1 -56($fp)
+sw $t1 0($t0)
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -76($fp)
+lw $t0 -76($fp)
+lw $t1 0($t0)
+sw $t1 -80($fp)
+lw $t0 -4($fp)
+li $t1 1
+add $t0 $t0 $t1
+sw $t0 -84($fp)
+lw $t0 -84($fp)
+li $t1 4
+mul $t0 $t0 $t1
+sw $t0 -84($fp)
+lw $t0 -80($fp)
+lw $t1 -84($fp)
+add $t0 $t0 $t1
+sw $t0 -84($fp)
+lw $t0 -84($fp)
+lw $t1 0($t0)
+sw $t1 -88($fp)
+lw $t0 -88($fp)
+lw $t1 0($t0)
+sw $t1 -92($fp)
+lw $t0 -92($fp)
+lw $t1 0($t0)
+sw $t1 -96($fp)
+lw $t0 -88($fp)
+lw $t1 -96($fp)
+add $t0 $t0 $t1
+sw $t0 -96($fp)
+lw $t0 -92($fp)
+lw $t1 4($t0)
+sw $t1 -92($fp)
+li $t0 1
+sw $t0 -100($fp)
+lw $t0 -4($fp)
+lw $t1 -100($fp)
+add $t0 $t0 $t1
+sw $t0 -104($fp)
+addi $sp $sp -4
+lw $t0 -104($fp)
+sw $t0 0($sp)
+addi $sp $sp -4
+lw $t0 -96($fp)
+sw $t0 0($sp)
+lw $t0 -92($fp)
+addi $sp $sp -4
+sw $ra ($sp)
+addi $sp $sp -4
+sw $fp ($sp)
+move $fp $sp
+jalr $t0
+lw $fp ($sp)
+addi $sp $sp 4
+lw $ra ($sp)
+addi $sp $sp 4
+sw $v0 -92($fp)
+addi $sp $sp 8
+_l27_stepFor:
+li $t0 1
+sw $t0 -108($fp)
+lw $t0 -4($fp)
+lw $t1 -108($fp)
+add $t0 $t0 $t1
+sw $t0 -112($fp)
+la $t0 -4($fp)
+sw $t0 -116($fp)
+lw $t0 -116($fp)
+lw $t1 -112($fp)
+sw $t1 0($t0)
+j _l27_startFor
+_l27_endFor:
+addiu $sp $sp 116
+jr $ra 
+func_global_House_TakeAllBets:
+addiu $sp $sp -92
+li $t0 0
+sw $t0 -4($fp)
+la $t0 __string__t491_
+sw $t0 -8($fp)
+lw $a0 -8($fp)
+li $v0 4
+syscall 
+li $v0 4
+la $a0 newline
+syscall
+li $t0 0
+sw $t0 -12($fp)
+la $t0 -4($fp)
+sw $t0 -16($fp)
+lw $t0 -16($fp)
+lw $t1 -12($fp)
+sw $t1 0($t0)
+_l29_startFor:
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -20($fp)
+lw $t0 -20($fp)
+lw $t1 0($t0)
+sw $t1 -24($fp)
+lw $t0 -24($fp)
+lw $t1 0($t0)
+sw $t1 -28($fp)
+lw $t0 -4($fp)
+lw $t1 -28($fp)
+slt $t0 $t0 $t1
+sw $t0 -32($fp)
+lw $t0 -32($fp)
+beq $t0 0 _l29_endFor
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -36($fp)
+lw $t0 -36($fp)
+lw $t1 0($t0)
+sw $t1 -40($fp)
+lw $t0 -4($fp)
+li $t1 1
+add $t0 $t0 $t1
+sw $t0 -44($fp)
+lw $t0 -44($fp)
+li $t1 4
+mul $t0 $t0 $t1
+sw $t0 -44($fp)
+lw $t0 -40($fp)
+lw $t1 -44($fp)
+add $t0 $t0 $t1
+sw $t0 -44($fp)
+lw $t0 -44($fp)
+lw $t1 0($t0)
+sw $t1 -48($fp)
+lw $t0 -48($fp)
+lw $t1 0($t0)
+sw $t1 -52($fp)
+lw $t0 -52($fp)
+lw $t1 0($t0)
+sw $t1 -56($fp)
+lw $t0 -48($fp)
+lw $t1 -56($fp)
+add $t0 $t0 $t1
+sw $t0 -56($fp)
+lw $t0 -52($fp)
+lw $t1 20($t0)
+sw $t1 -52($fp)
+addi $sp $sp -4
+lw $t0 -56($fp)
+sw $t0 0($sp)
+lw $t0 -52($fp)
+addi $sp $sp -4
+sw $ra ($sp)
+addi $sp $sp -4
+sw $fp ($sp)
+move $fp $sp
+jalr $t0
+lw $fp ($sp)
+addi $sp $sp 4
+lw $ra ($sp)
+addi $sp $sp 4
+sw $v0 -52($fp)
+addi $sp $sp 4
+lw $t0 -52($fp)
+beq $t0 0 _l28_false
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -60($fp)
+lw $t0 -60($fp)
+lw $t1 0($t0)
+sw $t1 -64($fp)
+lw $t0 -4($fp)
+li $t1 1
+add $t0 $t0 $t1
+sw $t0 -68($fp)
+lw $t0 -68($fp)
+li $t1 4
+mul $t0 $t0 $t1
+sw $t0 -68($fp)
+lw $t0 -64($fp)
+lw $t1 -68($fp)
+add $t0 $t0 $t1
+sw $t0 -68($fp)
+lw $t0 -68($fp)
+lw $t1 0($t0)
+sw $t1 -72($fp)
+lw $t0 -72($fp)
+lw $t1 0($t0)
+sw $t1 -76($fp)
+lw $t0 -76($fp)
+lw $t1 0($t0)
+sw $t1 -80($fp)
+lw $t0 -72($fp)
+lw $t1 -80($fp)
+add $t0 $t0 $t1
+sw $t0 -80($fp)
+lw $t0 -76($fp)
+lw $t1 28($t0)
+sw $t1 -76($fp)
+addi $sp $sp -4
+lw $t0 -80($fp)
+sw $t0 0($sp)
+lw $t0 -76($fp)
+addi $sp $sp -4
+sw $ra ($sp)
+addi $sp $sp -4
+sw $fp ($sp)
+move $fp $sp
+jalr $t0
+lw $fp ($sp)
+addi $sp $sp 4
+lw $ra ($sp)
+addi $sp $sp 4
+sw $v0 -76($fp)
+addi $sp $sp 4
+j _l28_afterIf
+_l28_false:
+_l28_afterIf:
+_l29_stepFor:
+li $t0 1
+sw $t0 -84($fp)
+lw $t0 -4($fp)
+lw $t1 -84($fp)
+add $t0 $t0 $t1
+sw $t0 -88($fp)
+la $t0 -4($fp)
+sw $t0 -92($fp)
+lw $t0 -92($fp)
+lw $t1 -88($fp)
+sw $t1 0($t0)
+j _l29_startFor
+_l29_endFor:
+addiu $sp $sp 92
+jr $ra 
+func_global_House_TakeAllTurns:
+addiu $sp $sp -96
+li $t0 0
+sw $t0 -4($fp)
+li $t0 0
+sw $t0 -8($fp)
+la $t0 -4($fp)
+sw $t0 -12($fp)
+lw $t0 -12($fp)
+lw $t1 -8($fp)
+sw $t1 0($t0)
+_l31_startFor:
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -16($fp)
+lw $t0 -16($fp)
+lw $t1 0($t0)
+sw $t1 -20($fp)
+lw $t0 -20($fp)
+lw $t1 0($t0)
+sw $t1 -24($fp)
+lw $t0 -4($fp)
+lw $t1 -24($fp)
+slt $t0 $t0 $t1
+sw $t0 -28($fp)
+lw $t0 -28($fp)
+beq $t0 0 _l31_endFor
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -32($fp)
+lw $t0 -32($fp)
+lw $t1 0($t0)
+sw $t1 -36($fp)
+lw $t0 -4($fp)
+li $t1 1
+add $t0 $t0 $t1
+sw $t0 -40($fp)
+lw $t0 -40($fp)
+li $t1 4
+mul $t0 $t0 $t1
+sw $t0 -40($fp)
+lw $t0 -36($fp)
+lw $t1 -40($fp)
+add $t0 $t0 $t1
+sw $t0 -40($fp)
+lw $t0 -40($fp)
+lw $t1 0($t0)
+sw $t1 -44($fp)
+lw $t0 -44($fp)
+lw $t1 0($t0)
+sw $t1 -48($fp)
+lw $t0 -48($fp)
+lw $t1 0($t0)
+sw $t1 -52($fp)
+lw $t0 -44($fp)
+lw $t1 -52($fp)
+add $t0 $t0 $t1
+sw $t0 -52($fp)
+lw $t0 -48($fp)
+lw $t1 20($t0)
+sw $t1 -48($fp)
+addi $sp $sp -4
+lw $t0 -52($fp)
+sw $t0 0($sp)
+lw $t0 -48($fp)
+addi $sp $sp -4
+sw $ra ($sp)
+addi $sp $sp -4
+sw $fp ($sp)
+move $fp $sp
+jalr $t0
+lw $fp ($sp)
+addi $sp $sp 4
+lw $ra ($sp)
+addi $sp $sp 4
+sw $v0 -48($fp)
+addi $sp $sp 4
+lw $t0 -48($fp)
+beq $t0 0 _l30_false
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -56($fp)
+lw $t0 -56($fp)
+lw $t1 0($t0)
+sw $t1 -60($fp)
+lw $t0 -4($fp)
+li $t1 1
+add $t0 $t0 $t1
+sw $t0 -64($fp)
+lw $t0 -64($fp)
+li $t1 4
+mul $t0 $t0 $t1
+sw $t0 -64($fp)
+lw $t0 -60($fp)
+lw $t1 -64($fp)
+add $t0 $t0 $t1
+sw $t0 -64($fp)
+lw $t0 -64($fp)
+lw $t1 0($t0)
+sw $t1 -68($fp)
+lw $t0 -68($fp)
+lw $t1 0($t0)
+sw $t1 -72($fp)
+lw $t0 -72($fp)
+lw $t1 0($t0)
+sw $t1 -76($fp)
+lw $t0 -68($fp)
+lw $t1 -76($fp)
+add $t0 $t0 $t1
+sw $t0 -76($fp)
+lw $t0 -72($fp)
+lw $t1 16($t0)
+sw $t1 -72($fp)
+lw $t0 8($fp)
+li $t1 12
+add $t0 $t0 $t1
+sw $t0 -80($fp)
+lw $t0 -80($fp)
+lw $t1 0($t0)
+sw $t1 -84($fp)
+addi $sp $sp -4
+lw $t0 -84($fp)
+sw $t0 0($sp)
+addi $sp $sp -4
+lw $t0 -76($fp)
+sw $t0 0($sp)
+lw $t0 -72($fp)
+addi $sp $sp -4
+sw $ra ($sp)
+addi $sp $sp -4
+sw $fp ($sp)
+move $fp $sp
+jalr $t0
+lw $fp ($sp)
+addi $sp $sp 4
+lw $ra ($sp)
+addi $sp $sp 4
+sw $v0 -72($fp)
+addi $sp $sp 8
+j _l30_afterIf
+_l30_false:
+_l30_afterIf:
+_l31_stepFor:
+li $t0 1
+sw $t0 -88($fp)
+lw $t0 -4($fp)
+lw $t1 -88($fp)
+add $t0 $t0 $t1
+sw $t0 -92($fp)
+la $t0 -4($fp)
+sw $t0 -96($fp)
+lw $t0 -96($fp)
+lw $t1 -92($fp)
+sw $t1 0($t0)
+j _l31_startFor
+_l31_endFor:
+addiu $sp $sp 96
+jr $ra 
+func_global_House_ResolveAllPlayers:
+addiu $sp $sp -108
+li $t0 0
+sw $t0 -4($fp)
+la $t0 __string__t538_
+sw $t0 -8($fp)
+lw $a0 -8($fp)
+li $v0 4
+syscall 
+li $v0 4
+la $a0 newline
+syscall
+li $t0 0
+sw $t0 -12($fp)
+la $t0 -4($fp)
+sw $t0 -16($fp)
+lw $t0 -16($fp)
+lw $t1 -12($fp)
+sw $t1 0($t0)
+_l33_startFor:
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -20($fp)
+lw $t0 -20($fp)
+lw $t1 0($t0)
+sw $t1 -24($fp)
+lw $t0 -24($fp)
+lw $t1 0($t0)
+sw $t1 -28($fp)
+lw $t0 -4($fp)
+lw $t1 -28($fp)
+slt $t0 $t0 $t1
+sw $t0 -32($fp)
+lw $t0 -32($fp)
+beq $t0 0 _l33_endFor
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -36($fp)
+lw $t0 -36($fp)
+lw $t1 0($t0)
+sw $t1 -40($fp)
+lw $t0 -4($fp)
+li $t1 1
+add $t0 $t0 $t1
+sw $t0 -44($fp)
+lw $t0 -44($fp)
+li $t1 4
+mul $t0 $t0 $t1
+sw $t0 -44($fp)
+lw $t0 -40($fp)
+lw $t1 -44($fp)
+add $t0 $t0 $t1
+sw $t0 -44($fp)
+lw $t0 -44($fp)
+lw $t1 0($t0)
+sw $t1 -48($fp)
+lw $t0 -48($fp)
+lw $t1 0($t0)
+sw $t1 -52($fp)
+lw $t0 -52($fp)
+lw $t1 0($t0)
+sw $t1 -56($fp)
+lw $t0 -48($fp)
+lw $t1 -56($fp)
+add $t0 $t0 $t1
+sw $t0 -56($fp)
+lw $t0 -52($fp)
+lw $t1 20($t0)
+sw $t1 -52($fp)
+addi $sp $sp -4
+lw $t0 -56($fp)
+sw $t0 0($sp)
+lw $t0 -52($fp)
+addi $sp $sp -4
+sw $ra ($sp)
+addi $sp $sp -4
+sw $fp ($sp)
+move $fp $sp
+jalr $t0
+lw $fp ($sp)
+addi $sp $sp 4
+lw $ra ($sp)
+addi $sp $sp 4
+sw $v0 -52($fp)
+addi $sp $sp 4
+lw $t0 -52($fp)
+beq $t0 0 _l32_false
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -60($fp)
+lw $t0 -60($fp)
+lw $t1 0($t0)
+sw $t1 -64($fp)
+lw $t0 -4($fp)
+li $t1 1
+add $t0 $t0 $t1
+sw $t0 -68($fp)
+lw $t0 -68($fp)
+li $t1 4
+mul $t0 $t0 $t1
+sw $t0 -68($fp)
+lw $t0 -64($fp)
+lw $t1 -68($fp)
+add $t0 $t0 $t1
+sw $t0 -68($fp)
+lw $t0 -68($fp)
+lw $t1 0($t0)
+sw $t1 -72($fp)
+lw $t0 -72($fp)
+lw $t1 0($t0)
+sw $t1 -76($fp)
+lw $t0 -76($fp)
+lw $t1 0($t0)
+sw $t1 -80($fp)
+lw $t0 -72($fp)
+lw $t1 -80($fp)
+add $t0 $t0 $t1
+sw $t0 -80($fp)
+lw $t0 -76($fp)
+lw $t1 36($t0)
+sw $t1 -76($fp)
+lw $t0 8($fp)
+li $t1 8
+add $t0 $t0 $t1
+sw $t0 -84($fp)
+lw $t0 -84($fp)
+lw $t1 0($t0)
+sw $t1 -88($fp)
+lw $t0 -88($fp)
+lw $t1 0($t0)
+sw $t1 -92($fp)
+lw $t0 -92($fp)
+lw $t1 0($t0)
+sw $t1 -96($fp)
+lw $t0 -88($fp)
+lw $t1 -96($fp)
+add $t0 $t0 $t1
+sw $t0 -96($fp)
+lw $t0 -92($fp)
+lw $t1 32($t0)
+sw $t1 -92($fp)
+addi $sp $sp -4
+lw $t0 -96($fp)
+sw $t0 0($sp)
+lw $t0 -92($fp)
+addi $sp $sp -4
+sw $ra ($sp)
+addi $sp $sp -4
+sw $fp ($sp)
+move $fp $sp
+jalr $t0
+lw $fp ($sp)
+addi $sp $sp 4
+lw $ra ($sp)
+addi $sp $sp 4
+sw $v0 -92($fp)
+addi $sp $sp 4
+addi $sp $sp -4
+lw $t0 -92($fp)
+sw $t0 0($sp)
+addi $sp $sp -4
+lw $t0 -80($fp)
+sw $t0 0($sp)
+lw $t0 -76($fp)
+addi $sp $sp -4
+sw $ra ($sp)
+addi $sp $sp -4
+sw $fp ($sp)
+move $fp $sp
+jalr $t0
+lw $fp ($sp)
+addi $sp $sp 4
+lw $ra ($sp)
+addi $sp $sp 4
+sw $v0 -76($fp)
+addi $sp $sp 8
+j _l32_afterIf
+_l32_false:
+_l32_afterIf:
+_l33_stepFor:
+li $t0 1
+sw $t0 -100($fp)
+lw $t0 -4($fp)
+lw $t1 -100($fp)
+add $t0 $t0 $t1
+sw $t0 -104($fp)
+la $t0 -4($fp)
+sw $t0 -108($fp)
+lw $t0 -108($fp)
+lw $t1 -104($fp)
+sw $t1 0($t0)
+j _l33_startFor
+_l33_endFor:
+addiu $sp $sp 108
+jr $ra 
+func_global_House_PrintAllMoney:
+addiu $sp $sp -64
+li $t0 0
+sw $t0 -4($fp)
+li $t0 0
+sw $t0 -8($fp)
+la $t0 -4($fp)
+sw $t0 -12($fp)
+lw $t0 -12($fp)
+lw $t1 -8($fp)
+sw $t1 0($t0)
+_l34_startFor:
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -16($fp)
+lw $t0 -16($fp)
+lw $t1 0($t0)
+sw $t1 -20($fp)
+lw $t0 -20($fp)
+lw $t1 0($t0)
+sw $t1 -24($fp)
+lw $t0 -4($fp)
+lw $t1 -24($fp)
+slt $t0 $t0 $t1
+sw $t0 -28($fp)
+lw $t0 -28($fp)
+beq $t0 0 _l34_endFor
+lw $t0 8($fp)
+li $t1 4
+add $t0 $t0 $t1
+sw $t0 -32($fp)
+lw $t0 -32($fp)
+lw $t1 0($t0)
+sw $t1 -36($fp)
+lw $t0 -4($fp)
+li $t1 1
+add $t0 $t0 $t1
+sw $t0 -40($fp)
+lw $t0 -40($fp)
+li $t1 4
+mul $t0 $t0 $t1
+sw $t0 -40($fp)
+lw $t0 -36($fp)
+lw $t1 -40($fp)
+add $t0 $t0 $t1
+sw $t0 -40($fp)
+lw $t0 -40($fp)
+lw $t1 0($t0)
+sw $t1 -44($fp)
+lw $t0 -44($fp)
+lw $t1 0($t0)
+sw $t1 -48($fp)
+lw $t0 -48($fp)
+lw $t1 0($t0)
+sw $t1 -52($fp)
+lw $t0 -44($fp)
+lw $t1 -52($fp)
+add $t0 $t0 $t1
+sw $t0 -52($fp)
+lw $t0 -48($fp)
+lw $t1 24($t0)
+sw $t1 -48($fp)
+addi $sp $sp -4
+lw $t0 -52($fp)
+sw $t0 0($sp)
+lw $t0 -48($fp)
+addi $sp $sp -4
+sw $ra ($sp)
+addi $sp $sp -4
+sw $fp ($sp)
+move $fp $sp
+jalr $t0
+lw $fp ($sp)
+addi $sp $sp 4
+lw $ra ($sp)
+addi $sp $sp 4
+sw $v0 -48($fp)
+addi $sp $sp 4
+_l34_stepFor:
+li $t0 1
+sw $t0 -56($fp)
+lw $t0 -4($fp)
+lw $t1 -56($fp)
+add $t0 $t0 $t1
+sw $t0 -60($fp)
+la $t0 -4($fp)
+sw $t0 -64($fp)
+lw $t0 -64($fp)
+lw $t1 -60($fp)
+sw $t1 0($t0)
+j _l34_startFor
+_l34_endFor:
+addiu $sp $sp 64
+jr $ra 
+func_global_House_PlayOneGame:
+addiu $sp $sp -148
+lw $t0 8($fp)
+li $t1 12
+add $t0 $t0 $t1
+sw $t0 -4($fp)
+lw $t0 -4($fp)
+lw $t1 0($t0)
+sw $t1 -8($fp)
+lw $t0 -8($fp)
+lw $t1 0($t0)
+sw $t1 -12($fp)
+lw $t0 -12($fp)
+lw $t1 0($t0)
+sw $t1 -16($fp)
+lw $t0 -8($fp)
+lw $t1 -16($fp)
+add $t0 $t0 $t1
+sw $t0 -16($fp)
+lw $t0 -12($fp)
+lw $t1 16($t0)
+sw $t1 -12($fp)
+addi $sp $sp -4
+lw $t0 -16($fp)
+sw $t0 0($sp)
+lw $t0 -12($fp)
+addi $sp $sp -4
+sw $ra ($sp)
+addi $sp $sp -4
+sw $fp ($sp)
+move $fp $sp
+jalr $t0
+lw $fp ($sp)
+addi $sp $sp 4
+lw $ra ($sp)
+addi $sp $sp 4
+sw $v0 -12($fp)
+addi $sp $sp 4
+li $t0 26
+sw $t0 -20($fp)
+lw $t0 -12($fp)
+lw $t1 -20($fp)
+slt $t0 $t0 $t1
+sw $t0 -24($fp)
+lw $t0 -24($fp)
+beq $t0 0 _l35_false
+lw $t0 8($fp)
+li $t1 12
+add $t0 $t0 $t1
+sw $t0 -28($fp)
+lw $t0 -28($fp)
+lw $t1 0($t0)
+sw $t1 -32($fp)
+lw $t0 -32($fp)
+lw $t1 0($t0)
+sw $t1 -36($fp)
+lw $t0 -36($fp)
+lw $t1 0($t0)
+sw $t1 -40($fp)
+lw $t0 -32($fp)
+lw $t1 -40($fp)
+add $t0 $t0 $t1
+sw $t0 -40($fp)
+lw $t0 -36($fp)
+lw $t1 12($t0)
+sw $t1 -36($fp)
+addi $sp $sp -4
+lw $t0 -40($fp)
+sw $t0 0($sp)
+lw $t0 -36($fp)
+addi $sp $sp -4
+sw $ra ($sp)
+addi $sp $sp -4
+sw $fp ($sp)
+move $fp $sp
+jalr $t0
+lw $fp ($sp)
+addi $sp $sp 4
+lw $ra ($sp)
+addi $sp $sp 4
+sw $v0 -36($fp)
+addi $sp $sp 4
+j _l35_afterIf
+_l35_false:
+_l35_afterIf:
+lw $t0 8($fp)
+lw $t1 0($t0)
+sw $t1 -44($fp)
+lw $t0 -44($fp)
+lw $t1 0($t0)
+sw $t1 -48($fp)
+lw $t0 8($fp)
+lw $t1 -48($fp)
+add $t0 $t0 $t1
+sw $t0 -48($fp)
+lw $t0 -44($fp)
+lw $t1 12($t0)
+sw $t1 -44($fp)
+addi $sp $sp -4
+lw $t0 -48($fp)
+sw $t0 0($sp)
+lw $t0 -44($fp)
+addi $sp $sp -4
+sw $ra ($sp)
+addi $sp $sp -4
+sw $fp ($sp)
+move $fp $sp
+jalr $t0
+lw $fp ($sp)
+addi $sp $sp 4
+lw $ra ($sp)
+addi $sp $sp 4
+sw $v0 -44($fp)
+addi $sp $sp 4
+la $t0 __string__t596_
+sw $t0 -52($fp)
+lw $a0 -52($fp)
+li $v0 4
+syscall 
+li $v0 4
+la $a0 newline
+syscall
+lw $t0 8($fp)
+li $t1 8
+add $t0 $t0 $t1
+sw $t0 -56($fp)
+lw $t0 -56($fp)
+lw $t1 0($t0)
+sw $t1 -60($fp)
+lw $t0 -60($fp)
+lw $t1 0($t0)
+sw $t1 -64($fp)
+lw $t0 -64($fp)
+lw $t1 0($t0)
+sw $t1 -68($fp)
+lw $t0 -60($fp)
+lw $t1 -68($fp)
+add $t0 $t0 $t1
+sw $t0 -68($fp)
+lw $t0 -64($fp)
+lw $t1 4($t0)
+sw $t1 -64($fp)
+li $t0 0
+sw $t0 -72($fp)
+addi $sp $sp -4
+lw $t0 -72($fp)
+sw $t0 0($sp)
+addi $sp $sp -4
+lw $t0 -68($fp)
+sw $t0 0($sp)
+lw $t0 -64($fp)
+addi $sp $sp -4
+sw $ra ($sp)
+addi $sp $sp -4
+sw $fp ($sp)
+move $fp $sp
+jalr $t0
+lw $fp ($sp)
+addi $sp $sp 4
+lw $ra ($sp)
+addi $sp $sp 4
+sw $v0 -64($fp)
+addi $sp $sp 8
+lw $t0 8($fp)
+li $t1 8
+add $t0 $t0 $t1
+sw $t0 -76($fp)
+lw $t0 -76($fp)
+lw $t1 0($t0)
+sw $t1 -80($fp)
+lw $t0 -80($fp)
+lw $t1 0($t0)
+sw $t1 -84($fp)
+lw $t0 -84($fp)
+lw $t1 0($t0)
+sw $t1 -88($fp)
+lw $t0 -80($fp)
+lw $t1 -88($fp)
+add $t0 $t0 $t1
+sw $t0 -88($fp)
+lw $t0 -84($fp)
+lw $t1 8($t0)
+sw $t1 -84($fp)
+lw $t0 8($fp)
+li $t1 12
+add $t0 $t0 $t1
+sw $t0 -92($fp)
+lw $t0 -92($fp)
+lw $t1 0($t0)
+sw $t1 -96($fp)
+addi $sp $sp -4
+lw $t0 -96($fp)
+sw $t0 0($sp)
+addi $sp $sp -4
+lw $t0 -88($fp)
+sw $t0 0($sp)
+lw $t0 -84($fp)
+addi $sp $sp -4
+sw $ra ($sp)
+addi $sp $sp -4
+sw $fp ($sp)
+move $fp $sp
+jalr $t0
+lw $fp ($sp)
+addi $sp $sp 4
+lw $ra ($sp)
+addi $sp $sp 4
+sw $v0 -84($fp)
+addi $sp $sp 8
+lw $t0 8($fp)
+lw $t1 0($t0)
+sw $t1 -100($fp)
+lw $t0 -100($fp)
+lw $t1 0($t0)
+sw $t1 -104($fp)
+lw $t0 8($fp)
+lw $t1 -104($fp)
+add $t0 $t0 $t1
+sw $t0 -104($fp)
+lw $t0 -100($fp)
+lw $t1 16($t0)
+sw $t1 -100($fp)
+addi $sp $sp -4
+lw $t0 -104($fp)
+sw $t0 0($sp)
+lw $t0 -100($fp)
+addi $sp $sp -4
+sw $ra ($sp)
+addi $sp $sp -4
+sw $fp ($sp)
+move $fp $sp
+jalr $t0
+lw $fp ($sp)
+addi $sp $sp 4
+lw $ra ($sp)
+addi $sp $sp 4
+sw $v0 -100($fp)
+addi $sp $sp 4
+lw $t0 8($fp)
+li $t1 8
+add $t0 $t0 $t1
+sw $t0 -108($fp)
+lw $t0 -108($fp)
+lw $t1 0($t0)
+sw $t1 -112($fp)
+lw $t0 -112($fp)
+lw $t1 0($t0)
+sw $t1 -116($fp)
+lw $t0 -116($fp)
+lw $t1 0($t0)
+sw $t1 -120($fp)
+lw $t0 -112($fp)
+lw $t1 -120($fp)
+add $t0 $t0 $t1
+sw $t0 -120($fp)
+lw $t0 -116($fp)
+lw $t1 16($t0)
+sw $t1 -116($fp)
+lw $t0 8($fp)
+li $t1 12
+add $t0 $t0 $t1
+sw $t0 -124($fp)
+lw $t0 -124($fp)
+lw $t1 0($t0)
+sw $t1 -128($fp)
+addi $sp $sp -4
+lw $t0 -128($fp)
+sw $t0 0($sp)
+addi $sp $sp -4
+lw $t0 -120($fp)
+sw $t0 0($sp)
+lw $t0 -116($fp)
+addi $sp $sp -4
+sw $ra ($sp)
+addi $sp $sp -4
+sw $fp ($sp)
+move $fp $sp
+jalr $t0
+lw $fp ($sp)
+addi $sp $sp 4
+lw $ra ($sp)
+addi $sp $sp 4
+sw $v0 -116($fp)
+addi $sp $sp 8
+lw $t0 8($fp)
+lw $t1 0($t0)
+sw $t1 -132($fp)
+lw $t0 -132($fp)
+lw $t1 0($t0)
+sw $t1 -136($fp)
+lw $t0 8($fp)
+lw $t1 -136($fp)
+add $t0 $t0 $t1
+sw $t0 -136($fp)
+lw $t0 -132($fp)
+lw $t1 20($t0)
+sw $t1 -132($fp)
+addi $sp $sp -4
+lw $t0 -136($fp)
+sw $t0 0($sp)
+lw $t0 -132($fp)
+addi $sp $sp -4
+sw $ra ($sp)
+addi $sp $sp -4
+sw $fp ($sp)
+move $fp $sp
+jalr $t0
+lw $fp ($sp)
+addi $sp $sp 4
+lw $ra ($sp)
+addi $sp $sp 4
+sw $v0 -132($fp)
+addi $sp $sp 4
+addiu $sp $sp 148
+jr $ra 
+func_global_GetYesOrNo:
+addiu $sp $sp -36
+li $t0 0
+sw $t0 -4($fp)
+lw $a0 8($fp)
+li $v0 4
+syscall 
+la $t0 __string__t625_
+sw $t0 -8($fp)
+lw $a0 -8($fp)
+li $v0 4
+syscall 
+li $v0 4
+la $a0 newline
+syscall
+li $a0 100
+li $v0 9
+syscall
+sw $v0 -12($fp)
+li $v0 8
+lw $a0 -12($fp)
+li $a1 100
+syscall
+li $t0 100
+add $t0 $t0 $a0
+__ReadLineLabel1:
+addi $t0 $t0 -1
+lb $t1 ($t0)
+li $t2 10
+bne $t1 $t2 __ReadLineLabel1_1
+sb $0 ($t0)
+__ReadLineLabel1_1: beq $t1 $0 __ReadLineLabel1
+la $t0 -4($fp)
+sw $t0 -16($fp)
+lw $t0 -16($fp)
+lw $t1 -12($fp)
+sw $t1 0($t0)
+la $t0 __string__t628_
+sw $t0 -20($fp)
+lw $t0 -4($fp)
+lw $t1 -20($fp)
+_compareStringLoop_0_:
+lb $t2 ($t0)
+lb $t3 ($t1)
+beq $t2 0 _compareStringEnd1_0_
+beq $t3 0 _compareStringGreater_0_
+blt $t2 $t3 _compareStringLess_0_
+addi $t0 $t0 1
+addi $t1 $t1 1
+beq $t2 $t3 _compareStringLoop_0_
+j _compareStringGreater_0_
+_compareStringEnd1_0_:
+beq $t3 0 _compareStringEqual_0_
+j _compareStringLess_0_
+_compareStringLess_0_:
+li $t4 0
+j _compareStringFinal_0_
+_compareStringGreater_0_:
+li $t4 0
+j _compareStringFinal_0_
+_compareStringEqual_0_:
+li $t4 1
+_compareStringFinal_0_:
+sw $t4 -24($fp)
+la $t0 __string__t630_
+sw $t0 -28($fp)
+lw $t0 -4($fp)
+lw $t1 -28($fp)
+_compareStringLoop_1_:
+lb $t2 ($t0)
+lb $t3 ($t1)
+beq $t2 0 _compareStringEnd1_1_
+beq $t3 0 _compareStringGreater_1_
+blt $t2 $t3 _compareStringLess_1_
+addi $t0 $t0 1
+addi $t1 $t1 1
+beq $t2 $t3 _compareStringLoop_1_
+j _compareStringGreater_1_
+_compareStringEnd1_1_:
+beq $t3 0 _compareStringEqual_1_
+j _compareStringLess_1_
+_compareStringLess_1_:
+li $t4 0
+j _compareStringFinal_1_
+_compareStringGreater_1_:
+li $t4 0
+j _compareStringFinal_1_
+_compareStringEqual_1_:
+li $t4 1
+_compareStringFinal_1_:
+sw $t4 -32($fp)
+lw $t0 -24($fp)
+lw $t1 -32($fp)
+or $t0 $t0 $t1
+sw $t0 -36($fp)
+lw $t0 -36($fp)
+addi $v0 $t0 0
+addiu $sp $sp 36
+jr $ra 
+addiu $sp $sp 36
+jr $ra 
+func_global_main:
+addiu $sp $sp -84
+li $t0 0
+sw $t0 -4($fp)
+li $t0 0
+sw $t0 -8($fp)
+li $t0 1
+sw $t0 -12($fp)
+la $t0 -4($fp)
+sw $t0 -16($fp)
+lw $t0 -16($fp)
+lw $t1 -12($fp)
+sw $t1 0($t0)
+li $a0 4
+sll $a0 $a0 2
+li $v0 9
+syscall
+sw $v0 -20($fp)
+lw $t0 24($gp)
+sw $t0 -24($fp)
+lw $t0 -20($fp)
+lw $t1 -24($fp)
+sw $t1 0($t0)
+la $t0 -8($fp)
+sw $t0 -28($fp)
+lw $t0 -28($fp)
+lw $t1 -20($fp)
+sw $t1 0($t0)
+lw $t0 -8($fp)
+lw $t1 0($t0)
+sw $t1 -32($fp)
+lw $t0 -32($fp)
+lw $t1 0($t0)
+sw $t1 -36($fp)
+lw $t0 -8($fp)
+lw $t1 -36($fp)
+add $t0 $t0 $t1
+sw $t0 -36($fp)
+lw $t0 -32($fp)
+lw $t1 4($t0)
+sw $t1 -32($fp)
+addi $sp $sp -4
+lw $t0 -36($fp)
+sw $t0 0($sp)
+lw $t0 -32($fp)
+addi $sp $sp -4
+sw $ra ($sp)
+addi $sp $sp -4
+sw $fp ($sp)
+move $fp $sp
+jalr $t0
+lw $fp ($sp)
+addi $sp $sp 4
+lw $ra ($sp)
+addi $sp $sp 4
+sw $v0 -32($fp)
+addi $sp $sp 4
+lw $t0 -8($fp)
+lw $t1 0($t0)
+sw $t1 -40($fp)
+lw $t0 -40($fp)
+lw $t1 0($t0)
+sw $t1 -44($fp)
+lw $t0 -8($fp)
+lw $t1 -44($fp)
+add $t0 $t0 $t1
+sw $t0 -44($fp)
+lw $t0 -40($fp)
+lw $t1 8($t0)
+sw $t1 -40($fp)
+addi $sp $sp -4
+lw $t0 -44($fp)
+sw $t0 0($sp)
+lw $t0 -40($fp)
+addi $sp $sp -4
+sw $ra ($sp)
+addi $sp $sp -4
+sw $fp ($sp)
+move $fp $sp
+jalr $t0
+lw $fp ($sp)
+addi $sp $sp 4
+lw $ra ($sp)
+addi $sp $sp 4
+sw $v0 -40($fp)
+addi $sp $sp 4
+_l36_startWhile:
+lw $t0 -4($fp)
+beq $t0 0 _l36_endWhile
+lw $t0 -8($fp)
+lw $t1 0($t0)
+sw $t1 -48($fp)
+lw $t0 -48($fp)
+lw $t1 0($t0)
+sw $t1 -52($fp)
+lw $t0 -8($fp)
+lw $t1 -52($fp)
+add $t0 $t0 $t1
+sw $t0 -52($fp)
+lw $t0 -48($fp)
+lw $t1 28($t0)
+sw $t1 -48($fp)
+addi $sp $sp -4
+lw $t0 -52($fp)
+sw $t0 0($sp)
+lw $t0 -48($fp)
+addi $sp $sp -4
+sw $ra ($sp)
+addi $sp $sp -4
+sw $fp ($sp)
+move $fp $sp
+jalr $t0
+lw $fp ($sp)
+addi $sp $sp 4
+lw $ra ($sp)
+addi $sp $sp 4
+sw $v0 -48($fp)
+addi $sp $sp 4
+la $t0 __string__t645_
+sw $t0 -56($fp)
+addi $sp $sp -4
+lw $t0 -56($fp)
+sw $t0 0($sp)
+addi $sp $sp -4
+sw $ra ($sp)
+addi $sp $sp -4
+sw $fp ($sp)
+move $fp $sp
+jal func_global_GetYesOrNo
+lw $fp ($sp)
+addi $sp $sp 4
+lw $ra ($sp)
+addi $sp $sp 4
+sw $v0 -60($fp)
+addi $sp $sp 4
+la $t0 -4($fp)
+sw $t0 -64($fp)
+lw $t0 -64($fp)
+lw $t1 -60($fp)
+sw $t1 0($t0)
+j _l36_startWhile
+_l36_endWhile:
+lw $t0 -8($fp)
+lw $t1 0($t0)
+sw $t1 -68($fp)
+lw $t0 -68($fp)
+lw $t1 0($t0)
+sw $t1 -72($fp)
+lw $t0 -8($fp)
+lw $t1 -72($fp)
+add $t0 $t0 $t1
+sw $t0 -72($fp)
+lw $t0 -68($fp)
+lw $t1 24($t0)
+sw $t1 -68($fp)
+addi $sp $sp -4
+lw $t0 -72($fp)
+sw $t0 0($sp)
+lw $t0 -68($fp)
+addi $sp $sp -4
+sw $ra ($sp)
+addi $sp $sp -4
+sw $fp ($sp)
+move $fp $sp
+jalr $t0
+lw $fp ($sp)
+addi $sp $sp 4
+lw $ra ($sp)
+addi $sp $sp 4
+sw $v0 -68($fp)
+addi $sp $sp 4
+la $t0 __string__t649_
+sw $t0 -76($fp)
+lw $a0 -76($fp)
+li $v0 4
+syscall 
+li $v0 4
+la $a0 newline
+syscall
+la $t0 __string__t650_
+sw $t0 -80($fp)
+lw $a0 -80($fp)
+li $v0 4
+syscall 
+li $v0 4
+la $a0 newline
+syscall
+la $t0 __string__t651_
+sw $t0 -84($fp)
+lw $a0 -84($fp)
+li $v0 4
+syscall 
+li $v0 4
+la $a0 newline
+syscall
+addiu $sp $sp 84
+jr $ra 
+.data
+newline: .asciiz "\n"
+true: .asciiz "true"
+false: .asciiz "false"
+__string__t152_: .asciiz "Shuffling..."
+__string__t168_: .asciiz "done.\n"
+__string__t177_: .asciiz "What is the name of player #"
+__string__t178_: .asciiz "? "
+__string__t186_: .asciiz " was dealt a "
+__string__t187_: .asciiz ".\n"
+__string__t233_: .asciiz "Would you like to double down?"
+__string__t245_: .asciiz ", your total is "
+__string__t248_: .asciiz ".\n"
+__string__t251_: .asciiz "\n"
+__string__t254_: .asciiz "'s turn.\n"
+__string__t280_: .asciiz ", your total is "
+__string__t283_: .asciiz ".\n"
+__string__t285_: .asciiz "Would you like a hit?"
+__string__t296_: .asciiz " busts with the big "
+__string__t299_: .asciiz "!\n"
+__string__t302_: .asciiz " stays at "
+__string__t305_: .asciiz ".\n"
+__string__t312_: .asciiz ", you have $"
+__string__t315_: .asciiz ".\n"
+__string__t331_: .asciiz "How much would you like to bet? "
+__string__t375_: .asciiz ", you won $"
+__string__t378_: .asciiz ".\n"
+__string__t383_: .asciiz ", you lost $"
+__string__t386_: .asciiz ".\n"
+__string__t389_: .asciiz ", you push!\n"
+__string__t410_: .asciiz "Dealer"
+__string__t411_: .asciiz "\n"
+__string__t414_: .asciiz "'s turn.\n"
+__string__t428_: .asciiz " busts with the big "
+__string__t431_: .asciiz "!\n"
+__string__t434_: .asciiz " stays at "
+__string__t437_: .asciiz ".\n"
+__string__t438_: .asciiz "\nWelcome to CS143 BlackJack!\n"
+__string__t439_: .asciiz "---------------------------\n"
+__string__t443_: .asciiz "Please enter a random number seed: "
+__string__t462_: .asciiz "How many players do we have today? "
+__string__t491_: .asciiz "\nFirst, let's take bets.\n"
+__string__t538_: .asciiz "\nTime to resolve bets.\n"
+__string__t596_: .asciiz "\nDealer starts. "
+__string__t625_: .asciiz " (y/n) "
+__string__t628_: .asciiz "y"
+__string__t630_: .asciiz "Y"
+__string__t645_: .asciiz "\nDo you want to play another hand?"
+__string__t649_: .asciiz "Thank you for playing...come again soon.\n"
+__string__t650_: .asciiz "\nCS143 BlackJack Copyright (c) 1999 by Peter Mork.\n"
+__string__t651_: .asciiz "(2001 mods by jdz)\n"
+
+Code Compiled Successfuly!
+Code Executed Successfuly!
+/usr/bin/python3
+---- test failed !
+
+Passed : 0
+Failed : 1
