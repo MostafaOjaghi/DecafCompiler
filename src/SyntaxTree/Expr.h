@@ -168,7 +168,6 @@ namespace SyntaxTree {
         Cgen cgen() override;
 
         void handleScope() override;
-        // TODO: THIS SHOULD BE IMPLEMENTED
     };
 
     class ExprToNew : public Expr {

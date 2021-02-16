@@ -36,9 +36,6 @@ void SymbolTable::TypeName::setDimension(int dimension) {
     TypeName::dimension = dimension;
 }
 
-// TODO: this should get the id if the id is primitive it should set it to a primitive type
-//  - and if it is not it should be set to a class type
-
 SymbolTable::TypeName::TypeName(std::string id, int dimension) : id(std::move(id)), dimension(dimension) {}
 
 bool SymbolTable::TypeName::isArray() const {

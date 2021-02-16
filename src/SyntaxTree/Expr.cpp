@@ -29,7 +29,7 @@ void SyntaxTree::ExprToAssignmentExpr::handleScope() {
     this->getLValue()->handleScope();
 }
 
-SyntaxTree::Cgen SyntaxTree::ExprToAssignmentExpr::cgen() { // TODO handle lvalue correctly
+SyntaxTree::Cgen SyntaxTree::ExprToAssignmentExpr::cgen() {
     Cgen cgen;
     Cgen lvalue_cgen = lValue->cgen();
     Cgen expr_cgen = expr->cgen();
@@ -37,11 +37,10 @@ SyntaxTree::Cgen SyntaxTree::ExprToAssignmentExpr::cgen() { // TODO handle lvalu
     cgen.append(lvalue_cgen);
 
     if (!SymbolTable::TypeName::checkCastable(expr_cgen.typeName, lvalue_cgen.typeName)) {
-      SymbolTable::TypeName::semanticError();
+        SymbolTable::TypeName::semanticError();
     } else if (lvalue_cgen.typeName.getId() == "double") {
         cgen.append("StoreF *(" + lvalue_cgen.var + ") = " + expr_cgen.var + "\n");
     } else if (lvalue_cgen.typeName.getId() == "string") {
-        // TODO: should be handled in TAC
         cgen.append("Store *(" + lvalue_cgen.var + ") = " + expr_cgen.var + "\n");
     } else
         cgen.append("Store *(" + lvalue_cgen.var + ") = " + expr_cgen.var + "\n");
@@ -195,7 +194,8 @@ SyntaxTree::Cgen SyntaxTree::ExprToBinaryOperation::cgen() {
                operatorSymbol == "<=" ||
                operatorSymbol == ">" ||
                operatorSymbol == ">=") {
-        if (op1.typeName.getId() == op2.typeName.getId() && (op1.typeName.getId() == "int" || op1.typeName.getId() == "double")) {
+        if (op1.typeName.getId() == op2.typeName.getId() &&
+            (op1.typeName.getId() == "int" || op1.typeName.getId() == "double")) {
             cgen.createVar("bool", 0);
             if (op1.typeName.getId() == "double")
                 cgen.append("AssignF " + cgen.var + " = " + op1.var + " " + operatorSymbol + " " + op2.var + "\n");
@@ -208,18 +208,32 @@ SyntaxTree::Cgen SyntaxTree::ExprToBinaryOperation::cgen() {
                operatorSymbol == "*" ||
                operatorSymbol == "/" ||
                operatorSymbol == "%") {
-        if (op1.typeName.getId() == op2.typeName.getId() && (op1.typeName.getId() == "int" || op1.typeName.getId() == "double")) {
-            cgen.createVar(op1.typeName.getId(), 0);
-            if (op1.typeName.getId() == "double")
-                cgen.append("AssignF " + cgen.var + " = " + op1.var + " " + operatorSymbol + " " + op2.var + "\n");
-            else
-                cgen.append("Assign " + cgen.var + " = " + op1.var + " " + operatorSymbol + " " + op2.var + "\n");
+        if (op1.typeName.getDimension() == 0 && op2.typeName.getDimension() == 0) {
+            if (op1.typeName.getId() == op2.typeName.getId() &&
+                (op1.typeName.getId() == "int" || op1.typeName.getId() == "double")) {
+                cgen.createVar(op1.typeName.getId(), 0);
+                if (op1.typeName.getId() == "double")
+                    cgen.append("AssignF " + cgen.var + " = " + op1.var + " " + operatorSymbol + " " + op2.var + "\n");
+                else
+                    cgen.append("Assign " + cgen.var + " = " + op1.var + " " + operatorSymbol + " " + op2.var + "\n");
 
-        } else if (op1.typeName.getId() == op2.typeName.getId() && op1.typeName.getId() == "string") {
-            cgen.createVar("string", 0);
-            cgen.append("AppendS " + cgen.var + " = " + op1.var + " + " + op2.var + "\n");
-        } else
+            } else if (op1.typeName.getId() == op2.typeName.getId() && op1.typeName.getId() == "string") {
+                cgen.createVar("string", 0);
+                cgen.append("AppendS " + cgen.var + " = " + op1.var + " + " + op2.var + "\n");
+            } else
+                SymbolTable::TypeName::semanticError();
+        } else if (op1.typeName.getDimension() == 1 && op2.typeName.getDimension() == 1) {
+            if (op1.typeName.getId() == op2.typeName.getId()) {
+                cgen.createVar(op1.typeName.getId(), 1);
+                cgen.append("AppendA " + cgen.var + " = " + op1.var + " + " + op2.var + "\n");
+            } else {
+                std::cerr << "Arithmetic operation on non compatible types";
+                SymbolTable::TypeName::semanticError();
+            }
+        } else {
+            std::cerr << "Arithmetic operation on non compatible types";
             SymbolTable::TypeName::semanticError();
+        }
     } else if (operatorSymbol == "||" ||
                operatorSymbol == "&&") {
         if (op2.typeName.getId() == "bool" && op1.typeName.getId() == "bool") {
@@ -229,7 +243,8 @@ SyntaxTree::Cgen SyntaxTree::ExprToBinaryOperation::cgen() {
             SymbolTable::TypeName::semanticError();
     } else {
         std::cerr << "Unknown binary operation!" << std::endl;
-        assert(0); // unknown binary operation
+        SymbolTable::TypeName::semanticError();
+        //assert(0); // unknown binary operation
     }
     return cgen;
 }
@@ -281,7 +296,7 @@ SyntaxTree::Cgen SyntaxTree::ExprToUnaryOperation::cgen() {
     else if (operand_cgen.typeName.getId() == "int" && operatorSymbol == "-")
         cgen.append("Assign " + cgen.var + " = - " + operand_cgen.var + "\n");
     else if (operand_cgen.typeName.getId() == "double" && operatorSymbol == "-")
-        cgen.append("AssignF " + cgen.var + " = - " + operand_cgen.var + "\n"); // TODO test
+        cgen.append("AssignF " + cgen.var + " = - " + operand_cgen.var + "\n");
     else if (operand_cgen.typeName.getId() == "bool" && operatorSymbol == "!")
         cgen.append("Assign " + cgen.var + " = ! " + operand_cgen.var + "\n");
     else
@@ -447,7 +462,7 @@ SyntaxTree::Cgen SyntaxTree::ExprToITOB::cgen() {
         SymbolTable::TypeName::semanticError();
     }
     cgen.createVar("bool", 0);
-    cgen.append("Assign " + cgen.var + " != 0\n");
+    cgen.append("Assign " + cgen.var + " = " + exprCgen.var + " != 0\n");
     return cgen;
 }
 

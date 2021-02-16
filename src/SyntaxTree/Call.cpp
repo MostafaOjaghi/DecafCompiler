@@ -22,7 +22,6 @@ void SyntaxTree::CallToFunctionCall::setActuals(SyntaxTree::Actuals *actuals) {
 }
 
 SyntaxTree::Cgen SyntaxTree::CallToFunctionCall::cgen() {
-    // TODO handle return type
     Cgen cgen;
     Cgen actualsCgen = actuals->cgen();
     cgen.append(actualsCgen);

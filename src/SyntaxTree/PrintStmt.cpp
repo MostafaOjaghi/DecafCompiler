@@ -6,7 +6,6 @@
 
 SyntaxTree::Cgen SyntaxTree::PrintStmt::cgen() {
     Cgen cgen;
-    // TODO handle other types
     for (Expr *actual : actuals->getExpressions()) {
         Cgen expr_cgen = actual->cgen();
         cgen.append(expr_cgen);
