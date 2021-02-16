@@ -144,6 +144,5 @@ SymbolTable::ClassType *SymbolTable::Scope::getParentClass() {
         std::cerr << "can't get parent class from scope!" << std::endl;
         return nullptr;
     }
-    std::cerr << "THIS IS Scope name! " << cur->getName() << std::endl;
     return SymbolTable::ClassType::getClass(cur->getName());
 }

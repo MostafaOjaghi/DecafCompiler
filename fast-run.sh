@@ -28,7 +28,7 @@ do
     program_input="$filename.in"
     report_filename="$filename.report.txt"
     echo "Running Test $filename -------------------------------------"
-    ./main -i $TEST_DIRECTORY$filelist -o $OUTPUT_DIRECTORY$output_asm
+    ./main -i $filelist -o $output_asm
     if [ $? -eq 0 ]; then
         echo "Code Compiled Successfuly!"
         spim -a -f "$OUTPUT_DIRECTORY$output_asm" < "$TEST_DIRECTORY$program_input" > "$OUTPUT_DIRECTORY$output_filename"
