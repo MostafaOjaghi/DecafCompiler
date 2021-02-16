@@ -267,10 +267,12 @@ void appendArray(string a, string b, string c) {
     // allocate space for result
     output << "add $a0 $t4 $t5\n";
     output << "addi $a0 $a0 1\n";
+    output << "sll $a0 $a0 2\n";
     output << "li $v0 9\n";
     output << "syscall\n";
-    output << "li $s0 1\n";
-    output << "sub $a0 $a0 $s0\n";
+    output << "srl $a0 $a0 2\n";
+    output << "li $t7 1\n";
+    output << "sub $a0 $a0 $t7\n";
     output << "sw $a0 ($v0)\n";
     output << "sw $v0 " << getPos(a, 0) << "\n";
 

@@ -170,9 +170,12 @@ addi $t0 $t0 4
 addi $t1 $t1 4
 add $a0 $t4 $t5
 addi $a0 $a0 1
+sll $a0 $a0 2
 li $v0 9
 syscall
-subi $a0 $a0 1
+srl $a0 $a0 2
+li $t7 1
+sub $a0 $a0 $t7
 sw $a0 ($v0)
 sw $v0 -124($fp)
 lw $t2 -124($fp)
