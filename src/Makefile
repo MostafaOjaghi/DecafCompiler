@@ -3,7 +3,7 @@
 all: ../main
 
 ../main: lex.yy.cpp lex.yy.h **/*.cpp **/*.h *.cpp parser.tab.cpp parser.tab.h
-	clang++ -std=c++14 -I . **/*.cpp *.cpp -o ../main
+	g++ -std=c++14 -I . **/*.cpp *.cpp -o ../main
 
 lex.yy.cpp lex.yy.h: scanner.l parser.tab.h
 	flex scanner.l
