@@ -23,14 +23,14 @@ void SyntaxTree::Call::setId(const std::string &id) {
 
 SyntaxTree::Cgen SyntaxTree::CallToFunctionCall::cgen() {
     Cgen cgen;
-    Cgen actualsCgen = actuals->cgen();
-    cgen.append(actualsCgen);
     SymbolTable::SymbolTableEntry *entry = getScope()->getFunction(id);
     cgen.createVar(entry->getTypeName());
     if (entry->isField()) {
         SymbolTable::ClassType *classType = getScope()->getParentClass();
         cgenMethodCall(cgen, classType, "this");
     } else {
+        Cgen actualsCgen = actuals->cgen();
+        cgen.append(actualsCgen);
         std::string function_id = entry->getUniqueId();
         cgen.append("Lcall " + function_id + " -> " + cgen.var + "\n");
         cgen.append("Popparams " + std::to_string(actuals->getExpressions().size()) + "\n");
