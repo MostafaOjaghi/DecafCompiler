@@ -683,7 +683,7 @@ string tacToAssembly(istream &inputFile) {
 
                 output << "l.s $f0 " << getPos(tokens[4], 0) << "\n";
                 if (tokens[3] == "-") {
-                    output << "mul.s $f0 $f0 -1\n";
+                    output << "neg.s $f0 $f0\n";
                 }
                 output << "s.s $f0 " << getPos(tokens[1], 0) << "\n";
                 continue;
