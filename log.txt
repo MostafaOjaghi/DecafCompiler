@@ -1,0 +1,167 @@
+rm ../main lex.yy.cpp lex.yy.h parser.tab.cpp parser.tab.h
+bison parser.y -o parser.tab.cpp --defines=parser.tab.h -r all
+flex scanner.l
+g++ -std=c++14 -I . **/*.cpp *.cpp -o ../main
+Subtask Arrays -------------------------------------
+Running Test t122-array-1 -------------------------------------
+---------- Parsing: ----------
+---------- Handle Scope: ----------
+---------- Class Hierarchy ----------
+---------- Cgen: ----------
+---------- asm: ----------
+MIPS Generated Successfuly!
+Code Executed Successfuly!
+/usr/bin/python3
+++++ test passed
+Running Test t123-array-2 -------------------------------------
+---------- Parsing: ----------
+---------- Handle Scope: ----------
+---------- Class Hierarchy ----------
+---------- Cgen: ----------
+---------- asm: ----------
+MIPS Generated Successfuly!
+Code Executed Successfuly!
+/usr/bin/python3
+++++ test passed
+Running Test t124-array-3 -------------------------------------
+---------- Parsing: ----------
+---------- Handle Scope: ----------
+---------- Class Hierarchy ----------
+---------- Cgen: ----------
+---------- asm: ----------
+MIPS Generated Successfuly!
+Code Executed Successfuly!
+/usr/bin/python3
+++++ test passed
+Running Test t125-array-4 -------------------------------------
+---------- Parsing: ----------
+---------- Handle Scope: ----------
+---------- Class Hierarchy ----------
+---------- Cgen: ----------
+---------- asm: ----------
+MIPS Generated Successfuly!
+Code Executed Successfuly!
+/usr/bin/python3
+++++ test passed
+Running Test t126-array-5 -------------------------------------
+---------- Parsing: ----------
+---------- Handle Scope: ----------
+---------- Class Hierarchy ----------
+---------- Cgen: ----------
+---------- asm: ----------
+MIPS Generated Successfuly!
+Code Executed Successfuly!
+/usr/bin/python3
+++++ test passed
+Running Test t127-array-6 -------------------------------------
+---------- Parsing: ----------
+---------- Handle Scope: ----------
+---------- Class Hierarchy ----------
+---------- Cgen: ----------
+---------- asm: ----------
+MIPS Generated Successfuly!
+Code Executed Successfuly!
+/usr/bin/python3
+---- test failed !
+
+Running Test t128-array-7 -------------------------------------
+---------- Parsing: ----------
+---------- Handle Scope: ----------
+---------- Class Hierarchy ----------
+---------- Cgen: ----------
+---------- asm: ----------
+MIPS Generated Successfuly!
+Code Executed Successfuly!
+/usr/bin/python3
+++++ test passed
+Running Test t129-array-8 -------------------------------------
+---------- Parsing: ----------
+---------- Handle Scope: ----------
+---------- Class Hierarchy ----------
+---------- Cgen: ----------
+---------- asm: ----------
+MIPS Generated Successfuly!
+Code Executed Successfuly!
+/usr/bin/python3
+++++ test passed
+Running Test t130-array-9 -------------------------------------
+---------- Parsing: ----------
+---------- Handle Scope: ----------
+---------- Class Hierarchy ----------
+---------- Cgen: ----------
+---------- asm: ----------
+MIPS Generated Successfuly!
+Code Executed Successfuly!
+/usr/bin/python3
+++++ test passed
+Running Test t131-array-10 -------------------------------------
+---------- Parsing: ----------
+---------- Handle Scope: ----------
+---------- Class Hierarchy ----------
+---------- Cgen: ----------
+---------- asm: ----------
+MIPS Generated Successfuly!
+Code Executed Successfuly!
+/usr/bin/python3
+++++ test passed
+Running Test t132-array-11 -------------------------------------
+---------- Parsing: ----------
+---------- Handle Scope: ----------
+---------- Class Hierarchy ----------
+---------- Cgen: ----------
+---------- asm: ----------
+MIPS Generated Successfuly!
+Code Executed Successfuly!
+/usr/bin/python3
+++++ test passed
+Running Test t133-array-12 -------------------------------------
+---------- Parsing: ----------
+---------- Handle Scope: ----------
+---------- Class Hierarchy ----------
+---------- Cgen: ----------
+---------- asm: ----------
+MIPS Generated Successfuly!
+Code Executed Successfuly!
+/usr/bin/python3
+++++ test passed
+Running Test t134-array-13 -------------------------------------
+---------- Parsing: ----------
+---------- Handle Scope: ----------
+---------- Class Hierarchy ----------
+---------- Cgen: ----------
+semantic ERROR!
+MIPS Generated Successfuly!
+Code Executed Successfuly!
+/usr/bin/python3
+---- test failed !
+
+Running Test t253_expr -------------------------------------
+---------- Parsing: ----------
+---------- Handle Scope: ----------
+---------- Class Hierarchy ----------
+---------- Cgen: ----------
+Running Test t286-array -------------------------------------
+---------- Parsing: ----------
+---------- Handle Scope: ----------
+---------- Class Hierarchy ----------
+---------- Cgen: ----------
+---------- asm: ----------
+MIPS Generated Successfuly!
+Code Executed Successfuly!
+/usr/bin/python3
+++++ test passed
+Running Test t287-array -------------------------------------
+---------- Parsing: ----------
+---------- Handle Scope: ----------
+---------- Class Hierarchy ----------
+---------- Cgen: ----------
+---------- asm: ----------
+MIPS Generated Successfuly!
+Code Executed Successfuly!
+/usr/bin/python3
+++++ test passed
+Passed : 13
+Failed : 2
+Subtask score: 
+Final score: 
+0

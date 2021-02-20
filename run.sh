@@ -1,6 +1,6 @@
 #!/bin/bash
-subtasks=( "G1" "G2" "G3" )
-scores=( 10 20 30 )
+subtasks=( "G1" "G2" "G3" "Arrays" "BooleanExpressions" "CallingMethodsOfClass(withInherit)" "CastFunctions" "Class(Simple)" "ConcatArraysAndStringsAndCompareString" "ConditionalStatements" "FloatExpressions" "Functions" "GlobalVariables" "Inheritance" "IntegerExpressions" "Interface" "LoopStatements" "ReadAndWrite" "SemanticError(type1)" "SemanticError(type2)" "SemanticError(type3)" "SemanticError(type4)" "SemanticError(type5)" "StringExpressions" )
+scores=( 10 20 30 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 )
 mkdir -p out
 mkdir -p report
 cd ./tests
@@ -46,7 +46,7 @@ do
 			./main -i "$folder/$filelist" -o "$folder/$output_asm"
 			if [ $? -eq 0 ]; then
 				echo "MIPS Generated Successfuly!"
-					spim -a -f "$OUTPUT_DIRECTORY$folder/$output_asm" < "$TEST_DIRECTORY$folder/$program_input" > "$OUTPUT_DIRECTORY$folder/$output_filename"
+					timeout 2 spim -a -f "$OUTPUT_DIRECTORY$folder/$output_asm" < "$TEST_DIRECTORY$folder/$program_input" > "$OUTPUT_DIRECTORY$folder/$output_filename"
 				if [ $? -eq 0 ]; then
 					echo "Code Executed Successfuly!"
 					if command -v python3; then
